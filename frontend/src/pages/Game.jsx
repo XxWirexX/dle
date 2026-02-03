@@ -33,8 +33,14 @@ function pickTarget(list) {
 
 // Calcul du feedback pour un champ
 function computeFieldFeedback(guessVal, targetVal, attribute) {
+  // Si les deux sont identiques (y compris Unknown === Unknown), c'est correct
+  if (guessVal && targetVal && guessVal.toString().toLowerCase() === targetVal.toString().toLowerCase()) {
+    return { type: "correct", label: guessVal };
+  }
+
+  // Si un des deux est vide ou Unknown, c'est faux
   if (!guessVal || !targetVal || guessVal === "Unknown" || targetVal === "Unknown") {
-    return { type: "unknown", label: guessVal || "-" };
+    return { type: "wrong", label: guessVal || "-" };
   }
 
   const { type, order, partialMatch } = attribute;
@@ -79,12 +85,10 @@ function computeFieldFeedback(guessVal, targetVal, attribute) {
     return { type: "correct", label: guessVal };
   }
 
-  // Match partiel (jaune)
-  if (partialMatch) {
-    if (targetVal.toLowerCase().includes(guessVal.toLowerCase()) ||
-        guessVal.toLowerCase().includes(targetVal.toLowerCase())) {
-      return { type: "close", label: guessVal };
-    }
+  // Match partiel (jaune) - activé par défaut pour le texte
+  if (targetVal.toLowerCase().includes(guessVal.toLowerCase()) ||
+      guessVal.toLowerCase().includes(targetVal.toLowerCase())) {
+    return { type: "close", label: guessVal };
   }
 
   return { type: "wrong", label: guessVal };

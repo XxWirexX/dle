@@ -52,12 +52,10 @@ function computeFieldFeedback(guessVal, targetVal, attribute) {
     return { type: "correct", label: guessVal };
   }
 
-  // Match partiel (jaune)
-  if (partialMatch) {
-    if (targetVal.toLowerCase().includes(guessVal.toLowerCase()) ||
-        guessVal.toLowerCase().includes(targetVal.toLowerCase())) {
-      return { type: "close", label: guessVal };
-    }
+  // Match partiel (jaune) - activé par défaut pour le texte
+  if (targetVal.toLowerCase().includes(guessVal.toLowerCase()) ||
+      guessVal.toLowerCase().includes(targetVal.toLowerCase())) {
+    return { type: "close", label: guessVal };
   }
 
   return { type: "wrong", label: guessVal };
