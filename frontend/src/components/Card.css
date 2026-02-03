@@ -1,0 +1,102 @@
+/* src/components/Card.css */
+
+.game-card {
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  background-color: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.game-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+}
+
+/* Image */
+.card-image-wrapper {
+  width: 120px;
+  height: 120px;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  flex-shrink: 0;
+}
+
+.card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card-overlay {
+  display: none;
+}
+
+/* Contenu */
+.card-content {
+  text-align: center;
+}
+
+.card-title {
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 0.25rem 0;
+}
+
+.card-stats {
+  display: flex;
+  justify-content: center;
+}
+
+.card-stat {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.8rem;
+}
+
+/* Boutons */
+.card-actions {
+  display: flex;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.action-btn {
+  flex: 1;
+  padding: 0.5rem;
+  border-radius: 0.4rem;
+  font-weight: 600;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.solo-btn {
+  background-color: rgba(34, 197, 94, 0.15);
+  color: #4ade80;
+  border: 1px solid rgba(34, 197, 94, 0.25);
+}
+
+.solo-btn:hover {
+  background-color: rgba(34, 197, 94, 0.3);
+}
+
+.duo-btn {
+  background-color: rgba(168, 85, 247, 0.15);
+  color: #c084fc;
+  border: 1px solid rgba(168, 85, 247, 0.25);
+}
+
+.duo-btn:hover {
+  background-color: rgba(168, 85, 247, 0.3);
+}

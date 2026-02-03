@@ -1,0 +1,28 @@
+{
+  "id": "chainsaw-man",
+  "name": "Chainsaw Man",
+  "icon": "cardIcon.jpg",
+  "background": "background.jpg",
+  "maxAttempts": 26,
+  "attributes": [
+    {
+      "key": "gender",
+      "label": "Gender",
+      "type": "text"
+    },
+    {
+      "key": "firstArc",
+      "label": "First Arc",
+      "type": "ordered",
+      "order": [
+        "L vs Kira Arc",
+        "2nd Kira Arc",
+        "Yotsuba Arc",
+        "Mello Arc",
+        "Wammy Arc",
+        "Final Arc"
+      ]
+    }
+  ],
+  "characters": []
+}
