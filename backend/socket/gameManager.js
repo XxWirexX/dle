@@ -147,16 +147,17 @@ class GameManager {
       return { error: 'Joueur introuvable dans la room' };
     }
 
-    // Vérifier si le personnage a déjà été essayé
-    if (player.attempts.some(a => a.guess.id === character.id)) {
-      return { error: 'Tu as déjà essayé ce personnage' };
+    // Vérifier si le personnage a déjà été essayé (par moi ou l'adversaire)
+    const allAttempts = Object.values(room.players).flatMap(p => p.attempts);
+    if (allAttempts.some(a => a.guess.id === character.id)) {
+      return { error: 'Ce personnage a déjà été joué' };
     }
 
     // Calculer le feedback
     const feedback = getFeedbackObject(character, room.target, room.gameData.attributes || []);
     const isCorrect = character.id === room.target.id;
 
-    const attempt = { guess: character, feedback, isCorrect };
+    const attempt = { guess: character, feedback, isCorrect, timestamp: Date.now() };
     player.attempts.push(attempt);
 
     // Vérifier si la partie est terminée

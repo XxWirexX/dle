@@ -3,7 +3,6 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import useSocket from "../hooks/useSocket";
 import WaitingRoom from "../components/game/WaitingRoom";
 import TurnIndicator from "../components/game/TurnIndicator";
-import OpponentDisplay from "../components/game/OpponentDisplay";
 import RematchModal from "../components/game/RematchModal";
 import "./Game.css";
 
@@ -81,11 +80,23 @@ export default function DuoGame() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  // Combine toutes les tentatives (moi + adversaire)
+  const allAttempts = [
+    ...myAttempts.map(a => ({ ...a, isMe: true })),
+    ...opponentAttempts.map(a => ({ ...a, isMe: false }))
+  ].sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+
+  // IDs déjà joués (par moi ou l'adversaire)
+  const playedIds = new Set([
+    ...myAttempts.map(a => a.guess.id),
+    ...opponentAttempts.map(a => a.guess.id)
+  ]);
+
   function validateSelection(char) {
     if (gameOver || !isYourTurn) return;
 
-    if (myAttempts.some((a) => a.guess.id === char.id)) {
-      alert("Tu as deja essaye ce personnage !");
+    if (playedIds.has(char.id)) {
+      alert("Ce personnage a deja ete joue !");
       return;
     }
 
@@ -112,7 +123,7 @@ export default function DuoGame() {
 
   const filteredSuggestions = query.trim()
     ? pool.filter((c) => {
-        if (myAttempts.some((a) => a.guess.id === c.id)) return false;
+        if (playedIds.has(c.id)) return false;
         return c.name.toLowerCase().includes(query.toLowerCase());
       })
     : [];
@@ -222,70 +233,72 @@ export default function DuoGame() {
           </div>
         </div>
 
-        {/* Layout Duo */}
-        <div className="duo-layout">
-          {/* Mes tentatives */}
-          <div className="my-attempts-section">
-            <h3 className="section-title">Mes essais ({myAttempts.length})</h3>
-            <div className="attempts-wrapper">
-              <div className="attempts-table">
-                {/* En-tetes */}
-                <div className="table-headers">
-                  <div className="table-header">Image</div>
-                  <div className="table-header">Name</div>
-                  {attributes.map((attr) => (
-                    <div key={attr.key} className="table-header">
-                      {attr.label}
+        {/* Toutes les tentatives combinées */}
+        <div className="attempts-section">
+          <h3 className="section-title">
+            Essais ({allAttempts.length}) - Toi: {myAttempts.length} | Adversaire: {opponentAttempts.length}
+          </h3>
+          <div className="attempts-wrapper">
+            <div className="attempts-table">
+              {/* En-tetes */}
+              <div className="table-headers">
+                <div className="table-header">Joueur</div>
+                <div className="table-header">Image</div>
+                <div className="table-header">Name</div>
+                {attributes.map((attr) => (
+                  <div key={attr.key} className="table-header">
+                    {attr.label}
+                  </div>
+                ))}
+              </div>
+
+              {/* Lignes */}
+              <div className="attempts-list">
+                {allAttempts.map((a, i) => (
+                  <div key={i} className={`attempt-row ${a.isMe ? "my-attempt" : "opponent-attempt"}`}>
+                    {/* Badge joueur */}
+                    <div className={`cell-player ${a.isMe ? "player-me" : "player-opponent"}`}>
+                      {a.isMe ? "Toi" : "Adv"}
                     </div>
-                  ))}
-                </div>
 
-                {/* Lignes */}
-                <div className="attempts-list">
-                  {myAttempts.map((a, i) => (
-                    <div key={i} className="attempt-row">
-                      {/* Image */}
-                      <div className="cell-image">
-                        <div className="character-image">
-                          <img src={a.guess.image} alt={a.guess.name} />
-                        </div>
+                    {/* Image */}
+                    <div className="cell-image">
+                      <div className="character-image">
+                        <img src={a.guess.image} alt={a.guess.name} />
                       </div>
+                    </div>
 
-                      {/* Nom */}
-                      <div className={`cell bg-${a.isCorrect ? "correct" : "wrong"}`}>
-                        <div className="cell-text">{a.guess.name}</div>
-                      </div>
+                    {/* Nom */}
+                    <div className={`cell bg-${a.isCorrect ? "correct" : "wrong"}`}>
+                      <div className="cell-text">{a.guess.name}</div>
+                    </div>
 
-                      {/* Attributs dynamiques */}
-                      {attributes.map((attr) => {
-                        const fb = a.feedback[attr.key];
-                        const showArrow = attr.type === "number" || attr.type === "ordered";
-                        const cellClass = showArrow ? "cell-with-arrow" : "cell";
+                    {/* Attributs dynamiques */}
+                    {attributes.map((attr) => {
+                      const fb = a.feedback[attr.key];
+                      const showArrow = attr.type === "number" || attr.type === "ordered";
+                      const cellClass = showArrow ? "cell-with-arrow" : "cell";
 
-                        return (
-                          <div
-                            key={attr.key}
-                            className={`${cellClass} bg-${fb?.type || "wrong"}`}
-                          >
-                            <div className="cell-text-sm">
-                              {a.guess[attr.key] || "-"}
-                            </div>
-                            {showArrow && fb?.type === "higher" && <div className="arrow">▼</div>}
-                            {showArrow && fb?.type === "lower" && <div className="arrow">▲</div>}
-                            {showArrow && fb?.type === "close" && fb?.direction === "higher" && <div className="arrow">▼</div>}
-                            {showArrow && fb?.type === "close" && fb?.direction === "lower" && <div className="arrow">▲</div>}
+                      return (
+                        <div
+                          key={attr.key}
+                          className={`${cellClass} bg-${fb?.type || "wrong"}`}
+                        >
+                          <div className="cell-text-sm">
+                            {a.guess[attr.key] || "-"}
                           </div>
-                        );
-                      })}
-                    </div>
-                  ))}
-                </div>
+                          {showArrow && fb?.type === "higher" && <div className="arrow">▼</div>}
+                          {showArrow && fb?.type === "lower" && <div className="arrow">▲</div>}
+                          {showArrow && fb?.type === "close" && fb?.direction === "higher" && <div className="arrow">▼</div>}
+                          {showArrow && fb?.type === "close" && fb?.direction === "lower" && <div className="arrow">▲</div>}
+                        </div>
+                      );
+                    })}
+                  </div>
+                ))}
               </div>
             </div>
           </div>
-
-          {/* Tentatives adversaire */}
-          <OpponentDisplay attempts={opponentAttempts} attributes={attributes} />
         </div>
 
         {/* Section des indices */}

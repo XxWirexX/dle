@@ -520,6 +520,45 @@
   margin-bottom: 15px;
 }
 
+/* Cellule joueur (Toi/Adv) */
+.cell-player {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 50px;
+  flex: 0 0 50px;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  font-weight: bold;
+  font-size: 0.75rem;
+}
+
+.player-me {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+}
+
+.player-opponent {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: white;
+}
+
+/* Ligne de tentative avec bordure colorée */
+.attempt-row.my-attempt {
+  border-left: 4px solid #10b981;
+  padding-left: 8px;
+}
+
+.attempt-row.opponent-attempt {
+  border-left: 4px solid #ef4444;
+  padding-left: 8px;
+}
+
+/* Section des essais combinés */
+.attempts-section {
+  margin-top: 2rem;
+}
+
 /* Turn Indicator */
 .turn-indicator {
   display: flex;
