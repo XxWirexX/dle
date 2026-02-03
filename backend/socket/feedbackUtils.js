@@ -55,8 +55,11 @@ function computeFieldFeedback(guessVal, targetVal, attribute) {
     return { type: "lower", label: guessVal };
   }
 
+  // Exception pour male/female (female contient male mais c'est pas un match)
+  const isMaleFemale = (gLower === "male" && tLower === "female") || (gLower === "female" && tLower === "male");
+
   // Type texte - match partiel (jaune) si l'un contient l'autre
-  if (tLower.includes(gLower) || gLower.includes(tLower)) {
+  if (!isMaleFemale && (tLower.includes(gLower) || gLower.includes(tLower))) {
     return { type: "close", label: guessVal };
   }
 
