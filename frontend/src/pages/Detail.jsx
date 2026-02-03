@@ -44,7 +44,7 @@ export default function Detail() {
   return (
     <div
       className="detail-container"
-      style={{ backgroundImage: `url(/api${id}/${anime.background})` }}
+      style={{ backgroundImage: `url(/api/images/${id}/${anime.background})` }}
     >
       <div className="detail-overlay">
         {/* Navigation */}
@@ -55,7 +55,7 @@ export default function Detail() {
         {/* Header */}
         <header className="detail-header">
           <div className="detail-icon">
-            <img src={`/api${id}/${anime.icon}`} alt={anime.name} />
+            <img src={`/api/images/${id}/${anime.icon}`} alt={anime.name} />
           </div>
           <div className="detail-title-section">
             <h1 className="detail-title">{anime.name}</h1>
@@ -139,7 +139,7 @@ export default function Detail() {
             {previewCharacters.map((char) => (
               <div key={char.id} className="character-preview-card">
                 <img
-                  src={`/api${id}/characters/${char.image}`}
+                  src={`/api/images/${id}/characters/${char.image}`}
                   alt={char.name}
                   onError={(e) => { e.target.src = "placeholder.png"; }}
                 />

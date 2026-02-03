@@ -87,7 +87,7 @@ export default function CharactersTable({ characters, attributes, gameId }) {
                 {/* IMAGE */}
                 <td>
                   <img
-                    src={`/api${gameId}/characters/${c.image}`}
+                    src={`/api/images/${gameId}/characters/${c.image}`}
                     alt={c.name}
                     className="character-image"
                     onError={(e) => {
