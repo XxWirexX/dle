@@ -9,7 +9,7 @@ export default function Detail() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`/api/anime/${id}`)
+    fetch(`/api/anime/images/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setAnime(data);
@@ -80,7 +80,7 @@ export default function Detail() {
         <section className="detail-section">
           <h2 className="section-title">Modes de jeu</h2>
           <div className="game-modes">
-            <Link to={`/anime/${id}/play`} className="mode-card solo">
+            <Link to={`/anime/images/${id}/play`} className="mode-card solo">
               <div className="mode-icon">🎮</div>
               <div className="mode-info">
                 <h3>Solo</h3>
@@ -88,7 +88,7 @@ export default function Detail() {
               </div>
               <div className="mode-arrow">→</div>
             </Link>
-            <Link to={`/anime/${id}/play?mode=duo`} className="mode-card duo">
+            <Link to={`/anime/images/${id}/play?mode=duo`} className="mode-card duo">
               <div className="mode-icon">👥</div>
               <div className="mode-info">
                 <h3>Duo</h3>
@@ -131,7 +131,7 @@ export default function Detail() {
         <section className="detail-section">
           <div className="section-header">
             <h2 className="section-title">Personnages</h2>
-            <Link to={`/anime/${id}/characters`} className="see-all-btn">
+            <Link to={`/anime/images/${id}/characters`} className="see-all-btn">
               Voir tous →
             </Link>
           </div>
