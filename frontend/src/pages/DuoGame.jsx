@@ -181,7 +181,7 @@ export default function DuoGame() {
   const isWinner = winner === socketId;
 
   return (
-    <div className="game-container duo-mode">
+    <div className="game-container duo-mode" style={{ backgroundImage: `url(/api/images/${id}/${localGameData.background})` }}>
       <div className="game-overlay">
         {/* Bouton retour */}
         <div className="nav-back">
@@ -216,7 +216,7 @@ export default function DuoGame() {
             {/* Suggestions */}
             {showSuggestions && filteredSuggestions.length > 0 && !gameOver && isYourTurn && (
               <div className="suggestions-dropdown">
-                {filteredSuggestions.slice(0, 10).map((char) => (
+                {filteredSuggestions.map((char) => (
                   <button
                     key={char.id}
                     onClick={() => validateSelection(char)}

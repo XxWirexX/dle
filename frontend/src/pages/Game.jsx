@@ -255,7 +255,7 @@ function SoloGame() {
             {/* Suggestions */}
             {showSuggestions && filteredSuggestions.length > 0 && !gameOver && (
               <div className="suggestions-dropdown">
-                {filteredSuggestions.slice(0, 10).map((char) => (
+                {filteredSuggestions.map((char) => (
                   <button
                     key={char.id}
                     onClick={() => validateSelection(char)}

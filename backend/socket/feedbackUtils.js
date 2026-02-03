@@ -1,7 +1,13 @@
 // Calcul du feedback pour un champ
 function computeFieldFeedback(guessVal, targetVal, attribute) {
+  // Si les deux sont identiques (y compris Unknown === Unknown), c'est correct
+  if (guessVal && targetVal && guessVal.toString().toLowerCase() === targetVal.toString().toLowerCase()) {
+    return { type: "correct", label: guessVal };
+  }
+
+  // Si un des deux est vide ou Unknown, c'est faux
   if (!guessVal || !targetVal || guessVal === "Unknown" || targetVal === "Unknown") {
-    return { type: "unknown", label: guessVal || "-" };
+    return { type: "wrong", label: guessVal || "-" };
   }
 
   const { type, order, partialMatch } = attribute;
