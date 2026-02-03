@@ -223,7 +223,7 @@ export default function DuoGame() {
                     className="suggestion-item"
                   >
                     <div className="suggestion-image">
-                      <img src={char.image} alt={char.name} />
+                      <img src={`/api/images/${gameData.id}/characters/${char.image}`} alt={char.name} />
                     </div>
                     <div className="suggestion-name">{char.name}</div>
                   </button>
@@ -264,7 +264,7 @@ export default function DuoGame() {
                     {/* Image */}
                     <div className="cell-image">
                       <div className="character-image">
-                        <img src={a.guess.image} alt={a.guess.name} />
+                        <img src={`/api/images/${gameData.id}/characters/${a.guess.image}`} alt={a.guess.name} />
                       </div>
                     </div>
 
@@ -340,6 +340,7 @@ export default function DuoGame() {
             opponentWantsRematch={opponentWantsRematch}
             opponentDisconnected={opponentDisconnected}
             opponentLeft={opponentLeft}
+            gameId={gameData.id}
           />
         )}
 

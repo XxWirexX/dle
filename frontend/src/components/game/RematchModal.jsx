@@ -8,7 +8,8 @@ export default function RematchModal({
   rematchRequested,
   opponentWantsRematch,
   opponentDisconnected,
-  opponentLeft
+  opponentLeft,
+  gameId
 }) {
   const opponentGone = opponentDisconnected || opponentLeft;
 
@@ -22,7 +23,7 @@ export default function RematchModal({
         <div className="rematch-target">
           <p>Le personnage etait :</p>
           <div className="target-character">
-            <img src={target?.image} alt={target?.name} />
+            <img src={`/api/images/${gameId}/characters/${target?.image}`} alt={target?.name} />
             <span>{target?.name}</span>
           </div>
         </div>
