@@ -108,7 +108,7 @@
     {
     "id": 1,
     "name": "Satoru Gojo",
-    "image": "/images/satoru gojo.webp",
+    "image": "satoru gojo.webp",
     "age": "21-40",
     "gender": "Male",
     "hairColor": "White",
@@ -122,7 +122,7 @@
   {
     "id": 2,
     "name": "Yuji Itadori",
-    "image": "/images/yuji itadori.webp",
+    "image": "yuji itadori.webp",
     "age": "1-20",
     "gender": "Male",
     "hairColor": "Pink",
@@ -136,7 +136,7 @@
   {
     "id": 3,
     "name": "Ryomen Sukuna",
-    "image": "/images/ryomen sukuna.webp",
+    "image": "ryomen sukuna.webp",
     "age": "100+",
     "gender": "Male",
     "hairColor": "Pink",
@@ -150,7 +150,7 @@
   {
     "id": 4,
     "name": "Aoi Todo",
-    "image": "/images/aoi todo.webp",
+    "image": "aoi todo.webp",
     "age": "1-20",
     "gender": "Male",
     "hairColor": "Black",
@@ -164,7 +164,7 @@
   {
     "id": 5,
     "name": "Akari Nitta",
-    "image": "/images/akari nitta.webp",
+    "image": "akari nitta.webp",
     "age": "21-40",
     "gender": "Female",
     "hairColor": "Brown",
@@ -178,7 +178,7 @@
   {
     "id": 6,
     "name": "Arata Nitta",
-    "image": "/images/arata nitta.webp",
+    "image": "arata nitta.webp",
     "age": "1-20",
     "gender": "Male",
     "hairColor": "Blonde",
@@ -192,7 +192,7 @@
   {
     "id": 7,
     "name": "Atsuya Kusakabe",
-    "image": "/images/atsuya kusakabe.webp",
+    "image": "atsuya kusakabe.webp",
     "age": "21-40",
     "gender": "Male",
     "hairColor": "Black",
@@ -206,7 +206,7 @@
   {
     "id": 8,
     "name": "Bayer",
-    "image": "/images/bayer.webp",
+    "image": "bayer.webp",
     "age": "21-40",
     "gender": "Male",
     "hairColor": "Black",
@@ -220,7 +220,7 @@
   {
     "id": 9,
     "name": "Choso",
-    "image": "/images/choso.webp",
+    "image": "choso.webp",
     "age": "100+",
     "gender": "Male",
     "hairColor": "Black",
@@ -234,7 +234,7 @@
   {
     "id": 10,
     "name": "Chojuro Zenin",
-    "image": "/images/chojuro zenin.webp",
+    "image": "chojuro zenin.webp",
     "age": "81-100",
     "gender": "Male",
     "hairColor": "White",
@@ -248,7 +248,7 @@
   {
     "id": 11,
     "name": "Charles Bernard",
-    "image": "/images/charles bernard.webp",
+    "image": "charles bernard.webp",
     "age": "21-40",
     "gender": "Male",
     "hairColor": "Blue",
@@ -262,7 +262,7 @@
   {
     "id": 12,
     "name": "Cyrus Veil",
-    "image": "/images/cyrus veil.webp",
+    "image": "cyrus veil.webp",
     "age": "41-60",
     "gender": "Male",
     "hairColor": "White",
@@ -276,7 +276,7 @@
   {
     "id": 13,
     "name": "Dhruv Lakdawalla",
-    "image": "/images/dhruv lakdawalla.webp",
+    "image": "dhruv lakdawalla.webp",
     "age": "100+",
     "gender": "Male",
     "hairColor": "White",
@@ -290,7 +290,7 @@
   {
     "id": 14,
     "name": "Dagon",
-    "image": "/images/dagon.jpg",
+    "image": "dagon.jpg",
     "age": "100+",
     "gender": "Male",
     "hairColor": "Bald",
@@ -304,7 +304,7 @@
   {
     "id": 15,
     "name": "Eso",
-    "image": "/images/eso.jpg",
+    "image": "eso.jpg",
     "age": "100+",
     "gender": "Male",
     "hairColor": "Black",
@@ -318,7 +318,7 @@
   {
     "id": 16,
     "name": "Furudate",
-    "image": "/images/furudate.webp",
+    "image": "furudate.webp",
     "age": "81-100",
     "gender": "Male",
     "hairColor": "Black",
@@ -332,7 +332,7 @@
   {
     "id": 17,
     "name": "Fumihiko Takaba",
-    "image": "/images/fumihiko takaba.webp",
+    "image": "fumihiko takaba.webp",
     "age": "21-40",
     "gender": "Male",
     "hairColor": "Black",
@@ -346,7 +346,7 @@
   {
     "id": 18,
     "name": "Garry K. Johnson",
-    "image": "/images/garry k. johnson.webp",
+    "image": "garry k. johnson.webp",
     "age": "41-60",
     "gender": "Male",
     "hairColor": "Black",
@@ -360,7 +360,7 @@
   {
     "id": 19,
     "name": "Hajime Kashimo",
-    "image": "/images/hajime kashimo.webp",
+    "image": "hajime kashimo.webp",
     "age": "100+",
     "gender": "Male",
     "hairColor": "Blue",
@@ -374,7 +374,7 @@
   {
     "id": 20,
     "name": "Haba",
-    "image": "/images/haba.webp",
+    "image": "haba.webp",
     "age": "21-40",
     "gender": "Male",
     "hairColor": "Black",
@@ -388,7 +388,7 @@
   {
     "id": 21,
     "name": "Hagane Daido",
-    "image": "/images/hagane daido.webp",
+    "image": "hagane daido.webp",
     "age": "100+",
     "gender": "Male",
     "hairColor": "White",
@@ -402,7 +402,7 @@
   {
     "id": 22,
     "name": "Hanami",
-    "image": "/images/hanami.jpg",
+    "image": "hanami.jpg",
     "age": "100+",
     "gender": "Male",
     "hairColor": "Bald",
@@ -416,7 +416,7 @@
   {
     "id": 23,
     "name": "Hanyu",
-    "image": "/images/hanyu.webp",
+    "image": "hanyu.webp",
     "age": "21-40",
     "gender": "Female",
     "hairColor": "Blonde",
@@ -430,7 +430,7 @@
   {
     "id": 24,
     "name": "Hiromi Higuruma",
-    "image": "/images/hiromi higuruma.png",
+    "image": "hiromi higuruma.png",
     "age": "21-40",
     "gender": "Male",
     "hairColor": "Black",
@@ -444,7 +444,7 @@
   {
     "id": 25,
     "name": "Haruta Shigemo",
-    "image": "/images/haruta shigemo.webp",
+    "image": "haruta shigemo.webp",
     "age": "1-20",
     "gender": "Male",
     "hairColor": "Blonde",
@@ -458,7 +458,7 @@
   {
     "id": 26,
     "name": "Hana Kurusu",
-    "image": "/images/hana kurusu.webp",
+    "image": "hana kurusu.webp",
     "age": "100+",
     "gender": "Female",
     "hairColor": "Blonde",
@@ -472,7 +472,7 @@
   {
     "id": 27,
     "name": "Iori Hazenoki",
-    "image": "/images/iori hazenoki.webp",
+    "image": "iori hazenoki.webp",
     "age": "100+",
     "gender": "Male",
     "hairColor": "Blonde",
@@ -486,7 +486,7 @@
   {
     "id": 28,
     "name": "Jogo",
-    "image": "/images/jogo.jpg",
+    "image": "jogo.jpg",
     "age": "100+",
     "gender": "Male",
     "hairColor": "Bald",
@@ -500,7 +500,7 @@
   {
     "id": 29,
     "name": "Juzo Kumiya",
-    "image": "/images/juzo kumiya.webp",
+    "image": "juzo kumiya.webp",
     "age": "21-40",
     "gender": "Male",
     "hairColor": "Bald",
@@ -514,7 +514,7 @@
   {
     "id": 30,
     "name": "Jinichi Zenin",
-    "image": "/images/jinichi zenin.webp",
+    "image": "jinichi zenin.webp",
     "age": "41-60",
     "gender": "Male",
     "hairColor": "Black",
@@ -528,7 +528,7 @@
   {
     "id": 31,
     "name": "Jiro Awasaka",
-    "image": "/images/jiro awasaka.webp",
+    "image": "jiro awasaka.webp",
     "age": "61-80",
     "gender": "Male",
     "hairColor": "Black",
@@ -542,7 +542,7 @@
   {
     "id": 32,
     "name": "Junpei Yoshino",
-    "image": "/images/junpei yoshino.jpg",
+    "image": "junpei yoshino.jpg",
     "age": "1-20",
     "gender": "Male",
     "hairColor": "Brown",
@@ -556,7 +556,7 @@
   {
     "id": 33,
     "name": "Jin Itadori",
-    "image": "/images/jin itadori.webp",
+    "image": "jin itadori.webp",
     "age": "41-60",
     "gender": "Male",
     "hairColor": "Pink",
@@ -570,7 +570,7 @@
   {
     "id": 34,
     "name": "Kechizu",
-    "image": "/images/kechizu.webp",
+    "image": "kechizu.webp",
     "age": "100+",
     "gender": "Male",
     "hairColor": "Green",
@@ -584,7 +584,7 @@
   {
     "id": 35,
     "name": "Kokun",
-    "image": "/images/kokun.webp",
+    "image": "kokun.webp",
     "age": "21-40",
     "gender": "Male",
     "hairColor": "Black",
@@ -598,7 +598,7 @@
   {
     "id": 36,
     "name": "Kinji Hakari",
-    "image": "/images/kinji hakari.webp",
+    "image": "kinji hakari.webp",
     "age": "1-20",
     "gender": "Male",
     "hairColor": "Blonde",
@@ -612,7 +612,7 @@
   {
     "id": 37,
     "name": "Kiyotaka Ijichi",
-    "image": "/images/kiyotaka ijichi.webp",
+    "image": "kiyotaka ijichi.webp",
     "age": "21-40",
     "gender": "Male",
     "hairColor": "Black",
@@ -626,7 +626,7 @@
   {
     "id": 38,
     "name": "Kenjaku",
-    "image": "/images/kenjaku.png",
+    "image": "kenjaku.png",
     "age": "100+",
     "gender": "Male",
     "hairColor": "Black",
@@ -640,7 +640,7 @@
   {
     "id": 39,
     "name": "Kento Nanami",
-    "image": "/images/kento nanami.webp",
+    "image": "kento nanami.webp",
     "age": "21-40",
     "gender": "Male",
     "hairColor": "Blonde",
@@ -654,7 +654,7 @@
   {
     "id": 40,
     "name": "Kokichi Muta",
-    "image": "/images/kokichi muta.webp",
+    "image": "kokichi muta.webp",
     "age": "1-20",
     "gender": "Male",
     "hairColor": "Black",
@@ -668,7 +668,7 @@
   {
     "id": 41,
     "name": "Kirara Hoshi",
-    "image": "/images/kirara hoshi.webp",
+    "image": "kirara hoshi.webp",
     "age": "1-20",
     "gender": "Male",
     "hairColor": "Black",
@@ -682,7 +682,7 @@
   {
     "id": 42,
     "name": "Kasumi Miwa",
-    "image": "/images/kasumi miwa.webp",
+    "image": "kasumi miwa.webp",
     "age": "1-20",
     "gender": "Female",
     "hairColor": "Blue",
@@ -696,7 +696,7 @@
   {
     "id": 43,
     "name": "Larue",
-    "image": "/images/larue.webp",
+    "image": "larue.webp",
     "age": "21-40",
     "gender": "Male",
     "hairColor": "Blonde",
@@ -710,7 +710,7 @@
   {
     "id": 44,
     "name": "Miguel Oduol",
-    "image": "/images/miguel oduol.webp",
+    "image": "miguel oduol.webp",
     "age": "21-40",
     "gender": "Male",
     "hairColor": "Bald",
@@ -724,7 +724,7 @@
   {
     "id": 45,
     "name": "Mahito",
-    "image": "/images/mahito.jpg",
+    "image": "mahito.jpg",
     "age": "100+",
     "gender": "Male",
     "hairColor": "Blue",
@@ -738,7 +738,7 @@
   {
     "id": 46,
     "name": "Mai Zenin",
-    "image": "/images/mai zenin.webp",
+    "image": "mai zenin.webp",
     "age": "1-20",
     "gender": "Female",
     "hairColor": "Black",
@@ -752,7 +752,7 @@
   {
     "id": 47,
     "name": "Maki Zenin",
-    "image": "/images/maki zenin.webp",
+    "image": "maki zenin.webp",
     "age": "1-20",
     "gender": "Female",
     "hairColor": "Black",
@@ -766,7 +766,7 @@
   {
     "id": 48,
     "name": "Misato Kuroi",
-    "image": "/images/misato kuroi.webp",
+    "image": "misato kuroi.webp",
     "age": "1-20",
     "gender": "Female",
     "hairColor": "Black",
@@ -780,7 +780,7 @@
   {
     "id": 49,
     "name": "Manami Suda",
-    "image": "/images/manami suda.webp",
+    "image": "manami suda.webp",
     "age": "21-40",
     "gender": "Female",
     "hairColor": "Pink",
@@ -794,7 +794,7 @@
   {
     "id": 50,
     "name": "Mei Mei",
-    "image": "/images/mei mei.webp",
+    "image": "mei mei.webp",
     "age": "21-40",
     "gender": "Female",
     "hairColor": "Blue",
@@ -808,7 +808,7 @@
   {
     "id": 51,
     "name": "Megumi Fushiguro",
-    "image": "/images/megumi fushiguro.jpg",
+    "image": "megumi fushiguro.jpg",
     "age": "1-20",
     "gender": "Male",
     "hairColor": "Black",
@@ -822,7 +822,7 @@
   {
     "id": 52,
     "name": "Momo Nishimiya",
-    "image": "/images/momo nishimiya.webp",
+    "image": "momo nishimiya.webp",
     "age": "1-20",
     "gender": "Female",
     "hairColor": "Blonde",
@@ -836,7 +836,7 @@
   {
     "id": 53,
     "name": "Masamichi Yaga",
-    "image": "/images/masamichi yaga.webp",
+    "image": "masamichi yaga.webp",
     "age": "41-60",
     "gender": "Male",
     "hairColor": "Brown",
@@ -850,7 +850,7 @@
   {
     "id": 54,
     "name": "Mimiko Hasaba",
-    "image": "/images/mimiko hasaba.webp",
+    "image": "mimiko hasaba.webp",
     "age": "1-20",
     "gender": "Female",
     "hairColor": "Brown",
@@ -864,7 +864,7 @@
   {
     "id": 55,
     "name": "Nagi Yoshino",
-    "image": "/images/nagi yoshino.webp",
+    "image": "nagi yoshino.webp",
     "age": "41-60",
     "gender": "Female",
     "hairColor": "Black",
@@ -878,7 +878,7 @@
   {
     "id": 56,
     "name": "Naoya Zenin",
-    "image": "/images/naoya zenin.jpg",
+    "image": "naoya zenin.jpg",
     "age": "21-40",
     "gender": "Male",
     "hairColor": "Blonde",
@@ -892,7 +892,7 @@
   {
     "id": 57,
     "name": "Nobuaki Zenin",
-    "image": "/images/nobuaki zenin.webp",
+    "image": "nobuaki zenin.webp",
     "age": "21-40",
     "gender": "Male",
     "hairColor": "Black",
@@ -906,7 +906,7 @@
   {
     "id": 58,
     "name": "Niji Ebina",
-    "image": "/images/niji ebina.webp",
+    "image": "niji ebina.webp",
     "age": "21-40",
     "gender": "Male",
     "hairColor": "Green",
@@ -920,7 +920,7 @@
   {
     "id": 59,
     "name": "Nanako Hasaba",
-    "image": "/images/nanako hasaba.webp",
+    "image": "nanako hasaba.webp",
     "age": "1-20",
     "gender": "Female",
     "hairColor": "Blonde",
@@ -934,7 +934,7 @@
   {
     "id": 60,
     "name": "Naobito Zenin",
-    "image": "/images/naobito zenin.jpg",
+    "image": "naobito zenin.jpg",
     "age": "61-80",
     "gender": "Male",
     "hairColor": "White",
@@ -948,7 +948,7 @@
   {
     "id": 61,
     "name": "Nobara Kugisaki",
-    "image": "/images/nobara kugisaki.webp",
+    "image": "nobara kugisaki.webp",
     "age": "1-20",
     "gender": "Female",
     "hairColor": "Orange",
@@ -962,7 +962,7 @@
   {
     "id": 62,
     "name": "Noritoshi Kamo",
-    "image": "/images/noritoshi kamo.webp",
+    "image": "noritoshi kamo.webp",
     "age": "1-20",
     "gender": "Male",
     "hairColor": "Black",
@@ -976,7 +976,7 @@
   {
     "id": 63,
     "name": "Noritoshi Kamo (Old)",
-    "image": "/images/noritoshi kamo (old).webp",
+    "image": "noritoshi kamo (old).webp",
     "age": "41-60",
     "gender": "Male",
     "hairColor": "Black",
@@ -990,7 +990,7 @@
   {
     "id": 64,
     "name": "Nobuko Takada",
-    "image": "/images/nobuko takada.webp",
+    "image": "nobuko takada.webp",
     "age": "1-20",
     "gender": "Female",
     "hairColor": "Black",
@@ -1004,7 +1004,7 @@
   {
     "id": 65,
     "name": "Ogami",
-    "image": "/images/ogami.webp",
+    "image": "ogami.webp",
     "age": "81-100",
     "gender": "Female",
     "hairColor": "White",
@@ -1018,7 +1018,7 @@
   {
     "id": 66,
     "name": "Ogi Zenin",
-    "image": "/images/ogi zenin.webp",
+    "image": "ogi zenin.webp",
     "age": "41-60",
     "gender": "Male",
     "hairColor": "Black",
@@ -1032,7 +1032,7 @@
   {
     "id": 67,
     "name": "Panda",
-    "image": "/images/panda.webp",
+    "image": "panda.webp",
     "age": "1-20",
     "gender": "Male",
     "hairColor": "White",
@@ -1046,7 +1046,7 @@
   {
     "id": 68,
     "name": "Rokujushi Miyo",
-    "image": "/images/rokujushi miyo.webp",
+    "image": "rokujushi miyo.webp",
     "age": "100+",
     "gender": "Male",
     "hairColor": "Black",
@@ -1060,7 +1060,7 @@
   {
     "id": 69,
     "name": "Ranta Zenin",
-    "image": "/images/ranta zenin.webp",
+    "image": "ranta zenin.webp",
     "age": "1-20",
     "gender": "Male",
     "hairColor": "Black",
@@ -1074,7 +1074,7 @@
   {
     "id": 70,
     "name": "Remi",
-    "image": "/images/remi.webp",
+    "image": "remi.webp",
     "age": "21-40",
     "gender": "Female",
     "hairColor": "Black",
@@ -1088,7 +1088,7 @@
   {
     "id": 71,
     "name": "Riko Amanai",
-    "image": "/images/riko amanai.webp",
+    "image": "riko amanai.webp",
     "age": "1-20",
     "gender": "Female",
     "hairColor": "Black",
@@ -1102,7 +1102,7 @@
   {
     "id": 72,
     "name": "Rin Amai",
-    "image": "/images/rin amai.webp",
+    "image": "rin amai.webp",
     "age": "1-20",
     "gender": "Male",
     "hairColor": "Blonde",
@@ -1116,7 +1116,7 @@
   {
     "id": 73,
     "name": "Ryu Ishigori",
-    "image": "/images/ryu ishigori.webp",
+    "image": "ryu ishigori.webp",
     "age": "100+",
     "gender": "Male",
     "hairColor": "Brown",
@@ -1130,7 +1130,7 @@
   {
     "id": 74,
     "name": "Reggie Star",
-    "image": "/images/reggie star.webp",
+    "image": "reggie star.webp",
     "age": "100+",
     "gender": "Male",
     "hairColor": "Blonde",
@@ -1144,7 +1144,7 @@
   {
     "id": 75,
     "name": "Rika Orimoto",
-    "image": "/images/rika orimoto.webp",
+    "image": "rika orimoto.webp",
     "age": "1-20",
     "gender": "Female",
     "hairColor": "Black",
@@ -1158,7 +1158,7 @@
   {
     "id": 76,
     "name": "Shigeru Sonoda",
-    "image": "/images/shigeru sonoda.webp",
+    "image": "shigeru sonoda.webp",
     "age": "61-80",
     "gender": "Male",
     "hairColor": "Black",
@@ -1172,7 +1172,7 @@
   {
     "id": 77,
     "name": "Shiu Kong",
-    "image": "/images/shiu kong.webp",
+    "image": "shiu kong.webp",
     "age": "41-60",
     "gender": "Male",
     "hairColor": "Black",
@@ -1186,7 +1186,7 @@
   {
     "id": 78,
     "name": "Suguru Geto",
-    "image": "/images/suguro geto.webp",
+    "image": "suguro geto.webp",
     "age": "21-40",
     "gender": "Male",
     "hairColor": "Black",
@@ -1200,7 +1200,7 @@
   {
     "id": 79,
     "name": "Shoko Ieiri",
-    "image": "/images/shoko ieiri.webp",
+    "image": "shoko ieiri.webp",
     "age": "21-40",
     "gender": "Female",
     "hairColor": "Brown",
@@ -1214,7 +1214,7 @@
   {
     "id": 80,
     "name": "Shino",
-    "image": "/images/shino.webp",
+    "image": "shino.webp",
     "age": "81-100",
     "gender": "Male",
     "hairColor": "White",
@@ -1228,7 +1228,7 @@
   {
     "id": 81,
     "name": "Takuma Ino",
-    "image": "/images/takuma ino.webp",
+    "image": "takuma ino.webp",
     "age": "21-40",
     "gender": "Male",
     "hairColor": "Black",
@@ -1242,7 +1242,7 @@
   {
     "id": 82,
     "name": "Toge Inumaki",
-    "image": "/images/toge inumaki.webp",
+    "image": "toge inumaki.webp",
     "age": "1-20",
     "gender": "Male",
     "hairColor": "Blonde",
@@ -1256,7 +1256,7 @@
   {
     "id": 83,
     "name": "Tengen",
-    "image": "/images/tengen.webp",
+    "image": "tengen.webp",
     "age": "100+",
     "gender": "Female",
     "hairColor": "Bald",
@@ -1270,7 +1270,7 @@
   {
     "id": 84,
     "name": "Tsumiki Fushiguro",
-    "image": "/images/tsumiki fushiguro.webp",
+    "image": "tsumiki fushiguro.webp",
     "age": "1-20",
     "gender": "Female",
     "hairColor": "Brown",
@@ -1284,7 +1284,7 @@
   {
     "id": 85,
     "name": "Toshihisa Negi",
-    "image": "/images/toshihisa negi.webp",
+    "image": "toshihisa negi.webp",
     "age": "21-40",
     "gender": "Male",
     "hairColor": "Black",
@@ -1298,7 +1298,7 @@
   {
     "id": 86,
     "name": "Takako Uro",
-    "image": "/images/takako uro.webp",
+    "image": "takako uro.webp",
     "age": "100+",
     "gender": "Female",
     "hairColor": "Pink",
@@ -1312,7 +1312,7 @@
   {
     "id": 87,
     "name": "Toji Fushiguro",
-    "image": "/images/toji fushiguro.jpg",
+    "image": "toji fushiguro.jpg",
     "age": "41-60",
     "gender": "Male",
     "hairColor": "Black",
@@ -1326,7 +1326,7 @@
   {
     "id": 88,
     "name": "Ui Ui",
-    "image": "/images/ui ui.webp",
+    "image": "ui ui.webp",
     "age": "1-20",
     "gender": "Male",
     "hairColor": "Blue",
@@ -1340,7 +1340,7 @@
   {
     "id": 89,
     "name": "Uraume",
-    "image": "/images/uraume.webp",
+    "image": "uraume.webp",
     "age": "100+",
     "gender": "Male",
     "hairColor": "White",
@@ -1354,7 +1354,7 @@
   {
     "id": 90,
     "name": "Utahime Iori",
-    "image": "/images/utahime iori.webp",
+    "image": "utahime iori.webp",
     "age": "21-40",
     "gender": "Female",
     "hairColor": "Black",
@@ -1368,7 +1368,7 @@
   {
     "id": 91,
     "name": "Wasuke Itadori",
-    "image": "/images/wasuke itadori.webp",
+    "image": "wasuke itadori.webp",
     "age": "81-100",
     "gender": "Male",
     "hairColor": "White",
@@ -1382,7 +1382,7 @@
   {
     "id": 92,
     "name": "Yuki Tsukumo",
-    "image": "/images/yuki tsukumo.jpg",
+    "image": "yuki tsukumo.jpg",
     "age": "21-40",
     "gender": "Female",
     "hairColor": "Blonde",
@@ -1396,7 +1396,7 @@
   {
     "id": 93,
     "name": "Yorozu",
-    "image": "/images/yorozu.jpg",
+    "image": "yorozu.jpg",
     "age": "100+",
     "gender": "Female",
     "hairColor": "Black",
@@ -1410,7 +1410,7 @@
   {
     "id": 94,
     "name": "Yuta Okkotsu",
-    "image": "/images/yuta okkotsu.png",
+    "image": "yuta okkotsu.png",
     "age": "1-20",
     "gender": "Male",
     "hairColor": "Black",
@@ -1424,7 +1424,7 @@
   {
     "id": 95,
     "name": "Yu Haibara",
-    "image": "/images/yu haibara.webp",
+    "image": "yu haibara.webp",
     "age": "1-20",
     "gender": "Male",
     "hairColor": "Brown",
@@ -1438,7 +1438,7 @@
   {
     "id": 96,
     "name": "Yuko Ozawa",
-    "image": "/images/yuko ozawa.jpg",
+    "image": "yuko ozawa.jpg",
     "age": "1-20",
     "gender": "Female",
     "hairColor": "Brown",
@@ -1452,7 +1452,7 @@
   {
     "id": 97,
     "name": "Yoshinobu Gakuganji",
-    "image": "/images/yoshinobu gakuganji.jpg",
+    "image": "yoshinobu gakuganji.jpg",
     "age": "61-80",
     "gender": "Male",
     "hairColor": "White",
@@ -1466,7 +1466,7 @@
   {
     "id": 98,
     "name": "Kurourushi",
-    "image": "/images/kurourushi.webp",
+    "image": "kurourushi.webp",
     "age": "100+",
     "gender": "Male",
     "hairColor": "Bald",
@@ -1480,7 +1480,7 @@
   {
     "id": 99,
     "name": "Agito",
-    "image": "/images/merged beast agito.jpg",
+    "image": "merged beast agito.jpg",
     "age": "100+",
     "gender": "Female",
     "hairColor": "Bald",
@@ -1494,7 +1494,7 @@
   {
     "id": 100,
     "name": "Mahoraga",
-    "image": "/images/mahoraga.webp",
+    "image": "mahoraga.webp",
     "age": "100+",
     "gender": "Male",
     "hairColor": "Bald",
@@ -1508,7 +1508,7 @@
   {
     "id": 101,
     "name": "Oboro Zetsu",
-    "image": "/images/oboro jetsu.jpeg",
+    "image": "oboro jetsu.jpeg",
     "age": "100+",
     "gender": "Male",
     "hairColor": "Pink",

@@ -87,11 +87,11 @@ export default function CharactersTable({ characters, attributes, gameId }) {
                 {/* IMAGE */}
                 <td>
                   <img
-                    src={`/api/images/${gameId}/characters/${c.image}`}
+                    src={`/api${gameId}/characters/${c.image}`}
                     alt={c.name}
                     className="character-image"
                     onError={(e) => {
-                      e.target.src = "/images/placeholder.png";
+                      e.target.src = "placeholder.png";
                     }}
                   />
                 </td>

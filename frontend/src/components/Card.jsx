@@ -14,7 +14,7 @@ export default function Card({ game }) {
       {/* Image avec overlay */}
       <div className="card-image-wrapper">
         <img
-          src={`/api/images/${game.id}/${game.icon}`}
+          src={`/api${game.id}/${game.icon}`}
           alt={game.name}
           className="card-image"
         />

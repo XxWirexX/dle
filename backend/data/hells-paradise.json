@@ -97,7 +97,7 @@
     {
       "id": 1,
       "name": "Gabimaru the Hollow",
-      "image": "/images/gabimaru the hollow.webp",
+      "image": "gabimaru the hollow.webp",
       "age": "16",
       "height": "150",
       "gender": "Male",
@@ -112,7 +112,7 @@
     {
       "id": 2,
       "name": "Sagiri Yamada Asaemon",
-      "image": "/images/sagiri yamada asaemon.webp",
+      "image": "sagiri yamada asaemon.webp",
       "age": "17",
       "height": "172",
       "gender": "Female",
@@ -127,7 +127,7 @@
     {
       "id": 3,
       "name": "Akaginu",
-      "image": "/images/akaginu.webp",
+      "image": "akaginu.webp",
       "age": "17",
       "height": "163",
       "gender": "Female",
@@ -142,7 +142,7 @@
     {
       "id": 4,
       "name": "Aoki",
-      "image": "/images/aoki.webp",
+      "image": "aoki.webp",
       "age": "30",
       "height": "175",
       "gender": "Male",
@@ -157,7 +157,7 @@
     {
       "id": 5,
       "name": "Chôbê Aza",
-      "image": "/images/chôbê aza.webp",
+      "image": "chôbê aza.webp",
       "age": "20",
       "height": "176",
       "gender": "Male",
@@ -172,7 +172,7 @@
     {
       "id": 6,
       "name": "Djujin (Nyoi Genkun)",
-      "image": "/images/djujin (nyoi genkun).webp",
+      "image": "djujin (nyoi genkun).webp",
       "age": "1000+",
       "height": "173/185",
       "gender": "Male/Female",
@@ -187,7 +187,7 @@
     {
       "id": 7,
       "name": "Eizen Yamada Asaemon",
-      "image": "/images/eizen yamada asaemon.webp",
+      "image": "eizen yamada asaemon.webp",
       "age": "28",
       "height": "180",
       "gender": "Male",
@@ -202,7 +202,7 @@
     {
       "id": 8,
       "name": "Fuchi Yamada Asaemon",
-      "image": "/images/fuchi yamada asaemon.webp",
+      "image": "fuchi yamada asaemon.webp",
       "age": "20",
       "height": "148",
       "gender": "Male",
@@ -217,7 +217,7 @@
     {
       "id": 9,
       "name": "Gabimaru (23)",
-      "image": "/images/gabimaru (23).webp",
+      "image": "gabimaru (23).webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -232,7 +232,7 @@
     {
       "id": 10,
       "name": "Gantetsusai Tamiya (Kenryû)",
-      "image": "/images/gantetsusai tamiya (kenryû).webp",
+      "image": "gantetsusai tamiya (kenryû).webp",
       "age": "40",
       "height": "222",
       "gender": "Male",
@@ -247,7 +247,7 @@
     {
       "id": 11,
       "name": "Genji Yamada Asaemon",
-      "image": "/images/genji yamada asaemon.webp",
+      "image": "genji yamada asaemon.webp",
       "age": "19",
       "height": "205",
       "gender": "Male",
@@ -262,7 +262,7 @@
     {
       "id": 12,
       "name": "Ginkakubô",
-      "image": "/images/ginkakubô.webp",
+      "image": "ginkakubô.webp",
       "age": "19",
       "height": "168",
       "gender": "Male",
@@ -277,7 +277,7 @@
     {
       "id": 13,
       "name": "Gu'Ifa (Monjû Kôkô)",
-      "image": "/images/gu'ifa (monjû kôkô).webp",
+      "image": "gu'ifa (monjû kôkô).webp",
       "age": "1000+",
       "height": "173/185",
       "gender": "Male/Female",
@@ -292,7 +292,7 @@
     {
       "id": 14,
       "name": "Hagetaka",
-      "image": "/images/hagetaka.webp",
+      "image": "hagetaka.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -307,7 +307,7 @@
     {
       "id": 15,
       "name": "Hôko",
-      "image": "/images/hôko.png",
+      "image": "hôko.png",
       "age": "500+",
       "height": "220",
       "gender": "Male",
@@ -322,7 +322,7 @@
     {
       "id": 16,
       "name": "Hôrubô",
-      "image": "/images/hôrubô.webp",
+      "image": "hôrubô.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -337,7 +337,7 @@
     {
       "id": 17,
       "name": "Igamino Keiun",
-      "image": "/images/igamino keiun.webp",
+      "image": "igamino keiun.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -352,7 +352,7 @@
     {
       "id": 18,
       "name": "Isuzu Yamada Asaemon",
-      "image": "/images/isuzu yamada asaemon.jpg",
+      "image": "isuzu yamada asaemon.jpg",
       "age": "17",
       "height": "215",
       "gender": "Female",
@@ -367,7 +367,7 @@
     {
       "id": 19,
       "name": "Iwagakure Chief",
-      "image": "/images/iwagakure chief.webp",
+      "image": "iwagakure chief.webp",
       "age": "Unknown",
       "height": "179",
       "gender": "Male",
@@ -382,7 +382,7 @@
     {
       "id": 20,
       "name": "Jikka Yamada Asaemon",
-      "image": "/images/jikka yamada asaemon.webp",
+      "image": "jikka yamada asaemon.webp",
       "age": "28",
       "height": "177",
       "gender": "Male",
@@ -397,7 +397,7 @@
     {
       "id": 21,
       "name": "Jufa (Ashuku Taitei)",
-      "image": "/images/jufa (ashuku taitei).webp",
+      "image": "jufa (ashuku taitei).webp",
       "age": "1000+",
       "height": "173/185",
       "gender": "Male/Female",
@@ -412,7 +412,7 @@
     {
       "id": 22,
       "name": "Keishu No Yuzuriha",
-      "image": "/images/keishu no yuzuriha.webp",
+      "image": "keishu no yuzuriha.webp",
       "age": "Unknown",
       "height": "160",
       "gender": "Female",
@@ -427,7 +427,7 @@
     {
       "id": 23,
       "name": "Kichiji Yamada Asaemon",
-      "image": "/images/kichiji yamada asaemon.jpg",
+      "image": "kichiji yamada asaemon.jpg",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -442,7 +442,7 @@
     {
       "id": 24,
       "name": "Kinkakubô",
-      "image": "/images/kinkakubô.webp",
+      "image": "kinkakubô.webp",
       "age": "19",
       "height": "214",
       "gender": "Male",
@@ -457,7 +457,7 @@
     {
       "id": 25,
       "name": "Kishô Yamada Asaemon",
-      "image": "/images/kishô yamada asaemon.webp",
+      "image": "kishô yamada asaemon.webp",
       "age": "18",
       "height": "173",
       "gender": "Male",
@@ -472,7 +472,7 @@
     {
       "id": 26,
       "name": "Kiyomaru Yamada Asaemon",
-      "image": "/images/kiyomaru yamada asaemon.jpg",
+      "image": "kiyomaru yamada asaemon.jpg",
       "age": "12",
       "height": "132",
       "gender": "Male",
@@ -487,7 +487,7 @@
     {
       "id": 27,
       "name": "Kumokiri",
-      "image": "/images/kumokiri.webp",
+      "image": "kumokiri.webp",
       "age": "17",
       "height": "180",
       "gender": "Male",
@@ -502,7 +502,7 @@
     {
       "id": 28,
       "name": "Lhien (Fûgen Jôtei)",
-      "image": "/images/lhien (fûgen jôtei).webp",
+      "image": "lhien (fûgen jôtei).webp",
       "age": "1000+",
       "height": "173/185",
       "gender": "Male/Female",
@@ -517,7 +517,7 @@
     {
       "id": 29,
       "name": "Makiya Moro",
-      "image": "/images/makiya moro.webp",
+      "image": "makiya moro.webp",
       "age": "24",
       "height": "191",
       "gender": "Male",
@@ -532,7 +532,7 @@
     {
       "id": 30,
       "name": "Matagorô Adachi",
-      "image": "/images/matagorô adachi.webp",
+      "image": "matagorô adachi.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -547,7 +547,7 @@
     {
       "id": 31,
       "name": "Mei",
-      "image": "/images/mei.jpg",
+      "image": "mei.jpg",
       "age": "1000+",
       "height": "128/171",
       "gender": "Female",
@@ -562,7 +562,7 @@
     {
       "id": 32,
       "name": "Mûdan (Fukû Jukun)",
-      "image": "/images/mûdan (fukû jukun).webp",
+      "image": "mûdan (fukû jukun).webp",
       "age": "1000+",
       "height": "173/185",
       "gender": "Male/Female",
@@ -577,7 +577,7 @@
     {
       "id": 33,
       "name": "Nariyoshi Tokugawa",
-      "image": "/images/nariyoshi tokugawa.webp",
+      "image": "nariyoshi tokugawa.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -592,7 +592,7 @@
     {
       "id": 34,
       "name": "Nikimaru",
-      "image": "/images/nikimaru.webp",
+      "image": "nikimaru.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -607,7 +607,7 @@
     {
       "id": 35,
       "name": "Nobusuma",
-      "image": "/images/nobusuma.webp",
+      "image": "nobusuma.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -622,7 +622,7 @@
     {
       "id": 36,
       "name": "Nurugai",
-      "image": "/images/nurugai.webp",
+      "image": "nurugai.webp",
       "age": "12",
       "height": "138",
       "gender": "Female",
@@ -637,7 +637,7 @@
     {
       "id": 37,
       "name": "Ran (Jundei Teikun)",
-      "image": "/images/ran (jundei teikun).webp",
+      "image": "ran (jundei teikun).webp",
       "age": "1000+",
       "height": "173/185",
       "gender": "Male/Female",
@@ -652,7 +652,7 @@
     {
       "id": 38,
       "name": "Rokurôta",
-      "image": "/images/rokurôta.webp",
+      "image": "rokurôta.webp",
       "age": "8",
       "height": "321",
       "gender": "Male",
@@ -667,7 +667,7 @@
     {
       "id": 39,
       "name": "Saya",
-      "image": "/images/saya.webp",
+      "image": "saya.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Female",
@@ -682,7 +682,7 @@
     {
       "id": 40,
       "name": "Seikichi Tanio",
-      "image": "/images/seikichi tanio.webp",
+      "image": "seikichi tanio.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -697,7 +697,7 @@
     {
       "id": 41,
       "name": "Senta Yamada Asaemon",
-      "image": "/images/senta yamada asaemon.webp",
+      "image": "senta yamada asaemon.webp",
       "age": "17",
       "height": "158",
       "gender": "Male",
@@ -712,7 +712,7 @@
     {
       "id": 42,
       "name": "Shija",
-      "image": "/images/shija.webp",
+      "image": "shija.webp",
       "age": "Unknown",
       "height": "165",
       "gender": "Unknown",
@@ -727,7 +727,7 @@
     {
       "id": 43,
       "name": "Shion Yamada Asaemon",
-      "image": "/images/shion yamada asaemon.webp",
+      "image": "shion yamada asaemon.webp",
       "age": "27",
       "height": "178",
       "gender": "Male",
@@ -742,7 +742,7 @@
     {
       "id": 44,
       "name": "Shugen Yamada Asaemon",
-      "image": "/images/shugen yamada asaemon.jpg",
+      "image": "shugen yamada asaemon.jpg",
       "age": "20",
       "height": "177",
       "gender": "Male",
@@ -757,7 +757,7 @@
     {
       "id": 45,
       "name": "Shûkan Kido",
-      "image": "/images/shûkan kido.webp",
+      "image": "shûkan kido.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -772,7 +772,7 @@
     {
       "id": 46,
       "name": "Taofa (Ratona Taisei)",
-      "image": "/images/taofa (ratona taisei).webp",
+      "image": "taofa (ratona taisei).webp",
       "age": "1000+",
       "height": "173/185",
       "gender": "Male/Female",
@@ -787,7 +787,7 @@
     {
       "id": 47,
       "name": "Tenza Yamada Asaemon",
-      "image": "/images/tenza yamada asaemon.webp",
+      "image": "tenza yamada asaemon.webp",
       "age": "17",
       "height": "176",
       "gender": "Male",
@@ -802,7 +802,7 @@
     {
       "id": 48,
       "name": "Tôma Aza",
-      "image": "/images/tôma aza.webp",
+      "image": "tôma aza.webp",
       "age": "16",
       "height": "175",
       "gender": "Male",
@@ -817,7 +817,7 @@
     {
       "id": 49,
       "name": "Xu Fu (Jofuku)",
-      "image": "/images/xu fu (jofuku).jpg",
+      "image": "xu fu (jofuku).jpg",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -832,7 +832,7 @@
     {
       "id": 50,
       "name": "Yui",
-      "image": "/images/yui.jpg",
+      "image": "yui.jpg",
       "age": "17",
       "height": "154",
       "gender": "Female",

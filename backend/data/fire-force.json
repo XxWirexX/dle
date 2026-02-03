@@ -115,7 +115,7 @@
     {
       "id": 1,
       "name": "Shinra Kusakabe",
-      "image": "/images/shinra kusakabe.jpg",
+      "image": "shinra kusakabe.jpg",
       "age": "17",
       "height": "173",
       "gender": "Male",
@@ -128,7 +128,7 @@
     {
       "id": 2,
       "name": "Arthur Boyle",
-      "image": "/images/arthur boyle.webp",
+      "image": "arthur boyle.webp",
       "age": "17",
       "height": "174",
       "gender": "Male",
@@ -141,7 +141,7 @@
     {
       "id": 3,
       "name": "Akitaru Obi",
-      "image": "/images/akitaru obi.webp",
+      "image": "akitaru obi.webp",
       "age": "31",
       "height": "189",
       "gender": "Male",
@@ -154,7 +154,7 @@
     {
       "id": 4,
       "name": "Akitaru Obi's Doppelganger",
-      "image": "/images/akitaru obi's doppelganger.webp",
+      "image": "akitaru obi's doppelganger.webp",
       "age": "Unknown",
       "height": "189",
       "gender": "Male",
@@ -167,7 +167,7 @@
     {
       "id": 5,
       "name": "Amaterasu",
-      "image": "/images/amaterasu.webp",
+      "image": "amaterasu.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Female",
@@ -180,7 +180,7 @@
     {
       "id": 6,
       "name": "Arrow",
-      "image": "/images/arrow.webp",
+      "image": "arrow.webp",
       "age": "24",
       "height": "169",
       "gender": "Female",
@@ -193,7 +193,7 @@
     {
       "id": 7,
       "name": "Assault",
-      "image": "/images/assault.jpg",
+      "image": "assault.jpg",
       "age": "28",
       "height": "182",
       "gender": "Male",
@@ -206,7 +206,7 @@
     {
       "id": 8,
       "name": "Benimaru Shinmon",
-      "image": "/images/benimaru shinmon.webp",
+      "image": "benimaru shinmon.webp",
       "age": "22",
       "height": "170",
       "gender": "Male",
@@ -219,7 +219,7 @@
     {
       "id": 9,
       "name": "Benimaru Shinmon's Doppelganger",
-      "image": "/images/benimaru shinmon's doppelganger.webp",
+      "image": "benimaru shinmon's doppelganger.webp",
       "age": "Unknown",
       "height": "170",
       "gender": "Male",
@@ -232,7 +232,7 @@
     {
       "id": 10,
       "name": "Charon",
-      "image": "/images/charon.webp",
+      "image": "charon.webp",
       "age": "28",
       "height": "202",
       "gender": "Male",
@@ -245,7 +245,7 @@
     {
       "id": 11,
       "name": "Daikoku Oguru",
-      "image": "/images/daikoku oguru.jpg",
+      "image": "daikoku oguru.jpg",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -258,7 +258,7 @@
     {
       "id": 12,
       "name": "Dr. Giovanni",
-      "image": "/images/dr. giovanni.jpg",
+      "image": "dr. giovanni.jpg",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -271,7 +271,7 @@
     {
       "id": 13,
       "name": "Dragon",
-      "image": "/images/dragon.webp",
+      "image": "dragon.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -284,7 +284,7 @@
     {
       "id": 14,
       "name": "Evangelist",
-      "image": "/images/evangelist.webp",
+      "image": "evangelist.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Female",
@@ -297,7 +297,7 @@
     {
       "id": 15,
       "name": "Faerie",
-      "image": "/images/faerie.jpg",
+      "image": "faerie.jpg",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -310,7 +310,7 @@
     {
       "id": 16,
       "name": "God",
-      "image": "/images/god.webp",
+      "image": "god.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Genderless",
@@ -323,7 +323,7 @@
     {
       "id": 17,
       "name": "Gold",
-      "image": "/images/gold.webp",
+      "image": "gold.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Female",
@@ -336,7 +336,7 @@
     {
       "id": 18,
       "name": "Gustav Honda",
-      "image": "/images/gustav honda.webp",
+      "image": "gustav honda.webp",
       "age": "46",
       "height": "165",
       "gender": "Male",
@@ -349,7 +349,7 @@
     {
       "id": 19,
       "name": "Haran",
-      "image": "/images/haran.webp",
+      "image": "haran.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -362,7 +362,7 @@
     {
       "id": 20,
       "name": "Haumea",
-      "image": "/images/haumea.webp",
+      "image": "haumea.webp",
       "age": "17",
       "height": "163",
       "gender": "Female",
@@ -375,7 +375,7 @@
     {
       "id": 21,
       "name": "Hibachi Shinmon",
-      "image": "/images/hibachi shinmon.webp",
+      "image": "hibachi shinmon.webp",
       "age": "58",
       "height": "177",
       "gender": "Male",
@@ -388,7 +388,7 @@
     {
       "id": 22,
       "name": "Hibachi Shinmon's Doppelganger",
-      "image": "/images/hibachi shinmon's doppelganger.webp",
+      "image": "hibachi shinmon's doppelganger.webp",
       "age": "Unknown",
       "height": "177",
       "gender": "Male",
@@ -401,7 +401,7 @@
     {
       "id": 23,
       "name": "Holy Sol's Shadow Captain",
-      "image": "/images/holy sol's shadow captain.webp",
+      "image": "holy sol's shadow captain.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -414,7 +414,7 @@
     {
       "id": 24,
       "name": "Huo Yan Li",
-      "image": "/images/huo yan li.jpg",
+      "image": "huo yan li.jpg",
       "age": "30",
       "height": "184",
       "gender": "Male",
@@ -427,7 +427,7 @@
     {
       "id": 25,
       "name": "Inca Kasugatani",
-      "image": "/images/inca kasugatani.webp",
+      "image": "inca kasugatani.webp",
       "age": "16",
       "height": "160",
       "gender": "Female",
@@ -440,7 +440,7 @@
     {
       "id": 26,
       "name": "Iris",
-      "image": "/images/iris.webp",
+      "image": "iris.webp",
       "age": "16",
       "height": "154",
       "gender": "Female",
@@ -453,7 +453,7 @@
     {
       "id": 27,
       "name": "Joker",
-      "image": "/images/joker.jpg",
+      "image": "joker.jpg",
       "age": "28",
       "height": "183",
       "gender": "Male",
@@ -466,7 +466,7 @@
     {
       "id": 28,
       "name": "Joker's Doppelganger",
-      "image": "/images/joker's doppelganger.webp",
+      "image": "joker's doppelganger.webp",
       "age": "Unknown",
       "height": "183",
       "gender": "Male",
@@ -479,7 +479,7 @@
     {
       "id": 29,
       "name": "Jonas",
-      "image": "/images/jonas.webp",
+      "image": "jonas.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -492,7 +492,7 @@
     {
       "id": 30,
       "name": "Karim Fulham",
-      "image": "/images/karim fulham.webp",
+      "image": "karim fulham.webp",
       "age": "22",
       "height": "178",
       "gender": "Male",
@@ -505,7 +505,7 @@
     {
       "id": 31,
       "name": "Konro Sagamiya",
-      "image": "/images/konro sagamiya.webp",
+      "image": "konro sagamiya.webp",
       "age": "38",
       "height": "188",
       "gender": "Male",
@@ -518,7 +518,7 @@
     {
       "id": 32,
       "name": "Konro Sagamiya's Doppelganger",
-      "image": "/images/konro sagamiya's doppelganger.webp",
+      "image": "konro sagamiya's doppelganger.webp",
       "age": "Unknown",
       "height": "188",
       "gender": "Male",
@@ -531,7 +531,7 @@
     {
       "id": 33,
       "name": "Leonardo Barns",
-      "image": "/images/leonardo barns.webp",
+      "image": "leonardo barns.webp",
       "age": "50",
       "height": "186",
       "gender": "Male",
@@ -544,7 +544,7 @@
     {
       "id": 34,
       "name": "Leonardo Barns's Doppelganger",
-      "image": "/images/leonardo barns's doppelganger.webp",
+      "image": "leonardo barns's doppelganger.webp",
       "age": "Unknown",
       "height": "186",
       "gender": "Male",
@@ -557,7 +557,7 @@
     {
       "id": 35,
       "name": "Lisa Isaribi",
-      "image": "/images/lisa isaribi.jpg",
+      "image": "lisa isaribi.jpg",
       "age": "19",
       "height": "167",
       "gender": "Female",
@@ -570,7 +570,7 @@
     {
       "id": 36,
       "name": "Maki Oze",
-      "image": "/images/maki oze.webp",
+      "image": "maki oze.webp",
       "age": "19",
       "height": "167",
       "gender": "Female",
@@ -583,7 +583,7 @@
     {
       "id": 37,
       "name": "Mari Kusakabe",
-      "image": "/images/mari kusakabe.webp",
+      "image": "mari kusakabe.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Female",
@@ -596,7 +596,7 @@
     {
       "id": 38,
       "name": "Mirage",
-      "image": "/images/mirage.webp",
+      "image": "mirage.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -609,7 +609,7 @@
     {
       "id": 39,
       "name": "Nataku Son",
-      "image": "/images/nataku son.webp",
+      "image": "nataku son.webp",
       "age": "11",
       "height": "142",
       "gender": "Male",
@@ -622,7 +622,7 @@
     {
       "id": 40,
       "name": "Natasha",
-      "image": "/images/natasha.webp",
+      "image": "natasha.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Female",
@@ -635,7 +635,7 @@
     {
       "id": 41,
       "name": "Ogun Montgomery",
-      "image": "/images/ogun montgomery.webp",
+      "image": "ogun montgomery.webp",
       "age": "17",
       "height": "175",
       "gender": "Male",
@@ -648,7 +648,7 @@
     {
       "id": 42,
       "name": "Onyango",
-      "image": "/images/onyango.webp",
+      "image": "onyango.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -661,7 +661,7 @@
     {
       "id": 43,
       "name": "Orochi",
-      "image": "/images/orochi.webp",
+      "image": "orochi.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Female",
@@ -674,7 +674,7 @@
     {
       "id": 44,
       "name": "Pan Ko Paat",
-      "image": "/images/pan ko paat.webp",
+      "image": "pan ko paat.webp",
       "age": "30",
       "height": "179",
       "gender": "Male",
@@ -687,7 +687,7 @@
     {
       "id": 45,
       "name": "Princess Hibana",
-      "image": "/images/princess hibana.webp",
+      "image": "princess hibana.webp",
       "age": "20",
       "height": "169",
       "gender": "Female",
@@ -700,7 +700,7 @@
     {
       "id": 46,
       "name": "Puppeteer",
-      "image": "/images/puppeteer.webp",
+      "image": "puppeteer.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Female",
@@ -713,7 +713,7 @@
     {
       "id": 47,
       "name": "Raffles 3",
-      "image": "/images/raffles 3.webp",
+      "image": "raffles 3.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -726,7 +726,7 @@
     {
       "id": 48,
       "name": "Raffles Smith (Raffles 1)",
-      "image": "/images/raffles smith (raffles 1).webp",
+      "image": "raffles smith (raffles 1).webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -739,7 +739,7 @@
     {
       "id": 49,
       "name": "Raffles Smith's Doppelganger",
-      "image": "/images/raffles smith's doppelganger.webp",
+      "image": "raffles smith's doppelganger.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -752,7 +752,7 @@
     {
       "id": 50,
       "name": "Rekka Hoshimiya",
-      "image": "/images/rekka hoshimiya.webp",
+      "image": "rekka hoshimiya.webp",
       "age": "23",
       "height": "175",
       "gender": "Male",
@@ -765,7 +765,7 @@
     {
       "id": 51,
       "name": "Rekka Hoshimiya's Doppelganger",
-      "image": "/images/rekka hoshimiya's doppelganger.webp",
+      "image": "rekka hoshimiya's doppelganger.webp",
       "age": "Unknown",
       "height": "175",
       "gender": "Male",
@@ -778,7 +778,7 @@
     {
       "id": 52,
       "name": "Ritsu",
-      "image": "/images/ritsu.webp",
+      "image": "ritsu.webp",
       "age": "22",
       "height": "165",
       "gender": "Female",
@@ -791,7 +791,7 @@
     {
       "id": 53,
       "name": "Scop",
-      "image": "/images/scop.webp",
+      "image": "scop.webp",
       "age": "Unknown",
       "height": "23",
       "gender": "Male",
@@ -804,7 +804,7 @@
     {
       "id": 54,
       "name": "Setsuo Miyamoto",
-      "image": "/images/setsuo miyamoto.webp",
+      "image": "setsuo miyamoto.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -817,7 +817,7 @@
     {
       "id": 55,
       "name": "Shinra Kusakabe's Doppelganger",
-      "image": "/images/shinra kusakabe's doppelganger.webp",
+      "image": "shinra kusakabe's doppelganger.webp",
       "age": "Unknown",
       "height": "173",
       "gender": "Male",
@@ -830,7 +830,7 @@
     {
       "id": 56,
       "name": "Sho Kusakabe",
-      "image": "/images/sho kusakabe.webp",
+      "image": "sho kusakabe.webp",
       "age": "14",
       "height": "145",
       "gender": "Male",
@@ -843,7 +843,7 @@
     {
       "id": 57,
       "name": "Soichiro Hague",
-      "image": "/images/soichiro hague.webp",
+      "image": "soichiro hague.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -856,7 +856,7 @@
     {
       "id": 58,
       "name": "Soichiro Hague's Doppelganger",
-      "image": "/images/soichiro hague's doppelganger.webp",
+      "image": "soichiro hague's doppelganger.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -869,7 +869,7 @@
     {
       "id": 59,
       "name": "Stream",
-      "image": "/images/stream.webp",
+      "image": "stream.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -882,7 +882,7 @@
     {
       "id": 60,
       "name": "Sumire Sugita",
-      "image": "/images/sumire sugita.webp",
+      "image": "sumire sugita.webp",
       "age": "250+",
       "height": "Unknown",
       "gender": "Female",
@@ -895,7 +895,7 @@
     {
       "id": 61,
       "name": "Takehisa Hinawa",
-      "image": "/images/takehisa hinawa.webp",
+      "image": "takehisa hinawa.webp",
       "age": "28",
       "height": "180",
       "gender": "Male",
@@ -908,7 +908,7 @@
     {
       "id": 62,
       "name": "Takeru Noto (Juggernaut)",
-      "image": "/images/takeru noto (juggernaut).webp",
+      "image": "takeru noto (juggernaut).webp",
       "age": "18",
       "height": "203",
       "gender": "Male",
@@ -921,7 +921,7 @@
     {
       "id": 63,
       "name": "Tamaki Kotatsu",
-      "image": "/images/tamaki kotatsu.jpg",
+      "image": "tamaki kotatsu.jpg",
       "age": "17",
       "height": "156",
       "gender": "Female",
@@ -934,7 +934,7 @@
     {
       "id": 64,
       "name": "Tempe",
-      "image": "/images/tempe.webp",
+      "image": "tempe.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -947,7 +947,7 @@
     {
       "id": 65,
       "name": "Toru Kishiri",
-      "image": "/images/toru kishiri.webp",
+      "image": "toru kishiri.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -960,7 +960,7 @@
     {
       "id": 66,
       "name": "Viktor Licht",
-      "image": "/images/viktor licht.webp",
+      "image": "viktor licht.webp",
       "age": "24",
       "height": "188",
       "gender": "Male",
@@ -973,7 +973,7 @@
     {
       "id": 67,
       "name": "Vulcan Joseph",
-      "image": "/images/vulcan joseph.webp",
+      "image": "vulcan joseph.webp",
       "age": "18",
       "height": "178",
       "gender": "Male",
@@ -986,7 +986,7 @@
     {
       "id": 68,
       "name": "Yona",
-      "image": "/images/yona.webp",
+      "image": "yona.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -999,7 +999,7 @@
     {
       "id": 69,
       "name": "Yu",
-      "image": "/images/yu.webp",
+      "image": "yu.webp",
       "age": "Unknown",
       "height": "142",
       "gender": "Male",
@@ -1012,7 +1012,7 @@
     {
       "id": 70,
       "name": "Yuichiro Kurono",
-      "image": "/images/yuichiro kurono.webp",
+      "image": "yuichiro kurono.webp",
       "age": "29",
       "height": "177",
       "gender": "Male",
@@ -1025,7 +1025,7 @@
     {
       "id": 71,
       "name": "Yuichiro Kurono's Doppelganger",
-      "image": "/images/yuichiro kurono's doppelganger.webp",
+      "image": "yuichiro kurono's doppelganger.webp",
       "age": "Unknown",
       "height": "177",
       "gender": "Male",

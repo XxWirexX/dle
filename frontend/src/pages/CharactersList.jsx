@@ -53,7 +53,7 @@ export default function CharactersList() {
   return (
     <div
       className="characters-list-container"
-      style={{ backgroundImage: `url(/api/images/${id}/${gameData.background})` }}
+      style={{ backgroundImage: `url(/api${id}/${gameData.background})` }}
     >
       <GameNavbar gameId={id} />
       <div className="characters-list-overlay">

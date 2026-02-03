@@ -80,7 +80,7 @@
     {
       "id": 1,
       "name": "L",
-      "image": "/images/L.webp",
+      "image": "L.webp",
       "gender": "Male",
       "species": "Human",
       "age": "25",
@@ -94,7 +94,7 @@
     {
       "id": 2,
       "name": "Light Yagami (Kira)",
-      "image": "/images/light yagami (kira).webp",
+      "image": "light yagami (kira).webp",
       "gender": "Male",
       "species": "Human",
       "age": "17",
@@ -108,7 +108,7 @@
     {
       "id": 3,
       "name": "Ryuk",
-      "image": "/images/ryuk.webp",
+      "image": "ryuk.webp",
       "gender": "Male",
       "species": "Shinigami",
       "age": "Unknown",
@@ -122,7 +122,7 @@
     {
       "id": 4,
       "name": "Aiber",
-      "image": "/images/aiber.webp",
+      "image": "aiber.webp",
       "gender": "Male",
       "species": "Human",
       "age": "33",
@@ -136,7 +136,7 @@
     {
       "id": 5,
       "name": "Anthony Rester",
-      "image": "/images/anthony rester.webp",
+      "image": "anthony rester.webp",
       "gender": "Male",
       "species": "Human",
       "age": "42",
@@ -150,7 +150,7 @@
     {
       "id": 6,
       "name": "Arayoshi Hatori",
-      "image": "/images/arayoshi hatori.webp",
+      "image": "arayoshi hatori.webp",
       "gender": "Male",
       "species": "Human",
       "age": "33",
@@ -164,7 +164,7 @@
     {
       "id": 7,
       "name": "Eiichi Takahashi",
-      "image": "/images/eiichi takahashi.webp",
+      "image": "eiichi takahashi.webp",
       "gender": "Male",
       "species": "Human",
       "age": "42",
@@ -178,7 +178,7 @@
     {
       "id": 8,
       "name": "Halle Lidner",
-      "image": "/images/halle lidner.webp",
+      "image": "halle lidner.webp",
       "gender": "Female",
       "species": "Human",
       "age": "29",
@@ -192,7 +192,7 @@
     {
       "id": 9,
       "name": "Hideki Ide",
-      "image": "/images/hideki ide.webp",
+      "image": "hideki ide.webp",
       "gender": "Male",
       "species": "Human",
       "age": "35",
@@ -206,7 +206,7 @@
     {
       "id": 10,
       "name": "Hirokazu Ukita",
-      "image": "/images/hirokazu ukita.webp",
+      "image": "hirokazu ukita.webp",
       "gender": "Male",
       "species": "Human",
       "age": "26",
@@ -220,7 +220,7 @@
     {
       "id": 11,
       "name": "Hitoshi Demegawa",
-      "image": "/images/hitoshi demegawa.webp",
+      "image": "hitoshi demegawa.webp",
       "gender": "Male",
       "species": "Human",
       "age": "37",
@@ -234,7 +234,7 @@
     {
       "id": 12,
       "name": "Jack Neylon",
-      "image": "/images/jack neylon.webp",
+      "image": "jack neylon.webp",
       "gender": "Male",
       "species": "Human",
       "age": "36",
@@ -248,7 +248,7 @@
     {
       "id": 13,
       "name": "Kanzo Mogi",
-      "image": "/images/kanzo mogi.webp",
+      "image": "kanzo mogi.webp",
       "gender": "Male",
       "species": "Human",
       "age": "30",
@@ -262,7 +262,7 @@
     {
       "id": 14,
       "name": "Kiyomi Takada",
-      "image": "/images/kiyomi takada.webp",
+      "image": "kiyomi takada.webp",
       "gender": "Female",
       "species": "Human",
       "age": "18",
@@ -276,7 +276,7 @@
     {
       "id": 15,
       "name": "Kyoko",
-      "image": "/images/kyoko.webp",
+      "image": "kyoko.webp",
       "gender": "Female",
       "species": "Human",
       "age": "Unknown",
@@ -290,7 +290,7 @@
     {
       "id": 16,
       "name": "Kyosuke Higuchi",
-      "image": "/images/kyosuke higuchi.webp",
+      "image": "kyosuke higuchi.webp",
       "gender": "Male",
       "species": "Human",
       "age": "32",
@@ -304,7 +304,7 @@
     {
       "id": 17,
       "name": "Masahiko Kida",
-      "image": "/images/masahiko kida.webp",
+      "image": "masahiko kida.webp",
       "gender": "Male",
       "species": "Human",
       "age": "32",
@@ -318,7 +318,7 @@
     {
       "id": 18,
       "name": "Matt",
-      "image": "/images/matt.webp",
+      "image": "matt.webp",
       "gender": "Male",
       "species": "Human",
       "age": "19",
@@ -332,7 +332,7 @@
     {
       "id": 19,
       "name": "Mello (Mihael Keehl)",
-      "image": "/images/mello (mihael keehl).webp",
+      "image": "mello (mihael keehl).webp",
       "gender": "Male",
       "species": "Human",
       "age": "19",
@@ -346,7 +346,7 @@
     {
       "id": 20,
       "name": "Misa Amane (2nd Kira)",
-      "image": "/images/misa amane (2nd kira).webp",
+      "image": "misa amane (2nd kira).webp",
       "gender": "Female",
       "species": "Human",
       "age": "19",
@@ -360,7 +360,7 @@
     {
       "id": 21,
       "name": "Near (Nate River)",
-      "image": "/images/near (nate river).webp",
+      "image": "near (nate river).webp",
       "gender": "Male",
       "species": "Human",
       "age": "13",
@@ -374,7 +374,7 @@
     {
       "id": 22,
       "name": "Naomi Misora",
-      "image": "/images/naomi misora.webp",
+      "image": "naomi misora.webp",
       "gender": "Female",
       "species": "Human",
       "age": "26",
@@ -388,7 +388,7 @@
     {
       "id": 23,
       "name": "Raye Penber",
-      "image": "/images/raye penber.webp",
+      "image": "raye penber.webp",
       "gender": "Male",
       "species": "Human",
       "age": "28",
@@ -402,7 +402,7 @@
     {
       "id": 24,
       "name": "Reiji Namikawa",
-      "image": "/images/reiji namikawa.webp",
+      "image": "reiji namikawa.webp",
       "gender": "Male",
       "species": "Human",
       "age": "30",
@@ -416,7 +416,7 @@
     {
       "id": 25,
       "name": "Rem",
-      "image": "/images/rem.webp",
+      "image": "rem.webp",
       "gender": "Female",
       "species": "Shinigami",
       "age": "Unknown",
@@ -430,7 +430,7 @@
     {
       "id": 26,
       "name": "Rod Ross",
-      "image": "/images/rod ross.webp",
+      "image": "rod ross.webp",
       "gender": "Male",
       "species": "Human",
       "age": "41",
@@ -444,7 +444,7 @@
     {
       "id": 27,
       "name": "Roger Ruvie",
-      "image": "/images/roger ruvie.webp",
+      "image": "roger ruvie.webp",
       "gender": "Male",
       "species": "Human",
       "age": "65",
@@ -458,7 +458,7 @@
     {
       "id": 28,
       "name": "Sachiko Yagami",
-      "image": "/images/sachiko yagami.webp",
+      "image": "sachiko yagami.webp",
       "gender": "Female",
       "species": "Human",
       "age": "41",
@@ -472,7 +472,7 @@
     {
       "id": 29,
       "name": "Sayu Yagami",
-      "image": "/images/sayu yagami.webp",
+      "image": "sayu yagami.webp",
       "gender": "Female",
       "species": "Human",
       "age": "14",
@@ -486,7 +486,7 @@
     {
       "id": 30,
       "name": "Soichiro Yagami",
-      "image": "/images/soichiro yagami.webp",
+      "image": "soichiro yagami.webp",
       "gender": "Male",
       "species": "Human",
       "age": "48",
@@ -500,7 +500,7 @@
     {
       "id": 31,
       "name": "Shingo Mido",
-      "image": "/images/shingo mido.webp",
+      "image": "shingo mido.webp",
       "gender": "Male",
       "species": "Human",
       "age": "33",
@@ -514,7 +514,7 @@
     {
       "id": 32,
       "name": "Shinigami King / King of Death",
-      "image": "/images/shinigami king - king of death.webp",
+      "image": "shinigami king - king of death.webp",
       "gender": "Male",
       "species": "Shinigami",
       "age": "Unknown",
@@ -528,7 +528,7 @@
     {
       "id": 33,
       "name": "Shuichi Aizawa",
-      "image": "/images/shuichi aizawa.webp",
+      "image": "shuichi aizawa.webp",
       "gender": "Male",
       "species": "Human",
       "age": "34",
@@ -542,7 +542,7 @@
     {
       "id": 34,
       "name": "Sidoh",
-      "image": "/images/sidoh.webp",
+      "image": "sidoh.webp",
       "gender": "Male",
       "species": "Shinigami",
       "age": "Unknown",
@@ -556,7 +556,7 @@
     {
       "id": 35,
       "name": "Stephen Gevanni",
-      "image": "/images/stephen gevanni.webp",
+      "image": "stephen gevanni.webp",
       "gender": "Male",
       "species": "Human",
       "age": "27",
@@ -570,7 +570,7 @@
     {
       "id": 36,
       "name": "Suguru Shimura",
-      "image": "/images/suguru shimura.webp",
+      "image": "suguru shimura.webp",
       "gender": "Male",
       "species": "Human",
       "age": "37",
@@ -584,7 +584,7 @@
     {
       "id": 37,
       "name": "Takeshi Ooi",
-      "image": "/images/takeshi ooi.webp",
+      "image": "takeshi ooi.webp",
       "gender": "Male",
       "species": "Human",
       "age": "43",
@@ -598,7 +598,7 @@
     {
       "id": 38,
       "name": "Teru Mikami (X-Kira)",
-      "image": "/images/teru mikami (x-kira).webp",
+      "image": "teru mikami (x-kira).webp",
       "gender": "Male",
       "species": "Human",
       "age": "27",
@@ -612,7 +612,7 @@
     {
       "id": 39,
       "name": "Touta Matsuda",
-      "image": "/images/touta matsuda.webp",
+      "image": "touta matsuda.webp",
       "gender": "Male",
       "species": "Human",
       "age": "25",
@@ -626,7 +626,7 @@
     {
       "id": 40,
       "name": "Watari",
-      "image": "/images/watari.webp",
+      "image": "watari.webp",
       "gender": "Male",
       "species": "Human",
       "age": "70",
@@ -640,7 +640,7 @@
     {
       "id": 41,
       "name": "Wedy",
-      "image": "/images/wedy.webp",
+      "image": "wedy.webp",
       "gender": "Female",
       "species": "Human",
       "age": "30",
@@ -654,7 +654,7 @@
     {
       "id": 42,
       "name": "Unnamed Shinigami",
-      "image": "/images/unnamed shinigami.webp",
+      "image": "unnamed shinigami.webp",
       "gender": "Male",
       "species": "Shinigami",
       "age": "Unknown",

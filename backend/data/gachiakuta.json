@@ -90,7 +90,7 @@
     {
       "id": 1,
       "name": "Rudo Surebrec",
-      "image": "/images/rudo surebrec.webp",
+      "image": "rudo surebrec.webp",
       "age": "15",
       "height": "163",
       "gender": "Male",
@@ -103,7 +103,7 @@
     {
       "id": 2,
       "name": "Enjin",
-      "image": "/images/enjin.jpg",
+      "image": "enjin.jpg",
       "age": "28",
       "height": "190",
       "gender": "Male",
@@ -116,7 +116,7 @@
     {
       "id": 3,
       "name": "Zanka Nijik",
-      "image": "/images/zanka nijik.webp",
+      "image": "zanka nijik.webp",
       "age": "17",
       "height": "178",
       "gender": "Male",
@@ -129,7 +129,7 @@
     {
       "id": 4,
       "name": "Riyo Reaper",
-      "image": "/images/riyo reaper.png",
+      "image": "riyo reaper.png",
       "age": "16",
       "height": "156",
       "gender": "Female",
@@ -142,7 +142,7 @@
     {
       "id": 5,
       "name": "Alfa Corbas",
-      "image": "/images/alfa corbas.webp",
+      "image": "alfa corbas.webp",
       "age": "Unknown",
       "height": "195",
       "gender": "Male",
@@ -155,7 +155,7 @@
     {
       "id": 6,
       "name": "Alice Stilzer",
-      "image": "/images/alice stilzer.webp",
+      "image": "alice stilzer.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Female",
@@ -168,7 +168,7 @@
     {
       "id": 7,
       "name": "Amo Empure",
-      "image": "/images/amo empure.webp",
+      "image": "amo empure.webp",
       "age": "Secret",
       "height": "158",
       "gender": "Female",
@@ -181,7 +181,7 @@
     {
       "id": 8,
       "name": "Asia Stilzer",
-      "image": "/images/asia stilzer.jpg",
+      "image": "asia stilzer.jpg",
       "age": "17",
       "height": "153",
       "gender": "Female",
@@ -194,7 +194,7 @@
     {
       "id": 9,
       "name": "Auguste Stilzer",
-      "image": "/images/auguste stilzer.webp",
+      "image": "auguste stilzer.webp",
       "age": "20",
       "height": "187",
       "gender": "Male",
@@ -207,7 +207,7 @@
     {
       "id": 10,
       "name": "Bro Santa",
-      "image": "/images/bro santa.webp",
+      "image": "bro santa.webp",
       "age": "35",
       "height": "195",
       "gender": "Male",
@@ -220,7 +220,7 @@
     {
       "id": 11,
       "name": "Bundus Begalkate",
-      "image": "/images/bundus begalkate.jpg",
+      "image": "bundus begalkate.jpg",
       "age": "44",
       "height": "200",
       "gender": "Male",
@@ -233,7 +233,7 @@
     {
       "id": 12,
       "name": "Chiwa",
-      "image": "/images/chiwa.webp",
+      "image": "chiwa.webp",
       "age": "Unknown",
       "height": "150",
       "gender": "Female",
@@ -246,7 +246,7 @@
     {
       "id": 13,
       "name": "Dear Santa",
-      "image": "/images/dear santa.webp",
+      "image": "dear santa.webp",
       "age": "10",
       "height": "130",
       "gender": "Male",
@@ -259,7 +259,7 @@
     {
       "id": 14,
       "name": "Delmon Getos",
-      "image": "/images/delmon getos.webp",
+      "image": "delmon getos.webp",
       "age": "45",
       "height": "The Tallest!!!",
       "gender": "Male",
@@ -272,7 +272,7 @@
     {
       "id": 15,
       "name": "Follo Tuneet",
-      "image": "/images/follo tuneet.webp",
+      "image": "follo tuneet.webp",
       "age": "19",
       "height": "175",
       "gender": "Male",
@@ -285,7 +285,7 @@
     {
       "id": 16,
       "name": "Fu Olosthol",
-      "image": "/images/fu olosthol.jpg",
+      "image": "fu olosthol.jpg",
       "age": "17",
       "height": "160",
       "gender": "Male",
@@ -298,7 +298,7 @@
     {
       "id": 17,
       "name": "Geeta Heavy Fantasia",
-      "image": "/images/geeta heavy fantasia.png",
+      "image": "geeta heavy fantasia.png",
       "age": "14",
       "height": "148",
       "gender": "Female",
@@ -311,7 +311,7 @@
     {
       "id": 18,
       "name": "Giant Trash Beast",
-      "image": "/images/giant trash beast.webp",
+      "image": "giant trash beast.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Genderless",
@@ -324,7 +324,7 @@
     {
       "id": 19,
       "name": "GOB.",
-      "image": "/images/gob..webp",
+      "image": "gob..webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -337,7 +337,7 @@
     {
       "id": 20,
       "name": "Goka Nijik",
-      "image": "/images/goka nijik.jpg",
+      "image": "goka nijik.jpg",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -350,7 +350,7 @@
     {
       "id": 21,
       "name": "Gris Rubion",
-      "image": "/images/gris rubion.jpg",
+      "image": "gris rubion.jpg",
       "age": "30",
       "height": "193",
       "gender": "Male",
@@ -363,7 +363,7 @@
     {
       "id": 22,
       "name": "Hyo",
-      "image": "/images/hyo.webp",
+      "image": "hyo.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Female",
@@ -376,7 +376,7 @@
     {
       "id": 23,
       "name": "Jabber Wonger",
-      "image": "/images/jabber wonger.webp",
+      "image": "jabber wonger.webp",
       "age": "18",
       "height": "183",
       "gender": "Male",
@@ -389,7 +389,7 @@
     {
       "id": 24,
       "name": "Konza",
-      "image": "/images/konza.webp",
+      "image": "konza.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -402,7 +402,7 @@
     {
       "id": 25,
       "name": "Konza's Friend",
-      "image": "/images/konza's friend.jpg",
+      "image": "konza's friend.jpg",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Female",
@@ -415,7 +415,7 @@
     {
       "id": 26,
       "name": "Kuro",
-      "image": "/images/kuro.jpg",
+      "image": "kuro.jpg",
       "age": "150",
       "height": "Unknown",
       "gender": "Male",
@@ -428,7 +428,7 @@
     {
       "id": 27,
       "name": "Kutohni Andor",
-      "image": "/images/kutohni andor.jpg",
+      "image": "kutohni andor.jpg",
       "age": "27",
       "height": "152",
       "gender": "Female",
@@ -441,7 +441,7 @@
     {
       "id": 28,
       "name": "Kyoka Nijik (Red Hornes)",
-      "image": "/images/kyoka nijik (red hornes).webp",
+      "image": "kyoka nijik (red hornes).webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Female",
@@ -454,7 +454,7 @@
     {
       "id": 29,
       "name": "Lemlin Tissark",
-      "image": "/images/lemlin tissark.jpg",
+      "image": "lemlin tissark.jpg",
       "age": "14",
       "height": "153",
       "gender": "Unknown",
@@ -467,7 +467,7 @@
     {
       "id": 30,
       "name": "Master Hii",
-      "image": "/images/master hii.webp",
+      "image": "master hii.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Unknown",
@@ -480,7 +480,7 @@
     {
       "id": 31,
       "name": "Merrige",
-      "image": "/images/merrige.webp",
+      "image": "merrige.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Female",
@@ -493,7 +493,7 @@
     {
       "id": 32,
       "name": "Mildretta",
-      "image": "/images/mildretta.webp",
+      "image": "mildretta.webp",
       "age": "24",
       "height": "Unknown",
       "gender": "Female",
@@ -506,7 +506,7 @@
     {
       "id": 33,
       "name": "Momoa Rukel",
-      "image": "/images/momoa rukel.jpg",
+      "image": "momoa rukel.jpg",
       "age": "17",
       "height": "160",
       "gender": "Female",
@@ -519,7 +519,7 @@
     {
       "id": 34,
       "name": "Mymo",
-      "image": "/images/mymo.webp",
+      "image": "mymo.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -532,7 +532,7 @@
     {
       "id": 35,
       "name": "Nelde Hue Amozo",
-      "image": "/images/nelde hue amozo.webp",
+      "image": "nelde hue amozo.webp",
       "age": "22",
       "height": "170",
       "gender": "Female",
@@ -545,7 +545,7 @@
     {
       "id": 36,
       "name": "Regto",
-      "image": "/images/regto.avif",
+      "image": "regto.avif",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -558,7 +558,7 @@
     {
       "id": 37,
       "name": "Semiu Graia",
-      "image": "/images/semiu graia.webp",
+      "image": "semiu graia.webp",
       "age": "26",
       "height": "175",
       "gender": "Female",
@@ -571,7 +571,7 @@
     {
       "id": 38,
       "name": "Tamzy Kainess",
-      "image": "/images/tamzy kainess.avif",
+      "image": "tamzy kainess.avif",
       "age": "23",
       "height": "180",
       "gender": "Male",
@@ -584,7 +584,7 @@
     {
       "id": 39,
       "name": "The Mayor (Gnomlars Rid)",
-      "image": "/images/the mayor (gnomlars rid).webp",
+      "image": "the mayor (gnomlars rid).webp",
       "age": "47",
       "height": "180",
       "gender": "Male",
@@ -597,7 +597,7 @@
     {
       "id": 40,
       "name": "Toum Mima",
-      "image": "/images/toum mima.jpg",
+      "image": "toum mima.jpg",
       "age": "21",
       "height": "167",
       "gender": "Female",
@@ -610,7 +610,7 @@
     {
       "id": 41,
       "name": "Trash Beast (Abandoned House)",
-      "image": "/images/trash beast (abandoned house).webp",
+      "image": "trash beast (abandoned house).webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Genderless",
@@ -623,7 +623,7 @@
     {
       "id": 42,
       "name": "Trash Beast (The King of Tori)",
-      "image": "/images/trash beast (the king of tori).webp",
+      "image": "trash beast (the king of tori).webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Genderless",
@@ -636,7 +636,7 @@
     {
       "id": 43,
       "name": "Trash Beast (With Jinki)",
-      "image": "/images/trash beast (with jinki).webp",
+      "image": "trash beast (with jinki).webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Genderless",
@@ -649,7 +649,7 @@
     {
       "id": 44,
       "name": "Zodyl Typhon",
-      "image": "/images/zodyl typhon.webp",
+      "image": "zodyl typhon.webp",
       "age": "23",
       "height": "188",
       "gender": "Male",

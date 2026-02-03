@@ -220,7 +220,7 @@ function SoloGame() {
   const hintsData = attributes.filter(attr => attr.hints || attr.order);
 
   return (
-    <div className="game-container" style={{ backgroundImage: `url(/api/images/${id}/${gameData.background})` }}>
+    <div className="game-container" style={{ backgroundImage: `url(/api${id}/${gameData.background})` }}>
       <GameNavbar gameId={id} />
       <div className="game-overlay">
         {/* Header */}
@@ -262,7 +262,7 @@ function SoloGame() {
                     className="suggestion-item"
                   >
                     <div className="suggestion-image">
-                      <img src={`/api/images/${gameData.id}/characters/${char.image}`} alt={char.name} />
+                      <img src={`/api${gameData.id}/characters/${char.image}`} alt={char.name} />
                     </div>
                     <div className="suggestion-name">{char.name}</div>
                   </button>
@@ -293,7 +293,7 @@ function SoloGame() {
                   {/* Image */}
                   <div className="cell-image">
                     <div className="character-image">
-                      <img src={`/api/images/${gameData.id}/characters/${a.guess.image}`} alt={a.guess.name} />
+                      <img src={`/api${gameData.id}/characters/${a.guess.image}`} alt={a.guess.name} />
                     </div>
                   </div>
 

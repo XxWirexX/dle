@@ -115,7 +115,7 @@
     {
       "id": 1,
       "name": "Saitama",
-      "image": "/images/saitama.jpg",
+      "image": "saitama.jpg",
       "age": "25",
       "gender": "Male",
       "species": "Human",
@@ -129,7 +129,7 @@
     {
       "id": 2,
       "name": "Garou",
-      "image": "/images/garou.webp",
+      "image": "garou.webp",
       "age": "19",
       "gender": "Male",
       "species": "Human",
@@ -143,7 +143,7 @@
     {
       "id": 3,
       "name": "Lord Boros",
-      "image": "/images/lord boros.webp",
+      "image": "lord boros.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Alien",
@@ -157,7 +157,7 @@
     {
       "id": 4,
       "name": "Agoni",
-      "image": "/images/agoni.jpg",
+      "image": "agoni.jpg",
       "age": "Unknown",
       "gender": "Male",
       "species": "Human",
@@ -171,7 +171,7 @@
     {
       "id": 5,
       "name": "Apollo",
-      "image": "/images/apollo.webp",
+      "image": "apollo.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Esper",
@@ -185,7 +185,7 @@
     {
       "id": 6,
       "name": "All Back-Man",
-      "image": "/images/all back-man.webp",
+      "image": "all back-man.webp",
       "age": "26",
       "gender": "Male",
       "species": "Human",
@@ -199,7 +199,7 @@
     {
       "id": 7,
       "name": "Angry Man",
-      "image": "/images/angry man.webp",
+      "image": "angry man.webp",
       "age": "20",
       "gender": "Male",
       "species": "Human",
@@ -213,7 +213,7 @@
     {
       "id": 8,
       "name": "Ancient King",
-      "image": "/images/ancient king.webp",
+      "image": "ancient king.webp",
       "age": "300000000",
       "gender": "Male",
       "species": "Monster",
@@ -227,7 +227,7 @@
     {
       "id": 9,
       "name": "Blue Fire",
-      "image": "/images/blue fire.webp",
+      "image": "blue fire.webp",
       "age": "19",
       "gender": "Male",
       "species": "Human",
@@ -241,7 +241,7 @@
     {
       "id": 10,
       "name": "Bushidrill",
-      "image": "/images/bushidrill.webp",
+      "image": "bushidrill.webp",
       "age": "37",
       "gender": "Male",
       "species": "Human",
@@ -255,7 +255,7 @@
     {
       "id": 11,
       "name": "Captain Mizuki",
-      "image": "/images/captain mizuki.webp",
+      "image": "captain mizuki.webp",
       "age": "Unknown",
       "gender": "Female",
       "species": "Human",
@@ -269,7 +269,7 @@
     {
       "id": 12,
       "name": "Bomb",
-      "image": "/images/bomb.webp",
+      "image": "bomb.webp",
       "age": "83",
       "gender": "Male",
       "species": "Human",
@@ -283,7 +283,7 @@
     {
       "id": 13,
       "name": "Bofoi",
-      "image": "/images/bofoi.jpg",
+      "image": "bofoi.jpg",
       "age": "Unknown",
       "gender": "Male",
       "species": "Human",
@@ -297,7 +297,7 @@
     {
       "id": 14,
       "name": "Blast",
-      "image": "/images/blast.webp",
+      "image": "blast.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Human",
@@ -311,7 +311,7 @@
     {
       "id": 15,
       "name": "Bang",
-      "image": "/images/bang.webp",
+      "image": "bang.webp",
       "age": "81",
       "gender": "Male",
       "species": "Human",
@@ -325,7 +325,7 @@
     {
       "id": 16,
       "name": "Charanko",
-      "image": "/images/charanko.webp",
+      "image": "charanko.webp",
       "age": "20",
       "gender": "Male",
       "species": "Human",
@@ -339,7 +339,7 @@
     {
       "id": 17,
       "name": "Crescent Eyebroll",
-      "image": "/images/crescent eyebroll.webp",
+      "image": "crescent eyebroll.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Human",
@@ -353,7 +353,7 @@
     {
       "id": 18,
       "name": "Crying Man",
-      "image": "/images/crying man.webp",
+      "image": "crying man.webp",
       "age": "23",
       "gender": "Male",
       "species": "Human",
@@ -367,7 +367,7 @@
     {
       "id": 19,
       "name": "Death Gatling",
-      "image": "/images/death gatling.webp",
+      "image": "death gatling.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Human",
@@ -381,7 +381,7 @@
     {
       "id": 20,
       "name": "Double Hole",
-      "image": "/images/double hole.webp",
+      "image": "double hole.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Human",
@@ -395,7 +395,7 @@
     {
       "id": 21,
       "name": "Darkness Blade",
-      "image": "/images/darkness blade.webp",
+      "image": "darkness blade.webp",
       "age": "20",
       "gender": "Male",
       "species": "Human",
@@ -409,7 +409,7 @@
     {
       "id": 22,
       "name": "Deep Sea King",
-      "image": "/images/deep sea king.webp",
+      "image": "deep sea king.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Seafolk",
@@ -423,7 +423,7 @@
     {
       "id": 23,
       "name": "Dr. Genus",
-      "image": "/images/dr. genus.webp",
+      "image": "dr. genus.webp",
       "age": "101",
       "gender": "Male",
       "species": "Human",
@@ -437,7 +437,7 @@
     {
       "id": 24,
       "name": "Dr. Kuseno",
-      "image": "/images/dr. kuseno.webp",
+      "image": "dr. kuseno.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Human",
@@ -451,7 +451,7 @@
     {
       "id": 25,
       "name": "Drive Knight",
-      "image": "/images/drive knight.webp",
+      "image": "drive knight.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Cyborg",
@@ -465,7 +465,7 @@
     {
       "id": 26,
       "name": "D-Pad",
-      "image": "/images/d-pad.webp",
+      "image": "d-pad.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Human",
@@ -479,7 +479,7 @@
     {
       "id": 27,
       "name": "Eagle",
-      "image": "/images/eagle.webp",
+      "image": "eagle.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Skyfolk",
@@ -493,7 +493,7 @@
     {
       "id": 28,
       "name": "Fubuki",
-      "image": "/images/fubuki.webp",
+      "image": "fubuki.webp",
       "age": "23",
       "gender": "Female",
       "species": "Esper",
@@ -507,7 +507,7 @@
     {
       "id": 29,
       "name": "Funeral Suspenders",
-      "image": "/images/funeral suspenders.webp",
+      "image": "funeral suspenders.webp",
       "age": "25",
       "gender": "Male",
       "species": "Human",
@@ -521,7 +521,7 @@
     {
       "id": 30,
       "name": "Futoshi Boustifaille",
-      "image": "/images/futoshi boustifaille.webp",
+      "image": "futoshi boustifaille.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Human",
@@ -535,7 +535,7 @@
     {
       "id": 31,
       "name": "Fukegao",
-      "image": "/images/fukegao.webp",
+      "image": "fukegao.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Human",
@@ -549,7 +549,7 @@
     {
       "id": 32,
       "name": "Flashy Flash",
-      "image": "/images/flashy flash.jpg",
+      "image": "flashy flash.jpg",
       "age": "25",
       "gender": "Male",
       "species": "Human",
@@ -563,7 +563,7 @@
     {
       "id": 33,
       "name": "Falcon",
-      "image": "/images/falcon.webp",
+      "image": "falcon.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Skyfolk",
@@ -577,7 +577,7 @@
     {
       "id": 34,
       "name": "Forte",
-      "image": "/images/forte.webp",
+      "image": "forte.webp",
       "age": "24",
       "gender": "Male",
       "species": "Human",
@@ -591,7 +591,7 @@
     {
       "id": 35,
       "name": "Feather",
-      "image": "/images/feather.webp",
+      "image": "feather.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Human",
@@ -605,7 +605,7 @@
     {
       "id": 36,
       "name": "Gearsper",
-      "image": "/images/gearsper.webp",
+      "image": "gearsper.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Esper",
@@ -619,7 +619,7 @@
     {
       "id": 37,
       "name": "Genos",
-      "image": "/images/genos.jpg",
+      "image": "genos.jpg",
       "age": "19",
       "gender": "Male",
       "species": "Cyborg",
@@ -633,7 +633,7 @@
     {
       "id": 38,
       "name": "Glasses",
-      "image": "/images/glasses.webp",
+      "image": "glasses.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Human",
@@ -647,7 +647,7 @@
     {
       "id": 39,
       "name": "Golden Ball",
-      "image": "/images/golden ball.webp",
+      "image": "golden ball.webp",
       "age": "28",
       "gender": "Male",
       "species": "Human",
@@ -661,7 +661,7 @@
     {
       "id": 40,
       "name": "Great Philosopher",
-      "image": "/images/great philosopher.webp",
+      "image": "great philosopher.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Human",
@@ -675,7 +675,7 @@
     {
       "id": 41,
       "name": "Genji",
-      "image": "/images/genji.webp",
+      "image": "genji.webp",
       "age": "24",
       "gender": "Male",
       "species": "Human",
@@ -689,7 +689,7 @@
     {
       "id": 42,
       "name": "Green",
-      "image": "/images/green.webp",
+      "image": "green.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Human",
@@ -703,7 +703,7 @@
     {
       "id": 43,
       "name": "Gun Gun",
-      "image": "/images/gun gun.webp",
+      "image": "gun gun.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Human",
@@ -717,7 +717,7 @@
     {
       "id": 44,
       "name": "Heavy Kong",
-      "image": "/images/heavy kong.webp",
+      "image": "heavy kong.webp",
       "age": "29",
       "gender": "Male",
       "species": "Human",
@@ -731,7 +731,7 @@
     {
       "id": 45,
       "name": "Hammerhead",
-      "image": "/images/hammerhead.webp",
+      "image": "hammerhead.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Human",
@@ -745,7 +745,7 @@
     {
       "id": 46,
       "name": "Heavy Tank Loincloth",
-      "image": "/images/heavy tank loincloth.webp",
+      "image": "heavy tank loincloth.webp",
       "age": "35",
       "gender": "Male",
       "species": "Human",
@@ -759,7 +759,7 @@
     {
       "id": 47,
       "name": "Hawk",
-      "image": "/images/hawk.webp",
+      "image": "hawk.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Skyfolk",
@@ -773,7 +773,7 @@
     {
       "id": 48,
       "name": "Haragiri",
-      "image": "/images/haragiri.webp",
+      "image": "haragiri.webp",
       "age": "40",
       "gender": "Male",
       "species": "Monster",
@@ -787,7 +787,7 @@
     {
       "id": 49,
       "name": "Isamu",
-      "image": "/images/isamu.webp",
+      "image": "isamu.webp",
       "age": "10",
       "gender": "Male",
       "species": "Human",
@@ -801,7 +801,7 @@
     {
       "id": 50,
       "name": "Iaian",
-      "image": "/images/iaian.webp",
+      "image": "iaian.webp",
       "age": "23",
       "gender": "Male",
       "species": "Human",
@@ -815,7 +815,7 @@
     {
       "id": 51,
       "name": "Jet Nice Guy",
-      "image": "/images/jet nice guy.webp",
+      "image": "jet nice guy.webp",
       "age": "26",
       "gender": "Male",
       "species": "Cyborg",
@@ -829,7 +829,7 @@
     {
       "id": 52,
       "name": "Kite",
-      "image": "/images/kite.webp",
+      "image": "kite.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Skyfolk",
@@ -843,7 +843,7 @@
     {
       "id": 53,
       "name": "Kamikaze",
-      "image": "/images/kamikaze.jpg",
+      "image": "kamikaze.jpg",
       "age": "37",
       "gender": "Male",
       "species": "Human",
@@ -857,7 +857,7 @@
     {
       "id": 54,
       "name": "King",
-      "image": "/images/king.jpg",
+      "image": "king.jpg",
       "age": "29",
       "gender": "Male",
       "species": "Human",
@@ -871,7 +871,7 @@
     {
       "id": 55,
       "name": "Lily",
-      "image": "/images/lily.webp",
+      "image": "lily.webp",
       "age": "14",
       "gender": "Female",
       "species": "Human",
@@ -885,7 +885,7 @@
     {
       "id": 56,
       "name": "Mohican",
-      "image": "/images/mohican.webp",
+      "image": "mohican.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Human",
@@ -899,7 +899,7 @@
     {
       "id": 57,
       "name": "Needle Star",
-      "image": "/images/needle star.webp",
+      "image": "needle star.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Human",
@@ -913,7 +913,7 @@
     {
       "id": 58,
       "name": "Lightning Max",
-      "image": "/images/max.webp",
+      "image": "max.webp",
       "age": "21",
       "gender": "Male",
       "species": "Human",
@@ -927,7 +927,7 @@
     {
       "id": 59,
       "name": "Magic Trick Man",
-      "image": "/images/magic trick man.webp",
+      "image": "magic trick man.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Human",
@@ -941,7 +941,7 @@
     {
       "id": 60,
       "name": "McCoy",
-      "image": "/images/mccoy.webp",
+      "image": "mccoy.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Human",
@@ -955,7 +955,7 @@
     {
       "id": 61,
       "name": "Metal Bat",
-      "image": "/images/metal bat.webp",
+      "image": "metal bat.webp",
       "age": "17",
       "gender": "Male",
       "species": "Human",
@@ -969,7 +969,7 @@
     {
       "id": 62,
       "name": "One Shotter",
-      "image": "/images/one shotter.webp",
+      "image": "one shotter.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Human",
@@ -983,7 +983,7 @@
     {
       "id": 63,
       "name": "Okamaitachi",
-      "image": "/images/okamaitachi.webp",
+      "image": "okamaitachi.webp",
       "age": "26",
       "gender": "Female",
       "species": "Human",
@@ -997,7 +997,7 @@
     {
       "id": 64,
       "name": "Peach Terry",
-      "image": "/images/peach terry.webp",
+      "image": "peach terry.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Human",
@@ -1011,7 +1011,7 @@
     {
       "id": 65,
       "name": "Pig God",
-      "image": "/images/pig god.webp",
+      "image": "pig god.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Human",
@@ -1025,7 +1025,7 @@
     {
       "id": 66,
       "name": "Psykos",
-      "image": "/images/psykos.jpg",
+      "image": "psykos.jpg",
       "age": "23",
       "gender": "Female",
       "species": "Esper",
@@ -1039,7 +1039,7 @@
     {
       "id": 67,
       "name": "Pineapple",
-      "image": "/images/pineapple.webp",
+      "image": "pineapple.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Human",
@@ -1053,7 +1053,7 @@
     {
       "id": 68,
       "name": "Puri-Puri Prisoner",
-      "image": "/images/puri-puri prisoner.webp",
+      "image": "puri-puri prisoner.webp",
       "age": "33",
       "gender": "Male",
       "species": "Human",
@@ -1067,7 +1067,7 @@
     {
       "id": 69,
       "name": "Red Nose",
-      "image": "/images/red nose.webp",
+      "image": "red nose.webp",
       "age": "24",
       "gender": "Male",
       "species": "Human",
@@ -1081,7 +1081,7 @@
     {
       "id": 70,
       "name": "Red Muffler",
-      "image": "/images/red muffler.webp",
+      "image": "red muffler.webp",
       "age": "20",
       "gender": "Male",
       "species": "Human",
@@ -1095,7 +1095,7 @@
     {
       "id": 71,
       "name": "Sour Face",
-      "image": "/images/sour face.webp",
+      "image": "sour face.webp",
       "age": "20",
       "gender": "Male",
       "species": "Human",
@@ -1109,7 +1109,7 @@
     {
       "id": 72,
       "name": "Sneck",
-      "image": "/images/sneck.webp",
+      "image": "sneck.webp",
       "age": "37",
       "gender": "Male",
       "species": "Human",
@@ -1123,7 +1123,7 @@
     {
       "id": 73,
       "name": "Stinger",
-      "image": "/images/stinger.webp",
+      "image": "stinger.webp",
       "age": "24",
       "gender": "Male",
       "species": "Human",
@@ -1137,7 +1137,7 @@
     {
       "id": 74,
       "name": "Shoulderpads",
-      "image": "/images/shoulderpads.webp",
+      "image": "shoulderpads.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Human",
@@ -1151,7 +1151,7 @@
     {
       "id": 75,
       "name": "Sitch",
-      "image": "/images/sitch.jpg",
+      "image": "sitch.jpg",
       "age": "Unknown",
       "gender": "Male",
       "species": "Human",
@@ -1165,7 +1165,7 @@
     {
       "id": 76,
       "name": "Smile Man",
-      "image": "/images/smile man.webp",
+      "image": "smile man.webp",
       "age": "26",
       "gender": "Male",
       "species": "Human",
@@ -1179,7 +1179,7 @@
     {
       "id": 77,
       "name": "Sky King",
-      "image": "/images/sky king.webp",
+      "image": "sky king.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Skyfolk",
@@ -1193,7 +1193,7 @@
     {
       "id": 78,
       "name": "Super Fight Announcer",
-      "image": "/images/super fight announcer.webp",
+      "image": "super fight announcer.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Human",
@@ -1207,7 +1207,7 @@
     {
       "id": 79,
       "name": "Sweet Mask",
-      "image": "/images/sweet mask.webp",
+      "image": "sweet mask.webp",
       "age": "24",
       "gender": "Male",
       "species": "Other",
@@ -1221,7 +1221,7 @@
     {
       "id": 80,
       "name": "Speed-o'-Sound Sonic",
-      "image": "/images/speed-o'-sound sonic.webp",
+      "image": "speed-o'-sound sonic.webp",
       "age": "25",
       "gender": "Male",
       "species": "Human",
@@ -1235,7 +1235,7 @@
     {
       "id": 81,
       "name": "Suiko",
-      "image": "/images/suiko.webp",
+      "image": "suiko.webp",
       "age": "18",
       "gender": "Female",
       "species": "Human",
@@ -1249,7 +1249,7 @@
     {
       "id": 82,
       "name": "Sekingar",
-      "image": "/images/sekingar.webp",
+      "image": "sekingar.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Human",
@@ -1263,7 +1263,7 @@
     {
       "id": 83,
       "name": "Shadow Ring",
-      "image": "/images/shadow ring.webp",
+      "image": "shadow ring.webp",
       "age": "Unknown",
       "gender": "Female",
       "species": "Human",
@@ -1277,7 +1277,7 @@
     {
       "id": 84,
       "name": "Shooter",
-      "image": "/images/shooter.webp",
+      "image": "shooter.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Human",
@@ -1291,7 +1291,7 @@
     {
       "id": 85,
       "name": "Spring Mustachio",
-      "image": "/images/spring mustachio.webp",
+      "image": "spring mustachio.webp",
       "age": "47",
       "gender": "Male",
       "species": "Human",
@@ -1305,7 +1305,7 @@
     {
       "id": 86,
       "name": "Satoru",
-      "image": "/images/satoru.webp",
+      "image": "satoru.webp",
       "age": "25",
       "gender": "Male",
       "species": "Human",
@@ -1319,7 +1319,7 @@
     {
       "id": 87,
       "name": "Superalloy Darkshine",
-      "image": "/images/superalloy darkshine.webp",
+      "image": "superalloy darkshine.webp",
       "age": "27",
       "gender": "Male",
       "species": "Human",
@@ -1333,7 +1333,7 @@
     {
       "id": 88,
       "name": "Tatsumaki",
-      "image": "/images/tatsumaki.jpg",
+      "image": "tatsumaki.jpg",
       "age": "28",
       "gender": "Female",
       "species": "Esper",
@@ -1347,7 +1347,7 @@
     {
       "id": 89,
       "name": "Tanktop Master",
-      "image": "/images/tanktop master.webp",
+      "image": "tanktop master.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Human",
@@ -1361,7 +1361,7 @@
     {
       "id": 90,
       "name": "Tanktop Vegetarian",
-      "image": "/images/tanktop vegetarian.webp",
+      "image": "tanktop vegetarian.webp",
       "age": "26",
       "gender": "Male",
       "species": "Human",
@@ -1375,7 +1375,7 @@
     {
       "id": 91,
       "name": "Tanktop Black Hole",
-      "image": "/images/tanktop black hole.webp",
+      "image": "tanktop black hole.webp",
       "age": "28",
       "gender": "Male",
       "species": "Human",
@@ -1389,7 +1389,7 @@
     {
       "id": 92,
       "name": "Tanktop Tiger",
-      "image": "/images/tanktop tiger.webp",
+      "image": "tanktop tiger.webp",
       "age": "25",
       "gender": "Male",
       "species": "Human",
@@ -1403,7 +1403,7 @@
     {
       "id": 93,
       "name": "Twin Tail",
-      "image": "/images/twin tail.webp",
+      "image": "twin tail.webp",
       "age": "Unknown",
       "gender": "Female",
       "species": "Human",
@@ -1417,7 +1417,7 @@
     {
       "id": 94,
       "name": "Tareo",
-      "image": "/images/tareo.webp",
+      "image": "tareo.webp",
       "age": "10",
       "gender": "Male",
       "species": "Human",
@@ -1431,7 +1431,7 @@
     {
       "id": 95,
       "name": "Watchdog Man",
-      "image": "/images/watchdog man.jpg",
+      "image": "watchdog man.jpg",
       "age": "Unknown",
       "gender": "Male",
       "species": "Human",
@@ -1445,7 +1445,7 @@
     {
       "id": 96,
       "name": "Wildhorn",
-      "image": "/images/wildhorn.webp",
+      "image": "wildhorn.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Human",
@@ -1459,7 +1459,7 @@
     {
       "id": 97,
       "name": "Zombieman",
-      "image": "/images/zombieman.jpg",
+      "image": "zombieman.jpg",
       "age": "Unknown",
       "gender": "Male",
       "species": "Other",
@@ -1473,7 +1473,7 @@
     {
       "id": 98,
       "name": "Chain'N'Toad",
-      "image": "/images/chain'n'toad.webp",
+      "image": "chain'n'toad.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Human",
@@ -1487,7 +1487,7 @@
     {
       "id": 99,
       "name": "Boumboum-Man",
-      "image": "/images/boumboum-man.webp",
+      "image": "boumboum-man.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Human",
@@ -1501,7 +1501,7 @@
     {
       "id": 100,
       "name": "Suiryu",
-      "image": "/images/suiryu.webp",
+      "image": "suiryu.webp",
       "age": "25",
       "gender": "Male",
       "species": "Human",
@@ -1515,7 +1515,7 @@
     {
       "id": 101,
       "name": "Narinki",
-      "image": "/images/narinki.webp",
+      "image": "narinki.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Human",
@@ -1529,7 +1529,7 @@
     {
       "id": 102,
       "name": "Waganma",
-      "image": "/images/waganma.webp",
+      "image": "waganma.webp",
       "age": "10",
       "gender": "Male",
       "species": "Human",
@@ -1543,7 +1543,7 @@
     {
       "id": 103,
       "name": "Narinki's Private Squad",
-      "image": "/images/narinki's private squad.webp",
+      "image": "narinki's private squad.webp",
       "age": "Unknown",
       "gender": "Male/Female",
       "species": "Human",
@@ -1557,7 +1557,7 @@
     {
       "id": 104,
       "name": "Vaccine Man",
-      "image": "/images/vaccine man.webp",
+      "image": "vaccine man.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Monster",
@@ -1571,7 +1571,7 @@
     {
       "id": 105,
       "name": "Marugori",
-      "image": "/images/marugori.webp",
+      "image": "marugori.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Human",
@@ -1585,7 +1585,7 @@
     {
       "id": 106,
       "name": "Kombu Infinity",
-      "image": "/images/kombu infinity.webp",
+      "image": "kombu infinity.webp",
       "age": "Unknown",
       "gender": "Female",
       "species": "Monster",
@@ -1599,7 +1599,7 @@
     {
       "id": 107,
       "name": "Mosquito Girl",
-      "image": "/images/mosquito girl.webp",
+      "image": "mosquito girl.webp",
       "age": "Unknown",
       "gender": "Female",
       "species": "Monster",
@@ -1613,7 +1613,7 @@
     {
       "id": 108,
       "name": "Armored Gorilla",
-      "image": "/images/armored gorilla.webp",
+      "image": "armored gorilla.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Cyborg",
@@ -1627,7 +1627,7 @@
     {
       "id": 109,
       "name": "Beast King",
-      "image": "/images/beast king.webp",
+      "image": "beast king.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Monster",
@@ -1641,7 +1641,7 @@
     {
       "id": 110,
       "name": "Praying Mantis",
-      "image": "/images/praying mantis.webp",
+      "image": "praying mantis.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Monster",
@@ -1655,7 +1655,7 @@
     {
       "id": 111,
       "name": "Slugerous",
-      "image": "/images/slugerous.webp",
+      "image": "slugerous.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Monster",
@@ -1669,7 +1669,7 @@
     {
       "id": 112,
       "name": "Frog Man",
-      "image": "/images/frog man.webp",
+      "image": "frog man.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Monster",
@@ -1683,7 +1683,7 @@
     {
       "id": 113,
       "name": "Ground Dragon",
-      "image": "/images/ground dragon.webp",
+      "image": "ground dragon.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Monster",
@@ -1697,7 +1697,7 @@
     {
       "id": 114,
       "name": "Subterranean King",
-      "image": "/images/subterranean king.webp",
+      "image": "subterranean king.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Monster",
@@ -1711,7 +1711,7 @@
     {
       "id": 115,
       "name": "Do-S",
-      "image": "/images/do-s.webp",
+      "image": "do-s.webp",
       "age": "Unknown",
       "gender": "Female",
       "species": "Monster",
@@ -1725,7 +1725,7 @@
     {
       "id": 116,
       "name": "Hundred-Eyes Octopus",
-      "image": "/images/hundred-eyes octopus.webp",
+      "image": "hundred-eyes octopus.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Monster",
@@ -1739,7 +1739,7 @@
     {
       "id": 117,
       "name": "Eyesight",
-      "image": "/images/eyesight.jpg",
+      "image": "eyesight.jpg",
       "age": "Unknown",
       "gender": "Female",
       "species": "Monster",
@@ -1753,7 +1753,7 @@
     {
       "id": 118,
       "name": "Rafflesidon",
-      "image": "/images/rafflesidon.webp",
+      "image": "rafflesidon.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Monster",
@@ -1767,7 +1767,7 @@
     {
       "id": 119,
       "name": "Electric Catfish Man",
-      "image": "/images/electric catfish man.webp",
+      "image": "electric catfish man.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Monster",
@@ -1781,7 +1781,7 @@
     {
       "id": 120,
       "name": "Maiko Plasma",
-      "image": "/images/maiko plasma.webp",
+      "image": "maiko plasma.webp",
       "age": "Unknown",
       "gender": "Female",
       "species": "Monster",
@@ -1795,7 +1795,7 @@
     {
       "id": 121,
       "name": "Rhino Wrestler",
-      "image": "/images/rhino wrestler.webp",
+      "image": "rhino wrestler.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Monster",
@@ -1809,7 +1809,7 @@
     {
       "id": 122,
       "name": "Face Ripper",
-      "image": "/images/face ripper.webp",
+      "image": "face ripper.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Monster",
@@ -1823,7 +1823,7 @@
     {
       "id": 123,
       "name": "Awakened Cockroach",
-      "image": "/images/awakened cockroach.webp",
+      "image": "awakened cockroach.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Monster",
@@ -1837,7 +1837,7 @@
     {
       "id": 124,
       "name": "Sludge Jellyfish",
-      "image": "/images/sludge jellyfish.webp",
+      "image": "sludge jellyfish.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Monster",
@@ -1851,7 +1851,7 @@
     {
       "id": 125,
       "name": "Mad Doctor Fish",
-      "image": "/images/mad doctor fish.webp",
+      "image": "mad doctor fish.webp",
       "age": "Unknown",
       "gender": "Male/Female",
       "species": "Monster",
@@ -1865,7 +1865,7 @@
     {
       "id": 126,
       "name": "Manako",
-      "image": "/images/manako.webp",
+      "image": "manako.webp",
       "age": "Unknown",
       "gender": "Female",
       "species": "Monster",
@@ -1879,7 +1879,7 @@
     {
       "id": 127,
       "name": "G4",
-      "image": "/images/g4.webp",
+      "image": "g4.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Cyborg",
@@ -1893,7 +1893,7 @@
     {
       "id": 128,
       "name": "G5",
-      "image": "/images/g5.webp",
+      "image": "g5.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Cyborg",
@@ -1907,7 +1907,7 @@
     {
       "id": 129,
       "name": "Royal Ripper",
-      "image": "/images/royal ripper.webp",
+      "image": "royal ripper.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Monster",
@@ -1921,7 +1921,7 @@
     {
       "id": 130,
       "name": "Bug God",
-      "image": "/images/bug god.webp",
+      "image": "bug god.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Monster",
@@ -1935,7 +1935,7 @@
     {
       "id": 131,
       "name": "Bakuzan",
-      "image": "/images/bakuzan.webp",
+      "image": "bakuzan.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Monster",
@@ -1949,7 +1949,7 @@
     {
       "id": 132,
       "name": "Choze",
-      "image": "/images/choze.webp",
+      "image": "choze.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Monster",
@@ -1963,7 +1963,7 @@
     {
       "id": 133,
       "name": "Messenger of the Seafolk",
-      "image": "/images/messenger of the seafolk.webp",
+      "image": "messenger of the seafolk.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Seafolk",
@@ -1977,7 +1977,7 @@
     {
       "id": 134,
       "name": "Melzargard",
-      "image": "/images/melzargard.webp",
+      "image": "melzargard.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Alien",
@@ -1991,7 +1991,7 @@
     {
       "id": 135,
       "name": "Geryuganshoop",
-      "image": "/images/geryuganshoop.webp",
+      "image": "geryuganshoop.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Alien",
@@ -2005,7 +2005,7 @@
     {
       "id": 136,
       "name": "Groribas",
-      "image": "/images/groribas.webp",
+      "image": "groribas.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Alien",
@@ -2019,7 +2019,7 @@
     {
       "id": 137,
       "name": "Pesky Clown",
-      "image": "/images/pesky clown.webp",
+      "image": "pesky clown.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Monster",
@@ -2033,7 +2033,7 @@
     {
       "id": 138,
       "name": "Gums",
-      "image": "/images/gums.webp",
+      "image": "gums.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Monster",
@@ -2047,7 +2047,7 @@
     {
       "id": 139,
       "name": "Nyan",
-      "image": "/images/nyan.jpg",
+      "image": "nyan.jpg",
       "age": "Unknown",
       "gender": "Male",
       "species": "Monster",
@@ -2061,7 +2061,7 @@
     {
       "id": 140,
       "name": "Gouketsu",
-      "image": "/images/gouketsu.jpg",
+      "image": "gouketsu.jpg",
       "age": "Unknown",
       "gender": "Male",
       "species": "Monster",
@@ -2075,7 +2075,7 @@
     {
       "id": 141,
       "name": "Fuhrer Ugly",
-      "image": "/images/fuhrer ugly.webp",
+      "image": "fuhrer ugly.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Monster",
@@ -2089,7 +2089,7 @@
     {
       "id": 142,
       "name": "Junior Centipede",
-      "image": "/images/junior centipede.webp",
+      "image": "junior centipede.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Monster",
@@ -2103,7 +2103,7 @@
     {
       "id": 143,
       "name": "Senior Centipede",
-      "image": "/images/senior centipede.webp",
+      "image": "senior centipede.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Monster",
@@ -2117,7 +2117,7 @@
     {
       "id": 144,
       "name": "Elder Centipede",
-      "image": "/images/elder centipede.jpg",
+      "image": "elder centipede.jpg",
       "age": "Unknown",
       "gender": "Male",
       "species": "Monster",
@@ -2131,7 +2131,7 @@
     {
       "id": 145,
       "name": "Sage Centipede",
-      "image": "/images/sage centipede.webp",
+      "image": "sage centipede.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Monster",
@@ -2145,7 +2145,7 @@
     {
       "id": 146,
       "name": "Evil Natural Water",
-      "image": "/images/evil natural water.webp",
+      "image": "evil natural water.webp",
       "age": "Unknown",
       "gender": "Female",
       "species": "Monster",
@@ -2159,7 +2159,7 @@
     {
       "id": 147,
       "name": "Evil Ocean Water",
-      "image": "/images/evil natural ocean.webp",
+      "image": "evil natural ocean.webp",
       "age": "Unknown",
       "gender": "Female",
       "species": "Monster",
@@ -2173,7 +2173,7 @@
     {
       "id": 148,
       "name": "Phoenix Man",
-      "image": "/images/phoenix man.webp",
+      "image": "phoenix man.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Monster",
@@ -2187,7 +2187,7 @@
     {
       "id": 149,
       "name": "Homeless Emperor",
-      "image": "/images/homeless emperor.webp",
+      "image": "homeless emperor.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Human",
@@ -2201,7 +2201,7 @@
     {
       "id": 150,
       "name": "Overgrown Rover",
-      "image": "/images/overgrown rover.jpg",
+      "image": "overgrown rover.jpg",
       "age": "Unknown",
       "gender": "Male",
       "species": "Monster",
@@ -2215,7 +2215,7 @@
     {
       "id": 151,
       "name": "Black Sperm",
-      "image": "/images/black sperm.jpg",
+      "image": "black sperm.jpg",
       "age": "Unknown",
       "gender": "Male",
       "species": "Monster",
@@ -2229,7 +2229,7 @@
     {
       "id": 152,
       "name": "Golden Sperm",
-      "image": "/images/golden sperm.webp",
+      "image": "golden sperm.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Monster",
@@ -2243,7 +2243,7 @@
     {
       "id": 153,
       "name": "Platinum Sperm",
-      "image": "/images/platinum sperm.webp",
+      "image": "platinum sperm.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Monster",
@@ -2257,7 +2257,7 @@
     {
       "id": 154,
       "name": "Seafolk",
-      "image": "/images/seafolk.webp",
+      "image": "seafolk.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Seafolk",
@@ -2271,7 +2271,7 @@
     {
       "id": 155,
       "name": "Pureblood",
-      "image": "/images/pureblood.webp",
+      "image": "pureblood.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Monster",
@@ -2285,7 +2285,7 @@
     {
       "id": 156,
       "name": "Devil Long Hair",
-      "image": "/images/devil long hair.webp",
+      "image": "devil long hair.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Monster",
@@ -2299,7 +2299,7 @@
     {
       "id": 157,
       "name": "Baquma",
-      "image": "/images/baquma.webp",
+      "image": "baquma.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Monster",
@@ -2313,7 +2313,7 @@
     {
       "id": 158,
       "name": "Pluton",
-      "image": "/images/pluton.webp",
+      "image": "pluton.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Monster",
@@ -2327,7 +2327,7 @@
     {
       "id": 159,
       "name": "Crablante",
-      "image": "/images/crablante.webp",
+      "image": "crablante.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Monster",
@@ -2341,7 +2341,7 @@
     {
       "id": 160,
       "name": "Cruel Dragon",
-      "image": "/images/cruel dragon.webp",
+      "image": "cruel dragon.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Monster",
@@ -2355,7 +2355,7 @@
     {
       "id": 161,
       "name": "Carnage Kabuto",
-      "image": "/images/carnage kabuto.png",
+      "image": "carnage kabuto.png",
       "age": "Unknown",
       "gender": "Male",
       "species": "Monster",
@@ -2369,7 +2369,7 @@
     {
       "id": 162,
       "name": "Marshall Gorilla",
-      "image": "/images/marshall gorilla.webp",
+      "image": "marshall gorilla.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Monster",
@@ -2383,7 +2383,7 @@
     {
       "id": 163,
       "name": "Evil Eye",
-      "image": "/images/evil eye.webp",
+      "image": "evil eye.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Monster",
@@ -2397,7 +2397,7 @@
     {
       "id": 164,
       "name": "Gale Wind",
-      "image": "/images/wind.webp",
+      "image": "wind.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Monster",
@@ -2411,7 +2411,7 @@
     {
       "id": 165,
       "name": "Hellfire Flame",
-      "image": "/images/flame.webp",
+      "image": "flame.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Monster",
@@ -2425,7 +2425,7 @@
     {
       "id": 166,
       "name": "Scrutt",
-      "image": "/images/scrutt.webp",
+      "image": "scrutt.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Monster",
@@ -2439,7 +2439,7 @@
     {
       "id": 167,
       "name": "King Orochi",
-      "image": "/images/king orochi.webp",
+      "image": "king orochi.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "Monster",
@@ -2453,7 +2453,7 @@
     {
       "id": 168,
       "name": "Psykorochi",
-      "image": "/images/psykorochi.webp",
+      "image": "psykorochi.webp",
       "age": "Unknown",
       "gender": "Female",
       "species": "Monster",
@@ -2467,7 +2467,7 @@
     {
       "id": 169,
       "name": "Empty Void",
-      "image": "/images/empty void.jpg",
+      "image": "empty void.jpg",
       "age": "Unknown",
       "gender": "Male",
       "species": "Human",
@@ -2481,7 +2481,7 @@
     {
       "id": 170,
       "name": "God",
-      "image": "/images/god.webp",
+      "image": "god.webp",
       "age": "Unknown",
       "gender": "Male",
       "species": "God",

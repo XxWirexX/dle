@@ -20,7 +20,7 @@ export default function Home() {
     <div className="home-container">
       <header className="home-header">
         <div className="logo-container">
-          <img src="/images/logo.jpg" alt="Mangadle" className="logo" />
+          <img src="logo.jpg" alt="Mangadle" className="logo" />
           <h1 className="site-title">Mangadle</h1>
         </div>
         
