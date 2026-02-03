@@ -33,17 +33,24 @@ function pickTarget(list) {
 
 // Calcul du feedback pour un champ
 function computeFieldFeedback(guessVal, targetVal, attribute) {
-  // Si les deux sont identiques (y compris Unknown === Unknown), c'est correct
-  if (guessVal && targetVal && guessVal.toString().toLowerCase() === targetVal.toString().toLowerCase()) {
+  const gLower = guessVal ? guessVal.toString().toLowerCase() : null;
+  const tLower = targetVal ? targetVal.toString().toLowerCase() : null;
+
+  // Si les deux sont identiques (y compris "unknown" === "unknown"), c'est correct
+  if (gLower && tLower && gLower === tLower) {
     return { type: "correct", label: guessVal };
   }
 
-  // Si un des deux est vide ou Unknown, c'est faux
-  if (!guessVal || !targetVal || guessVal === "Unknown" || targetVal === "Unknown") {
+  // Vérifier si un des deux est vide ou "unknown"
+  const gIsUnknown = !gLower || gLower === "unknown";
+  const tIsUnknown = !tLower || tLower === "unknown";
+
+  // Si un des deux est unknown (mais pas les deux, car déjà géré au-dessus)
+  if (gIsUnknown || tIsUnknown) {
     return { type: "wrong", label: guessVal || "-" };
   }
 
-  const { type, order, partialMatch } = attribute;
+  const { type, order } = attribute;
 
   // Type numérique
   if (type === "number") {
@@ -51,7 +58,7 @@ function computeFieldFeedback(guessVal, targetVal, attribute) {
     const t = Number(targetVal);
 
     if (isNaN(g) || isNaN(t)) {
-      return { type: guessVal === targetVal ? "correct" : "wrong", label: guessVal };
+      return { type: "wrong", label: guessVal };
     }
 
     if (g === t) return { type: "correct", label: guessVal };
@@ -63,31 +70,26 @@ function computeFieldFeedback(guessVal, targetVal, attribute) {
   // Type ordonné (ex: arcs)
   if (type === "ordered" && order) {
     const guessIndex = order.findIndex(item =>
-      guessVal.toLowerCase().includes(item.toLowerCase()) ||
-      item.toLowerCase().includes(guessVal.toLowerCase())
+      gLower.includes(item.toLowerCase()) ||
+      item.toLowerCase().includes(gLower)
     );
     const targetIndex = order.findIndex(item =>
-      targetVal.toLowerCase().includes(item.toLowerCase()) ||
-      item.toLowerCase().includes(targetVal.toLowerCase())
+      tLower.includes(item.toLowerCase()) ||
+      item.toLowerCase().includes(tLower)
     );
 
     if (guessIndex === -1 || targetIndex === -1) {
-      return { type: guessVal.toLowerCase() === targetVal.toLowerCase() ? "correct" : "wrong", label: guessVal };
+      return { type: "wrong", label: guessVal };
     }
 
     if (guessIndex === targetIndex) return { type: "correct", label: guessVal };
+    if (Math.abs(guessIndex - targetIndex) === 1) return { type: "close", label: guessVal, direction: guessIndex > targetIndex ? "higher" : "lower" };
     if (guessIndex > targetIndex) return { type: "higher", label: guessVal };
     return { type: "lower", label: guessVal };
   }
 
-  // Type texte
-  if (guessVal.toLowerCase() === targetVal.toLowerCase()) {
-    return { type: "correct", label: guessVal };
-  }
-
-  // Match partiel (jaune) - activé par défaut pour le texte
-  if (targetVal.toLowerCase().includes(guessVal.toLowerCase()) ||
-      guessVal.toLowerCase().includes(targetVal.toLowerCase())) {
+  // Type texte - match partiel (jaune) si l'un contient l'autre
+  if (tLower.includes(gLower) || gLower.includes(tLower)) {
     return { type: "close", label: guessVal };
   }
 
