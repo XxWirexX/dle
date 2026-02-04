@@ -47,8 +47,10 @@ export default function Register() {
               required
               minLength={2}
               maxLength={20}
+              pattern="[a-zA-Z0-9_]+"
               autoComplete="off"
             />
+            <small>2-20 caracteres, lettres, chiffres et _ uniquement</small>
           </div>
 
           <div className="form-group">
@@ -71,10 +73,10 @@ export default function Register() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              minLength={6}
+              minLength={8}
               autoComplete="new-password"
             />
-            <small>Minimum 6 caracteres</small>
+            <small>Min 8 caracteres, 1 majuscule, 1 minuscule, 1 chiffre</small>
           </div>
 
           <button type="submit" className="auth-btn" disabled={loading}>
