@@ -1,5 +1,5 @@
 const express = require('express');
-const { createUser, findUserByEmail, findUserById, updateUserAvatar } = require('../db/database');
+const { createUser, findUserByEmail, findUserById } = require('../db/database');
 const { hashPassword, verifyPassword, generateToken } = require('../auth/authUtils');
 const { authMiddleware } = require('../auth/authMiddleware');
 
@@ -29,13 +29,13 @@ router.post('/register', async (req, res) => {
     }
 
     const passwordHash = await hashPassword(password);
-    const { id: userId, avatarColor } = createUser(email, passwordHash, username);
+    const userId = createUser(email, passwordHash, username);
 
     const user = { id: userId, username };
     const token = generateToken(user);
 
     res.status(201).json({
-      user: { id: userId, email, username, avatar_color: avatarColor, avatar_image: null },
+      user: { id: userId, email, username },
       token
     });
   } catch (error) {
@@ -66,13 +66,7 @@ router.post('/login', async (req, res) => {
     const token = generateToken(user);
 
     res.json({
-      user: {
-        id: user.id,
-        email: user.email,
-        username: user.username,
-        avatar_color: user.avatar_color,
-        avatar_image: user.avatar_image
-      },
+      user: { id: user.id, email: user.email, username: user.username },
       token
     });
   } catch (error) {
@@ -92,23 +86,6 @@ router.get('/me', authMiddleware, (req, res) => {
     res.json({ user });
   } catch (error) {
     console.error('Me error:', error);
-    res.status(500).json({ error: 'Erreur serveur' });
-  }
-});
-
-// PUT /api/auth/avatar
-router.put('/avatar', authMiddleware, (req, res) => {
-  try {
-    const { avatarImage } = req.body;
-    const userId = req.user.userId;
-
-    // avatarImage peut être null (retour à l'avatar par défaut) ou un chemin d'image
-    updateUserAvatar(userId, avatarImage || null);
-
-    const user = findUserById(userId);
-    res.json({ user });
-  } catch (error) {
-    console.error('Update avatar error:', error);
     res.status(500).json({ error: 'Erreur serveur' });
   }
 });

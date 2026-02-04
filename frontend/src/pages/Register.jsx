@@ -37,21 +37,17 @@ export default function Register() {
           {error && <div className="auth-error">{error}</div>}
 
           <div className="form-group">
-            <label htmlFor="pseudo">Pseudo</label>
+            <label htmlFor="username">Pseudo</label>
             <input
               type="text"
-              id="pseudo"
-              name="pseudo"
+              id="username"
+              name="display-name"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
               minLength={2}
               maxLength={20}
               autoComplete="off"
-              autoCorrect="off"
-              autoCapitalize="off"
-              spellCheck="false"
-              data-form-type="other"
             />
           </div>
 

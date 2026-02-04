@@ -1,18 +1,14 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
-import Avatar from "../components/Avatar";
 import "./Profile.css";
 
 export default function Profile() {
   const navigate = useNavigate();
-  const { user, token, logout, loading, refreshUser } = useAuth();
+  const { user, token, logout, loading } = useAuth();
   const [animes, setAnimes] = useState([]);
   const [stats, setStats] = useState(null);
   const [loadingStats, setLoadingStats] = useState(true);
-  const [showAvatarPicker, setShowAvatarPicker] = useState(false);
-  const [avatarOptions, setAvatarOptions] = useState([]);
-  const [savingAvatar, setSavingAvatar] = useState(false);
 
   useEffect(() => {
     if (!loading && !user) {
@@ -42,78 +38,9 @@ export default function Profile() {
       .catch(() => setLoadingStats(false));
   }, [token]);
 
-  // Charger les personnages pour le choix d'avatar
-  useEffect(() => {
-    if (!showAvatarPicker || avatarOptions.length > 0) return;
-
-    Promise.all(
-      animes.map(anime =>
-        fetch(`/api/anime/${anime.id}`)
-          .then(r => r.json())
-          .then(data => ({
-            animeId: anime.id,
-            animeName: anime.name,
-            characters: (data.characters || []).slice(0, 10).map(c => ({
-              id: c.id,
-              name: c.name,
-              image: `/api/images/${anime.id}/characters/${c.image}`
-            }))
-          }))
-      )
-    ).then(results => {
-      setAvatarOptions(results);
-    });
-  }, [showAvatarPicker, animes, avatarOptions.length]);
-
   function handleLogout() {
     logout();
     navigate("/");
-  }
-
-  async function handleSelectAvatar(imagePath) {
-    setSavingAvatar(true);
-    try {
-      const res = await fetch('/api/auth/avatar', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
-        },
-        body: JSON.stringify({ avatarImage: imagePath })
-      });
-
-      if (res.ok) {
-        await refreshUser();
-        setShowAvatarPicker(false);
-      }
-    } catch (err) {
-      console.error('Failed to update avatar:', err);
-    } finally {
-      setSavingAvatar(false);
-    }
-  }
-
-  async function handleResetAvatar() {
-    setSavingAvatar(true);
-    try {
-      const res = await fetch('/api/auth/avatar', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
-        },
-        body: JSON.stringify({ avatarImage: null })
-      });
-
-      if (res.ok) {
-        await refreshUser();
-        setShowAvatarPicker(false);
-      }
-    } catch (err) {
-      console.error('Failed to reset avatar:', err);
-    } finally {
-      setSavingAvatar(false);
-    }
   }
 
   if (loading) {
@@ -137,14 +64,9 @@ export default function Profile() {
       <div className="profile-content">
         {/* Carte utilisateur */}
         <div className="profile-card user-info">
-          <button
-            className="avatar-edit-btn"
-            onClick={() => setShowAvatarPicker(true)}
-            title="Changer d'avatar"
-          >
-            <Avatar user={user} size="xl" />
-            <span className="avatar-edit-icon">&#9998;</span>
-          </button>
+          <div className="user-avatar-large">
+            {user.username.charAt(0).toUpperCase()}
+          </div>
           <h2 className="username">{user.username}</h2>
           <p className="email">{user.email}</p>
           <button onClick={handleLogout} className="logout-btn">
@@ -247,7 +169,7 @@ export default function Profile() {
                 <div key={anime.id} className="game-stat-row">
                   <div className="game-info">
                     <span className="game-name">{anime.name}</span>
-                    <span className="game-total">{s.played} parties - {s.wins} victoires</span>
+                    <span className="game-total">{s.played} parties • {s.wins} victoires</span>
                   </div>
                   <div className="game-modes">
                     <div className="game-mode-stat solo">
@@ -272,63 +194,6 @@ export default function Profile() {
           </div>
         </div>
       </div>
-
-      {/* Modal de selection d'avatar */}
-      {showAvatarPicker && (
-        <div className="avatar-picker-overlay" onClick={() => setShowAvatarPicker(false)}>
-          <div className="avatar-picker-modal" onClick={e => e.stopPropagation()}>
-            <div className="avatar-picker-header">
-              <h2>Choisir un avatar</h2>
-              <button className="close-btn" onClick={() => setShowAvatarPicker(false)}>&times;</button>
-            </div>
-
-            <div className="avatar-picker-content">
-              {/* Option pour revenir a l'avatar par defaut */}
-              <div className="avatar-section">
-                <h3>Avatar par defaut</h3>
-                <div className="avatar-grid">
-                  <button
-                    className={`avatar-option ${!user.avatar_image ? 'selected' : ''}`}
-                    onClick={handleResetAvatar}
-                    disabled={savingAvatar}
-                  >
-                    <div
-                      className="avatar-preview default"
-                      style={{ backgroundColor: user.avatar_color || '#3b82f6' }}
-                    >
-                      {user.username.charAt(0).toUpperCase()}
-                    </div>
-                  </button>
-                </div>
-              </div>
-
-              {/* Personnages par anime */}
-              {avatarOptions.map(anime => (
-                <div key={anime.animeId} className="avatar-section">
-                  <h3>{anime.animeName}</h3>
-                  <div className="avatar-grid">
-                    {anime.characters.map(char => (
-                      <button
-                        key={char.id}
-                        className={`avatar-option ${user.avatar_image === char.image ? 'selected' : ''}`}
-                        onClick={() => handleSelectAvatar(char.image)}
-                        disabled={savingAvatar}
-                        title={char.name}
-                      >
-                        <img src={char.image} alt={char.name} className="avatar-preview" />
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              ))}
-
-              {avatarOptions.length === 0 && (
-                <div className="loading-avatars">Chargement des avatars...</div>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
