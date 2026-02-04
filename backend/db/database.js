@@ -1,5 +1,6 @@
 const Database = require('better-sqlite3');
 const path = require('path');
+const crypto = require('crypto');
 
 const db = new Database(path.join(__dirname, 'dle.db'));
 
@@ -48,6 +49,28 @@ try {
   db.exec(`ALTER TABLE users ADD COLUMN avatar_image TEXT`);
 } catch (e) { /* colonne existe déjà */ }
 
+// Migration username unique
+try {
+  db.exec(`CREATE UNIQUE INDEX IF NOT EXISTS idx_users_username ON users(username)`);
+} catch (e) { /* index existe déjà */ }
+
+// Migration email verification
+try {
+  db.exec(`ALTER TABLE users ADD COLUMN email_verified INTEGER DEFAULT 0`);
+} catch (e) { /* colonne existe déjà */ }
+try {
+  db.exec(`ALTER TABLE users ADD COLUMN verification_token TEXT`);
+} catch (e) { /* colonne existe déjà */ }
+try {
+  db.exec(`ALTER TABLE users ADD COLUMN verification_token_expires DATETIME`);
+} catch (e) { /* colonne existe déjà */ }
+try {
+  db.exec(`ALTER TABLE users ADD COLUMN password_reset_token TEXT`);
+} catch (e) { /* colonne existe déjà */ }
+try {
+  db.exec(`ALTER TABLE users ADD COLUMN password_reset_expires DATETIME`);
+} catch (e) { /* colonne existe déjà */ }
+
 // Générer une couleur aléatoire pour l'avatar
 function generateRandomColor() {
   const colors = [
@@ -59,14 +82,23 @@ function generateRandomColor() {
   return colors[Math.floor(Math.random() * colors.length)];
 }
 
+// Générer un token sécurisé
+function generateToken() {
+  return crypto.randomBytes(32).toString('hex');
+}
+
 // Fonctions utilisateurs
 function createUser(email, passwordHash, username) {
   const avatarColor = generateRandomColor();
+  const verificationToken = generateToken();
+  const tokenExpires = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(); // 24h
+
   const stmt = db.prepare(
-    'INSERT INTO users (email, password_hash, username, avatar_color) VALUES (?, ?, ?, ?)'
+    `INSERT INTO users (email, password_hash, username, avatar_color, email_verified, verification_token, verification_token_expires)
+     VALUES (?, ?, ?, ?, 0, ?, ?)`
   );
-  const result = stmt.run(email, passwordHash, username, avatarColor);
-  return { id: result.lastInsertRowid, avatarColor };
+  const result = stmt.run(email, passwordHash, username, avatarColor, verificationToken, tokenExpires);
+  return { id: result.lastInsertRowid, avatarColor, verificationToken };
 }
 
 function findUserByEmail(email) {
@@ -74,9 +106,52 @@ function findUserByEmail(email) {
   return stmt.get(email);
 }
 
+function findUserByUsername(username) {
+  const stmt = db.prepare('SELECT * FROM users WHERE LOWER(username) = LOWER(?)');
+  return stmt.get(username);
+}
+
 function findUserById(id) {
-  const stmt = db.prepare('SELECT id, email, username, created_at, avatar_color, avatar_image FROM users WHERE id = ?');
+  const stmt = db.prepare('SELECT id, email, username, created_at, avatar_color, avatar_image, email_verified FROM users WHERE id = ?');
   return stmt.get(id);
+}
+
+function findUserByVerificationToken(token) {
+  const stmt = db.prepare('SELECT * FROM users WHERE verification_token = ?');
+  return stmt.get(token);
+}
+
+function verifyUserEmail(userId) {
+  const stmt = db.prepare('UPDATE users SET email_verified = 1, verification_token = NULL, verification_token_expires = NULL WHERE id = ?');
+  stmt.run(userId);
+}
+
+function createPasswordResetToken(userId) {
+  const resetToken = generateToken();
+  const expires = new Date(Date.now() + 60 * 60 * 1000).toISOString(); // 1h
+
+  const stmt = db.prepare('UPDATE users SET password_reset_token = ?, password_reset_expires = ? WHERE id = ?');
+  stmt.run(resetToken, expires, userId);
+  return resetToken;
+}
+
+function findUserByResetToken(token) {
+  const stmt = db.prepare('SELECT * FROM users WHERE password_reset_token = ?');
+  return stmt.get(token);
+}
+
+function updateUserPassword(userId, newPasswordHash) {
+  const stmt = db.prepare('UPDATE users SET password_hash = ?, password_reset_token = NULL, password_reset_expires = NULL WHERE id = ?');
+  stmt.run(newPasswordHash, userId);
+}
+
+function resendVerificationToken(userId) {
+  const verificationToken = generateToken();
+  const tokenExpires = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
+
+  const stmt = db.prepare('UPDATE users SET verification_token = ?, verification_token_expires = ? WHERE id = ?');
+  stmt.run(verificationToken, tokenExpires, userId);
+  return verificationToken;
 }
 
 function updateUserAvatar(userId, avatarImage) {
@@ -153,7 +228,14 @@ module.exports = {
   db,
   createUser,
   findUserByEmail,
+  findUserByUsername,
   findUserById,
+  findUserByVerificationToken,
+  verifyUserEmail,
+  createPasswordResetToken,
+  findUserByResetToken,
+  updateUserPassword,
+  resendVerificationToken,
   updateUserAvatar,
   getStats,
   getAllStatsForUser,

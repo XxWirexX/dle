@@ -1,12 +1,73 @@
 const express = require('express');
-const { createUser, findUserByEmail, findUserById, updateUserAvatar } = require('../db/database');
+const rateLimit = require('express-rate-limit');
+const {
+  createUser,
+  findUserByEmail,
+  findUserByUsername,
+  findUserById,
+  findUserByVerificationToken,
+  verifyUserEmail,
+  createPasswordResetToken,
+  findUserByResetToken,
+  updateUserPassword,
+  resendVerificationToken,
+  updateUserAvatar
+} = require('../db/database');
 const { hashPassword, verifyPassword, generateToken } = require('../auth/authUtils');
 const { authMiddleware } = require('../auth/authMiddleware');
+const { sendVerificationEmail, sendPasswordResetEmail } = require('../services/emailService');
 
 const router = express.Router();
 
+// Rate limiters
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 10, // 10 tentatives par fenêtre
+  message: { error: 'Trop de tentatives, réessayez dans 15 minutes' },
+  standardHeaders: true,
+  legacyHeaders: false
+});
+
+const strictLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000, // 1 heure
+  max: 5, // 5 tentatives par heure
+  message: { error: 'Trop de tentatives de connexion échouées, réessayez plus tard' },
+  standardHeaders: true,
+  legacyHeaders: false,
+  skipSuccessfulRequests: true // Ne compte que les échecs
+});
+
+// Validation helpers
+function isValidEmail(email) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+
+function isValidUsername(username) {
+  // 2-20 caractères, lettres, chiffres, underscores uniquement
+  const usernameRegex = /^[a-zA-Z0-9_]{2,20}$/;
+  return usernameRegex.test(username);
+}
+
+function validatePassword(password) {
+  const errors = [];
+  if (password.length < 8) {
+    errors.push('au moins 8 caractères');
+  }
+  if (!/[A-Z]/.test(password)) {
+    errors.push('une majuscule');
+  }
+  if (!/[a-z]/.test(password)) {
+    errors.push('une minuscule');
+  }
+  if (!/[0-9]/.test(password)) {
+    errors.push('un chiffre');
+  }
+  return errors;
+}
+
 // POST /api/auth/register
-router.post('/register', async (req, res) => {
+router.post('/register', authLimiter, async (req, res) => {
   try {
     const { email, password, username } = req.body;
 
@@ -14,29 +75,51 @@ router.post('/register', async (req, res) => {
       return res.status(400).json({ error: 'Email, mot de passe et username requis' });
     }
 
-    if (password.length < 6) {
-      return res.status(400).json({ error: 'Le mot de passe doit faire au moins 6 caractères' });
+    // Validation email
+    if (!isValidEmail(email)) {
+      return res.status(400).json({ error: 'Format d\'email invalide' });
     }
 
-    if (username.length < 2 || username.length > 20) {
-      return res.status(400).json({ error: 'Le username doit faire entre 2 et 20 caractères' });
+    // Validation username
+    if (!isValidUsername(username)) {
+      return res.status(400).json({
+        error: 'Le pseudo doit faire 2-20 caractères (lettres, chiffres, underscores uniquement)'
+      });
+    }
+
+    // Validation mot de passe
+    const passwordErrors = validatePassword(password);
+    if (passwordErrors.length > 0) {
+      return res.status(400).json({
+        error: `Le mot de passe doit contenir ${passwordErrors.join(', ')}`
+      });
     }
 
     // Vérifier si l'email existe déjà
-    const existing = findUserByEmail(email);
-    if (existing) {
+    const existingEmail = findUserByEmail(email);
+    if (existingEmail) {
       return res.status(400).json({ error: 'Cet email est déjà utilisé' });
     }
 
+    // Vérifier si le username existe déjà
+    const existingUsername = findUserByUsername(username);
+    if (existingUsername) {
+      return res.status(400).json({ error: 'Ce pseudo est déjà pris' });
+    }
+
     const passwordHash = await hashPassword(password);
-    const { id: userId, avatarColor } = createUser(email, passwordHash, username);
+    const { id: userId, avatarColor, verificationToken } = createUser(email, passwordHash, username);
+
+    // Envoyer l'email de vérification
+    await sendVerificationEmail(email, username, verificationToken);
 
     const user = { id: userId, username };
     const token = generateToken(user);
 
     res.status(201).json({
-      user: { id: userId, email, username, avatar_color: avatarColor, avatar_image: null },
-      token
+      user: { id: userId, email, username, avatar_color: avatarColor, avatar_image: null, email_verified: 0 },
+      token,
+      message: 'Un email de vérification a été envoyé'
     });
   } catch (error) {
     console.error('Register error:', error);
@@ -45,7 +128,7 @@ router.post('/register', async (req, res) => {
 });
 
 // POST /api/auth/login
-router.post('/login', async (req, res) => {
+router.post('/login', [authLimiter, strictLimiter], async (req, res) => {
   try {
     const { email, password } = req.body;
 
@@ -71,12 +154,127 @@ router.post('/login', async (req, res) => {
         email: user.email,
         username: user.username,
         avatar_color: user.avatar_color,
-        avatar_image: user.avatar_image
+        avatar_image: user.avatar_image,
+        email_verified: user.email_verified
       },
       token
     });
   } catch (error) {
     console.error('Login error:', error);
+    res.status(500).json({ error: 'Erreur serveur' });
+  }
+});
+
+// POST /api/auth/verify-email
+router.post('/verify-email', async (req, res) => {
+  try {
+    const { token } = req.body;
+
+    if (!token) {
+      return res.status(400).json({ error: 'Token requis' });
+    }
+
+    const user = findUserByVerificationToken(token);
+    if (!user) {
+      return res.status(400).json({ error: 'Token invalide ou expiré' });
+    }
+
+    // Vérifier l'expiration
+    if (new Date(user.verification_token_expires) < new Date()) {
+      return res.status(400).json({ error: 'Token expiré, demandez un nouveau lien' });
+    }
+
+    verifyUserEmail(user.id);
+
+    res.json({ message: 'Email vérifié avec succès' });
+  } catch (error) {
+    console.error('Verify email error:', error);
+    res.status(500).json({ error: 'Erreur serveur' });
+  }
+});
+
+// POST /api/auth/resend-verification
+router.post('/resend-verification', authLimiter, authMiddleware, async (req, res) => {
+  try {
+    const user = findUserById(req.user.userId);
+
+    if (!user) {
+      return res.status(404).json({ error: 'Utilisateur non trouvé' });
+    }
+
+    if (user.email_verified) {
+      return res.status(400).json({ error: 'Email déjà vérifié' });
+    }
+
+    const verificationToken = resendVerificationToken(user.id);
+    await sendVerificationEmail(user.email, user.username, verificationToken);
+
+    res.json({ message: 'Email de vérification envoyé' });
+  } catch (error) {
+    console.error('Resend verification error:', error);
+    res.status(500).json({ error: 'Erreur serveur' });
+  }
+});
+
+// POST /api/auth/forgot-password
+router.post('/forgot-password', authLimiter, async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      return res.status(400).json({ error: 'Email requis' });
+    }
+
+    const user = findUserByEmail(email);
+
+    // Toujours répondre OK pour ne pas révéler si l'email existe
+    if (!user) {
+      return res.json({ message: 'Si cet email existe, un lien de réinitialisation a été envoyé' });
+    }
+
+    const resetToken = createPasswordResetToken(user.id);
+    await sendPasswordResetEmail(email, user.username, resetToken);
+
+    res.json({ message: 'Si cet email existe, un lien de réinitialisation a été envoyé' });
+  } catch (error) {
+    console.error('Forgot password error:', error);
+    res.status(500).json({ error: 'Erreur serveur' });
+  }
+});
+
+// POST /api/auth/reset-password
+router.post('/reset-password', async (req, res) => {
+  try {
+    const { token, password } = req.body;
+
+    if (!token || !password) {
+      return res.status(400).json({ error: 'Token et mot de passe requis' });
+    }
+
+    // Validation mot de passe
+    const passwordErrors = validatePassword(password);
+    if (passwordErrors.length > 0) {
+      return res.status(400).json({
+        error: `Le mot de passe doit contenir ${passwordErrors.join(', ')}`
+      });
+    }
+
+    const user = findUserByResetToken(token);
+    if (!user) {
+      return res.status(400).json({ error: 'Token invalide ou expiré' });
+    }
+
+    // Vérifier l'expiration
+    if (new Date(user.password_reset_expires) < new Date()) {
+      return res.status(400).json({ error: 'Token expiré, demandez un nouveau lien' });
+    }
+
+    const passwordHash = await hashPassword(password);
+    updateUserPassword(user.id, passwordHash);
+
+    res.json({ message: 'Mot de passe mis à jour avec succès' });
+  } catch (error) {
+    console.error('Reset password error:', error);
     res.status(500).json({ error: 'Erreur serveur' });
   }
 });

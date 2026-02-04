@@ -4,6 +4,7 @@ const PORT = process.env.PORT || 3000;
 const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
+const helmet = require("helmet");
 
 const app = express();
 const server = http.createServer(app);
@@ -18,6 +19,11 @@ const io = new Server(server, {
 
 const fs = require("fs");
 const path = require("path");
+
+// Security headers
+app.use(helmet({
+  contentSecurityPolicy: false // Désactivé pour permettre le chargement des images
+}));
 
 // Middleware JSON
 app.use(express.json());
