@@ -19,6 +19,15 @@ const io = new Server(server, {
 const fs = require("fs");
 const path = require("path");
 
+// Middleware JSON
+app.use(express.json());
+
+// Routes d'authentification
+const authRoutes = require("./routes/authRoutes");
+const statsRoutes = require("./routes/statsRoutes");
+app.use("/api/auth", authRoutes);
+app.use("/api/stats", statsRoutes);
+
 // Setup Socket.IO handlers
 const setupSocketHandlers = require("./socket/socketHandler");
 setupSocketHandlers(io);
