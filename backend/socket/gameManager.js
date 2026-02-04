@@ -22,7 +22,7 @@ class GameManager {
   }
 
   // Ajouter un joueur à la queue
-  joinQueue(socket, animeId, gameData) {
+  joinQueue(socket, animeId, gameData, user = null) {
     if (!this.matchmakingQueues.has(animeId)) {
       this.matchmakingQueues.set(animeId, []);
     }
@@ -35,7 +35,7 @@ class GameManager {
       return { status: 'already-in-queue', position: existingIndex + 1 };
     }
 
-    queue.push({ socket, gameData });
+    queue.push({ socket, gameData, user });
     const position = queue.length;
 
     // Si on a 2 joueurs, créer une room
@@ -79,6 +79,10 @@ class GameManager {
     // Choisir aléatoirement qui commence
     const firstPlayer = Math.random() < 0.5 ? player1.socket.id : player2.socket.id;
 
+    // Utiliser le username de l'utilisateur connecté ou un nom par défaut
+    const username1 = player1.user?.username || 'Joueur 1';
+    const username2 = player2.user?.username || 'Joueur 2';
+
     const room = {
       id: roomId,
       animeId,
@@ -88,12 +92,14 @@ class GameManager {
         [player1.socket.id]: {
           attempts: [],
           rematchVote: false,
-          username: `Joueur 1`
+          username: username1,
+          user: player1.user
         },
         [player2.socket.id]: {
           attempts: [],
           rematchVote: false,
-          username: `Joueur 2`
+          username: username2,
+          user: player2.user
         }
       },
       currentTurn: firstPlayer,

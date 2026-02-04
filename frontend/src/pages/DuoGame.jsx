@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import useSocket from "../hooks/useSocket";
+import useAuth from "../hooks/useAuth";
 import WaitingRoom from "../components/game/WaitingRoom";
 import TurnIndicator from "../components/game/TurnIndicator";
 import RematchModal from "../components/game/RematchModal";
@@ -9,6 +10,7 @@ import "./Game.css";
 export default function DuoGame() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { token } = useAuth();
 
   const [localGameData, setLocalGameData] = useState(null);
   const [pool, setPool] = useState([]);
@@ -30,7 +32,6 @@ export default function DuoGame() {
     queuePosition,
     roomId,
     isYourTurn,
-    gameData,
     makeGuess,
     myAttempts,
     opponentAttempts,
@@ -43,7 +44,7 @@ export default function DuoGame() {
     opponentDisconnected,
     opponentLeft,
     leaveRoom
-  } = useSocket();
+  } = useSocket(token);
 
   // Charger les donnees de l'anime
   useEffect(() => {

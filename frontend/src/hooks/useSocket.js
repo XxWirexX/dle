@@ -3,10 +3,16 @@ import { io } from 'socket.io-client';
 
 const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || 'http://localhost:3000';
 
-export default function useSocket() {
+export default function useSocket(token = null) {
   const socketRef = useRef(null);
+  const tokenRef = useRef(token);
   const [isConnected, setIsConnected] = useState(false);
   const [connectionError, setConnectionError] = useState(null);
+
+  // Mettre à jour la ref du token dans un effet
+  useEffect(() => {
+    tokenRef.current = token;
+  }, [token]);
 
   // État du matchmaking
   const [inQueue, setInQueue] = useState(false);
@@ -33,22 +39,35 @@ export default function useSocket() {
   const [opponentDisconnected, setOpponentDisconnected] = useState(false);
   const [opponentLeft, setOpponentLeft] = useState(false);
 
+  // Socket ID comme état
+  const [socketId, setSocketId] = useState(null);
+
   // Connexion au serveur
   const connect = useCallback(() => {
     if (socketRef.current?.connected) return;
 
-    socketRef.current = io(SOCKET_URL, {
-      transports: ['websocket', 'polling']
-    });
+    const options = {
+      transports: ['websocket', 'polling'],
+      auth: {}
+    };
+
+    // Ajouter le token si disponible
+    if (tokenRef.current) {
+      options.auth.token = tokenRef.current;
+    }
+
+    socketRef.current = io(SOCKET_URL, options);
 
     socketRef.current.on('connect', () => {
       setIsConnected(true);
       setConnectionError(null);
+      setSocketId(socketRef.current?.id || null);
       console.log('Connected to server');
     });
 
     socketRef.current.on('disconnect', () => {
       setIsConnected(false);
+      setSocketId(null);
       console.log('Disconnected from server');
     });
 
@@ -102,7 +121,7 @@ export default function useSocket() {
       setIsYourTurn(isYourTurn);
     });
 
-    socketRef.current.on('game-over', ({ winner, target, winnerId }) => {
+    socketRef.current.on('game-over', ({ target, winnerId }) => {
       setGameOver(true);
       setWinner(winnerId);
       setTarget(target);
@@ -205,7 +224,7 @@ export default function useSocket() {
     disconnect,
     isConnected,
     connectionError,
-    socketId: socketRef.current?.id,
+    socketId,
 
     // Queue
     joinQueue,

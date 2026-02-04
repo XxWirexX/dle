@@ -3,6 +3,8 @@ import Home from './pages/Home';
 import Detail from './pages/Detail';
 import Game from './pages/Game';
 import CharactersList from './pages/CharactersList';
+import Login from './pages/Login';
+import Register from './pages/Register';
 import './App.css'
 
 function App() {
@@ -13,7 +15,14 @@ function App() {
           path="/"
           element={<Home />}
         />
-
+        <Route
+          path="/login"
+          element={<Login />}
+        />
+        <Route
+          path="/register"
+          element={<Register />}
+        />
         <Route
             path="/anime/:id"
             element={<Detail />}

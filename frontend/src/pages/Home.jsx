@@ -3,9 +3,11 @@ import "./Home.css";
 import {useEffect, useState} from "react";
 import Card from "../components/Card.jsx";
 import {Link} from "react-router-dom";
+import useAuth from "../hooks/useAuth";
 
 export default function Home() {
   const [mangas, setMangas] = useState([]);
+  const { user, loading } = useAuth();
 
   useEffect(() => {
     fetch("/api/animes")
@@ -15,7 +17,7 @@ export default function Home() {
         setMangas(data);
       });
   }, []);
-  
+
   return (
     <div className="home-container">
       <header className="home-header">
@@ -23,7 +25,7 @@ export default function Home() {
           <img src="/images/logo.jpg" alt="Mangadle" className="logo" />
           <h1 className="site-title">Mangadle</h1>
         </div>
-        
+
         <nav className="nav-buttons">
           <Link to="/" className="nav-btn active">
             Manga
@@ -32,6 +34,19 @@ export default function Home() {
             Video Games
           </Link>
         </nav>
+
+        <div className="user-section">
+          {loading ? null : user ? (
+            <Link to="/profile" className="user-btn">
+              <span className="user-avatar">{user.username.charAt(0).toUpperCase()}</span>
+              <span className="user-name">{user.username}</span>
+            </Link>
+          ) : (
+            <Link to="/login" className="nav-btn login-btn">
+              Connexion
+            </Link>
+          )}
+        </div>
       </header>
 
       <div className="games-grid">

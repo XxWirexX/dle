@@ -226,6 +226,18 @@
   color: white;
 }
 
+.mode-card.requires-login {
+  opacity: 0.8;
+}
+
+.login-hint {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.8rem;
+  color: #f59e0b;
+  font-style: italic;
+}
+
 /* Attributes Grid */
 .attributes-grid {
   display: grid;

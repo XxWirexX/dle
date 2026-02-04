@@ -1,10 +1,12 @@
 // src/pages/Detail.jsx
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
 import "./Detail.css";
 
 export default function Detail() {
   const { id } = useParams();
+  const { user, loading: authLoading } = useAuth();
   const [anime, setAnime] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -88,11 +90,12 @@ export default function Detail() {
               </div>
               <div className="mode-arrow">→</div>
             </Link>
-            <Link to={`/anime/${id}/play?mode=duo`} className="mode-card duo">
-              <div className="mode-icon">👥</div>
+            <Link to={`/anime/${id}/play?mode=duo`} className={`mode-card duo ${!user && !authLoading ? 'requires-login' : ''}`}>
+              <div className="mode-icon">{!user && !authLoading ? '🔒' : '👥'}</div>
               <div className="mode-info">
                 <h3>Duo</h3>
                 <p>Affronte un autre joueur en temps réel</p>
+                {!user && !authLoading && <span className="login-hint">Connexion requise</span>}
               </div>
               <div className="mode-arrow">→</div>
             </Link>

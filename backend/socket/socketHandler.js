@@ -1,16 +1,34 @@
 const GameManager = require('./gameManager');
+const { verifyToken } = require('../auth/authUtils');
+const { updateStats } = require('../db/database');
 
 function setupSocketHandlers(io) {
   const gameManager = new GameManager();
 
+  // Middleware pour authentifier les connexions Socket.IO
+  io.use((socket, next) => {
+    const token = socket.handshake.auth.token;
+    if (token) {
+      try {
+        socket.user = verifyToken(token);
+      } catch (err) {
+        socket.user = null;
+      }
+    } else {
+      socket.user = null;
+    }
+    next();
+  });
+
   io.on('connection', (socket) => {
-    console.log(`Player connected: ${socket.id}`);
+    const username = socket.user?.username || `Joueur`;
+    console.log(`Player connected: ${socket.id} (${username})`);
 
     // Rejoindre la queue de matchmaking
     socket.on('join-queue', ({ animeId, gameData }) => {
       console.log(`${socket.id} joining queue for anime: ${animeId}`);
 
-      const result = gameManager.joinQueue(socket, animeId, gameData);
+      const result = gameManager.joinQueue(socket, animeId, gameData, socket.user);
 
       if (result.status === 'queue-joined') {
         socket.emit('queue-joined', { position: result.position });
@@ -69,6 +87,16 @@ function setupSocketHandlers(io) {
           winner: result.winner,
           target: result.target,
           winnerId: socket.id
+        });
+
+        // Enregistrer les stats des joueurs connectés
+        const playerIds = Object.keys(room.players);
+        playerIds.forEach(playerId => {
+          const player = room.players[playerId];
+          if (player.user && player.user.userId) {
+            const won = playerId === socket.id;
+            updateStats(player.user.userId, room.animeId, won);
+          }
         });
 
         console.log(`Game over in ${roomId}, winner: ${socket.id}`);
