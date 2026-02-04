@@ -1,27 +1,87 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import DuoGame from "./DuoGame";
 import GameNavbar from "../components/GameNavbar";
+import useAuth from "../hooks/useAuth";
 import "./Game.css";
 
-// Hook pour persister l'état dans localStorage
-function usePersistentState(key, initial) {
-  const [state, setState] = useState(() => {
-    try {
-      const raw = localStorage.getItem(key);
-      return raw ? JSON.parse(raw) : initial;
-    } catch {
-      return initial;
-    }
+// Hook pour persister l'état - utilise l'API si connecté, sinon localStorage
+function useStats(animeId) {
+  const { token, user } = useAuth();
+  const [stats, setStats] = useState({
+    played: 0,
+    wins: 0,
+    streak: 0,
+    maxStreak: 0
   });
+  const [loaded, setLoaded] = useState(false);
 
+  // Charger les stats au montage
   useEffect(() => {
-    try {
-      localStorage.setItem(key, JSON.stringify(state));
-    } catch {}
-  }, [key, state]);
+    if (!animeId) return;
 
-  return [state, setState];
+    if (token && user) {
+      // Charger depuis l'API
+      fetch(`/api/stats/${animeId}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+        .then(r => r.ok ? r.json() : Promise.reject())
+        .then(data => {
+          setStats(data);
+          setLoaded(true);
+        })
+        .catch(() => loadFromLocalStorage());
+    } else {
+      // Charger depuis localStorage
+      loadFromLocalStorage();
+    }
+
+    function loadFromLocalStorage() {
+      try {
+        const raw = localStorage.getItem(`stats-${animeId}`);
+        if (raw) setStats(JSON.parse(raw));
+      } catch { /* ignore parse errors */ }
+      setLoaded(true);
+    }
+  }, [animeId, token, user]);
+
+  // Mettre à jour les stats après une partie
+  const updateStats = useCallback((won, attempts = 0, isDuo = false) => {
+    if (token && user) {
+      // Sauvegarder via l'API
+      fetch(`/api/stats/${animeId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ won, attempts, isDuo })
+      })
+        .then(r => r.ok ? r.json() : Promise.reject())
+        .then(data => setStats(data))
+        .catch(() => updateLocalStorage(won));
+    } else {
+      // Sauvegarder dans localStorage
+      updateLocalStorage(won);
+    }
+
+    function updateLocalStorage(won) {
+      setStats(s => {
+        const newStats = {
+          played: s.played + 1,
+          wins: s.wins + (won ? 1 : 0),
+          streak: won ? s.streak + 1 : 0,
+          maxStreak: Math.max(s.maxStreak, won ? s.streak + 1 : 0)
+        };
+        try {
+          localStorage.setItem(`stats-${animeId}`, JSON.stringify(newStats));
+        } catch { /* ignore storage errors */ }
+        return newStats;
+      });
+    }
+  }, [animeId, token, user]);
+
+  return { stats, updateStats, loaded };
 }
 
 // Sélection aléatoire d'une cible
@@ -119,13 +179,9 @@ function SoloGame() {
   const [query, setQuery] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [showHints, setShowHints] = useState(false);
+  const [statsUpdated, setStatsUpdated] = useState(false);
 
-  const [stats, setStats] = usePersistentState(`stats-${id}`, {
-    played: 0,
-    wins: 0,
-    streak: 0,
-    maxStreak: 0,
-  });
+  const { stats, updateStats } = useStats(id);
 
   const searchRef = useRef(null);
 
@@ -155,16 +211,19 @@ function SoloGame() {
 
   // Mise à jour des stats à la fin de partie
   useEffect(() => {
-    if (!gameOver) return;
-    setStats((s) => {
-      const played = s.played + 1;
-      const won = attempts.some((a) => a.isCorrect);
-      const wins = s.wins + (won ? 1 : 0);
-      const streak = won ? s.streak + 1 : 0;
-      const maxStreak = Math.max(s.maxStreak, streak);
-      return { played, wins, streak, maxStreak };
-    });
-  }, [gameOver]);
+    if (!gameOver || statsUpdated) return;
+    const won = attempts.some((a) => a.isCorrect);
+    updateStats(won, attempts.length, false);
+    // Note: statsUpdated sera mis à true via le callback updateStats
+  }, [gameOver, statsUpdated, attempts, updateStats]);
+
+  // Flag pour éviter double update
+  useEffect(() => {
+    if (gameOver && !statsUpdated) {
+      const timer = setTimeout(() => setStatsUpdated(true), 0);
+      return () => clearTimeout(timer);
+    }
+  }, [gameOver, statsUpdated]);
 
   function validateSelection(char) {
     if (gameOver || !target || !gameData) return;
@@ -197,6 +256,7 @@ function SoloGame() {
     setTarget(pickTarget(pool));
     setAttempts([]);
     setGameOver(false);
+    setStatsUpdated(false);
     setQuery("");
     setShowSuggestions(false);
   }
@@ -388,8 +448,21 @@ function SoloGame() {
 export default function Game() {
   const search = new URLSearchParams(useLocation().search);
   const mode = search.get("mode") || "solo";
+  const { user, loading } = useAuth();
 
+  // Mode duo requiert une connexion
   if (mode === "duo") {
+    if (loading) {
+      return <div className="loading">Chargement...</div>;
+    }
+
+    if (!user) {
+      // Rediriger vers login avec retour après connexion
+      const returnUrl = window.location.pathname + window.location.search;
+      window.location.href = `/login?redirect=${encodeURIComponent(returnUrl)}`;
+      return <div className="loading">Redirection...</div>;
+    }
+
     return <DuoGame />;
   }
 

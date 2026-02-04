@@ -9,7 +9,11 @@ export default function RematchModal({
   opponentWantsRematch,
   opponentDisconnected,
   opponentLeft,
-  gameId
+  gameId,
+  playerName,
+  opponentName,
+  myScore,
+  opponentScore
 }) {
   const opponentGone = opponentDisconnected || opponentLeft;
 
@@ -18,6 +22,17 @@ export default function RematchModal({
       <div className="rematch-modal">
         <div className={`rematch-result ${isWinner ? 'win' : 'lose'}`}>
           {isWinner ? 'Victoire !' : 'Defaite...'}
+        </div>
+
+        {/* Score de la série */}
+        <div className="series-score">
+          <span className="series-player me">{playerName || 'Toi'}</span>
+          <span className="series-numbers">
+            <span className="score me">{myScore}</span>
+            <span className="separator">-</span>
+            <span className="score opponent">{opponentScore}</span>
+          </span>
+          <span className="series-player opponent">{opponentName || 'Adversaire'}</span>
         </div>
 
         <div className="rematch-target">
