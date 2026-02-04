@@ -1,6 +1,5 @@
 const GameManager = require('./gameManager');
 const { verifyToken } = require('../auth/authUtils');
-const { updateStats } = require('../db/database');
 
 function setupSocketHandlers(io) {
   const gameManager = new GameManager();
@@ -30,9 +29,13 @@ function setupSocketHandlers(io) {
 
       const result = gameManager.joinQueue(socket, animeId, gameData, socket.user);
 
-      if (result.status === 'queue-joined') {
-        socket.emit('queue-joined', { position: result.position });
+      if (result.status === 'already-in-game') {
+        socket.emit('queue-error', { error: 'Tu es déjà dans une partie en cours' });
+        return;
       } else if (result.status === 'already-in-queue') {
+        socket.emit('queue-error', { error: 'Tu es déjà en recherche de partie' });
+        return;
+      } else if (result.status === 'queue-joined') {
         socket.emit('queue-joined', { position: result.position });
       } else if (result.status === 'match-found') {
         const { roomId, room, players } = result;
@@ -48,7 +51,11 @@ function setupSocketHandlers(io) {
             isYourTurn: isFirstTurn,
             opponentId,
             gameData: room.gameData,
-            maxAttempts: room.gameData.maxAttempts || 26
+            maxAttempts: room.gameData.maxAttempts || 26,
+            playerName: room.players[playerSocket.id].username,
+            opponentName: room.players[opponentId].username,
+            myScore: room.sessionScores[playerSocket.id],
+            opponentScore: room.sessionScores[opponentId]
           });
         });
 
@@ -82,20 +89,19 @@ function setupSocketHandlers(io) {
           isCorrect: true
         });
 
-        // Annoncer la fin de partie aux deux joueurs
-        io.to(roomId).emit('game-over', {
-          winner: result.winner,
-          target: result.target,
-          winnerId: socket.id
-        });
-
-        // Enregistrer les stats des joueurs connectés
+        // Annoncer la fin de partie à chaque joueur avec ses scores
         const playerIds = Object.keys(room.players);
         playerIds.forEach(playerId => {
-          const player = room.players[playerId];
-          if (player.user && player.user.userId) {
-            const won = playerId === socket.id;
-            updateStats(player.user.userId, room.animeId, won);
+          const playerSocket = io.sockets.sockets.get(playerId);
+          if (playerSocket) {
+            const opId = playerIds.find(id => id !== playerId);
+            playerSocket.emit('game-over', {
+              winner: result.winner,
+              target: result.target,
+              winnerId: socket.id,
+              myScore: room.sessionScores[playerId],
+              opponentScore: room.sessionScores[opId]
+            });
           }
         });
 
@@ -142,8 +148,11 @@ function setupSocketHandlers(io) {
         playerIds.forEach(playerId => {
           const playerSocket = io.sockets.sockets.get(playerId);
           if (playerSocket) {
+            const opId = playerIds.find(id => id !== playerId);
             playerSocket.emit('rematch-starting', {
-              isYourTurn: result.room.currentTurn === playerId
+              isYourTurn: result.room.currentTurn === playerId,
+              myScore: room.sessionScores[playerId],
+              opponentScore: room.sessionScores[opId]
             });
           }
         });
@@ -168,6 +177,17 @@ function setupSocketHandlers(io) {
         }
       }
       socket.emit('room-left');
+    });
+
+    // Chat
+    socket.on('send-chat', ({ text }) => {
+      if (!text || typeof text !== 'string') return;
+
+      const result = gameManager.addMessage(socket.id, text);
+      if (result) {
+        // Broadcast le message à tous les joueurs de la room
+        io.to(result.roomId).emit('chat-message', result.message);
+      }
     });
 
     // Déconnexion

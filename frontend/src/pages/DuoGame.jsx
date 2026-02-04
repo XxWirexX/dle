@@ -5,6 +5,7 @@ import useAuth from "../hooks/useAuth";
 import WaitingRoom from "../components/game/WaitingRoom";
 import TurnIndicator from "../components/game/TurnIndicator";
 import RematchModal from "../components/game/RematchModal";
+import ChatBox from "../components/game/ChatBox";
 import "./Game.css";
 
 export default function DuoGame() {
@@ -17,8 +18,10 @@ export default function DuoGame() {
   const [query, setQuery] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [showHints, setShowHints] = useState(false);
+  const [statsUpdated, setStatsUpdated] = useState(false);
 
   const searchRef = useRef(null);
+  const hasJoinedQueue = useRef(false);
 
   const {
     connect,
@@ -30,21 +33,30 @@ export default function DuoGame() {
     leaveQueue,
     inQueue,
     queuePosition,
+    queueError,
     roomId,
     isYourTurn,
+    playerName,
+    opponentName,
     makeGuess,
     myAttempts,
     opponentAttempts,
     gameOver,
     winner,
     target,
+    myScore,
+    opponentScore,
     requestRematch,
     rematchRequested,
     opponentWantsRematch,
     opponentDisconnected,
     opponentLeft,
-    leaveRoom
+    leaveRoom,
+    messages,
+    sendChatMessage
   } = useSocket(token);
+
+  const [chatOpen, setChatOpen] = useState(false);
 
   // Charger les donnees de l'anime
   useEffect(() => {
@@ -65,10 +77,15 @@ export default function DuoGame() {
 
   // Rejoindre la queue quand connecte et donnees chargees
   useEffect(() => {
-    if (isConnected && localGameData && !roomId && !inQueue) {
+    if (isConnected && localGameData && !roomId && !inQueue && !queueError && !hasJoinedQueue.current) {
+      hasJoinedQueue.current = true;
       joinQueue(id, localGameData);
     }
-  }, [isConnected, localGameData, id, joinQueue, roomId, inQueue]);
+    // Reset si on quitte la room pour pouvoir rejoindre à nouveau
+    if (!isConnected) {
+      hasJoinedQueue.current = false;
+    }
+  }, [isConnected, localGameData, id, joinQueue, roomId, inQueue, queueError]);
 
   // Fermer les suggestions au clic exterieur
   useEffect(() => {
@@ -80,6 +97,34 @@ export default function DuoGame() {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  // Envoyer les stats duo quand la partie se termine
+  useEffect(() => {
+    if (!gameOver || statsUpdated || !token || !socketId) return;
+
+    const isWinner = winner === socketId;
+    fetch(`/api/stats/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        won: isWinner,
+        attempts: myAttempts.length,
+        isDuo: true
+      })
+    }).catch(console.error);
+
+    setStatsUpdated(true);
+  }, [gameOver, statsUpdated, token, id, winner, socketId, myAttempts.length]);
+
+  // Reset statsUpdated quand une nouvelle partie commence (rematch)
+  useEffect(() => {
+    if (!gameOver && statsUpdated) {
+      setStatsUpdated(false);
+    }
+  }, [gameOver, statsUpdated]);
 
   // Combine toutes les tentatives (moi + adversaire)
   const allAttempts = [
@@ -146,6 +191,23 @@ export default function DuoGame() {
     );
   }
 
+  // Erreur de queue (déjà en partie, etc.)
+  if (queueError) {
+    return (
+      <div className="game-container">
+        <div className="game-overlay">
+          <div className="connection-error">
+            <h2>Impossible de rejoindre</h2>
+            <p>{queueError}</p>
+            <button onClick={() => navigate(`/anime/${id}`)} className="back-btn">
+              Retour
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   // Chargement
   if (!localGameData || pool.length === 0) {
     return <div className="loading">Chargement...</div>;
@@ -196,6 +258,17 @@ export default function DuoGame() {
           <h1 className="game-title">{localGameData.name}</h1>
           <div className="mode-badge">Mode Duo</div>
 
+          {/* Affichage des joueurs et score */}
+          <div className="players-display">
+            <span className="player-name me">{playerName || "Joueur 1"}</span>
+            <span className="session-score">
+              <span className="score me">{myScore}</span>
+              <span className="score-separator">-</span>
+              <span className="score opponent">{opponentScore}</span>
+            </span>
+            <span className="player-name opponent">{opponentName || "Joueur 2"}</span>
+          </div>
+
           <TurnIndicator isYourTurn={isYourTurn} gameOver={gameOver} />
 
           {/* Barre de recherche */}
@@ -224,7 +297,7 @@ export default function DuoGame() {
                     className="suggestion-item"
                   >
                     <div className="suggestion-image">
-                      <img src={`/api/images/${gameData.id}/characters/${char.image}`} alt={char.name} />
+                      <img src={`/api/images/${id}/characters/${char.image}`} alt={char.name} />
                     </div>
                     <div className="suggestion-name">{char.name}</div>
                   </button>
@@ -259,13 +332,13 @@ export default function DuoGame() {
                   <div key={i} className={`attempt-row ${a.isMe ? "my-attempt" : "opponent-attempt"}`}>
                     {/* Badge joueur */}
                     <div className={`cell-player ${a.isMe ? "player-me" : "player-opponent"}`}>
-                      {a.isMe ? "Toi" : "Adv"}
+                      {a.isMe ? (playerName || "Toi") : (opponentName || "Adv")}
                     </div>
 
                     {/* Image */}
                     <div className="cell-image">
                       <div className="character-image">
-                        <img src={`/api/images/${gameData.id}/characters/${a.guess.image}`} alt={a.guess.name} />
+                        <img src={`/api/images/${id}/characters/${a.guess.image}`} alt={a.guess.name} />
                       </div>
                     </div>
 
@@ -341,7 +414,11 @@ export default function DuoGame() {
             opponentWantsRematch={opponentWantsRematch}
             opponentDisconnected={opponentDisconnected}
             opponentLeft={opponentLeft}
-            gameId={gameData.id}
+            gameId={id}
+            playerName={playerName}
+            opponentName={opponentName}
+            myScore={myScore}
+            opponentScore={opponentScore}
           />
         )}
 
@@ -357,6 +434,15 @@ export default function DuoGame() {
             </div>
           </div>
         )}
+
+        {/* Chat */}
+        <ChatBox
+          messages={messages}
+          onSend={sendChatMessage}
+          mySocketId={socketId}
+          isOpen={chatOpen}
+          onToggle={() => setChatOpen(!chatOpen)}
+        />
       </div>
     </div>
   );

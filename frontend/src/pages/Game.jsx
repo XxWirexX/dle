@@ -46,7 +46,7 @@ function useStats(animeId) {
   }, [animeId, token, user]);
 
   // Mettre à jour les stats après une partie
-  const updateStats = useCallback((won) => {
+  const updateStats = useCallback((won, attempts = 0, isDuo = false) => {
     if (token && user) {
       // Sauvegarder via l'API
       fetch(`/api/stats/${animeId}`, {
@@ -55,7 +55,7 @@ function useStats(animeId) {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`
         },
-        body: JSON.stringify({ won })
+        body: JSON.stringify({ won, attempts, isDuo })
       })
         .then(r => r.ok ? r.json() : Promise.reject())
         .then(data => setStats(data))
@@ -213,7 +213,7 @@ function SoloGame() {
   useEffect(() => {
     if (!gameOver || statsUpdated) return;
     const won = attempts.some((a) => a.isCorrect);
-    updateStats(won);
+    updateStats(won, attempts.length, false);
     // Note: statsUpdated sera mis à true via le callback updateStats
   }, [gameOver, statsUpdated, attempts, updateStats]);
 

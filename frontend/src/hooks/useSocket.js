@@ -9,20 +9,21 @@ export default function useSocket(token = null) {
   const [isConnected, setIsConnected] = useState(false);
   const [connectionError, setConnectionError] = useState(null);
 
-  // Mettre à jour la ref du token dans un effet
-  useEffect(() => {
-    tokenRef.current = token;
-  }, [token]);
+  // Reconnexion nécessaire quand le token change
+  const [needsReconnect, setNeedsReconnect] = useState(false);
 
   // État du matchmaking
   const [inQueue, setInQueue] = useState(false);
   const [queuePosition, setQueuePosition] = useState(0);
+  const [queueError, setQueueError] = useState(null);
 
   // État de la partie
   const [roomId, setRoomId] = useState(null);
   const [isYourTurn, setIsYourTurn] = useState(false);
   const [opponentId, setOpponentId] = useState(null);
   const [gameData, setGameData] = useState(null);
+  const [playerName, setPlayerName] = useState(null);
+  const [opponentName, setOpponentName] = useState(null);
 
   // État des tentatives
   const [myAttempts, setMyAttempts] = useState([]);
@@ -34,6 +35,13 @@ export default function useSocket(token = null) {
   const [target, setTarget] = useState(null);
   const [rematchRequested, setRematchRequested] = useState(false);
   const [opponentWantsRematch, setOpponentWantsRematch] = useState(false);
+
+  // Scores de session
+  const [myScore, setMyScore] = useState(0);
+  const [opponentScore, setOpponentScore] = useState(0);
+
+  // Chat
+  const [messages, setMessages] = useState([]);
 
   // État adversaire
   const [opponentDisconnected, setOpponentDisconnected] = useState(false);
@@ -48,6 +56,10 @@ export default function useSocket(token = null) {
 
     const options = {
       transports: ['websocket', 'polling'],
+      reconnection: true,
+      reconnectionAttempts: 5,
+      reconnectionDelay: 1000,
+      timeout: 10000,
       auth: {}
     };
 
@@ -80,6 +92,7 @@ export default function useSocket(token = null) {
     socketRef.current.on('queue-joined', ({ position }) => {
       setInQueue(true);
       setQueuePosition(position);
+      setQueueError(null);
     });
 
     socketRef.current.on('queue-left', () => {
@@ -87,14 +100,24 @@ export default function useSocket(token = null) {
       setQueuePosition(0);
     });
 
-    socketRef.current.on('match-found', ({ roomId, isYourTurn, opponentId, gameData }) => {
+    socketRef.current.on('queue-error', ({ error }) => {
+      setQueueError(error);
+      setInQueue(false);
+    });
+
+    socketRef.current.on('match-found', ({ roomId, isYourTurn, opponentId, gameData, playerName, opponentName, myScore, opponentScore }) => {
       setInQueue(false);
       setRoomId(roomId);
       setIsYourTurn(isYourTurn);
       setOpponentId(opponentId);
       setGameData(gameData);
+      setPlayerName(playerName);
+      setOpponentName(opponentName);
+      setMyScore(myScore || 0);
+      setOpponentScore(opponentScore || 0);
       setMyAttempts([]);
       setOpponentAttempts([]);
+      setMessages([]);
       setGameOver(false);
       setWinner(null);
       setTarget(null);
@@ -121,10 +144,12 @@ export default function useSocket(token = null) {
       setIsYourTurn(isYourTurn);
     });
 
-    socketRef.current.on('game-over', ({ target, winnerId }) => {
+    socketRef.current.on('game-over', ({ target, winnerId, myScore, opponentScore }) => {
       setGameOver(true);
       setWinner(winnerId);
       setTarget(target);
+      if (myScore !== undefined) setMyScore(myScore);
+      if (opponentScore !== undefined) setOpponentScore(opponentScore);
     });
 
     // Rematch events
@@ -136,7 +161,7 @@ export default function useSocket(token = null) {
       setRematchRequested(true);
     });
 
-    socketRef.current.on('rematch-starting', ({ isYourTurn }) => {
+    socketRef.current.on('rematch-starting', ({ isYourTurn, myScore, opponentScore }) => {
       setMyAttempts([]);
       setOpponentAttempts([]);
       setGameOver(false);
@@ -145,6 +170,13 @@ export default function useSocket(token = null) {
       setIsYourTurn(isYourTurn);
       setRematchRequested(false);
       setOpponentWantsRematch(false);
+      if (myScore !== undefined) setMyScore(myScore);
+      if (opponentScore !== undefined) setOpponentScore(opponentScore);
+    });
+
+    // Chat events
+    socketRef.current.on('chat-message', (message) => {
+      setMessages(prev => [...prev, message]);
     });
 
     // Opponent events
@@ -163,11 +195,35 @@ export default function useSocket(token = null) {
       setGameData(null);
       setMyAttempts([]);
       setOpponentAttempts([]);
+      setMessages([]);
       setGameOver(false);
       setWinner(null);
       setTarget(null);
     });
   }, []);
+
+  // Mettre à jour la ref du token et marquer pour reconnexion si nécessaire
+  useEffect(() => {
+    const oldToken = tokenRef.current;
+    tokenRef.current = token;
+
+    // Si le token a changé et qu'on est connecté, déconnecter et marquer pour reconnexion
+    if (oldToken !== token && socketRef.current) {
+      console.log('Token changed, will reconnect socket...');
+      socketRef.current.disconnect();
+      socketRef.current = null;
+      setIsConnected(false);
+      setNeedsReconnect(true);
+    }
+  }, [token]);
+
+  // Reconnexion automatique après changement de token
+  useEffect(() => {
+    if (needsReconnect && !socketRef.current) {
+      setNeedsReconnect(false);
+      connect();
+    }
+  }, [needsReconnect, connect]);
 
   // Déconnexion du serveur
   const disconnect = useCallback(() => {
@@ -211,6 +267,12 @@ export default function useSocket(token = null) {
     }
   }, []);
 
+  const sendChatMessage = useCallback((text) => {
+    if (socketRef.current?.connected && text && text.trim()) {
+      socketRef.current.emit('send-chat', { text: text.trim() });
+    }
+  }, []);
+
   // Cleanup on unmount
   useEffect(() => {
     return () => {
@@ -231,12 +293,15 @@ export default function useSocket(token = null) {
     leaveQueue,
     inQueue,
     queuePosition,
+    queueError,
 
     // Room/Game
     roomId,
     isYourTurn,
     opponentId,
     gameData,
+    playerName,
+    opponentName,
     makeGuess,
 
     // Attempts
@@ -248,6 +313,10 @@ export default function useSocket(token = null) {
     winner,
     target,
 
+    // Session scores
+    myScore,
+    opponentScore,
+
     // Rematch
     requestRematch,
     rematchRequested,
@@ -256,6 +325,10 @@ export default function useSocket(token = null) {
     // Opponent status
     opponentDisconnected,
     opponentLeft,
-    leaveRoom
+    leaveRoom,
+
+    // Chat
+    messages,
+    sendChatMessage
   };
 }
