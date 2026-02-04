@@ -32,7 +32,7 @@
     },
     {
       "key": "planet",
-      "label": "Planète",
+      "label": "Planet",
       "type": "text",
       "hints": [
         "Earth",
@@ -65,7 +65,7 @@
     },
     {
       "key": "residence",
-      "label": "Résidence",
+      "label": "Residence",
       "type": "text",
       "hints": [
         "Kamigoe City",
@@ -129,12 +129,6 @@
         "Danmara Arc",
         "Current Arc"
       ]
-    },
-    {
-      "key": "race",
-      "label": "Race",
-      "type": "ordered",
-      "order": ["Introduction Arc", "Bat Devil Arc", "Eternity Devil Arc", "Katana Man Arc", "Bomb Girl Arc", "International Assassins Arc", "Gun Devil Arc", "Control Devil Arc", "Justice Devil Arc", "Dating Denji Arc", "Falling Devil Arc", "Chainsaw Man Church Arc", "Aging Devil Arc", "Current Arc"]
     }
   ],
   "characters": [
