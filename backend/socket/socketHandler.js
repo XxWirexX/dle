@@ -1,5 +1,6 @@
 const GameManager = require('./gameManager');
 const { verifyToken } = require('../auth/authUtils');
+const { findUserById } = require('../db/database');
 
 function setupSocketHandlers(io) {
   const gameManager = new GameManager();
@@ -26,6 +27,18 @@ function setupSocketHandlers(io) {
     // Rejoindre la queue de matchmaking
     socket.on('join-queue', ({ animeId, gameData }) => {
       console.log(`${socket.id} joining queue for anime: ${animeId}`);
+
+      // Vérifier que l'utilisateur est connecté et a vérifié son email
+      if (!socket.user) {
+        socket.emit('queue-error', { error: 'Tu dois être connecté pour jouer en duo' });
+        return;
+      }
+
+      const dbUser = findUserById(socket.user.userId);
+      if (!dbUser || !dbUser.email_verified) {
+        socket.emit('queue-error', { error: 'Tu dois vérifier ton email pour jouer en duo' });
+        return;
+      }
 
       const result = gameManager.joinQueue(socket, animeId, gameData, socket.user);
 
