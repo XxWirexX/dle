@@ -4,7 +4,9 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "dev": "nodemon ."
+    "dev": "nodemon .",
+    "start": "node main.js",
+    "build": "cd ../frontend && npm run build"
   },
   "keywords": [],
   "author": "",

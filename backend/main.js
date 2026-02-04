@@ -65,7 +65,21 @@ app.get("/api/anime/:id", (req, res) => {
 });
 
 
+// En production, servir le frontend build
+if (process.env.NODE_ENV === "production") {
+  const frontendPath = path.join(__dirname, "../frontend/dist");
+  app.use(express.static(frontendPath));
+
+  // Toutes les routes non-API renvoient vers index.html (pour React Router)
+  app.get("*", (req, res) => {
+    if (!req.path.startsWith("/api")) {
+      res.sendFile(path.join(frontendPath, "index.html"));
+    }
+  });
+}
+
 server.listen(PORT, () => {
   console.log(`Server listening at http://localhost:${PORT}`);
   console.log(`Socket.IO enabled for multiplayer`);
+  console.log(`Mode: ${process.env.NODE_ENV || "development"}`);
 });
