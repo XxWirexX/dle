@@ -4,6 +4,7 @@ import {useEffect, useState} from "react";
 import Card from "../components/Card.jsx";
 import {Link} from "react-router-dom";
 import useAuth from "../hooks/useAuth";
+import Avatar from "../components/Avatar";
 
 export default function Home() {
   const [mangas, setMangas] = useState([]);
@@ -38,8 +39,7 @@ export default function Home() {
         <div className="user-section">
           {loading ? null : user ? (
             <Link to="/profile" className="user-btn">
-              <span className="user-avatar">{user.username.charAt(0).toUpperCase()}</span>
-              <span className="user-name">{user.username}</span>
+              <Avatar user={user} size="md" />
             </Link>
           ) : (
             <Link to="/login" className="nav-btn login-btn">
