@@ -50,6 +50,7 @@
         "Commander",
         "Assassin",
         "Student",
+        "Director",
         "Imperial King",
         "Unknown",
         "None"
@@ -999,7 +1000,7 @@
     {
       "id": 69,
       "name": "Yu",
-      "image": "yu.webp",
+      "image": "/images/yu.webp",
       "age": "Unknown",
       "height": "142",
       "gender": "Male",
@@ -1012,7 +1013,7 @@
     {
       "id": 70,
       "name": "Yuichiro Kurono",
-      "image": "yuichiro kurono.webp",
+      "image": "/images/yuichiro kurono.webp",
       "age": "29",
       "height": "177",
       "gender": "Male",
@@ -1025,7 +1026,7 @@
     {
       "id": 71,
       "name": "Yuichiro Kurono's Doppelganger",
-      "image": "yuichiro kurono's doppelganger.webp",
+      "image": "/images/yuichiro kurono's doppelganger.webp",
       "age": "Unknown",
       "height": "177",
       "gender": "Male",
