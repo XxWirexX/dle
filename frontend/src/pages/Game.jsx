@@ -18,7 +18,9 @@ function usePersistentState(key, initial) {
   useEffect(() => {
     try {
       localStorage.setItem(key, JSON.stringify(state));
-    } catch {}
+    } catch (e) {
+      console.error("Failed to save state to localStorage:", e); //a verif
+    }
   }, [key, state]);
 
   return [state, setState];
@@ -72,6 +74,10 @@ function computeFieldFeedback(guessVal, targetVal, attribute) {
     if (guessIndex === targetIndex) return { type: "correct", label: guessVal };
     if (guessIndex > targetIndex) return { type: "higher", label: guessVal };
     return { type: "lower", label: guessVal };
+  }
+
+  if(type === "multiple") {
+    return { type: "wrong", label: guessVal }; // a modifier pour le haki de one piece
   }
 
   // Type texte
@@ -155,7 +161,7 @@ function SoloGame() {
       const maxStreak = Math.max(s.maxStreak, streak);
       return { played, wins, streak, maxStreak };
     });
-  }, [gameOver]);
+  }, [gameOver, attempts, setStats]); //à verif
 
   function validateSelection(char) {
     if (gameOver || !target || !gameData) return;
