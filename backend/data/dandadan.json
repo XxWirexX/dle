@@ -135,7 +135,7 @@
     {
       "id": 1,
       "name": "Okarun (Ken Takakura)",
-      "image": "/images/okarun (ken takakura).webp",
+      "image": "okarun (ken takakura).webp",
       "gender": "Male",
       "age": "16",
       "race": "Human",
@@ -151,7 +151,7 @@
     {
       "id": 2,
       "name": "Momo Ayase",
-      "image": "/images/momo ayase.webp",
+      "image": "momo ayase.webp",
       "gender": "Female",
       "age": "16",
       "race": "Human",
@@ -167,7 +167,7 @@
     {
       "id": 3,
       "name": "Acrobatic Silky",
-      "image": "/images/acrobatic silky.webp",
+      "image": "acrobatic silky.webp",
       "gender": "Female",
       "age": "10",
       "race": "Yokai",
@@ -183,7 +183,7 @@
     {
       "id": 4,
       "name": "Aira Shiratori",
-      "image": "/images/aira shiratori.webp",
+      "image": "aira shiratori.webp",
       "gender": "Female",
       "age": "16",
       "race": "Human",
@@ -199,7 +199,7 @@
     {
       "id": 5,
       "name": "Chameleon",
-      "image": "/images/chameleon.webp",
+      "image": "chameleon.webp",
       "gender": "Male",
       "age": "Unknown",
       "race": "Alien",
@@ -215,7 +215,7 @@
     {
       "id": 6,
       "name": "Chiquitita",
-      "image": "/images/chiquitita.webp",
+      "image": "chiquitita.webp",
       "gender": "Male",
       "age": "Unknown",
       "race": "Alien",
@@ -231,7 +231,7 @@
     {
       "id": 7,
       "name": "Count Saint-Germain",
-      "image": "/images/count saint-germain.webp",
+      "image": "count saint-germain.webp",
       "gender": "Male",
       "age": "Unknown",
       "race": "Unknown",
@@ -247,7 +247,7 @@
     {
       "id": 8,
       "name": "Dark Knight",
-      "image": "/images/dark knight.webp",
+      "image": "dark knight.webp",
       "gender": "Male",
       "age": "Unknown",
       "race": "Devil",
@@ -263,7 +263,7 @@
     {
       "id": 9,
       "name": "Death Patissier",
-      "image": "/images/death patissier.webp",
+      "image": "death patissier.webp",
       "gender": "Male",
       "age": "Unknown",
       "race": "Devil",
@@ -279,7 +279,7 @@
     {
       "id": 10,
       "name": "Earthbound Spirit Crab",
-      "image": "/images/earthbound spirit crab.webp",
+      "image": "earthbound spirit crab.webp",
       "gender": "Female",
       "age": "Unknown",
       "race": "Yokai",
@@ -295,7 +295,7 @@
     {
       "id": 11,
       "name": "Evil Eye",
-      "image": "/images/evil eye.webp",
+      "image": "evil eye.webp",
       "gender": "Male",
       "age": "1000",
       "race": "Yokai",
@@ -311,7 +311,7 @@
     {
       "id": 12,
       "name": "Fairy Tail Card",
-      "image": "/images/fairy tail card.jpeg",
+      "image": "fairy tail card.jpeg",
       "gender": "Male",
       "age": "1000",
       "race": "Yokai",
@@ -327,7 +327,7 @@
     {
       "id": 13,
       "name": "Flatwoods Monster",
-      "image": "/images/flatwoods monster.webp",
+      "image": "flatwoods monster.webp",
       "gender": "Male",
       "age": "1000",
       "race": "Alien",
@@ -343,7 +343,7 @@
     {
       "id": 14,
       "name": "Futa Zuma",
-      "image": "/images/futa zuma.webp",
+      "image": "futa zuma.webp",
       "gender": "Male",
       "age": "6",
       "race": "Human",
@@ -359,7 +359,7 @@
     {
       "id": 15,
       "name": "Hana",
-      "image": "/images/hana.webp",
+      "image": "hana.webp",
       "gender": "Female",
       "age": "Unknown",
       "race": "Cryptid",
@@ -375,7 +375,7 @@
     {
       "id": 16,
       "name": "Hayashi Performers",
-      "image": "/images/hayashi performers.jpg",
+      "image": "hayashi performers.jpg",
       "gender": "Male/Female",
       "age": "Unknown",
       "race": "Human",
@@ -391,7 +391,7 @@
     {
       "id": 17,
       "name": "Jiji (Jin Enjoji)",
-      "image": "/images/jiji (jin enjoji).webp",
+      "image": "jiji (jin enjoji).webp",
       "gender": "Male",
       "age": "16",
       "race": "Human",
@@ -407,7 +407,7 @@
     {
       "id": 18,
       "name": "Kei",
-      "image": "/images/kei.webp",
+      "image": "kei.webp",
       "gender": "Female",
       "age": "17",
       "race": "Human",
@@ -423,7 +423,7 @@
     {
       "id": 19,
       "name": "Kinta Sakata",
-      "image": "/images/kinta sakata.webp",
+      "image": "kinta sakata.webp",
       "gender": "Male",
       "age": "16",
       "race": "Human",
@@ -439,7 +439,7 @@
     {
       "id": 20,
       "name": "Koki Yukishiro",
-      "image": "/images/koki yukishiro.webp",
+      "image": "koki yukishiro.webp",
       "gender": "Female",
       "age": "16",
       "race": "Human",
@@ -455,7 +455,7 @@
     {
       "id": 21,
       "name": "Kur",
-      "image": "/images/kur.webp",
+      "image": "kur.webp",
       "gender": "Female",
       "age": "Unknown",
       "race": "Alien",
@@ -471,7 +471,7 @@
     {
       "id": 22,
       "name": "Ludris",
-      "image": "/images/ludris.webp",
+      "image": "ludris.webp",
       "gender": "Male",
       "age": "Unknown",
       "race": "Alien",
@@ -487,7 +487,7 @@
     {
       "id": 23,
       "name": "Mai Kawabanga",
-      "image": "/images/mai kawabanga.webp",
+      "image": "mai kawabanga.webp",
       "gender": "Female",
       "age": "Unknown",
       "race": "Onbusuman",
@@ -503,7 +503,7 @@
     {
       "id": 24,
       "name": "Mandrill Alien",
-      "image": "/images/mandrill alien.webp",
+      "image": "mandrill alien.webp",
       "gender": "Male",
       "age": "Unknown",
       "race": "Alien",
@@ -519,7 +519,7 @@
     {
       "id": 25,
       "name": "Manjiro",
-      "image": "/images/manjiro.webp",
+      "image": "manjiro.webp",
       "gender": "Male",
       "age": "36",
       "race": "Human",
@@ -535,7 +535,7 @@
     {
       "id": 26,
       "name": "Masamichi Vega",
-      "image": "/images/masamichi vega.webp",
+      "image": "masamichi vega.webp",
       "gender": "Male",
       "age": "Unknown",
       "race": "Human",
@@ -551,7 +551,7 @@
     {
       "id": 27,
       "name": "Medusa",
-      "image": "/images/medusa.webp",
+      "image": "medusa.webp",
       "gender": "Female",
       "age": "Unknown",
       "race": "Devil",
@@ -567,7 +567,7 @@
     {
       "id": 28,
       "name": "Miko",
-      "image": "/images/miko.webp",
+      "image": "miko.webp",
       "gender": "Female",
       "age": "17",
       "race": "Human",
@@ -583,7 +583,7 @@
     {
       "id": 29,
       "name": "Mongolian Death Worm (Hatchling)",
-      "image": "/images/mongolian death worm (hatchling).webp",
+      "image": "mongolian death worm (hatchling).webp",
       "gender": "Female",
       "age": "200",
       "race": "Cryptid",
@@ -599,7 +599,7 @@
     {
       "id": 30,
       "name": "Mr. Mantis Shrimp",
-      "image": "/images/mr. mantis shrimp.webp",
+      "image": "mr. mantis shrimp.webp",
       "gender": "Male",
       "age": "1000",
       "race": "Alien",
@@ -615,7 +615,7 @@
     {
       "id": 31,
       "name": "Music Room Portraits",
-      "image": "/images/music room portraits.webp",
+      "image": "music room portraits.webp",
       "gender": "Male",
       "age": "Unknown",
       "race": "Yokai",
@@ -631,7 +631,7 @@
     {
       "id": 32,
       "name": "Naki Kito",
-      "image": "/images/naki kito.webp",
+      "image": "naki kito.webp",
       "gender": "Female",
       "age": "1000",
       "race": "Cryptid",
@@ -647,7 +647,7 @@
     {
       "id": 33,
       "name": "Nessie",
-      "image": "/images/nessie.webp",
+      "image": "nessie.webp",
       "gender": "Male",
       "age": "1000",
       "race": "Cryptid",
@@ -663,7 +663,7 @@
     {
       "id": 34,
       "name": "Queen Sensei",
-      "image": "/images/queen sensei.webp",
+      "image": "queen sensei.webp",
       "gender": "Female",
       "age": "Unknown",
       "race": "Human",
@@ -679,7 +679,7 @@
     {
       "id": 35,
       "name": "Reiko Kashima",
-      "image": "/images/reiko kashima.webp",
+      "image": "reiko kashima.webp",
       "gender": "Female",
       "age": "Unknown",
       "race": "Yokai",
@@ -695,7 +695,7 @@
     {
       "id": 36,
       "name": "Rin Sawaki",
-      "image": "/images/rin sawaki.webp",
+      "image": "rin sawaki.webp",
       "gender": "Female",
       "age": "16",
       "race": "Human",
@@ -711,7 +711,7 @@
     {
       "id": 37,
       "name": "Rokuro Serpo",
-      "image": "/images/rokuro serpo.webp",
+      "image": "rokuro serpo.webp",
       "gender": "Male",
       "age": "1000",
       "race": "Alien",
@@ -727,7 +727,7 @@
     {
       "id": 38,
       "name": "Seiko Ayase",
-      "image": "/images/seiko ayase.webp",
+      "image": "seiko ayase.webp",
       "gender": "Female",
       "age": "43",
       "race": "Human",
@@ -743,7 +743,7 @@
     {
       "id": 39,
       "name": "Serpo",
-      "image": "/images/serpo.webp",
+      "image": "serpo.webp",
       "gender": "Male",
       "age": "1000",
       "race": "Alien",
@@ -759,7 +759,7 @@
     {
       "id": 40,
       "name": "Taro",
-      "image": "/images/taro.jpg",
+      "image": "taro.jpg",
       "gender": "Male",
       "age": "Unknown",
       "race": "Cryptid",
@@ -775,7 +775,7 @@
     {
       "id": 41,
       "name": "Tsuchinoko",
-      "image": "/images/tsuchinoko.webp",
+      "image": "tsuchinoko.webp",
       "gender": "Male",
       "age": "1000",
       "race": "Cryptid",
@@ -791,7 +791,7 @@
     {
       "id": 42,
       "name": "Turbo Granny",
-      "image": "/images/turbo granny.webp",
+      "image": "turbo granny.webp",
       "gender": "Female",
       "age": "1000",
       "race": "Yokai",
@@ -807,7 +807,7 @@
     {
       "id": 43,
       "name": "Unji Zuma",
-      "image": "/images/unji zuma.webp",
+      "image": "unji zuma.webp",
       "gender": "Male",
       "age": "19",
       "race": "Human",
@@ -823,7 +823,7 @@
     {
       "id": 44,
       "name": "Vamola (Bamora)",
-      "image": "/images/vamola (bamora).webp",
+      "image": "vamola (bamora).webp",
       "gender": "Female",
       "age": "1000",
       "race": "Sumerian",
@@ -839,7 +839,7 @@
     {
       "id": 45,
       "name": "Vamola's Mother",
-      "image": "/images/vamola's mother.webp",
+      "image": "vamola's mother.webp",
       "gender": "Female",
       "age": "10000",
       "race": "Sumerian",

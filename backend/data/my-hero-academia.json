@@ -149,7 +149,7 @@
     {
     "id": 1,
     "name": "Izuku Midoriya (Deku)",
-    "image": "/images/izuku midoriya (deku).webp",
+    "image": "izuku midoriya (deku).webp",
     "age": "1-20",
     "gender": "Male",
     "nationality": "Shizuoka",
@@ -162,7 +162,7 @@
   {
     "id": 2,
     "name": "Toshinori Yagi (All Might)",
-    "image": "/images/toshinori yagi (all might).webp",
+    "image": "toshinori yagi (all might).webp",
     "age": "41-60",
     "gender": "Male",
     "nationality": "Tokyo",
@@ -175,7 +175,7 @@
   {
     "id": 3,
     "name": "Anan Kurose (Thirteen)",
-    "image": "/images/anan kurose (thirteen).webp",
+    "image": "anan kurose (thirteen).webp",
     "age": "21-40",
     "gender": "Female",
     "nationality": "Tanegashima",
@@ -188,7 +188,7 @@
   {
     "id": 4,
     "name": "Atsuhiro Sako (Mr. Compress)",
-    "image": "/images/atsuhiro sako (mr. compress).webp",
+    "image": "atsuhiro sako (mr. compress).webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Japan",
@@ -201,7 +201,7 @@
   {
     "id": 5,
     "name": "Big Red Dot",
-    "image": "/images/big red dot.webp",
+    "image": "big red dot.webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Singapore",
@@ -214,7 +214,7 @@
   {
     "id": 6,
     "name": "Brainless",
-    "image": "/images/brainless.webp",
+    "image": "brainless.webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Japan",
@@ -227,7 +227,7 @@
   {
     "id": 7,
     "name": "Camie Utsushimi (Illus-O-Camie)",
-    "image": "/images/camie utsushimi (illus-o-camie).webp",
+    "image": "camie utsushimi (illus-o-camie).webp",
     "age": "1-20",
     "gender": "Female",
     "nationality": "Japan",
@@ -240,7 +240,7 @@
   {
     "id": 8,
     "name": "Cathleen Bate (Star and Stripe)",
-    "image": "/images/cathleen bate (star and stripe).webp",
+    "image": "cathleen bate (star and stripe).webp",
     "age": "41-60",
     "gender": "Female",
     "nationality": "United States of America",
@@ -253,7 +253,7 @@
   {
     "id": 9,
     "name": "Chitose Kizuki (Curious)",
-    "image": "/images/chitose kizuki (curious).webp",
+    "image": "chitose kizuki (curious).webp",
     "age": "21-40",
     "gender": "Female",
     "nationality": "Japan",
@@ -266,7 +266,7 @@
   {
     "id": 10,
     "name": "Chiyo Shuzenji (Recovery Girl)",
-    "image": "/images/chiyo shuzenji (recovery girl).webp",
+    "image": "chiyo shuzenji (recovery girl).webp",
     "age": "61-80",
     "gender": "Female",
     "nationality": "Japan",
@@ -279,7 +279,7 @@
   {
     "id": 11,
     "name": "Chizome Akaguro (Stain) (Stendhal)",
-    "image": "/images/chizome akaguro (stain) (stendhal).webp",
+    "image": "chizome akaguro (stain) (stendhal).webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Japan",
@@ -292,7 +292,7 @@
   {
     "id": 12,
     "name": "Cook Hero: Lunch Rush",
-    "image": "/images/cook hero.. lunch rush.webp",
+    "image": "cook hero.. lunch rush.webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Japan",
@@ -305,7 +305,7 @@
   {
     "id": 13,
     "name": "Danjuro Tobita (Gentle Criminal)",
-    "image": "/images/danjuro tobita (gentle criminal).webp",
+    "image": "danjuro tobita (gentle criminal).webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Japan",
@@ -318,7 +318,7 @@
   {
     "id": 14,
     "name": "Deidoro Sakaki",
-    "image": "/images/deidoro sakaki.webp",
+    "image": "deidoro sakaki.webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Japan",
@@ -331,7 +331,7 @@
   {
     "id": 15,
     "name": "Denki Kaminari (Chargebolt)",
-    "image": "/images/denki kaminari (chargebolt).webp",
+    "image": "denki kaminari (chargebolt).webp",
     "age": "1-20",
     "gender": "Male",
     "nationality": "Saitama",
@@ -344,7 +344,7 @@
   {
     "id": 16,
     "name": "Desutegoro (Death Arms)",
-    "image": "/images/desutegoro (death arms).webp",
+    "image": "desutegoro (death arms).webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Japan",
@@ -357,7 +357,7 @@
   {
     "id": 17,
     "name": "Ectoplasm",
-    "image": "/images/ectoplasm.webp",
+    "image": "ectoplasm.webp",
     "age": "41-60",
     "gender": "Male",
     "nationality": "Okinawa",
@@ -370,7 +370,7 @@
   {
     "id": 18,
     "name": "Eel Boy",
-    "image": "/images/eel boy.webp",
+    "image": "eel boy.webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Japan",
@@ -383,7 +383,7 @@
   {
     "id": 19,
     "name": "Eijiro Kirishima (Red Riot)",
-    "image": "/images/eijiro kirishima (red riot).webp",
+    "image": "eijiro kirishima (red riot).webp",
     "age": "1-20",
     "gender": "Male",
     "nationality": "Chiba",
@@ -396,7 +396,7 @@
   {
     "id": 20,
     "name": "Emi Fukukado (Ms. Joke)",
-    "image": "/images/emi fukukado (ms. joke).webp",
+    "image": "emi fukukado (ms. joke).webp",
     "age": "21-40",
     "gender": "Female",
     "nationality": "Japan",
@@ -409,7 +409,7 @@
   {
     "id": 21,
     "name": "Ending",
-    "image": "/images/ending.webp",
+    "image": "ending.webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Japan",
@@ -422,7 +422,7 @@
   {
     "id": 22,
     "name": "Enji Todoroki (Endeavor)",
-    "image": "/images/enji todoroki (endeavor).webp",
+    "image": "enji todoroki (endeavor).webp",
     "age": "41-60",
     "gender": "Male",
     "nationality": "Shizuoka",
@@ -435,7 +435,7 @@
   {
     "id": 23,
     "name": "Eri",
-    "image": "/images/eri.webp",
+    "image": "eri.webp",
     "age": "1-20",
     "gender": "Female",
     "nationality": "Japan",
@@ -448,7 +448,7 @@
   {
     "id": 24,
     "name": "Fumikage Tokoyami (Tsukuyomi)",
-    "image": "/images/fumikage tokoyami (tsukuyomi).webp",
+    "image": "fumikage tokoyami (tsukuyomi).webp",
     "age": "1-20",
     "gender": "Male",
     "nationality": "Shizuoka",
@@ -461,7 +461,7 @@
   {
     "id": 25,
     "name": "Fuyumi Todoroki",
-    "image": "/images/fuyumi todoroki.webp",
+    "image": "fuyumi todoroki.webp",
     "age": "21-40",
     "gender": "Female",
     "nationality": "Shizuoka",
@@ -474,7 +474,7 @@
   {
     "id": 26,
     "name": "Geten (Iceman)",
-    "image": "/images/geten (iceman).webp",
+    "image": "geten (iceman).webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Japan",
@@ -487,7 +487,7 @@
   {
     "id": 27,
     "name": "Gigantomachia",
-    "image": "/images/gigantomachia.webp",
+    "image": "gigantomachia.webp",
     "age": "100+",
     "gender": "Male",
     "nationality": "Japan",
@@ -500,7 +500,7 @@
   {
     "id": 28,
     "name": "Goto Imasuji (Muscular)",
-    "image": "/images/goto imasuji (muscular).webp",
+    "image": "goto imasuji (muscular).webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Japan",
@@ -513,7 +513,7 @@
   {
     "id": 29,
     "name": "Hanta Sero (Cellophane)",
-    "image": "/images/hanta sero (cellophane).webp",
+    "image": "hanta sero (cellophane).webp",
     "age": "1-20",
     "gender": "Male",
     "nationality": "Tokyo",
@@ -526,7 +526,7 @@
   {
     "id": 30,
     "name": "Hari Kurono (Chronostasis)",
-    "image": "/images/hari kurono (chronostasis).webp",
+    "image": "hari kurono (chronostasis).webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Japan",
@@ -539,7 +539,7 @@
   {
     "id": 31,
     "name": "Hekiji Tengai",
-    "image": "/images/hekiji tengai.webp",
+    "image": "hekiji tengai.webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Japan",
@@ -552,7 +552,7 @@
   {
     "id": 32,
     "name": "Higari Maijima (Power Loader)",
-    "image": "/images/higari maijima (power loader).webp",
+    "image": "higari maijima (power loader).webp",
     "age": "41-60",
     "gender": "Male",
     "nationality": "Osaka",
@@ -565,7 +565,7 @@
   {
     "id": 33,
     "name": "Himiko Toga",
-    "image": "/images/himiko toga.webp",
+    "image": "himiko toga.webp",
     "age": "21-40",
     "gender": "Female",
     "nationality": "Japan",
@@ -578,7 +578,7 @@
   {
     "id": 34,
     "name": "Hiroshi Tameda",
-    "image": "/images/hiroshi tameda.webp",
+    "image": "hiroshi tameda.webp",
     "age": "1-20",
     "gender": "Male",
     "nationality": "Japan",
@@ -591,7 +591,7 @@
   {
     "id": 35,
     "name": "Hiryu Rin (Long Weizi)",
-    "image": "/images/hiryu rin (long weizi).webp",
+    "image": "hiryu rin (long weizi).webp",
     "age": "1-20",
     "gender": "Male",
     "nationality": "China",
@@ -604,7 +604,7 @@
   {
     "id": 36,
     "name": "Hitoshi Shinso (Nighthide)",
-    "image": "/images/hitoshi shinso (nighthide).webp",
+    "image": "hitoshi shinso (nighthide).webp",
     "age": "1-20",
     "gender": "Male",
     "nationality": "Japan",
@@ -617,7 +617,7 @@
   {
     "id": 37,
     "name": "Hizashi Yamada (Present Mac)",
-    "image": "/images/hizashi yamada (present mic).webp",
+    "image": "hizashi yamada (present mic).webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Tokyo",
@@ -630,7 +630,7 @@
   {
     "id": 38,
     "name": "Hood",
-    "image": "/images/hood.webp",
+    "image": "hood.webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Japan",
@@ -643,7 +643,7 @@
   {
     "id": 39,
     "name": "Ibara Shiozaki (Vine)",
-    "image": "/images/ibara shiozaki (vine).webp",
+    "image": "ibara shiozaki (vine).webp",
     "age": "1-20",
     "gender": "Female",
     "nationality": "Japan",
@@ -656,7 +656,7 @@
   {
     "id": 40,
     "name": "Inasa Yoarashi (Gale Force)",
-    "image": "/images/inasa yoarashi (gale force).webp",
+    "image": "inasa yoarashi (gale force).webp",
     "age": "1-20",
     "gender": "Male",
     "nationality": "Japan",
@@ -669,7 +669,7 @@
   {
     "id": 41,
     "name": "Inko Midoriya",
-    "image": "/images/inko midoriya.webp",
+    "image": "inko midoriya.webp",
     "age": "41-60",
     "gender": "Female",
     "nationality": "Japan",
@@ -682,7 +682,7 @@
   {
     "id": 42,
     "name": "Itsuka Kendo (Battle Fist)",
-    "image": "/images/itsuka kendo (battle fist).webp",
+    "image": "itsuka kendo (battle fist).webp",
     "age": "1-20",
     "gender": "Female",
     "nationality": "Chiba",
@@ -695,7 +695,7 @@
   {
     "id": 43,
     "name": "Jin Bubaigawara (Twice)",
-    "image": "/images/jin bubaigawara (twice).webp",
+    "image": "jin bubaigawara (twice).webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Japan",
@@ -708,7 +708,7 @@
   {
     "id": 44,
     "name": "Joi Irinaka (Mimic)",
-    "image": "/images/joi irinaka (mimic).webp",
+    "image": "joi irinaka (mimic).webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Japan",
@@ -721,7 +721,7 @@
   {
     "id": 45,
     "name": "Jurota Shishida (Gevaudan)",
-    "image": "/images/jurota shishida (gevaudan).webp",
+    "image": "jurota shishida (gevaudan).webp",
     "age": "1-20",
     "gender": "Male",
     "nationality": "Japan",
@@ -734,7 +734,7 @@
   {
     "id": 46,
     "name": "Juzo Honenuki (Mudman)",
-    "image": "/images/juzo honenuki (mudman).webp",
+    "image": "juzo honenuki (mudman).webp",
     "age": "1-20",
     "gender": "Male",
     "nationality": "Japan",
@@ -747,7 +747,7 @@
   {
     "id": 47,
     "name": "Kagero Okuta (Giran)",
-    "image": "/images/kagero okuta (giran).webp",
+    "image": "kagero okuta (giran).webp",
     "age": "41-60",
     "gender": "Male",
     "nationality": "Japan",
@@ -760,7 +760,7 @@
   {
     "id": 48,
     "name": "Kai Chisaki (Overhaul)",
-    "image": "/images/kai chisaki (overhaul).webp",
+    "image": "kai chisaki (overhaul).webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Japan",
@@ -773,7 +773,7 @@
   {
     "id": 49,
     "name": "Kaina Tsutsumi (Lady Nagant)",
-    "image": "/images/kaina tsutsumi (lady nagant).webp",
+    "image": "kaina tsutsumi (lady nagant).webp",
     "age": "21-40",
     "gender": "Female",
     "nationality": "Japan",
@@ -786,7 +786,7 @@
   {
     "id": 50,
     "name": "Katsuki Bakugo (Great Expolsion Murder God Dynamight)",
-    "image": "/images/katsuki bakugo (great explosion murder god dynamight).webp",
+    "image": "katsuki bakugo (great explosion murder god dynamight).webp",
     "age": "1-20",
     "gender": "Male",
     "nationality": "Shizuoka",
@@ -799,7 +799,7 @@
   {
     "id": 51,
     "name": "Keigo Takami (Hawks)",
-    "image": "/images/keigo takami (hawks).webp",
+    "image": "keigo takami (hawks).webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Fukuoka",
@@ -812,7 +812,7 @@
   {
     "id": 52,
     "name": "Ken Ishiyama (Cementoss)",
-    "image": "/images/ken ishiyama (cementoss).webp",
+    "image": "ken ishiyama (cementoss).webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Yamagata",
@@ -825,7 +825,7 @@
   {
     "id": 53,
     "name": "Kendo Rappa",
-    "image": "/images/kendo rappa.webp",
+    "image": "kendo rappa.webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Japan",
@@ -838,7 +838,7 @@
   {
     "id": 54,
     "name": "Kenji Hikiishi (Magne)",
-    "image": "/images/kenji hikiishi (magne).webp",
+    "image": "kenji hikiishi (magne).webp",
     "age": "21-40",
     "gender": "Female",
     "nationality": "Japan",
@@ -851,7 +851,7 @@
   {
     "id": 55,
     "name": "Kinoko Komori (Shemage)",
-    "image": "/images/kinoko komori (shemage).webp",
+    "image": "kinoko komori (shemage).webp",
     "age": "1-20",
     "gender": "Female",
     "nationality": "Gunma",
@@ -864,7 +864,7 @@
   {
     "id": 56,
     "name": "Koji Koda (Anima)",
-    "image": "/images/koji koda (anima).webp",
+    "image": "koji koda (anima).webp",
     "age": "1-20",
     "gender": "Male",
     "nationality": "Iwate",
@@ -877,7 +877,7 @@
   {
     "id": 57,
     "name": "Kojiro Bondo (Plamo)",
-    "image": "/images/kojiro bondo (plamo).webp",
+    "image": "kojiro bondo (plamo).webp",
     "age": "1-20",
     "gender": "Male",
     "nationality": "Tokyo",
@@ -890,7 +890,7 @@
   {
     "id": 58,
     "name": "Koku Hanabata (Trumpet)",
-    "image": "/images/koku hanabata (trumpet).webp",
+    "image": "koku hanabata (trumpet).webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Japan",
@@ -903,7 +903,7 @@
   {
     "id": 59,
     "name": "Kosei Tsuburaba (Tsuburaba)",
-    "image": "/images/kosei tsuburaba (tsuburaba).webp",
+    "image": "kosei tsuburaba (tsuburaba).webp",
     "age": "1-20",
     "gender": "Male",
     "nationality": "Japan",
@@ -916,7 +916,7 @@
   {
     "id": 60,
     "name": "Kota Izumi",
-    "image": "/images/kota izumi.webp",
+    "image": "kota izumi.webp",
     "age": "1-20",
     "gender": "Male",
     "nationality": "Japan",
@@ -929,7 +929,7 @@
   {
     "id": 61,
     "name": "Kugo Sakamata (Gang Orca)",
-    "image": "/images/kugo sakamata (gang orca).webp",
+    "image": "kugo sakamata (gang orca).webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Kanagawa",
@@ -942,7 +942,7 @@
   {
     "id": 62,
     "name": "Kurogiri (Oboro Shirakumo)",
-    "image": "/images/kurogiri.webp",
+    "image": "kurogiri.webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Japan",
@@ -955,7 +955,7 @@
   {
     "id": 63,
     "name": "Kyoka Jiro (Earphone Jack)",
-    "image": "/images/kyoka jiro (earphone jack).webp",
+    "image": "kyoka jiro (earphone jack).webp",
     "age": "1-20",
     "gender": "Female",
     "nationality": "Shizuoka",
@@ -968,7 +968,7 @@
   {
     "id": 64,
     "name": "Kyudai Garaki (Doctor)",
-    "image": "/images/kyudai garaki (doctor).webp",
+    "image": "kyudai garaki (doctor).webp",
     "age": "100+",
     "gender": "Male",
     "nationality": "Shizuoka",
@@ -981,7 +981,7 @@
   {
     "id": 65,
     "name": "Manami Aiba (La Brava)",
-    "image": "/images/manami aiba (la brava).webp",
+    "image": "manami aiba (la brava).webp",
     "age": "1-20",
     "gender": "Female",
     "nationality": "Japan",
@@ -994,7 +994,7 @@
   {
     "id": 66,
     "name": "Manga Fukidashi (Comicman)",
-    "image": "/images/manga fukidashi (comicman).webp",
+    "image": "manga fukidashi (comicman).webp",
     "age": "1-20",
     "gender": "Male",
     "nationality": "Shizuoka",
@@ -1007,7 +1007,7 @@
   {
     "id": 67,
     "name": "Masaki Mizushima (Manual)",
-    "image": "/images/masaki mizushima (manual).webp",
+    "image": "masaki mizushima (manual).webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Japan",
@@ -1020,7 +1020,7 @@
   {
     "id": 68,
     "name": "Mashirao Ojiro (Tailman)",
-    "image": "/images/mashirao ojiro (tailman).webp",
+    "image": "mashirao ojiro (tailman).webp",
     "age": "1-20",
     "gender": "Male",
     "nationality": "Tokyo",
@@ -1033,7 +1033,7 @@
   {
     "id": 69,
     "name": "Mei Hatsume",
-    "image": "/images/mei hatsume.webp",
+    "image": "mei hatsume.webp",
     "age": "1-20",
     "gender": "Female",
     "nationality": "Japan",
@@ -1046,7 +1046,7 @@
   {
     "id": 70,
     "name": "Mezo Shoji (Tentacole)",
-    "image": "/images/mezo shoji (tentacole).webp",
+    "image": "mezo shoji (tentacole).webp",
     "age": "1-20",
     "gender": "Male",
     "nationality": "Fukuoka",
@@ -1059,7 +1059,7 @@
   {
     "id": 71,
     "name": "Mina Ashido (Pinky)",
-    "image": "/images/mina ashido (pinky).webp",
+    "image": "mina ashido (pinky).webp",
     "age": "1-20",
     "gender": "Female",
     "nationality": "Chiba",
@@ -1072,7 +1072,7 @@
   {
     "id": 72,
     "name": "Minoru Mineta (Grape Juice)",
-    "image": "/images/minoru mineta (grape juice).webp",
+    "image": "minoru mineta (grape juice).webp",
     "age": "1-20",
     "gender": "Male",
     "nationality": "Kanagawa",
@@ -1085,7 +1085,7 @@
   {
     "id": 73,
     "name": "Mirai Sasaki (Sir Nighteye)",
-    "image": "/images/mirai sasaki (sir nighteye).webp",
+    "image": "mirai sasaki (sir nighteye).webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Tokyo",
@@ -1098,7 +1098,7 @@
   {
     "id": 74,
     "name": "Mirio Togata (Lemillion)",
-    "image": "/images/mirio togata (lemillion).webp",
+    "image": "mirio togata (lemillion).webp",
     "age": "1-20",
     "gender": "Male",
     "nationality": "Chiba",
@@ -1111,7 +1111,7 @@
   {
     "id": 75,
     "name": "Moe Kamiji (Blazing Hair)",
-    "image": "/images/moe kamiji (blazing hair).webp",
+    "image": "moe kamiji (blazing hair).webp",
     "age": "21-40",
     "gender": "Female",
     "nationality": "Shizuoka",
@@ -1124,7 +1124,7 @@
   {
     "id": 76,
     "name": "Momo Yaoyorozy (Creati)",
-    "image": "/images/momo yaoyorozu (creati).webp",
+    "image": "momo yaoyorozu (creati).webp",
     "age": "1-20",
     "gender": "Female",
     "nationality": "Aichi",
@@ -1137,7 +1137,7 @@
   {
     "id": 77,
     "name": "Moonfish",
-    "image": "/images/moonfish.webp",
+    "image": "moonfish.webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Japan",
@@ -1150,7 +1150,7 @@
   {
     "id": 78,
     "name": "Mustard",
-    "image": "/images/mustard.webp",
+    "image": "mustard.webp",
     "age": "1-20",
     "gender": "Male",
     "nationality": "Japan",
@@ -1163,7 +1163,7 @@
   {
     "id": 79,
     "name": "Nagamasa Mora (Chewyee)",
-    "image": "/images/nagamasa mora (chewyee).webp",
+    "image": "nagamasa mora (chewyee).webp",
     "age": "1-20",
     "gender": "Male",
     "nationality": "Japan",
@@ -1176,7 +1176,7 @@
   {
     "id": 80,
     "name": "Nana Shimura",
-    "image": "/images/nana shimura.webp",
+    "image": "nana shimura.webp",
     "age": "21-40",
     "gender": "Female",
     "nationality": "Tokyo",
@@ -1189,7 +1189,7 @@
   {
     "id": 81,
     "name": "Naomasa Tsukauchi",
-    "image": "/images/naomasa tsukauchi.webp",
+    "image": "naomasa tsukauchi.webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Japan",
@@ -1202,7 +1202,7 @@
   {
     "id": 82,
     "name": "Natsuo Todoroki",
-    "image": "/images/natsuo todoroki.webp",
+    "image": "natsuo todoroki.webp",
     "age": "1-20",
     "gender": "Male",
     "nationality": "Shizuoka",
@@ -1215,7 +1215,7 @@
   {
     "id": 83,
     "name": "Neito Monoma (Phantom Thief)",
-    "image": "/images/neito monoma (phantom thief).webp",
+    "image": "neito monoma (phantom thief).webp",
     "age": "1-20",
     "gender": "Male",
     "nationality": "Kanagawa",
@@ -1228,7 +1228,7 @@
   {
     "id": 84,
     "name": "Nejire Hado (Nejire Chan)",
-    "image": "/images/nejire hado (nejire chan).webp",
+    "image": "nejire hado (nejire chan).webp",
     "age": "1-20",
     "gender": "Female",
     "nationality": "Okayama",
@@ -1241,7 +1241,7 @@
   {
     "id": 85,
     "name": "Nemuri Kayama (Midnight)",
-    "image": "/images/nemuri kayama (midnight).webp",
+    "image": "nemuri kayama (midnight).webp",
     "age": "21-40",
     "gender": "Female",
     "nationality": "Saitama",
@@ -1254,7 +1254,7 @@
   {
     "id": 86,
     "name": "Nezu (Mr. President)",
-    "image": "/images/nezu (mr. president).webp",
+    "image": "nezu (mr. president).webp",
     "age": "61-80",
     "gender": "Male",
     "nationality": "Tokyo",
@@ -1267,7 +1267,7 @@
   {
     "id": 87,
     "name": "Nirengeki Shoda (Mines)",
-    "image": "/images/nirengeki shoda (mines).webp",
+    "image": "nirengeki shoda (mines).webp",
     "age": "1-20",
     "gender": "Male",
     "nationality": "Tokyo",
@@ -1280,7 +1280,7 @@
   {
     "id": 88,
     "name": "Ochaco Uraraka (Uravity)",
-    "image": "/images/ochaco uraraka (uravity).webp",
+    "image": "ochaco uraraka (uravity).webp",
     "age": "1-20",
     "gender": "Female",
     "nationality": "Mie",
@@ -1293,7 +1293,7 @@
   {
     "id": 89,
     "name": "Pony Tsunotori (Rocketti)",
-    "image": "/images/pony tsunotori (rocketti).webp",
+    "image": "pony tsunotori (rocketti).webp",
     "age": "1-20",
     "gender": "Female",
     "nationality": "United States of America",
@@ -1306,7 +1306,7 @@
   {
     "id": 90,
     "name": "Rei Todoroki",
-    "image": "/images/rei todoroki.webp",
+    "image": "rei todoroki.webp",
     "age": "41-60",
     "gender": "Female",
     "nationality": "Shizuoka",
@@ -1319,7 +1319,7 @@
   {
     "id": 91,
     "name": "Reiko Yanagi (Emily)",
-    "image": "/images/reiko yanagi (emily).webp",
+    "image": "reiko yanagi (emily).webp",
     "age": "1-20",
     "gender": "Female",
     "nationality": "Aichi",
@@ -1332,7 +1332,7 @@
   {
     "id": 92,
     "name": "Rikido Sato (Sugarman)",
-    "image": "/images/rikido sato (sugarman).webp",
+    "image": "rikido sato (sugarman).webp",
     "age": "1-20",
     "gender": "Male",
     "nationality": "Tottori",
@@ -1345,7 +1345,7 @@
   {
     "id": 93,
     "name": "Rikiya Katsukame",
-    "image": "/images/rikiya katsukame.webp",
+    "image": "rikiya katsukame.webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Japan",
@@ -1358,7 +1358,7 @@
   {
     "id": 94,
     "name": "Rikiya Yotsubashi (Re-Destro)",
-    "image": "/images/rikiya yotsubashi (re-destro).webp",
+    "image": "rikiya yotsubashi (re-destro).webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Japan",
@@ -1371,7 +1371,7 @@
   {
     "id": 95,
     "name": "Rumi Usagiyama (Mirko)",
-    "image": "/images/rumi usagiyama (mirko).webp",
+    "image": "rumi usagiyama (mirko).webp",
     "age": "21-40",
     "gender": "Female",
     "nationality": "Hiroshima",
@@ -1384,7 +1384,7 @@
   {
     "id": 96,
     "name": "Ryo Inui (Hound Dog)",
-    "image": "/images/ryo inui (hound dog).webp",
+    "image": "ryo inui (hound dog).webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Tokyo",
@@ -1397,7 +1397,7 @@
   {
     "id": 97,
     "name": "Ryuko Tatsuma (Ryukyu)",
-    "image": "/images/ryuko tatsuma (ryukyu).webp",
+    "image": "ryuko tatsuma (ryukyu).webp",
     "age": "21-40",
     "gender": "Female",
     "nationality": "Okinawa",
@@ -1410,7 +1410,7 @@
   {
     "id": 98,
     "name": "Ryuko Tsuchikawa (Pixie-Bob)",
-    "image": "/images/ryuko tsuchikawa (pixie-bob).webp",
+    "image": "ryuko tsuchikawa (pixie-bob).webp",
     "age": "21-40",
     "gender": "Female",
     "nationality": "Japan",
@@ -1423,7 +1423,7 @@
   {
     "id": 99,
     "name": "Sajin Higawara (Snatch)",
-    "image": "/images/sajin higawara (snatch).webp",
+    "image": "sajin higawara (snatch).webp",
     "age": "41-60",
     "gender": "Male",
     "nationality": "Japan",
@@ -1436,7 +1436,7 @@
   {
     "id": 100,
     "name": "Sansa Tamagawa",
-    "image": "/images/sansa tamagawa.webp",
+    "image": "sansa tamagawa.webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Japan",
@@ -1449,7 +1449,7 @@
   {
     "id": 101,
     "name": "Seiji Shishikura (Shishikross)",
-    "image": "/images/seiji shishikura (shishikross).webp",
+    "image": "seiji shishikura (shishikross).webp",
     "age": "1-20",
     "gender": "Male",
     "nationality": "Japan",
@@ -1462,7 +1462,7 @@
   {
     "id": 102,
     "name": "Sekijiro Kan (Vlad King)",
-    "image": "/images/sekijiro kan (vlad king).webp",
+    "image": "sekijiro kan (vlad king).webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Aomori",
@@ -1475,7 +1475,7 @@
   {
     "id": 103,
     "name": "Sen Kaibara (Spiral)",
-    "image": "/images/sen kaibara (spiral).webp",
+    "image": "sen kaibara (spiral).webp",
     "age": "1-20",
     "gender": "Male",
     "nationality": "Tokyo",
@@ -1488,7 +1488,7 @@
   {
     "id": 104,
     "name": "Setsuna Tokage (Lizardy)",
-    "image": "/images/setsuna tokage (lizardy).webp",
+    "image": "setsuna tokage (lizardy).webp",
     "age": "1-20",
     "gender": "Female",
     "nationality": "Saitama",
@@ -1501,7 +1501,7 @@
   {
     "id": 105,
     "name": "Shie Hassaikai's Boss",
-    "image": "/images/shie hassaikai's boss.webp",
+    "image": "shie hassaikai's boss.webp",
     "age": "61-80",
     "gender": "Male",
     "nationality": "Japan",
@@ -1514,7 +1514,7 @@
   {
     "id": 106,
     "name": "Shigaraki (All For One)",
-    "image": "/images/shigaraki (all for one).webp",
+    "image": "shigaraki (all for one).webp",
     "age": "100+",
     "gender": "Male",
     "nationality": "Japan",
@@ -1527,7 +1527,7 @@
   {
     "id": 107,
     "name": "Shihai Kuroiro (Vantablack)",
-    "image": "/images/shihai kuroiro (vantablack).webp",
+    "image": "shihai kuroiro (vantablack).webp",
     "age": "1-20",
     "gender": "Male",
     "nationality": "Fukushima",
@@ -1540,7 +1540,7 @@
   {
     "id": 108,
     "name": "Shin Nemoto",
-    "image": "/images/shin nemoto.webp",
+    "image": "shin nemoto.webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Japan",
@@ -1553,7 +1553,7 @@
   {
     "id": 109,
     "name": "Shinji Nishiya (Woods)",
-    "image": "/images/shinji nishiya (woods).webp",
+    "image": "shinji nishiya (woods).webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Kagoshima",
@@ -1566,7 +1566,7 @@
   {
     "id": 110,
     "name": "Shino Sosaki (Mandalay)",
-    "image": "/images/shino sosaki (mandalay).webp",
+    "image": "shino sosaki (mandalay).webp",
     "age": "21-40",
     "gender": "Female",
     "nationality": "Japan",
@@ -1579,7 +1579,7 @@
   {
     "id": 111,
     "name": "Shinya Kamihara (Edgeshot)",
-    "image": "/images/shinya kamihara (edgeshot).webp",
+    "image": "shinya kamihara (edgeshot).webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Japan",
@@ -1592,7 +1592,7 @@
   {
     "id": 112,
     "name": "Shirudo (Crust)",
-    "image": "/images/shirudo (crust).webp",
+    "image": "shirudo (crust).webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Japan",
@@ -1605,7 +1605,7 @@
   {
     "id": 113,
     "name": "Shishido",
-    "image": "/images/shishido.webp",
+    "image": "shishido.webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Japan",
@@ -1618,7 +1618,7 @@
   {
     "id": 114,
     "name": "Shota Aizawa (Eraser Head)",
-    "image": "/images/shota aizawa (eraser head).webp",
+    "image": "shota aizawa (eraser head).webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Tokyo",
@@ -1631,7 +1631,7 @@
   {
     "id": 115,
     "name": "Shoto Todoroki (Shoto)",
-    "image": "/images/shoto todoroki (shoto).webp",
+    "image": "shoto todoroki (shoto).webp",
     "age": "1-20",
     "gender": "Male",
     "nationality": "Shizuoka",
@@ -1644,7 +1644,7 @@
   {
     "id": 116,
     "name": "Shuichi Iguchi (Spinner)",
-    "image": "/images/shuichi iguchi (spinner).webp",
+    "image": "shuichi iguchi (spinner).webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Japan",
@@ -1657,7 +1657,7 @@
   {
     "id": 117,
     "name": "Snipe",
-    "image": "/images/snipe.webp",
+    "image": "snipe.webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Kanagawa",
@@ -1670,7 +1670,7 @@
   {
     "id": 118,
     "name": "Sorahiko Torino (Gran Torino)",
-    "image": "/images/sorahiko torino (gran torino).webp",
+    "image": "sorahiko torino (gran torino).webp",
     "age": "61-80",
     "gender": "Male",
     "nationality": "Yamanashi",
@@ -1683,7 +1683,7 @@
   {
     "id": 119,
     "name": "Soramitsu Tabe",
-    "image": "/images/soramitsu tabe.webp",
+    "image": "soramitsu tabe.webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Japan",
@@ -1696,7 +1696,7 @@
   {
     "id": 120,
     "name": "Susugu Mitarai (Wash)",
-    "image": "/images/susugu mitarai (wash).webp",
+    "image": "susugu mitarai (wash).webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Japan",
@@ -1709,7 +1709,7 @@
   {
     "id": 121,
     "name": "Taishiro Toyomitsu (Fat Gum)",
-    "image": "/images/taishiro toyomitsu (fat gum).webp",
+    "image": "taishiro toyomitsu (fat gum).webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Okayama",
@@ -1722,7 +1722,7 @@
   {
     "id": 122,
     "name": "Tamaki Amajiki (Suneater)",
-    "image": "/images/tamaki amajiki (suneater).webp",
+    "image": "tamaki amajiki (suneater).webp",
     "age": "1-20",
     "gender": "Male",
     "nationality": "Chiba",
@@ -1735,7 +1735,7 @@
   {
     "id": 123,
     "name": "Tatami Nakagame (Turtle Neck)",
-    "image": "/images/tatami nakagame (turtle neck).webp",
+    "image": "tatami nakagame (turtle neck).webp",
     "age": "1-20",
     "gender": "Female",
     "nationality": "Japan",
@@ -1748,7 +1748,7 @@
   {
     "id": 124,
     "name": "Tatsuyuki Tokoname (Slidin' Go)",
-    "image": "/images/tatsuyuki tokoname (slidin' go).webp",
+    "image": "tatsuyuki tokoname (slidin' go).webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Japan",
@@ -1761,7 +1761,7 @@
   {
     "id": 125,
     "name": "Tenko Shimura (Tomura Shigaraki)",
-    "image": "/images/tenko shimura (tomura shigaraki).webp",
+    "image": "tenko shimura (tomura shigaraki).webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Japan",
@@ -1774,7 +1774,7 @@
   {
     "id": 126,
     "name": "Tensei Ida (Ingenium)",
-    "image": "/images/tensei ida (ingenium).webp",
+    "image": "tensei ida (ingenium).webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Tokyo",
@@ -1787,7 +1787,7 @@
   {
     "id": 127,
     "name": "Tenya Ida (Ingenium)",
-    "image": "/images/tenya ida (ingenium).webp",
+    "image": "tenya ida (ingenium).webp",
     "age": "1-20",
     "gender": "Male",
     "nationality": "Tokyo",
@@ -1800,7 +1800,7 @@
   {
     "id": 128,
     "name": "Tetsutetsu Tetsutetsu (Real Steel)",
-    "image": "/images/tetsutetsu tetsutetsu (real steel).webp",
+    "image": "tetsutetsu tetsutetsu (real steel).webp",
     "age": "1-20",
     "gender": "Male",
     "nationality": "Saitama",
@@ -1813,7 +1813,7 @@
   {
     "id": 129,
     "name": "Togaru Kamakiri (Jack Mantis)",
-    "image": "/images/togaru kamakiri (jack mantis).webp",
+    "image": "togaru kamakiri (jack mantis).webp",
     "age": "1-20",
     "gender": "Male",
     "nationality": "Nagasaki",
@@ -1826,7 +1826,7 @@
   {
     "id": 130,
     "name": "Tomoko Shiretoko (Ragdoll)",
-    "image": "/images/tomoko shiretoko (ragdoll).webp",
+    "image": "tomoko shiretoko (ragdoll).webp",
     "age": "21-40",
     "gender": "Female",
     "nationality": "Japan",
@@ -1839,7 +1839,7 @@
   {
     "id": 131,
     "name": "Tomoyasu Chikaoku (Skeptic)",
-    "image": "/images/tomoyasu chikaoku (skeptic).webp",
+    "image": "tomoyasu chikaoku (skeptic).webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Japan",
@@ -1852,7 +1852,7 @@
   {
     "id": 132,
     "name": "Toru Hagakure (Invisible Girl)",
-    "image": "/images/toru hagakure (invisible girl).webp",
+    "image": "toru hagakure (invisible girl).webp",
     "age": "1-20",
     "gender": "Female",
     "nationality": "Tokyo",
@@ -1865,7 +1865,7 @@
   {
     "id": 133,
     "name": "Toya Setsuno",
-    "image": "/images/toya setsuno.webp",
+    "image": "toya setsuno.webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Japan",
@@ -1878,7 +1878,7 @@
   {
     "id": 134,
     "name": "Toya Todoroki (Dabi)",
-    "image": "/images/toya todoroki (dabi).webp",
+    "image": "toya todoroki (dabi).webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Shizuoka",
@@ -1891,7 +1891,7 @@
   {
     "id": 135,
     "name": "Tsunagu Hakamada (Best Jeanist)",
-    "image": "/images/tsunagu hakamada (best jeanist).webp",
+    "image": "tsunagu hakamada (best jeanist).webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Okayama",
@@ -1904,7 +1904,7 @@
   {
     "id": 136,
     "name": "Tsuyu Asui (Froppy)",
-    "image": "/images/tsuyu asui (froppy).webp",
+    "image": "tsuyu asui (froppy).webp",
     "age": "1-20",
     "gender": "Female",
     "nationality": "Aichi",
@@ -1917,7 +1917,7 @@
   {
     "id": 137,
     "name": "Uwabami",
-    "image": "/images/uwabami.webp",
+    "image": "uwabami.webp",
     "age": "21-40",
     "gender": "Female",
     "nationality": "Shimane",
@@ -1930,7 +1930,7 @@
   {
     "id": 138,
     "name": "Yawara Chatora (Tiger)",
-    "image": "/images/yawara chatora (tiger).webp",
+    "image": "yawara chatora (tiger).webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Japan",
@@ -1943,7 +1943,7 @@
   {
     "id": 139,
     "name": "Yu Hojo",
-    "image": "/images/yu hojo.webp",
+    "image": "yu hojo.webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Japan",
@@ -1956,7 +1956,7 @@
   {
     "id": 140,
     "name": "Yo Shindo (Grand)",
-    "image": "/images/yo shindo (grand).webp",
+    "image": "yo shindo (grand).webp",
     "age": "1-20",
     "gender": "Male",
     "nationality": "Japan",
@@ -1969,7 +1969,7 @@
   {
     "id": 141,
     "name": "Yosetsu Awase (Welder)",
-    "image": "/images/yosetsu awase (welder).webp",
+    "image": "yosetsu awase (welder).webp",
     "age": "1-20",
     "gender": "Male",
     "nationality": "Niigata",
@@ -1982,7 +1982,7 @@
   {
     "id": 142,
     "name": "Yu Takeyama (Mt. Lady)",
-    "image": "/images/yu takeyama (mt. lady).webp",
+    "image": "yu takeyama (mt. lady).webp",
     "age": "21-40",
     "gender": "Female",
     "nationality": "Osaka",
@@ -1995,7 +1995,7 @@
   {
     "id": 143,
     "name": "Yuga Aoyama (Can't Stop Twinkling)",
-    "image": "/images/yuga aoyama (can't stop twinkling).webp",
+    "image": "yuga aoyama (can't stop twinkling).webp",
     "age": "1-20",
     "gender": "Male",
     "nationality": "France",
@@ -2008,7 +2008,7 @@
   {
     "id": 144,
     "name": "Yui Kodai (Rule)",
-    "image": "/images/yui kodai (rule).webp",
+    "image": "yui kodai (rule).webp",
     "age": "1-20",
     "gender": "Female",
     "nationality": "Shimane",
@@ -2021,7 +2021,7 @@
   {
     "id": 145,
     "name": "David Shield",
-    "image": "/images/david shield.webp",
+    "image": "david shield.webp",
     "age": "41-60",
     "gender": "Male",
     "nationality": "United States of America",
@@ -2034,7 +2034,7 @@
   {
     "id": 146,
     "name": "Melissa Shield",
-    "image": "/images/melissa shield.webp",
+    "image": "melissa shield.webp",
     "age": "1-20",
     "gender": "Female",
     "nationality": "United States of America",
@@ -2047,7 +2047,7 @@
   {
     "id": 147,
     "name": "Wolfram",
-    "image": "/images/wolfram.webp",
+    "image": "wolfram.webp",
     "age": "41-60",
     "gender": "Male",
     "nationality": "Japan",
@@ -2060,7 +2060,7 @@
   {
     "id": 148,
     "name": "Mahoro Shimano",
-    "image": "/images/mahoro shimano.webp",
+    "image": "mahoro shimano.webp",
     "age": "1-20",
     "gender": "Female",
     "nationality": "Nabu Island",
@@ -2073,7 +2073,7 @@
   {
     "id": 149,
     "name": "Katsuma Shimano",
-    "image": "/images/katsuma shimano.webp",
+    "image": "katsuma shimano.webp",
     "age": "1-20",
     "gender": "Male",
     "nationality": "Nabu Island",
@@ -2086,7 +2086,7 @@
   {
     "id": 150,
     "name": "Nine",
-    "image": "/images/nine.webp",
+    "image": "nine.webp",
     "age": "41-60",
     "gender": "Male",
     "nationality": "Japan",
@@ -2099,7 +2099,7 @@
   {
     "id": 151,
     "name": "Hoyo Makihara (Mummy)",
-    "image": "/images/hoyo makihara (mummy).webp",
+    "image": "hoyo makihara (mummy).webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Japan",
@@ -2112,7 +2112,7 @@
   {
     "id": 152,
     "name": "Kiruka Hasaki (Slice)",
-    "image": "/images/kiruka hasaki (slice).webp",
+    "image": "kiruka hasaki (slice).webp",
     "age": "21-40",
     "gender": "Female",
     "nationality": "Japan",
@@ -2125,7 +2125,7 @@
   {
     "id": 153,
     "name": "Chojuro Kon (Chimera)",
-    "image": "/images/chojuro kon (chimera).webp",
+    "image": "chojuro kon (chimera).webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Japan",
@@ -2138,7 +2138,7 @@
   {
     "id": 154,
     "name": "Rody Soul",
-    "image": "/images/rody soul.webp",
+    "image": "rody soul.webp",
     "age": "1-20",
     "gender": "Male",
     "nationality": "Otheon",
@@ -2151,7 +2151,7 @@
   {
     "id": 155,
     "name": "Flect Turn",
-    "image": "/images/flect turn.webp",
+    "image": "flect turn.webp",
     "age": "41-60",
     "gender": "Male",
     "nationality": "Otheon",
@@ -2164,7 +2164,7 @@
   {
     "id": 156,
     "name": "Beros",
-    "image": "/images/beros.webp",
+    "image": "beros.webp",
     "age": "21-40",
     "gender": "Female",
     "nationality": "Otheon",
@@ -2177,7 +2177,7 @@
   {
     "id": 157,
     "name": "Sidero",
-    "image": "/images/sidero.webp",
+    "image": "sidero.webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Otheon",
@@ -2190,7 +2190,7 @@
   {
     "id": 158,
     "name": "Leviathan",
-    "image": "/images/leviathan.webp",
+    "image": "leviathan.webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Otheon",
@@ -2203,7 +2203,7 @@
   {
     "id": 159,
     "name": "Serpenters (Ena & Dio)",
-    "image": "/images/serpenters.webp",
+    "image": "serpenters.webp",
     "age": "1-20",
     "gender": "Male",
     "nationality": "Otheon",
@@ -2216,7 +2216,7 @@
   {
     "id": 160,
     "name": "Anna Scervino",
-    "image": "/images/anna scervino.webp",
+    "image": "anna scervino.webp",
     "age": "1-20",
     "gender": "Female",
     "nationality": "Europe",
@@ -2229,7 +2229,7 @@
   {
     "id": 161,
     "name": "Giulio Gandini",
-    "image": "/images/giulio gandini.webp",
+    "image": "giulio gandini.webp",
     "age": "1-20",
     "gender": "Male",
     "nationality": "Europe",
@@ -2242,7 +2242,7 @@
   {
     "id": 162,
     "name": "Valdo Gollini (Dark Might)",
-    "image": "/images/valdo gollini (dark might).webp",
+    "image": "valdo gollini (dark might).webp",
     "age": "41-60",
     "gender": "Male",
     "nationality": "Europe",
@@ -2255,7 +2255,7 @@
   {
     "id": 163,
     "name": "Koichi Haimawari (The Crawler) (Gentle-Man)",
-    "image": "/images/koichi haimawari (the crawler) (gentle-man).webp",
+    "image": "koichi haimawari (the crawler) (gentle-man).webp",
     "age": "1-20",
     "gender": "Male",
     "nationality": "Naruhata",
@@ -2268,7 +2268,7 @@
   {
     "id": 164,
     "name": "Kazuho Haneyama (Pop Step)",
-    "image": "/images/kazuho haneyama (pop step).webp",
+    "image": "kazuho haneyama (pop step).webp",
     "age": "1-20",
     "gender": "Female",
     "nationality": "Naruhata",
@@ -2281,7 +2281,7 @@
   {
     "id": 165,
     "name": "Knuckle Duster (Iwao Oguro) (Takeshi Kuroiwa) (Chao Pin Siquan) (O'Clock)",
-    "image": "/images/knuckle duster (iwao oguro) (takeshi kuroiwa) (chao pin siquan) (o'clock).webp",
+    "image": "knuckle duster (iwao oguro) (takeshi kuroiwa) (chao pin siquan) (o'clock).webp",
     "age": "41-60",
     "gender": "Male",
     "nationality": "Naruhata",
@@ -2294,7 +2294,7 @@
   {
     "id": 166,
     "name": "Soga Kugizaki",
-    "image": "/images/soga kugizaki.webp",
+    "image": "soga kugizaki.webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Naruhata",
@@ -2307,7 +2307,7 @@
   {
     "id": 167,
     "name": "Rapt Tokage",
-    "image": "/images/rapt tokage.webp",
+    "image": "rapt tokage.webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Naruhata",
@@ -2320,7 +2320,7 @@
   {
     "id": 168,
     "name": "Moyuru Tochi",
-    "image": "/images/moyuru tochi.webp",
+    "image": "moyuru tochi.webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Naruhata",
@@ -2333,7 +2333,7 @@
   {
     "id": 169,
     "name": "Ichimoku Samazu",
-    "image": "/images/ichimoku samazu.webp",
+    "image": "ichimoku samazu.webp",
     "age": "1-20",
     "gender": "Male",
     "nationality": "Naruhata",
@@ -2346,7 +2346,7 @@
   {
     "id": 170,
     "name": "Jubee Namimaru",
-    "image": "/images/jubee namimaru.webp",
+    "image": "jubee namimaru.webp",
     "age": "1-20",
     "gender": "Male",
     "nationality": "Naruhata",
@@ -2359,7 +2359,7 @@
   {
     "id": 171,
     "name": "Teruo Unagisawa",
-    "image": "/images/teruo unagisawa.webp",
+    "image": "teruo unagisawa.webp",
     "age": "1-20",
     "gender": "Male",
     "nationality": "Naruhata",
@@ -2372,7 +2372,7 @@
   {
     "id": 172,
     "name": "Christopher Skyline (Captain Celebrity)",
-    "image": "/images/christopher skyline (captain celebrity).webp",
+    "image": "christopher skyline (captain celebrity).webp",
     "age": "41-60",
     "gender": "Male",
     "nationality": "United States of America",
@@ -2385,7 +2385,7 @@
   {
     "id": 173,
     "name": "Eizo Tanuma",
-    "image": "/images/eizo tanuma.webp",
+    "image": "eizo tanuma.webp",
     "age": "41-60",
     "gender": "Male",
     "nationality": "Naruhata",
@@ -2398,7 +2398,7 @@
   {
     "id": 174,
     "name": "Makoto Tsukauchi",
-    "image": "/images/makoto tsukauchi.png",
+    "image": "makoto tsukauchi.png",
     "age": "21-40",
     "gender": "Female",
     "nationality": "Naruhata",
@@ -2411,7 +2411,7 @@
   {
     "id": 175,
     "name": "Kuin Hachisuka (Tamao Oguro)",
-    "image": "/images/kuin hachisuka (tamao oguro).webp",
+    "image": "kuin hachisuka (tamao oguro).webp",
     "age": "1-20",
     "gender": "Female",
     "nationality": "Naruhata",
@@ -2424,7 +2424,7 @@
   {
     "id": 176,
     "name": "Ichiro & Jiro Hotta",
-    "image": "/images/ichiro & jiro hotta.webp",
+    "image": "ichiro & jiro hotta.webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Naruhata",
@@ -2437,7 +2437,7 @@
   {
     "id": 177,
     "name": "Kirihito Kamachi (Kama)",
-    "image": "/images/kirihito kamachi (kama).webp",
+    "image": "kirihito kamachi (kama).webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Naruhata",
@@ -2450,7 +2450,7 @@
   {
     "id": 178,
     "name": "Ikajiro Takobe",
-    "image": "/images/ikajiro takobe.webp",
+    "image": "ikajiro takobe.webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Naruhata",
@@ -2463,7 +2463,7 @@
   {
     "id": 179,
     "name": "Shoko Haimawari",
-    "image": "/images/shoko haimawari.webp",
+    "image": "shoko haimawari.webp",
     "age": "41-60",
     "gender": "Female",
     "nationality": "Naruhata",
@@ -2476,7 +2476,7 @@
   {
     "id": 180,
     "name": "Enigma",
-    "image": "/images/enigma.webp",
+    "image": "enigma.webp",
     "age": "1-20",
     "gender": "Female",
     "nationality": "Japan",
@@ -2489,7 +2489,7 @@
   {
     "id": 181,
     "name": "Monika Kaniyashiki (Kaniko)",
-    "image": "/images/monika kaniyashiki (kaniko).jpg",
+    "image": "monika kaniyashiki (kaniko).jpg",
     "age": "21-40",
     "gender": "Female",
     "nationality": "Okayama",
@@ -2502,7 +2502,7 @@
   {
     "id": 182,
     "name": "Sensoji (Mister Blaster)",
-    "image": "/images/sensoji (mister blaster).webp",
+    "image": "sensoji (mister blaster).webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Japan",
@@ -2515,7 +2515,7 @@
   {
     "id": 183,
     "name": "Tenma Nakaoji (His Purple Highness)",
-    "image": "/images/tenma nakaoji (his purple highness).webp",
+    "image": "tenma nakaoji (his purple highness).webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Japan",
@@ -2528,7 +2528,7 @@
   {
     "id": 184,
     "name": "Hokuto Hario (Compass Kid)",
-    "image": "/images/hokuto hario (compass kid).webp",
+    "image": "hokuto hario (compass kid).webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Japan",
@@ -2541,7 +2541,7 @@
   {
     "id": 185,
     "name": "Batto Yobayakawa",
-    "image": "/images/batto yobayakawa.webp",
+    "image": "batto yobayakawa.webp",
     "age": "21-40",
     "gender": "Male",
     "nationality": "Naruhata",
@@ -2554,7 +2554,7 @@
   {
     "id": 186,
     "name": "Number 6 (Rokuro Nomura) (Rock)",
-    "image": "/images/number 6 (rokuro nomura) (rock).webp",
+    "image": "number 6 (rokuro nomura) (rock).webp",
     "age": "1-20",
     "gender": "Male",
     "nationality": "Naruhata",

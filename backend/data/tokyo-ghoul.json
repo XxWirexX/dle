@@ -94,7 +94,7 @@
     {
       "id": 1,
       "name": "Ken Kaneki",
-      "image": "/images/ken kaneki.jpg",
+      "image": "ken kaneki.jpg",
       "age": "29",
       "height": "170",
       "gender": "Male",
@@ -107,7 +107,7 @@
     {
       "id": 2,
       "name": "Kisho Arima",
-      "image": "/images/kisho arima.webp",
+      "image": "kisho arima.webp",
       "age": "29",
       "height": "180",
       "gender": "Male",
@@ -120,7 +120,7 @@
     {
       "id": 3,
       "name": "Furuta Nimura",
-      "image": "/images/furuta nimura.jpg",
+      "image": "furuta nimura.jpg",
       "age": "25",
       "height": "175",
       "gender": "Male",
@@ -133,7 +133,7 @@
     {
       "id": 4,
       "name": "Toka Kirishima",
-      "image": "/images/toka kirishima.jpg",
+      "image": "toka kirishima.jpg",
       "age": "28",
       "height": "156",
       "gender": "Female",
@@ -146,7 +146,7 @@
     {
       "id": 5,
       "name": "Akihiro Kanou",
-      "image": "/images/akihiro kanou.jpg",
+      "image": "akihiro kanou.jpg",
       "age": "Unknown",
       "height": "176",
       "gender": "Male",
@@ -159,7 +159,7 @@
     {
       "id": 6,
       "name": "Akashi Kobayashi",
-      "image": "/images/akashi kobayashi.webp",
+      "image": "akashi kobayashi.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -172,7 +172,7 @@
     {
       "id": 7,
       "name": "Asaki Fueguchi",
-      "image": "/images/asaki fueguchi.webp",
+      "image": "asaki fueguchi.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -185,7 +185,7 @@
     {
       "id": 8,
       "name": "Ayato Kirishima",
-      "image": "/images/ayato kirishima.jpg",
+      "image": "ayato kirishima.jpg",
       "age": "25",
       "height": "170",
       "gender": "Male",
@@ -198,7 +198,7 @@
     {
       "id": 9,
       "name": "Akira Mado",
-      "image": "/images/akira mado.webp",
+      "image": "akira mado.webp",
       "age": "31",
       "height": "164",
       "gender": "Female",
@@ -211,7 +211,7 @@
     {
       "id": 10,
       "name": "Arata Kirishima",
-      "image": "/images/arata kirishima.webp",
+      "image": "arata kirishima.webp",
       "age": "Unknown",
       "height": "182",
       "gender": "Male",
@@ -224,7 +224,7 @@
     {
       "id": 11,
       "name": "Asa",
-      "image": "/images/asa.webp",
+      "image": "asa.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Female",
@@ -237,7 +237,7 @@
     {
       "id": 12,
       "name": "Aki Sasada",
-      "image": "/images/aki sasada.webp",
+      "image": "aki sasada.webp",
       "age": "32",
       "height": "Unknown",
       "gender": "Female",
@@ -250,7 +250,7 @@
     {
       "id": 13,
       "name": "Ayumu Hogi",
-      "image": "/images/ayumu hogi.jpg",
+      "image": "ayumu hogi.jpg",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Female",
@@ -263,7 +263,7 @@
     {
       "id": 14,
       "name": "Big Madam",
-      "image": "/images/big madam.webp",
+      "image": "big madam.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Female",
@@ -276,7 +276,7 @@
     {
       "id": 15,
       "name": "Bin brothers",
-      "image": "/images/bin brothers.webp",
+      "image": "bin brothers.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -289,7 +289,7 @@
     {
       "id": 16,
       "name": "Cain",
-      "image": "/images/cain.webp",
+      "image": "cain.webp",
       "age": "20",
       "height": "Unknown",
       "gender": "Male",
@@ -302,7 +302,7 @@
     {
       "id": 17,
       "name": "Chie Hori",
-      "image": "/images/chie hori.webp",
+      "image": "chie hori.webp",
       "age": "32",
       "height": "130",
       "gender": "Female",
@@ -315,7 +315,7 @@
     {
       "id": 18,
       "name": "Chuu Hachikawa",
-      "image": "/images/chuu hachikawa.webp",
+      "image": "chuu hachikawa.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -328,7 +328,7 @@
     {
       "id": 19,
       "name": "Demon Yamada",
-      "image": "/images/demon yamada.webp",
+      "image": "demon yamada.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -341,7 +341,7 @@
     {
       "id": 20,
       "name": "Donato Porpora",
-      "image": "/images/donato porpora.webp",
+      "image": "donato porpora.webp",
       "age": "Unknown",
       "height": "179",
       "gender": "Male",
@@ -354,7 +354,7 @@
     {
       "id": 21,
       "name": "Enji Koma",
-      "image": "/images/enji koma.webp",
+      "image": "enji koma.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -367,7 +367,7 @@
     {
       "id": 22,
       "name": "Hooguro",
-      "image": "/images/hooguro.webp",
+      "image": "hooguro.webp",
       "age": "59",
       "height": "184",
       "gender": "Male",
@@ -380,7 +380,7 @@
     {
       "id": 23,
       "name": "Hikari Kirishima",
-      "image": "/images/hikari kirishima.webp",
+      "image": "hikari kirishima.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Female",
@@ -393,7 +393,7 @@
     {
       "id": 24,
       "name": "Hideyoshi Nagachika",
-      "image": "/images/hideyoshi nagachika.jpg",
+      "image": "hideyoshi nagachika.jpg",
       "age": "30",
       "height": "171",
       "gender": "Male",
@@ -406,7 +406,7 @@
     {
       "id": 25,
       "name": "Hinami Fueguchi",
-      "image": "/images/hinami fueguchi.webp",
+      "image": "hinami fueguchi.webp",
       "age": "24",
       "height": "162",
       "gender": "Female",
@@ -419,7 +419,7 @@
     {
       "id": 26,
       "name": "Hajime Hazuki",
-      "image": "/images/hajime hazuki.webp",
+      "image": "hajime hazuki.webp",
       "age": "11",
       "height": "155",
       "gender": "Male",
@@ -432,7 +432,7 @@
     {
       "id": 27,
       "name": "Hairu Ihei",
-      "image": "/images/hairu ihei.jpg",
+      "image": "hairu ihei.jpg",
       "age": "21",
       "height": "160",
       "gender": "Female",
@@ -445,7 +445,7 @@
     {
       "id": 28,
       "name": "Hanbee Abara",
-      "image": "/images/hanbee abara.webp",
+      "image": "hanbee abara.webp",
       "age": "29",
       "height": "190",
       "gender": "Male",
@@ -458,7 +458,7 @@
     {
       "id": 29,
       "name": "Itsuki Marude",
-      "image": "/images/itsuki marude.webp",
+      "image": "itsuki marude.webp",
       "age": "54",
       "height": "177",
       "gender": "Male",
@@ -471,7 +471,7 @@
     {
       "id": 30,
       "name": "Ichika Kaneki",
-      "image": "/images/ichika kaneki.webp",
+      "image": "ichika kaneki.webp",
       "age": "5",
       "height": "112",
       "gender": "Female",
@@ -484,7 +484,7 @@
     {
       "id": 31,
       "name": "Ikuma Momochi",
-      "image": "/images/ikuma momochi.webp",
+      "image": "ikuma momochi.webp",
       "age": "22",
       "height": "Unknown",
       "gender": "Male",
@@ -497,7 +497,7 @@
     {
       "id": 32,
       "name": "Itori",
-      "image": "/images/itori.webp",
+      "image": "itori.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Female",
@@ -510,7 +510,7 @@
     {
       "id": 33,
       "name": "Iwao Kuroiwa",
-      "image": "/images/iwao kuroiwa.webp",
+      "image": "iwao kuroiwa.webp",
       "age": "42",
       "height": "181",
       "gender": "Male",
@@ -523,7 +523,7 @@
     {
       "id": 34,
       "name": "Jun Numa",
-      "image": "/images/jun numa.webp",
+      "image": "jun numa.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -536,7 +536,7 @@
     {
       "id": 35,
       "name": "Juzo Suzuya",
-      "image": "/images/juzo suzuya.webp",
+      "image": "juzo suzuya.webp",
       "age": "30",
       "height": "160",
       "gender": "Male",
@@ -549,7 +549,7 @@
     {
       "id": 36,
       "name": "Kasuka Mado",
-      "image": "/images/kasuka mado.webp",
+      "image": "kasuka mado.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Female",
@@ -562,7 +562,7 @@
     {
       "id": 37,
       "name": "Karren von Rosewald",
-      "image": "/images/karren von rosewald.webp",
+      "image": "karren von rosewald.webp",
       "age": "19",
       "height": "168",
       "gender": "Female",
@@ -575,7 +575,7 @@
     {
       "id": 38,
       "name": "Katsuya Mabuchi",
-      "image": "/images/katsuya mabuchi.webp",
+      "image": "katsuya mabuchi.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -588,7 +588,7 @@
     {
       "id": 39,
       "name": "Kie Muramatsu",
-      "image": "/images/kie muramatsu.webp",
+      "image": "kie muramatsu.webp",
       "age": "68",
       "height": "Unknown",
       "gender": "Female",
@@ -601,7 +601,7 @@
     {
       "id": 40,
       "name": "Kinko",
-      "image": "/images/kinko.webp",
+      "image": "kinko.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -614,7 +614,7 @@
     {
       "id": 41,
       "name": "Keijin Nakarai",
-      "image": "/images/keijin nakarai.webp",
+      "image": "keijin nakarai.webp",
       "age": "24",
       "height": "167",
       "gender": "Male",
@@ -627,7 +627,7 @@
     {
       "id": 42,
       "name": "Kurei",
-      "image": "/images/kurei.webp",
+      "image": "kurei.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -640,7 +640,7 @@
     {
       "id": 43,
       "name": "Karao Saeki",
-      "image": "/images/karao saeki.webp",
+      "image": "karao saeki.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -653,7 +653,7 @@
     {
       "id": 44,
       "name": "Kurona Yasuhisa",
-      "image": "/images/kurona yasuhisa.webp",
+      "image": "kurona yasuhisa.webp",
       "age": "29",
       "height": "160",
       "gender": "Female",
@@ -666,7 +666,7 @@
     {
       "id": 45,
       "name": "Kuki Urie",
-      "image": "/images/kuki urie.webp",
+      "image": "kuki urie.webp",
       "age": "27",
       "height": "175",
       "gender": "Male",
@@ -679,7 +679,7 @@
     {
       "id": 46,
       "name": "Kuzen Yoshimura",
-      "image": "/images/kuzen yoshimura.jpg",
+      "image": "kuzen yoshimura.jpg",
       "age": "80",
       "height": "Unknown",
       "gender": "Male",
@@ -692,7 +692,7 @@
     {
       "id": 47,
       "name": "Eto Yoshimura",
-      "image": "/images/eto yoshimura.jpg",
+      "image": "eto yoshimura.jpg",
       "age": "27",
       "height": "151",
       "gender": "Female",
@@ -705,7 +705,7 @@
     {
       "id": 48,
       "name": "Kotaro Amon",
-      "image": "/images/kotaro amon.webp",
+      "image": "kotaro amon.webp",
       "age": "38",
       "height": "191",
       "gender": "Male",
@@ -718,7 +718,7 @@
     {
       "id": 49,
       "name": "Kaya Irimi",
-      "image": "/images/kaya irimi.webp",
+      "image": "kaya irimi.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Female",
@@ -731,7 +731,7 @@
     {
       "id": 50,
       "name": "Kiyoko Aura",
-      "image": "/images/kiyoko aura.webp",
+      "image": "kiyoko aura.webp",
       "age": "58",
       "height": "165",
       "gender": "Female",
@@ -744,7 +744,7 @@
     {
       "id": 51,
       "name": "Kousuke Houji",
-      "image": "/images/kousuke houji.jpg",
+      "image": "kousuke houji.jpg",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -757,7 +757,7 @@
     {
       "id": 52,
       "name": "Kooki Ui",
-      "image": "/images/koori ui.webp",
+      "image": "koori ui.webp",
       "age": "35",
       "height": "169",
       "gender": "Male",
@@ -770,7 +770,7 @@
     {
       "id": 53,
       "name": "Kaiko",
-      "image": "/images/kaiko.webp",
+      "image": "kaiko.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -783,7 +783,7 @@
     {
       "id": 54,
       "name": "Matsumae",
-      "image": "/images/matsumae.webp",
+      "image": "matsumae.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Female",
@@ -796,7 +796,7 @@
     {
       "id": 55,
       "name": "Matsuri Washuu",
-      "image": "/images/matsuri washuu.webp",
+      "image": "matsuri washuu.webp",
       "age": "36",
       "height": "179",
       "gender": "Male",
@@ -809,7 +809,7 @@
     {
       "id": 56,
       "name": "Mayuzumi",
-      "image": "/images/mayuzumi.webp",
+      "image": "mayuzumi.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Female",
@@ -822,7 +822,7 @@
     {
       "id": 57,
       "name": "Misato Gori",
-      "image": "/images/misato gori.webp",
+      "image": "misato gori.webp",
       "age": "30",
       "height": "180",
       "gender": "Female",
@@ -835,7 +835,7 @@
     {
       "id": 58,
       "name": "Miza Kusakari",
-      "image": "/images/miza kusakari.webp",
+      "image": "miza kusakari.webp",
       "age": "38",
       "height": "145",
       "gender": "Female",
@@ -848,7 +848,7 @@
     {
       "id": 59,
       "name": "Mirumo Tsukiyama",
-      "image": "/images/mirumo tsukiyama.webp",
+      "image": "mirumo tsukiyama.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -861,7 +861,7 @@
     {
       "id": 60,
       "name": "Mikito Urie",
-      "image": "/images/mikito urie.webp",
+      "image": "mikito urie.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -874,7 +874,7 @@
     {
       "id": 61,
       "name": "Mougan Tanakamaru",
-      "image": "/images/mougan tanakamaru.webp",
+      "image": "mougan tanakamaru.webp",
       "age": "56",
       "height": "192",
       "gender": "Male",
@@ -887,7 +887,7 @@
     {
       "id": 62,
       "name": "Naoto Hayashimura",
-      "image": "/images/naoto hayashimura.jpg",
+      "image": "naoto hayashimura.jpg",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -900,7 +900,7 @@
     {
       "id": 63,
       "name": "Nashiro Yasuhisa",
-      "image": "/images/nashiro yasuhisa.webp",
+      "image": "nashiro yasuhisa.webp",
       "age": "20",
       "height": "160",
       "gender": "Female",
@@ -913,7 +913,7 @@
     {
       "id": 64,
       "name": "Nobu Shimoguchi",
-      "image": "/images/nobu shimoguchi.webp",
+      "image": "nobu shimoguchi.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -926,7 +926,7 @@
     {
       "id": 65,
       "name": "Noro",
-      "image": "/images/noro.jpg",
+      "image": "noro.jpg",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -939,7 +939,7 @@
     {
       "id": 66,
       "name": "Nico",
-      "image": "/images/nico.webp",
+      "image": "nico.webp",
       "age": "Unknown",
       "height": "175",
       "gender": "Male",
@@ -952,7 +952,7 @@
     {
       "id": 67,
       "name": "Nishiki Nishio",
-      "image": "/images/nishiki nishio.jpg",
+      "image": "nishiki nishio.jpg",
       "age": "30",
       "height": "177",
       "gender": "Male",
@@ -965,7 +965,7 @@
     {
       "id": 68,
       "name": "Kimi Nishino",
-      "image": "/images/kimi nishino.jpg",
+      "image": "kimi nishino.jpg",
       "age": "32",
       "height": "163",
       "gender": "Female",
@@ -978,7 +978,7 @@
     {
       "id": 69,
       "name": "Noyama",
-      "image": "/images/noyama.webp",
+      "image": "noyama.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -991,7 +991,7 @@
     {
       "id": 70,
       "name": "Nutcracker",
-      "image": "/images/nutcracker.webp",
+      "image": "nutcracker.webp",
       "age": "21",
       "height": "166",
       "gender": "Female",
@@ -1004,7 +1004,7 @@
     {
       "id": 71,
       "name": "Nutcracker's partner",
-      "image": "/images/nutcracker's partner.webp",
+      "image": "nutcracker's partner.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -1017,7 +1017,7 @@
     {
       "id": 72,
       "name": "Naki",
-      "image": "/images/naki.webp",
+      "image": "naki.webp",
       "age": "Unknown",
       "height": "173",
       "gender": "Male",
@@ -1030,7 +1030,7 @@
     {
       "id": 73,
       "name": "Okahira",
-      "image": "/images/okahira.jpg",
+      "image": "okahira.jpg",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -1043,7 +1043,7 @@
     {
       "id": 74,
       "name": "Rize Kamishiro",
-      "image": "/images/rize kamishiro.webp",
+      "image": "rize kamishiro.webp",
       "age": "Unknown",
       "height": "164",
       "gender": "Female",
@@ -1056,7 +1056,7 @@
     {
       "id": 75,
       "name": "Rou",
-      "image": "/images/rou.webp",
+      "image": "rou.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Female",
@@ -1069,7 +1069,7 @@
     {
       "id": 76,
       "name": "Ryouko Fueguchi",
-      "image": "/images/ryouko fueguchi.webp",
+      "image": "ryouko fueguchi.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Female",
@@ -1082,7 +1082,7 @@
     {
       "id": 77,
       "name": "Renji Yomo",
-      "image": "/images/renji yomo.webp",
+      "image": "renji yomo.webp",
       "age": "Unknown",
       "height": "182",
       "gender": "Male",
@@ -1095,7 +1095,7 @@
     {
       "id": 78,
       "name": "Roma Hoito",
-      "image": "/images/roma hoito.webp",
+      "image": "roma hoito.webp",
       "age": "55",
       "height": "Unknown",
       "gender": "Female",
@@ -1108,7 +1108,7 @@
     {
       "id": 79,
       "name": "Rio",
-      "image": "/images/rio.webp",
+      "image": "rio.webp",
       "age": "15",
       "height": "163",
       "gender": "Male",
@@ -1121,7 +1121,7 @@
     {
       "id": 80,
       "name": "Shuu Tsukiyama",
-      "image": "/images/shuu tsukiyama.webp",
+      "image": "shuu tsukiyama.webp",
       "age": "32",
       "height": "180",
       "gender": "Male",
@@ -1134,7 +1134,7 @@
     {
       "id": 81,
       "name": "Shiki Kijima",
-      "image": "/images/shiki kijima.webp",
+      "image": "shiki kijima.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -1147,7 +1147,7 @@
     {
       "id": 82,
       "name": "Seidou Takizawa",
-      "image": "/images/seidou takizawa.webp",
+      "image": "seidou takizawa.webp",
       "age": "25",
       "height": "172",
       "gender": "Male",
@@ -1160,7 +1160,7 @@
     {
       "id": 83,
       "name": "Tatara",
-      "image": "/images/tatara.jpg",
+      "image": "tatara.jpg",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -1173,7 +1173,7 @@
     {
       "id": 84,
       "name": "Takeomi Kuroiwa",
-      "image": "/images/takeomi kuroiwa.webp",
+      "image": "takeomi kuroiwa.webp",
       "age": "21",
       "height": "182",
       "gender": "Male",
@@ -1186,7 +1186,7 @@
     {
       "id": 85,
       "name": "Yoriko Kuroiwa",
-      "image": "/images/yoriko kuroiwa.webp",
+      "image": "yoriko kuroiwa.webp",
       "age": "28",
       "height": "157",
       "gender": "Female",
@@ -1199,7 +1199,7 @@
     {
       "id": 86,
       "name": "Uta",
-      "image": "/images/uta.webp",
+      "image": "uta.webp",
       "age": "32",
       "height": "177",
       "gender": "Male",
@@ -1212,7 +1212,7 @@
     {
       "id": 87,
       "name": "Yukinori Shinohara",
-      "image": "/images/yukinori shinohara.webp",
+      "image": "yukinori shinohara.webp",
       "age": "37",
       "height": "185",
       "gender": "Male",
@@ -1225,7 +1225,7 @@
     {
       "id": 88,
       "name": "Yakumo Oomori",
-      "image": "/images/yakumo oomori - jason yamori.webp",
+      "image": "yakumo oomori - jason yamori.webp",
       "age": "40",
       "height": "183",
       "gender": "Male",
@@ -1238,7 +1238,7 @@
     {
       "id": 89,
       "name": "Matasaka Kamishiro",
-      "image": "/images/matasaka kamishiro.webp",
+      "image": "matasaka kamishiro.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -1251,7 +1251,7 @@
     {
       "id": 90,
       "name": "Kureo Mado",
-      "image": "/images/kureo mado.webp",
+      "image": "kureo mado.webp",
       "age": "Unknown",
       "height": "177",
       "gender": "Male",
@@ -1264,7 +1264,7 @@
     {
       "id": 91,
       "name": "Shikorae",
-      "image": "/images/shikorae.webp",
+      "image": "shikorae.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -1277,7 +1277,7 @@
     {
       "id": 92,
       "name": "Take Hirako",
-      "image": "/images/take hirako.webp",
+      "image": "take hirako.webp",
       "age": "31",
       "height": "172",
       "gender": "Male",
@@ -1290,7 +1290,7 @@
     {
       "id": 93,
       "name": "Haru Shirazu",
-      "image": "/images/haru shirazu.webp",
+      "image": "haru shirazu.webp",
       "age": "15",
       "height": "Unknown",
       "gender": "Female",
@@ -1303,7 +1303,7 @@
     {
       "id": 94,
       "name": "Kazuichi Banjo",
-      "image": "/images/kazuichi banjo.webp",
+      "image": "kazuichi banjo.webp",
       "age": "35",
       "height": "187",
       "gender": "Male",
@@ -1316,7 +1316,7 @@
     {
       "id": 95,
       "name": "Maiko Abe (Madam A)",
-      "image": "/images/maiko abe (madam a).webp",
+      "image": "maiko abe (madam a).webp",
       "age": "Unknown",
       "height": "160",
       "gender": "Female",
@@ -1329,7 +1329,7 @@
     {
       "id": 96,
       "name": "Yoshitoki Washuu",
-      "image": "/images/yoshitoki washuu.webp",
+      "image": "yoshitoki washuu.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -1342,7 +1342,7 @@
     {
       "id": 97,
       "name": "Tsuneyoshi Washuu",
-      "image": "/images/tsuneyoshi washuu.webp",
+      "image": "tsuneyoshi washuu.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Male",
@@ -1355,7 +1355,7 @@
     {
       "id": 98,
       "name": "Ginshi Shirazu",
-      "image": "/images/ginshi shirazu.webp",
+      "image": "ginshi shirazu.webp",
       "age": "20",
       "height": "176",
       "gender": "Male",
@@ -1368,7 +1368,7 @@
     {
       "id": 99,
       "name": "Tooru Mutsuki",
-      "image": "/images/tooru mutsuki.webp",
+      "image": "tooru mutsuki.webp",
       "age": "21",
       "height": "165",
       "gender": "Female",
@@ -1381,7 +1381,7 @@
     {
       "id": 100,
       "name": "Saiko Yonebayashi",
-      "image": "/images/saiko yonebayashi.webp",
+      "image": "saiko yonebayashi.webp",
       "age": "21",
       "height": "143",
       "gender": "Female",
@@ -1394,7 +1394,7 @@
     {
       "id": 101,
       "name": "Ching-Li Hsiao",
-      "image": "/images/ching-li hsiao.webp",
+      "image": "ching-li hsiao.webp",
       "age": "19",
       "height": "167",
       "gender": "Female",
@@ -1407,7 +1407,7 @@
     {
       "id": 102,
       "name": "Shinsanpei Aura",
-      "image": "/images/shinsanpei aura.webp",
+      "image": "shinsanpei aura.webp",
       "age": "19",
       "height": "185",
       "gender": "Male",
@@ -1420,7 +1420,7 @@
     {
       "id": 103,
       "name": "Toma Higemaru",
-      "image": "/images/toma higemaru.jpg",
+      "image": "toma higemaru.jpg",
       "age": "18",
       "height": "167",
       "gender": "Male",
@@ -1433,7 +1433,7 @@
     {
       "id": 104,
       "name": "Ken Kaneki (Dragon)",
-      "image": "/images/ken kaneki (dragon).jpg",
+      "image": "ken kaneki (dragon).jpg",
       "age": "29",
       "height": "Unknown",
       "gender": "Male",

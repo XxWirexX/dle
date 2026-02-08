@@ -82,7 +82,7 @@
     {
       "id": 1,
       "name": "Anya Forger",
-      "image": "/images/anya forger.webp",
+      "image": "anya forger.webp",
       "gender": "Female",
       "age": "5",
       "height": "99.5",
@@ -94,7 +94,7 @@
     {
       "id": 2,
       "name": "Loid Forger",
-      "image": "/images/loid forger.webp",
+      "image": "loid forger.webp",
       "gender": "Male",
       "age": "Unknown",
       "height": "187",
@@ -106,7 +106,7 @@
     {
       "id": 3,
       "name": "Yor Forger",
-      "image": "/images/yor forger.webp",
+      "image": "yor forger.webp",
       "gender": "Female",
       "age": "27",
       "height": "170",
@@ -118,7 +118,7 @@
     {
       "id": 4,
       "name": "Bond Forger",
-      "image": "/images/bond forger.webp",
+      "image": "bond forger.webp",
       "gender": "Male",
       "age": "Unknown",
       "height": "140",
@@ -130,7 +130,7 @@
     {
       "id": 5,
       "name": "Aaron",
-      "image": "/images/aaron.webp",
+      "image": "aaron.webp",
       "gender": "Male",
       "age": "5",
       "height": "30",
@@ -142,7 +142,7 @@
     {
       "id": 6,
       "name": "Becky Blackbell",
-      "image": "/images/becky blackbell.webp",
+      "image": "becky blackbell.webp",
       "gender": "Female",
       "age": "6",
       "height": "104",
@@ -154,7 +154,7 @@
     {
       "id": 7,
       "name": "Bill Watkins",
-      "image": "/images/bill watkins.webp",
+      "image": "bill watkins.webp",
       "gender": "Male",
       "age": "6",
       "height": "Unknown",
@@ -166,7 +166,7 @@
     {
       "id": 8,
       "name": "Biddy Squire",
-      "image": "/images/biddy squire.webp",
+      "image": "biddy squire.webp",
       "gender": "Female",
       "age": "Unknown",
       "height": "Unknown",
@@ -178,7 +178,7 @@
     {
       "id": 9,
       "name": "Billy Squire",
-      "image": "/images/billy squire.webp",
+      "image": "billy squire.webp",
       "gender": "Male",
       "age": "Unknown",
       "height": "Unknown",
@@ -190,7 +190,7 @@
     {
       "id": 10,
       "name": "Camilla",
-      "image": "/images/camilla.webp",
+      "image": "camilla.webp",
       "gender": "Female",
       "age": "Unknown",
       "height": "Unknown",
@@ -202,7 +202,7 @@
     {
       "id": 11,
       "name": "Carrol Campbell",
-      "image": "/images/carrol campbell.webp",
+      "image": "carrol campbell.webp",
       "gender": "Male",
       "age": "18",
       "height": "Unknown",
@@ -214,7 +214,7 @@
     {
       "id": 12,
       "name": "Chloe",
-      "image": "/images/chloe.webp",
+      "image": "chloe.webp",
       "gender": "Female",
       "age": "20",
       "height": "Unknown",
@@ -226,7 +226,7 @@
     {
       "id": 13,
       "name": "Damian Desmond",
-      "image": "/images/damian desmond.webp",
+      "image": "damian desmond.webp",
       "gender": "Male",
       "age": "6",
       "height": "110",
@@ -238,7 +238,7 @@
     {
       "id": 14,
       "name": "Demetrius Desmond",
-      "image": "/images/demetrius desmond.webp",
+      "image": "demetrius desmond.webp",
       "gender": "Male",
       "age": "15",
       "height": "Unknown",
@@ -250,7 +250,7 @@
     {
       "id": 15,
       "name": "Donovan Desmond",
-      "image": "/images/donovan desmond.webp",
+      "image": "donovan desmond.webp",
       "gender": "Male",
       "age": "Unknown",
       "height": "Unknown",
@@ -262,7 +262,7 @@
     {
       "id": 16,
       "name": "Dominic",
-      "image": "/images/dominic.webp",
+      "image": "dominic.webp",
       "gender": "Male",
       "age": "Unknown",
       "height": "Unknown",
@@ -274,7 +274,7 @@
     {
       "id": 17,
       "name": "Emile Elman",
-      "image": "/images/emile elman.webp",
+      "image": "emile elman.webp",
       "gender": "Male",
       "age": "6",
       "height": "Unknown",
@@ -286,7 +286,7 @@
     {
       "id": 18,
       "name": "Ewen Egeburg",
-      "image": "/images/ewen egeburg.webp",
+      "image": "ewen egeburg.webp",
       "gender": "Male",
       "age": "6",
       "height": "Unknown",
@@ -298,7 +298,7 @@
     {
       "id": 19,
       "name": "Fiona Frost",
-      "image": "/images/fiona frost.webp",
+      "image": "fiona frost.webp",
       "gender": "Female",
       "age": "Unknown",
       "height": "172",
@@ -310,7 +310,7 @@
     {
       "id": 20,
       "name": "Franky Franklin",
-      "image": "/images/franky franklin.webp",
+      "image": "franky franklin.webp",
       "gender": "Male",
       "age": "Unknown",
       "height": "162",
@@ -322,7 +322,7 @@
     {
       "id": 21,
       "name": "George Glooman",
-      "image": "/images/george glooman.webp",
+      "image": "george glooman.webp",
       "gender": "Male",
       "age": "6",
       "height": "Unknown",
@@ -334,7 +334,7 @@
     {
       "id": 22,
       "name": "Gram Gretcher",
-      "image": "/images/gram gretcher.webp",
+      "image": "gram gretcher.webp",
       "gender": "Male",
       "age": "3",
       "height": "Unknown",
@@ -346,7 +346,7 @@
     {
       "id": 23,
       "name": "Henry Henderson",
-      "image": "/images/henry henderson.webp",
+      "image": "henry henderson.webp",
       "gender": "Male",
       "age": "66",
       "height": "183",
@@ -358,7 +358,7 @@
     {
       "id": 24,
       "name": "Keith Kepler",
-      "image": "/images/keith kepler.webp",
+      "image": "keith kepler.webp",
       "gender": "Male",
       "age": "Unknown",
       "height": "Unknown",
@@ -370,7 +370,7 @@
     {
       "id": 25,
       "name": "Kim Campbell",
-      "image": "/images/kim campbell.webp",
+      "image": "kim campbell.webp",
       "gender": "Female",
       "age": "18",
       "height": "Unknown",
@@ -382,7 +382,7 @@
     {
       "id": 26,
       "name": "Martha Marriott",
-      "image": "/images/martha marriott.webp",
+      "image": "martha marriott.webp",
       "gender": "Female",
       "age": "64",
       "height": "Unknown",
@@ -394,7 +394,7 @@
     {
       "id": 27,
       "name": "Matthew McMahon",
-      "image": "/images/matthew mcmahon.webp",
+      "image": "matthew mcmahon.webp",
       "gender": "Male",
       "age": "Unknown",
       "height": "Unknown",
@@ -406,7 +406,7 @@
     {
       "id": 28,
       "name": "Melinda Desmond",
-      "image": "/images/melinda desmond.webp",
+      "image": "melinda desmond.webp",
       "gender": "Female",
       "age": "Unknown",
       "height": "Unknown",
@@ -418,7 +418,7 @@
     {
       "id": 29,
       "name": "Millie Myers",
-      "image": "/images/millie myers.webp",
+      "image": "millie myers.webp",
       "gender": "Female",
       "age": "Unknown",
       "height": "Unknown",
@@ -430,7 +430,7 @@
     {
       "id": 30,
       "name": "Murdoch Swan",
-      "image": "/images/murdoch swan.webp",
+      "image": "murdoch swan.webp",
       "gender": "Male",
       "age": "47",
       "height": "163",
@@ -442,7 +442,7 @@
     {
       "id": 31,
       "name": "Olka Gretcher",
-      "image": "/images/olka gretcher.webp",
+      "image": "olka gretcher.webp",
       "gender": "Female",
       "age": "Unknown",
       "height": "Unknown",
@@ -454,7 +454,7 @@
     {
       "id": 32,
       "name": "Sharon",
-      "image": "/images/sharon.webp",
+      "image": "sharon.webp",
       "gender": "Female",
       "age": "Unknown",
       "height": "Unknown",
@@ -466,7 +466,7 @@
     {
       "id": 33,
       "name": "Shopkeeper",
-      "image": "/images/shopkeeper.webp",
+      "image": "shopkeeper.webp",
       "gender": "Male",
       "age": "Unknown",
       "height": "Unknown",
@@ -478,7 +478,7 @@
     {
       "id": 34,
       "name": "SSS Lieutenant",
-      "image": "/images/sss lieutenant.webp",
+      "image": "sss lieutenant.webp",
       "gender": "Male",
       "age": "Unknown",
       "height": "Unknown",
@@ -490,7 +490,7 @@
     {
       "id": 35,
       "name": "Sylvia Sherwood",
-      "image": "/images/sylvia sherwood.webp",
+      "image": "sylvia sherwood.webp",
       "gender": "Female",
       "age": "Unknown",
       "height": "173",
@@ -502,7 +502,7 @@
     {
       "id": 36,
       "name": "Wise Agent",
-      "image": "/images/wise agent.webp",
+      "image": "wise agent.webp",
       "gender": "Male",
       "age": "Unknown",
       "height": "Unknown",
@@ -514,7 +514,7 @@
     {
       "id": 37,
       "name": "Yuri Briar",
-      "image": "/images/yuri briar.webp",
+      "image": "yuri briar.webp",
       "gender": "Male",
       "age": "20",
       "height": "179",
@@ -526,7 +526,7 @@
     {
       "id": 38,
       "name": "Zeb",
-      "image": "/images/zeb.webp",
+      "image": "zeb.webp",
       "gender": "Male",
       "age": "Unknown",
       "height": "Unknown",

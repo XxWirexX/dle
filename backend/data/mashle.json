@@ -70,7 +70,7 @@
     {
       "id": 1,
       "name": "Mash Burnedead",
-      "image": "/images/mash burnedead.webp",
+      "image": "mash burnedead.webp",
       "age": "16",
       "height": "171",
       "gender": "Male",
@@ -82,7 +82,7 @@
     {
       "id": 2,
       "name": "Abel Walker",
-      "image": "/images/abel walker.webp",
+      "image": "abel walker.webp",
       "age": "18",
       "height": "176",
       "gender": "Male",
@@ -94,7 +94,7 @@
     {
       "id": 3,
       "name": "Abyss Razor",
-      "image": "/images/abyss razor.webp",
+      "image": "abyss razor.webp",
       "age": "18",
       "height": "175",
       "gender": "Male",
@@ -106,7 +106,7 @@
     {
       "id": 4,
       "name": "Adam Jobs",
-      "image": "/images/adam jobs.webp",
+      "image": "adam jobs.webp",
       "age": "55",
       "height": "182",
       "gender": "Male",
@@ -118,7 +118,7 @@
     {
       "id": 5,
       "name": "Agito Tyrone",
-      "image": "/images/agito tyrone.webp",
+      "image": "agito tyrone.webp",
       "age": "22",
       "height": "188",
       "gender": "Male",
@@ -130,7 +130,7 @@
     {
       "id": 6,
       "name": "Anna Crown",
-      "image": "/images/anna crown.webp",
+      "image": "anna crown.webp",
       "age": "12",
       "height": "140",
       "gender": "Female",
@@ -142,7 +142,7 @@
     {
       "id": 7,
       "name": "Anser Shinri",
-      "image": "/images/anser shinri.webp",
+      "image": "anser shinri.webp",
       "age": "17",
       "height": "174",
       "gender": "Male",
@@ -154,7 +154,7 @@
     {
       "id": 8,
       "name": "Brad Coleman",
-      "image": "/images/brad coleman.webp",
+      "image": "brad coleman.webp",
       "age": "40",
       "height": "178",
       "gender": "Male",
@@ -166,7 +166,7 @@
     {
       "id": 9,
       "name": "Carpaccio Luo-Yang",
-      "image": "/images/carpaccio luo-yang.webp",
+      "image": "carpaccio luo-yang.webp",
       "age": "16",
       "height": "174",
       "gender": "Male",
@@ -178,7 +178,7 @@
     {
       "id": 10,
       "name": "Cell War",
-      "image": "/images/cell war.webp",
+      "image": "cell war.webp",
       "age": "Unknown",
       "height": "171",
       "gender": "Male",
@@ -190,7 +190,7 @@
     {
       "id": 11,
       "name": "Charles Contini",
-      "image": "/images/charles contini.webp",
+      "image": "charles contini.webp",
       "age": "18",
       "height": "178",
       "gender": "Male",
@@ -202,7 +202,7 @@
     {
       "id": 12,
       "name": "Claude Lucci",
-      "image": "/images/claude lucci.webp",
+      "image": "claude lucci.webp",
       "age": "27",
       "height": "176",
       "gender": "Male",
@@ -214,7 +214,7 @@
     {
       "id": 13,
       "name": "Delisaster",
-      "image": "/images/delisaster.jpg",
+      "image": "delisaster.jpg",
       "age": "27",
       "height": "176",
       "gender": "Male",
@@ -226,7 +226,7 @@
     {
       "id": 14,
       "name": "Domina Blowelive",
-      "image": "/images/domina blowelive.jpg",
+      "image": "domina blowelive.jpg",
       "age": "16",
       "height": "173",
       "gender": "Male",
@@ -238,7 +238,7 @@
     {
       "id": 15,
       "name": "Doom",
-      "image": "/images/doom.jpg",
+      "image": "doom.jpg",
       "age": "30",
       "height": "200",
       "gender": "Male",
@@ -250,7 +250,7 @@
     {
       "id": 16,
       "name": "Dot Barrett",
-      "image": "/images/dot barrett.webp",
+      "image": "dot barrett.webp",
       "age": "16",
       "height": "178",
       "gender": "Male",
@@ -262,7 +262,7 @@
     {
       "id": 17,
       "name": "Epidem",
-      "image": "/images/epidem.webp",
+      "image": "epidem.webp",
       "age": "28",
       "height": "175",
       "gender": "Male",
@@ -274,7 +274,7 @@
     {
       "id": 18,
       "name": "Famin",
-      "image": "/images/famin.webp",
+      "image": "famin.webp",
       "age": "29",
       "height": "180",
       "gender": "Male",
@@ -286,7 +286,7 @@
     {
       "id": 19,
       "name": "Finn Ames",
-      "image": "/images/finn ames.webp",
+      "image": "finn ames.webp",
       "age": "16",
       "height": "170",
       "gender": "Male",
@@ -298,7 +298,7 @@
     {
       "id": 20,
       "name": "Gail Garrett",
-      "image": "/images/gail garrett.webp",
+      "image": "gail garrett.webp",
       "age": "28",
       "height": "180",
       "gender": "Male",
@@ -310,7 +310,7 @@
     {
       "id": 21,
       "name": "Galbo Botteri",
-      "image": "/images/galbo botteri.webp",
+      "image": "galbo botteri.webp",
       "age": "41",
       "height": "180",
       "gender": "Male",
@@ -322,7 +322,7 @@
     {
       "id": 22,
       "name": "Galuf Gargaron",
-      "image": "/images/galuf gargaron.webp",
+      "image": "galuf gargaron.webp",
       "age": "17",
       "height": "185",
       "gender": "Male",
@@ -334,7 +334,7 @@
     {
       "id": 23,
       "name": "God of Demand",
-      "image": "/images/god of demand.webp",
+      "image": "god of demand.webp",
       "age": "Unknown",
       "height": "Unknown",
       "gender": "Genderless",
@@ -346,7 +346,7 @@
     {
       "id": 24,
       "name": "Innocent Zero",
-      "image": "/images/innocent zero.webp",
+      "image": "innocent zero.webp",
       "age": "118",
       "height": "175",
       "gender": "Male",
@@ -358,7 +358,7 @@
     {
       "id": 25,
       "name": "Jon Pierre",
-      "image": "/images/jon pierre.webp",
+      "image": "jon pierre.webp",
       "age": "42",
       "height": "176",
       "gender": "Male",
@@ -370,7 +370,7 @@
     {
       "id": 26,
       "name": "Kaldo Gehenna",
-      "image": "/images/kaldo gehenna.webp",
+      "image": "kaldo gehenna.webp",
       "age": "27",
       "height": "175",
       "gender": "Male",
@@ -382,7 +382,7 @@
     {
       "id": 27,
       "name": "Kenny Clark",
-      "image": "/images/kenny clark.webp",
+      "image": "kenny clark.webp",
       "age": "17",
       "height": "177",
       "gender": "Male",
@@ -394,7 +394,7 @@
     {
       "id": 28,
       "name": "Lance Crown",
-      "image": "/images/lance crown.webp",
+      "image": "lance crown.webp",
       "age": "16",
       "height": "178",
       "gender": "Male",
@@ -406,7 +406,7 @@
     {
       "id": 29,
       "name": "Lauren Cabasse",
-      "image": "/images/lauren cabasse.webp",
+      "image": "lauren cabasse.webp",
       "age": "16",
       "height": "164",
       "gender": "Female",
@@ -418,7 +418,7 @@
     {
       "id": 30,
       "name": "Lemon Irvine",
-      "image": "/images/lemon irvine.webp",
+      "image": "lemon irvine.webp",
       "age": "16",
       "height": "162",
       "gender": "Female",
@@ -430,7 +430,7 @@
     {
       "id": 31,
       "name": "Lévis Rosequartz",
-      "image": "/images/levis rosequartz.webp",
+      "image": "levis rosequartz.webp",
       "age": "17",
       "height": "182",
       "gender": "Male",
@@ -442,7 +442,7 @@
     {
       "id": 32,
       "name": "Love Cute",
-      "image": "/images/love cute.webp",
+      "image": "love cute.webp",
       "age": "17",
       "height": "160",
       "gender": "Female",
@@ -454,7 +454,7 @@
     {
       "id": 33,
       "name": "Lovie Rosequartz",
-      "image": "/images/lovie rosequartz.webp",
+      "image": "lovie rosequartz.webp",
       "age": "17",
       "height": "182",
       "gender": "Male",
@@ -466,7 +466,7 @@
     {
       "id": 34,
       "name": "Malcolm Curtis",
-      "image": "/images/malcolm curtis.webp",
+      "image": "malcolm curtis.webp",
       "age": "17",
       "height": "183",
       "gender": "Male",
@@ -478,7 +478,7 @@
     {
       "id": 35,
       "name": "Margarette Macaron",
-      "image": "/images/margarette macaron.webp",
+      "image": "margarette macaron.webp",
       "age": "18",
       "height": "198",
       "gender": "Nonbinary",
@@ -490,7 +490,7 @@
     {
       "id": 36,
       "name": "Meliadoul Amy",
-      "image": "/images/meliadoul amy.jpg",
+      "image": "meliadoul amy.jpg",
       "age": "118",
       "height": "152",
       "gender": "Female",
@@ -502,7 +502,7 @@
     {
       "id": 37,
       "name": "Milo Genius",
-      "image": "/images/milo genius.webp",
+      "image": "milo genius.webp",
       "age": "16",
       "height": "159",
       "gender": "Male",
@@ -514,7 +514,7 @@
     {
       "id": 38,
       "name": "Necross Mance",
-      "image": "/images/necross mance.webp",
+      "image": "necross mance.webp",
       "age": "40",
       "height": "178",
       "gender": "Male",
@@ -526,7 +526,7 @@
     {
       "id": 39,
       "name": "Ochoa Dale",
-      "image": "/images/ochoa dale.webp",
+      "image": "ochoa dale.webp",
       "age": "12",
       "height": "138",
       "gender": "Male",
@@ -538,7 +538,7 @@
     {
       "id": 40,
       "name": "Olore Andrew",
-      "image": "/images/olore andrew.webp",
+      "image": "olore andrew.webp",
       "age": "17",
       "height": "185",
       "gender": "Male",
@@ -550,7 +550,7 @@
     {
       "id": 41,
       "name": "Orter Madl",
-      "image": "/images/orter madl.webp",
+      "image": "orter madl.webp",
       "age": "23",
       "height": "177",
       "gender": "Male",
@@ -562,7 +562,7 @@
     {
       "id": 42,
       "name": "Rayne Ames",
-      "image": "/images/rayne ames.webp",
+      "image": "rayne ames.webp",
       "age": "18",
       "height": "175",
       "gender": "Male",
@@ -574,7 +574,7 @@
     {
       "id": 43,
       "name": "Regro Burnedead",
-      "image": "/images/regro burnedead.webp",
+      "image": "regro burnedead.webp",
       "age": "75",
       "height": "165",
       "gender": "Male",
@@ -586,7 +586,7 @@
     {
       "id": 44,
       "name": "Renatus Revol",
-      "image": "/images/renatus revol.webp",
+      "image": "renatus revol.webp",
       "age": "26",
       "height": "180",
       "gender": "Male",
@@ -598,7 +598,7 @@
     {
       "id": 45,
       "name": "Ryoh Grantz",
-      "image": "/images/ryoh grantz.jpg",
+      "image": "ryoh grantz.jpg",
       "age": "30",
       "height": "183",
       "gender": "Male",
@@ -610,7 +610,7 @@
     {
       "id": 46,
       "name": "Sitter Baby",
-      "image": "/images/sitter baby.webp",
+      "image": "sitter baby.webp",
       "age": "44",
       "height": "166",
       "gender": "Male",
@@ -622,7 +622,7 @@
     {
       "id": 47,
       "name": "Sophina Biblia",
-      "image": "/images/sophina biblia.webp",
+      "image": "sophina biblia.webp",
       "age": "24",
       "height": "168",
       "gender": "Female",
@@ -634,7 +634,7 @@
     {
       "id": 48,
       "name": "Terry Yabuketail",
-      "image": "/images/terry yabuketail.webp",
+      "image": "terry yabuketail.webp",
       "age": "33",
       "height": "180",
       "gender": "Male",
@@ -646,7 +646,7 @@
     {
       "id": 49,
       "name": "Tom Knowles",
-      "image": "/images/tom knowles.webp",
+      "image": "tom knowles.webp",
       "age": "17",
       "height": "173",
       "gender": "Male",
@@ -658,7 +658,7 @@
     {
       "id": 50,
       "name": "Tsurara Halestone",
-      "image": "/images/tsurara halestone.webp",
+      "image": "tsurara halestone.webp",
       "age": "20",
       "height": "152",
       "gender": "Female",
@@ -670,7 +670,7 @@
     {
       "id": 51,
       "name": "Wahlberg Baigan",
-      "image": "/images/wahlberg baigan.webp",
+      "image": "wahlberg baigan.webp",
       "age": "118",
       "height": "183",
       "gender": "Male",
@@ -682,7 +682,7 @@
     {
       "id": 52,
       "name": "Wirth Madl",
-      "image": "/images/wirth madl.webp",
+      "image": "wirth madl.webp",
       "age": "18",
       "height": "180",
       "gender": "Male",
