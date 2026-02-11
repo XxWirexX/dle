@@ -221,7 +221,7 @@
     "species": "Human",
     "grade": "Unknown",
     "weapon": "Melee Weapon",
-    "occupation": "Non-Curse User",
+    "occupation": "Curse User",
     "affiliation": "Q",
     "firstArc": "Gojo's Past arc"
   },
@@ -599,7 +599,7 @@
     "species": "Human",
     "grade": "Unknown",
     "weapon": "None",
-    "occupation": "Jujutsu Sorcerer",
+    "occupation": "Curse User",
     "affiliation": "Q",
     "firstArc": "Gojo's Past arc"
   },
