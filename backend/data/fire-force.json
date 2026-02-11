@@ -33,7 +33,11 @@
     {
       "key": "occupation",
       "label": "Occupation",
-      "type": "text",
+      "type": "text-group",
+      "groups": [
+        ["Fire Force Soldier", "Fire Force Commander", "Fire Force Vice-Captain", "Fire Force Captain", "Fire Force Chief"],
+        ["Nun", "Priest"]
+      ],
       "hints": [
         "Fire Force Soldier",
         "Fire Force Commander",
@@ -59,7 +63,11 @@
     {
       "key": "affiliation",
       "label": "Affiliation",
-      "type": "text",
+      "type": "text-group",
+      "groups": [
+        ["Special Fire Force Company 1", "Special Fire Force Company 2", "Special Fire Force Company 3", "Special Fire Force Company 4", "Special Fire Force Company 5", "Special Fire Force Company 7", "Special Fire Force Company 8", "Special Fire Force Company 1/White-Clad", "Special Fire Force Company 3/White-Clad", "Asakusa/Special Fire Force Company 7"],
+        ["Knights of the Ashen Flame", "Butchers", "White-Clad"]
+      ],
       "hints": [
         "Special Fire Force Company 8",
         "Asakusa",

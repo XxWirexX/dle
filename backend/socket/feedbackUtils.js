@@ -1,5 +1,40 @@
 // Calcul du feedback pour un champ
 function computeFieldFeedback(guessVal, targetVal, attribute) {
+  const { type, order, groups } = attribute;
+
+  // Type multiple (tableaux de valeurs, ex: haki)
+  if (type === "multiple") {
+    const gArray = Array.isArray(guessVal) ? guessVal : [];
+    const tArray = Array.isArray(targetVal) ? targetVal : [];
+    const gSet = new Set(gArray.map(v => v.toLowerCase()));
+    const tSet = new Set(tArray.map(v => v.toLowerCase()));
+
+    const label = gArray.length > 0 ? gArray.join(", ") : "None";
+
+    // Si les deux sont vides, c'est correct
+    if (gSet.size === 0 && tSet.size === 0) {
+      return { type: "correct", label };
+    }
+
+    // Si un seul est vide, c'est wrong
+    if (gSet.size === 0 || tSet.size === 0) {
+      return { type: "wrong", label };
+    }
+
+    // Si identiques (mêmes éléments)
+    if (gSet.size === tSet.size && [...gSet].every(v => tSet.has(v))) {
+      return { type: "correct", label };
+    }
+
+    // Si au moins un élément en commun
+    const hasCommon = [...gSet].some(v => tSet.has(v));
+    if (hasCommon) {
+      return { type: "close", label };
+    }
+
+    return { type: "wrong", label };
+  }
+
   const gLower = guessVal ? guessVal.toString().toLowerCase() : null;
   const tLower = targetVal ? targetVal.toString().toLowerCase() : null;
 
@@ -12,12 +47,15 @@ function computeFieldFeedback(guessVal, targetVal, attribute) {
   const gIsUnknown = !gLower || gLower === "unknown";
   const tIsUnknown = !tLower || tLower === "unknown";
 
-  // Si un des deux est unknown (mais pas les deux, car déjà géré au-dessus)
-  if (gIsUnknown || tIsUnknown) {
+  // Pour les types ordered, vérifier si "unknown" est dans l'ordre avant de le rejeter
+  if (type === "ordered" && order) {
+    const unknownInOrder = order.some(item => item.toLowerCase() === "unknown");
+    if (!unknownInOrder && (gIsUnknown || tIsUnknown)) {
+      return { type: "wrong", label: guessVal || "-" };
+    }
+  } else if (gIsUnknown || tIsUnknown) {
     return { type: "wrong", label: guessVal || "-" };
   }
-
-  const { type, order } = attribute;
 
   // Type numérique
   if (type === "number") {
@@ -34,16 +72,11 @@ function computeFieldFeedback(guessVal, targetVal, attribute) {
     return { type: "lower", label: guessVal };
   }
 
-  // Type ordonné (ex: arcs)
+  // Type ordonné (ex: arcs, ranks)
   if (type === "ordered" && order) {
-    const guessIndex = order.findIndex(item =>
-      gLower.includes(item.toLowerCase()) ||
-      item.toLowerCase().includes(gLower)
-    );
-    const targetIndex = order.findIndex(item =>
-      tLower.includes(item.toLowerCase()) ||
-      item.toLowerCase().includes(tLower)
-    );
+    // Utiliser une correspondance exacte pour éviter les faux positifs (Dragon vs Above Dragon)
+    const guessIndex = order.findIndex(item => item.toLowerCase() === gLower);
+    const targetIndex = order.findIndex(item => item.toLowerCase() === tLower);
 
     if (guessIndex === -1 || targetIndex === -1) {
       return { type: "wrong", label: guessVal };
@@ -53,6 +86,20 @@ function computeFieldFeedback(guessVal, targetVal, attribute) {
     if (Math.abs(guessIndex - targetIndex) === 1) return { type: "close", label: guessVal, direction: guessIndex > targetIndex ? "higher" : "lower" };
     if (guessIndex > targetIndex) return { type: "higher", label: guessVal };
     return { type: "lower", label: guessVal };
+  }
+
+  // Type text-group - groupes de valeurs considérées comme "proches"
+  if (type === "text-group" && groups) {
+    // Chercher si les deux valeurs sont dans le même groupe
+    for (const group of groups) {
+      const groupLower = group.map(g => g.toLowerCase());
+      const gInGroup = groupLower.some(item => gLower.includes(item) || item.includes(gLower));
+      const tInGroup = groupLower.some(item => tLower.includes(item) || item.includes(tLower));
+      if (gInGroup && tInGroup) {
+        return { type: "close", label: guessVal };
+      }
+    }
+    // Sinon, appliquer la logique text standard (substring matching)
   }
 
   // Exception pour male/female (female contient male mais c'est pas un match)

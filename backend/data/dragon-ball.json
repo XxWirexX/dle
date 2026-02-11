@@ -54,7 +54,10 @@
     {
       "key": "residence",
       "label": "Residence",
-      "type": "text",
+      "type": "text-group",
+      "groups": [
+        ["Universe 6", "Universe 7", "Universe 10", "Universe 11"]
+      ],
       "hints": [
         "Anywhere",
         "WST 3338926 K",

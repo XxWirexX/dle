@@ -87,7 +87,11 @@
     {
       "key": "affiliation",
       "label": "Affiliation",
-      "type": "text",
+      "type": "text-group",
+      "groups": [
+        ["U.A. High Staff", "U.A. High Class 1-A", "U.A. High Class 1-B", "Shiketsu High", "Ketsubutsu High", "Manjix High"],
+        ["Shield Family", "Scervino Family", "Gollini Family"]
+      ],
       "hints": [
         "None",
         "U.A. High Staff",

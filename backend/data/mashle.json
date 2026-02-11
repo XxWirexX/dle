@@ -42,7 +42,10 @@
     {
       "key": "affiliation",
       "label": "Affiliation",
-      "type": "text",
+      "type": "text-group",
+      "groups": [
+        ["Easton Magic Academy", "Walkis Magic Academy"]
+      ],
       "hints": [
         "Easton Magic Academy",
         "Walkis Magic Academy",
