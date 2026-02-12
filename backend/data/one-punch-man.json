@@ -74,7 +74,10 @@
     {
       "key": "affiliation",
       "label": "Affiliation",
-      "type": "text",
+      "type": "text-group",
+      "groups": [
+        ["Hero Association", "Monster Association"]
+      ],
       "hints": [
         "Hero Association",
         "Saitama's Group",

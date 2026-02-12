@@ -76,7 +76,12 @@
     {
       "key": "affiliation",
       "label": "Affiliation",
-      "type": "text",
+      "type": "text-group",
+      "groups": [
+        ["Tokyo Jujutsu High", "Kyoto Jujutsu High", "Renchoku Girls' Junior High"],
+        ["Zenin Clan", "Kamo Clan"],
+        ["Mahito's Group", "Geto's Original Group", "Kenjaku's Group"]
+      ],
       "hints": [
         "None",
         "Tokyo Jujutsu High",

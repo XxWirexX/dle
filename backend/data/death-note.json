@@ -33,7 +33,7 @@
     {
       "key": "intelligence",
       "label": "Intelligence",
-      "type": "text"
+      "type": "number"
     },
     {
       "key": "occupation",

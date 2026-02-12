@@ -58,19 +58,34 @@
     {
       "key": "rank",
       "label": "Rank",
-      "type": "text",
-      "hints": [
-        "Dôshi",
-        "Jônin",
-        "Tensen",
+      "type": "ordered",
+      "order": [
+        "None",
         "Unknown",
-        "None"
+        "Dôshi",
+        "12",
+        "11",
+        "10",
+        "9",
+        "8",
+        "7",
+        "6",
+        "5",
+        "4",
+        "3",
+        "2",
+        "1",
+        "Jônin",
+        "Tensen"
       ]
     },
     {
       "key": "affiliation",
       "label": "Affiliation",
-      "type": "text",
+      "type": "text-group",
+      "groups": [
+        ["Iwagakure Clan", "Yamada Clan", "Sanka Clan"]
+      ],
       "hints": [
         "Iwagakure Clan",
         "Yamada Clan",
