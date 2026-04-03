@@ -2,47 +2,49 @@
   "id": "atelier-sorciers",
   "name": "L'Atelier des Sorciers",
   "icon": "cardIcon.jpg",
-  "background": "background.jpg",
+  "background": "background.webp",
   "maxAttempts": 26,
   "attributes": [
     {
       "key": "gender",
       "label": "Gender",
       "type": "text",
-      "hints": ["Female", "Male"]
+      "hints": ["Female", "Male", "Unknown"]
     },
     {
       "key": "hairColor",
       "label": "Hair Color",
       "type": "text",
-      "hints": ["Black", "Brown", "Blonde", "White", "Silver", "Red", "Blue", "Pink", "Purple", "Green"]
+      "hints": ["Black", "Brown", "Blonde", "White", "Silver", "Red", "Blue", "Pink", "Purple", "Green", "Orange", "Grey", "Multicolor", "Unknown"]
     },
     {
-      "key": "magicType",
-      "label": "Magic Type",
+      "key": "species",
+      "label": "Species",
       "type": "text",
-      "partialMatch": true,
-      "hints": ["Drawing Magic", "Forbidden Magic", "Combat Magic", "Support Magic", "Healing Magic", "Illusion Magic", "None"]
+      "hints": ["Witch", "Human", "Unknown"]
     },
     {
       "key": "affiliation",
       "label": "Affiliation",
       "type": "text",
       "partialMatch": true,
-      "hints": ["Qifrey's Atelier", "Pointed Hats", "Brim Caps", "Great Hall", "Knights Moralis", "Mercenary", "Unaffiliated"]
-    },
-    {
-      "key": "species",
-      "label": "Species",
-      "type": "text",
-      "partialMatch": true,
-      "hints": ["Human", "Witch", "Half-Witch", "Spirit", "Unknown"]
+      "hints": [
+        "Qifrey's Atelier",
+        "Great Hall",
+        "Knights Moralis",
+        "Brimmed Caps",
+        "Tower of Tomes",
+        "Three Wise",
+        "Ezrest Royal Family",
+        "Kalhn",
+        "Unaffiliated"
+      ]
     },
     {
       "key": "role",
       "label": "Role",
       "type": "text",
-      "hints": ["Apprentice", "Master Witch", "Knight", "Villain", "Ally", "Neutral"]
+      "hints": ["Apprentice", "Master Witch", "Knight", "Antagonist", "Ally", "Neutral", "Royalty", "Non-Witch"]
     },
     {
       "key": "firstArc",
@@ -50,10 +52,11 @@
       "type": "ordered",
       "order": [
         "Prologue arc",
-        "Entrance Exam arc",
-        "Moralis arc",
-        "Brim Caps arc",
-        "Tower arc"
+        "First Test arc",
+        "Stairway River arc",
+        "Second Test arc",
+        "Silver Eve arc",
+        "Ezrest arc"
       ]
     }
   ],
@@ -64,8 +67,7 @@
       "image": "coco.jpg",
       "gender": "Female",
       "hairColor": "Brown",
-      "species": "Human",
-      "magicType": "Drawing Magic",
+      "species": "Witch",
       "affiliation": "Qifrey's Atelier",
       "role": "Apprentice",
       "firstArc": "Prologue arc"
@@ -77,7 +79,6 @@
       "gender": "Male",
       "hairColor": "Blue",
       "species": "Witch",
-      "magicType": "Drawing Magic",
       "affiliation": "Qifrey's Atelier",
       "role": "Master Witch",
       "firstArc": "Prologue arc"
@@ -89,7 +90,6 @@
       "gender": "Female",
       "hairColor": "Black",
       "species": "Witch",
-      "magicType": "Drawing Magic",
       "affiliation": "Qifrey's Atelier",
       "role": "Apprentice",
       "firstArc": "Prologue arc"
@@ -99,9 +99,8 @@
       "name": "Tetia",
       "image": "tetia.jpg",
       "gender": "Female",
-      "hairColor": "Brown",
+      "hairColor": "Pink",
       "species": "Witch",
-      "magicType": "Support Magic",
       "affiliation": "Qifrey's Atelier",
       "role": "Apprentice",
       "firstArc": "Prologue arc"
@@ -111,12 +110,11 @@
       "name": "Richeh",
       "image": "richeh.jpg",
       "gender": "Female",
-      "hairColor": "Silver",
+      "hairColor": "Blue",
       "species": "Witch",
-      "magicType": "Drawing Magic",
       "affiliation": "Qifrey's Atelier",
       "role": "Apprentice",
-      "firstArc": "Entrance Exam arc"
+      "firstArc": "Prologue arc"
     },
     {
       "id": 6,
@@ -125,7 +123,6 @@
       "gender": "Male",
       "hairColor": "Black",
       "species": "Witch",
-      "magicType": "Drawing Magic",
       "affiliation": "Qifrey's Atelier",
       "role": "Master Witch",
       "firstArc": "Prologue arc"
@@ -137,46 +134,394 @@
       "gender": "Male",
       "hairColor": "Brown",
       "species": "Human",
-      "magicType": "None",
-      "affiliation": "Unaffiliated",
-      "role": "Ally",
-      "firstArc": "Prologue arc"
+      "affiliation": "Kalhn",
+      "role": "Non-Witch",
+      "firstArc": "First Test arc"
     },
     {
       "id": 8,
-      "name": "Custas",
-      "image": "custas.jpg",
+      "name": "Nolnoa",
+      "image": "nolnoa.jpg",
       "gender": "Male",
-      "hairColor": "Brown",
-      "species": "Human",
-      "magicType": "Forbidden Magic",
-      "affiliation": "Brim Caps",
-      "role": "Villain",
-      "firstArc": "Moralis arc"
+      "hairColor": "White",
+      "species": "Witch",
+      "affiliation": "Kalhn",
+      "role": "Master Witch",
+      "firstArc": "First Test arc"
     },
     {
       "id": 9,
       "name": "Iguin",
       "image": "iguin.jpg",
-      "gender": "Male",
-      "hairColor": "White",
+      "gender": "Unknown",
+      "hairColor": "Unknown",
       "species": "Witch",
-      "magicType": "Forbidden Magic",
-      "affiliation": "Brim Caps",
-      "role": "Villain",
+      "affiliation": "Brimmed Caps",
+      "role": "Antagonist",
       "firstArc": "Prologue arc"
     },
     {
       "id": 10,
+      "name": "Sasaran",
+      "image": "sasaran.jpg",
+      "gender": "Male",
+      "hairColor": "Unknown",
+      "species": "Witch",
+      "affiliation": "Brimmed Caps",
+      "role": "Antagonist",
+      "firstArc": "Second Test arc"
+    },
+    {
+      "id": 11,
+      "name": "Custas",
+      "image": "custas.jpg",
+      "gender": "Male",
+      "hairColor": "Black",
+      "species": "Human",
+      "affiliation": "Brimmed Caps",
+      "role": "Antagonist",
+      "firstArc": "Stairway River arc"
+    },
+    {
+      "id": 12,
+      "name": "Dagda",
+      "image": "dagda.jpg",
+      "gender": "Male",
+      "hairColor": "Black",
+      "species": "Human",
+      "affiliation": "Unaffiliated",
+      "role": "Non-Witch",
+      "firstArc": "Stairway River arc"
+    },
+    {
+      "id": 13,
+      "name": "Ininia",
+      "image": "ininia.jpg",
+      "gender": "Female",
+      "hairColor": "Blonde",
+      "species": "Witch",
+      "affiliation": "Brimmed Caps",
+      "role": "Antagonist",
+      "firstArc": "Stairway River arc"
+    },
+    {
+      "id": 14,
+      "name": "Restys",
+      "image": "restys.jpg",
+      "gender": "Unknown",
+      "hairColor": "Blonde",
+      "species": "Witch",
+      "affiliation": "Brimmed Caps",
+      "role": "Antagonist",
+      "firstArc": "Stairway River arc"
+    },
+    {
+      "id": 15,
       "name": "Beldaruit",
       "image": "beldaruit.jpg",
       "gender": "Male",
       "hairColor": "White",
       "species": "Witch",
-      "magicType": "Drawing Magic",
+      "affiliation": "Three Wise",
+      "role": "Master Witch",
+      "firstArc": "Second Test arc"
+    },
+    {
+      "id": 16,
+      "name": "Vinanna",
+      "image": "vinanna.jpg",
+      "gender": "Female",
+      "hairColor": "Grey",
+      "species": "Witch",
+      "affiliation": "Three Wise",
+      "role": "Master Witch",
+      "firstArc": "Stairway River arc"
+    },
+    {
+      "id": 17,
+      "name": "Engendale",
+      "image": "engendale.jpg",
+      "gender": "Male",
+      "hairColor": "White",
+      "species": "Witch",
+      "affiliation": "Three Wise",
+      "role": "Antagonist",
+      "firstArc": "Second Test arc"
+    },
+    {
+      "id": 18,
+      "name": "Lagrah",
+      "image": "lagrah.jpg",
+      "gender": "Male",
+      "hairColor": "Black",
+      "species": "Witch",
+      "affiliation": "Three Wise",
+      "role": "Master Witch",
+      "firstArc": "Silver Eve arc"
+    },
+    {
+      "id": 19,
+      "name": "Easthies",
+      "image": "easthies.jpg",
+      "gender": "Male",
+      "hairColor": "Black",
+      "species": "Witch",
+      "affiliation": "Knights Moralis",
+      "role": "Knight",
+      "firstArc": "Stairway River arc"
+    },
+    {
+      "id": 20,
+      "name": "Luluci",
+      "image": "luluci.jpg",
+      "gender": "Female",
+      "hairColor": "Blonde",
+      "species": "Witch",
+      "affiliation": "Knights Moralis",
+      "role": "Knight",
+      "firstArc": "Stairway River arc"
+    },
+    {
+      "id": 21,
+      "name": "Galga",
+      "image": "galga.jpg",
+      "gender": "Male",
+      "hairColor": "Multicolor",
+      "species": "Witch",
+      "affiliation": "Knights Moralis",
+      "role": "Knight",
+      "firstArc": "Stairway River arc"
+    },
+    {
+      "id": 22,
+      "name": "Utowin",
+      "image": "utowin.jpg",
+      "gender": "Male",
+      "hairColor": "Orange",
+      "species": "Witch",
+      "affiliation": "Knights Moralis",
+      "role": "Knight",
+      "firstArc": "Stairway River arc"
+    },
+    {
+      "id": 23,
+      "name": "Ekoh",
+      "image": "ekoh.jpg",
+      "gender": "Female",
+      "hairColor": "Brown",
+      "species": "Witch",
+      "affiliation": "Knights Moralis",
+      "role": "Knight",
+      "firstArc": "Second Test arc"
+    },
+    {
+      "id": 24,
+      "name": "Etlan",
+      "image": "etlan.jpg",
+      "gender": "Male",
+      "hairColor": "Brown",
+      "species": "Witch",
+      "affiliation": "Knights Moralis",
+      "role": "Knight",
+      "firstArc": "Second Test arc"
+    },
+    {
+      "id": 25,
+      "name": "Eryenne",
+      "image": "eryenne.jpg",
+      "gender": "Female",
+      "hairColor": "Unknown",
+      "species": "Witch",
+      "affiliation": "Knights Moralis",
+      "role": "Knight",
+      "firstArc": "Ezrest arc"
+    },
+    {
+      "id": 26,
+      "name": "Euini",
+      "image": "euini.jpg",
+      "gender": "Male",
+      "hairColor": "Brown",
+      "species": "Witch",
+      "affiliation": "Great Hall",
+      "role": "Apprentice",
+      "firstArc": "Second Test arc"
+    },
+    {
+      "id": 27,
+      "name": "Alaira",
+      "image": "alaira.jpg",
+      "gender": "Female",
+      "hairColor": "Multicolor",
+      "species": "Witch",
       "affiliation": "Great Hall",
       "role": "Master Witch",
-      "firstArc": "Entrance Exam arc"
+      "firstArc": "Second Test arc"
+    },
+    {
+      "id": 28,
+      "name": "Kukrow",
+      "image": "kukrow.jpg",
+      "gender": "Male",
+      "hairColor": "Black",
+      "species": "Witch",
+      "affiliation": "Great Hall",
+      "role": "Master Witch",
+      "firstArc": "Second Test arc"
+    },
+    {
+      "id": 29,
+      "name": "Riliphin",
+      "image": "riliphin.jpg",
+      "gender": "Male",
+      "hairColor": "Blue",
+      "species": "Witch",
+      "affiliation": "Great Hall",
+      "role": "Apprentice",
+      "firstArc": "Ezrest arc"
+    },
+    {
+      "id": 30,
+      "name": "Hiehart",
+      "image": "hiehart.jpg",
+      "gender": "Male",
+      "hairColor": "Brown",
+      "species": "Witch",
+      "affiliation": "Great Hall",
+      "role": "Master Witch",
+      "firstArc": "Silver Eve arc"
+    },
+    {
+      "id": 31,
+      "name": "Jujy",
+      "image": "jujy.jpg",
+      "gender": "Female",
+      "hairColor": "Black",
+      "species": "Witch",
+      "affiliation": "Great Hall",
+      "role": "Apprentice",
+      "firstArc": "Silver Eve arc"
+    },
+    {
+      "id": 32,
+      "name": "Loroga",
+      "image": "loroga.jpg",
+      "gender": "Male",
+      "hairColor": "Black",
+      "species": "Witch",
+      "affiliation": "Great Hall",
+      "role": "Apprentice",
+      "firstArc": "Second Test arc"
+    },
+    {
+      "id": 33,
+      "name": "Sinocia",
+      "image": "sinocia.jpg",
+      "gender": "Female",
+      "hairColor": "Brown",
+      "species": "Human",
+      "affiliation": "Great Hall",
+      "role": "Non-Witch",
+      "firstArc": "Second Test arc"
+    },
+    {
+      "id": 34,
+      "name": "Ermile",
+      "image": "ermile.jpg",
+      "gender": "Female",
+      "hairColor": "Blonde",
+      "species": "Human",
+      "affiliation": "Great Hall",
+      "role": "Non-Witch",
+      "firstArc": "Second Test arc"
+    },
+    {
+      "id": 35,
+      "name": "Atwert",
+      "image": "atwert.jpg",
+      "gender": "Male",
+      "hairColor": "Black",
+      "species": "Witch",
+      "affiliation": "Unaffiliated",
+      "role": "Master Witch",
+      "firstArc": "Silver Eve arc"
+    },
+    {
+      "id": 36,
+      "name": "Adina Arklaum",
+      "image": "adina.jpg",
+      "gender": "Female",
+      "hairColor": "Black",
+      "species": "Witch",
+      "affiliation": "Tower of Tomes",
+      "role": "Master Witch",
+      "firstArc": "Second Test arc"
+    },
+    {
+      "id": 37,
+      "name": "Coco's Mother",
+      "image": "coco-mother.jpg",
+      "gender": "Female",
+      "hairColor": "Brown",
+      "species": "Human",
+      "affiliation": "Unaffiliated",
+      "role": "Non-Witch",
+      "firstArc": "Prologue arc"
+    },
+    {
+      "id": 38,
+      "name": "Deanreldy Ezrest",
+      "image": "deanreldy.jpg",
+      "gender": "Male",
+      "hairColor": "Brown",
+      "species": "Human",
+      "affiliation": "Ezrest Royal Family",
+      "role": "Royalty",
+      "firstArc": "Ezrest arc"
+    },
+    {
+      "id": 39,
+      "name": "Zayamaiya Ezrest",
+      "image": "zayamaiya.jpg",
+      "gender": "Female",
+      "hairColor": "Brown",
+      "species": "Human",
+      "affiliation": "Ezrest Royal Family",
+      "role": "Royalty",
+      "firstArc": "Ezrest arc"
+    },
+    {
+      "id": 40,
+      "name": "Eoleo Ezrest",
+      "image": "eoleo.jpg",
+      "gender": "Male",
+      "hairColor": "Brown",
+      "species": "Human",
+      "affiliation": "Ezrest Royal Family",
+      "role": "Royalty",
+      "firstArc": "Ezrest arc"
+    },
+    {
+      "id": 41,
+      "name": "Princess Miia",
+      "image": "miia.jpg",
+      "gender": "Female",
+      "hairColor": "Brown",
+      "species": "Human",
+      "affiliation": "Unaffiliated",
+      "role": "Royalty",
+      "firstArc": "Ezrest arc"
+    },
+    {
+      "id": 42,
+      "name": "Lord Cladd",
+      "image": "lord-cladd.jpg",
+      "gender": "Male",
+      "hairColor": "Unknown",
+      "species": "Human",
+      "affiliation": "Unaffiliated",
+      "role": "Antagonist",
+      "firstArc": "Ezrest arc"
     }
   ]
 }
