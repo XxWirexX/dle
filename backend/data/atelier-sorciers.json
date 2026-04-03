@@ -1,0 +1,182 @@
+{
+  "id": "atelier-sorciers",
+  "name": "L'Atelier des Sorciers",
+  "icon": "cardIcon.jpg",
+  "background": "background.jpg",
+  "maxAttempts": 26,
+  "attributes": [
+    {
+      "key": "gender",
+      "label": "Gender",
+      "type": "text",
+      "hints": ["Female", "Male"]
+    },
+    {
+      "key": "hairColor",
+      "label": "Hair Color",
+      "type": "text",
+      "hints": ["Black", "Brown", "Blonde", "White", "Silver", "Red", "Blue", "Pink", "Purple", "Green"]
+    },
+    {
+      "key": "magicType",
+      "label": "Magic Type",
+      "type": "text",
+      "partialMatch": true,
+      "hints": ["Drawing Magic", "Forbidden Magic", "Combat Magic", "Support Magic", "Healing Magic", "Illusion Magic", "None"]
+    },
+    {
+      "key": "affiliation",
+      "label": "Affiliation",
+      "type": "text",
+      "partialMatch": true,
+      "hints": ["Qifrey's Atelier", "Pointed Hats", "Brim Caps", "Great Hall", "Knights Moralis", "Mercenary", "Unaffiliated"]
+    },
+    {
+      "key": "species",
+      "label": "Species",
+      "type": "text",
+      "partialMatch": true,
+      "hints": ["Human", "Witch", "Half-Witch", "Spirit", "Unknown"]
+    },
+    {
+      "key": "role",
+      "label": "Role",
+      "type": "text",
+      "hints": ["Apprentice", "Master Witch", "Knight", "Villain", "Ally", "Neutral"]
+    },
+    {
+      "key": "firstArc",
+      "label": "First Arc",
+      "type": "ordered",
+      "order": [
+        "Prologue arc",
+        "Entrance Exam arc",
+        "Moralis arc",
+        "Brim Caps arc",
+        "Tower arc"
+      ]
+    }
+  ],
+  "characters": [
+    {
+      "id": 1,
+      "name": "Coco",
+      "image": "coco.jpg",
+      "gender": "Female",
+      "hairColor": "Brown",
+      "species": "Human",
+      "magicType": "Drawing Magic",
+      "affiliation": "Qifrey's Atelier",
+      "role": "Apprentice",
+      "firstArc": "Prologue arc"
+    },
+    {
+      "id": 2,
+      "name": "Qifrey",
+      "image": "qifrey.jpg",
+      "gender": "Male",
+      "hairColor": "Blue",
+      "species": "Witch",
+      "magicType": "Drawing Magic",
+      "affiliation": "Qifrey's Atelier",
+      "role": "Master Witch",
+      "firstArc": "Prologue arc"
+    },
+    {
+      "id": 3,
+      "name": "Agott",
+      "image": "agott.jpg",
+      "gender": "Female",
+      "hairColor": "Black",
+      "species": "Witch",
+      "magicType": "Drawing Magic",
+      "affiliation": "Qifrey's Atelier",
+      "role": "Apprentice",
+      "firstArc": "Prologue arc"
+    },
+    {
+      "id": 4,
+      "name": "Tetia",
+      "image": "tetia.jpg",
+      "gender": "Female",
+      "hairColor": "Brown",
+      "species": "Witch",
+      "magicType": "Support Magic",
+      "affiliation": "Qifrey's Atelier",
+      "role": "Apprentice",
+      "firstArc": "Prologue arc"
+    },
+    {
+      "id": 5,
+      "name": "Richeh",
+      "image": "richeh.jpg",
+      "gender": "Female",
+      "hairColor": "Silver",
+      "species": "Witch",
+      "magicType": "Drawing Magic",
+      "affiliation": "Qifrey's Atelier",
+      "role": "Apprentice",
+      "firstArc": "Entrance Exam arc"
+    },
+    {
+      "id": 6,
+      "name": "Olruggio",
+      "image": "olruggio.jpg",
+      "gender": "Male",
+      "hairColor": "Black",
+      "species": "Witch",
+      "magicType": "Drawing Magic",
+      "affiliation": "Qifrey's Atelier",
+      "role": "Master Witch",
+      "firstArc": "Prologue arc"
+    },
+    {
+      "id": 7,
+      "name": "Tartah",
+      "image": "tartah.jpg",
+      "gender": "Male",
+      "hairColor": "Brown",
+      "species": "Human",
+      "magicType": "None",
+      "affiliation": "Unaffiliated",
+      "role": "Ally",
+      "firstArc": "Prologue arc"
+    },
+    {
+      "id": 8,
+      "name": "Custas",
+      "image": "custas.jpg",
+      "gender": "Male",
+      "hairColor": "Brown",
+      "species": "Human",
+      "magicType": "Forbidden Magic",
+      "affiliation": "Brim Caps",
+      "role": "Villain",
+      "firstArc": "Moralis arc"
+    },
+    {
+      "id": 9,
+      "name": "Iguin",
+      "image": "iguin.jpg",
+      "gender": "Male",
+      "hairColor": "White",
+      "species": "Witch",
+      "magicType": "Forbidden Magic",
+      "affiliation": "Brim Caps",
+      "role": "Villain",
+      "firstArc": "Prologue arc"
+    },
+    {
+      "id": 10,
+      "name": "Beldaruit",
+      "image": "beldaruit.jpg",
+      "gender": "Male",
+      "hairColor": "White",
+      "species": "Witch",
+      "magicType": "Drawing Magic",
+      "affiliation": "Great Hall",
+      "role": "Master Witch",
+      "firstArc": "Entrance Exam arc"
+    }
+  ]
+}
