@@ -459,6 +459,7 @@ export default function Game() {
     if (!user) {
       // Rediriger vers login avec retour après connexion
       const returnUrl = window.location.pathname + window.location.search;
+      // eslint-disable-next-line react-hooks/immutability
       window.location.href = `/login?redirect=${encodeURIComponent(returnUrl)}`;
       return <div className="loading">Redirection...</div>;
     }
