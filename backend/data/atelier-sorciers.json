@@ -1,6 +1,6 @@
 {
-  "id": "atelier-sorciers",
-  "name": "L'Atelier des Sorciers",
+  "id": "atelier-Sorcier.eres",
+  "name": "L'Atelier des Sorcier.eres",
   "icon": "cardIcon.jpg",
   "background": "background.webp",
   "maxAttempts": 26,
@@ -21,7 +21,7 @@
       "key": "species",
       "label": "Espece",
       "type": "text",
-      "hints": ["Sorcier", "Humain", "Inconnu"]
+      "hints": ["Sorcier.ere", "Humain", "Inconnu"]
     },
     {
       "key": "affiliation",
@@ -44,12 +44,12 @@
       "key": "role",
       "label": "Role",
       "type": "text",
-      "hints": ["Apprenti.e", "Maitre Sorcier", "Chevalier", "Antagoniste", "Allie.e", "Neutre", "Royaute", "Non-Sorcier"]
+      "hints": ["Apprenti.e", "Maitre Sorcier.ere", "Chevalier", "Antagoniste", "Allie.e", "Neutre", "Royaute", "Non-Sorcier.ere"]
     },
     {
       "key": "firstArc",
       "label": "Premier Arc",
-      "type": "ordeRouge",
+      "type": "ordered",
       "order": [
         "Prologue",
         "Premier examen",
@@ -66,8 +66,8 @@
       "name": "Coco",
       "image": "coco.jpg",
       "gender": "Feminin",
-      "hairColor": "Brun",
-      "species": "Sorcier",
+      "hairColor": "Vert",
+      "species": "Sorcier.ere",
       "affiliation": "Atelier de Kieffrey",
       "role": "Apprenti.e",
       "firstArc": "Prologue"
@@ -77,10 +77,10 @@
       "name": "Kieffrey",
       "image": "kieffrey.jpg",
       "gender": "Masculin",
-      "hairColor": "Bleu",
-      "species": "Sorcier",
+      "hairColor": "Blanc",
+      "species": "Sorcier.ere",
       "affiliation": "Atelier de Kieffrey",
-      "role": "Maitre Sorcier",
+      "role": "Maitre Sorcier.ere",
       "firstArc": "Prologue"
     },
     {
@@ -89,7 +89,7 @@
       "image": "agathe.jpg",
       "gender": "Feminin",
       "hairColor": "Noir",
-      "species": "Sorcier",
+      "species": "Sorcier.ere",
       "affiliation": "Atelier de Kieffrey",
       "role": "Apprenti.e",
       "firstArc": "Prologue"
@@ -100,7 +100,7 @@
       "image": "tetia.jpg",
       "gender": "Feminin",
       "hairColor": "Rose",
-      "species": "Sorcier",
+      "species": "Sorcier.ere",
       "affiliation": "Atelier de Kieffrey",
       "role": "Apprenti.e",
       "firstArc": "Prologue"
@@ -111,7 +111,7 @@
       "image": "trice.jpg",
       "gender": "Feminin",
       "hairColor": "Bleu",
-      "species": "Sorcier",
+      "species": "Sorcier.ere",
       "affiliation": "Atelier de Kieffrey",
       "role": "Apprenti.e",
       "firstArc": "Prologue"
@@ -122,9 +122,9 @@
       "image": "olugio.jpg",
       "gender": "Masculin",
       "hairColor": "Noir",
-      "species": "Sorcier",
+      "species": "Sorcier.ere",
       "affiliation": "Atelier de Kieffrey",
-      "role": "Maitre Sorcier",
+      "role": "Maitre Sorcier.ere",
       "firstArc": "Prologue"
     },
     {
@@ -135,7 +135,7 @@
       "hairColor": "Brun",
       "species": "Humain",
       "affiliation": "Carn",
-      "role": "Non-Sorcier",
+      "role": "Non-Sorcier.ere",
       "firstArc": "Premier examen"
     },
     {
@@ -144,9 +144,9 @@
       "image": "nornois.jpg",
       "gender": "Masculin",
       "hairColor": "Blanc",
-      "species": "Sorcier",
+      "species": "Sorcier.ere",
       "affiliation": "Carn",
-      "role": "Maitre Sorcier",
+      "role": "Maitre Sorcier.ere",
       "firstArc": "Premier examen"
     },
     {
@@ -155,7 +155,7 @@
       "image": "iguin.jpg",
       "gender": "Inconnu",
       "hairColor": "Inconnu",
-      "species": "Sorcier",
+      "species": "Sorcier.ere",
       "affiliation": "Confrerie du Capuchon",
       "role": "Antagoniste",
       "firstArc": "Prologue"
@@ -166,7 +166,7 @@
       "image": "sasaran.jpg",
       "gender": "Masculin",
       "hairColor": "Inconnu",
-      "species": "Sorcier",
+      "species": "Sorcier.ere",
       "affiliation": "Confrerie du Capuchon",
       "role": "Antagoniste",
       "firstArc": "Deuxieme examen"
@@ -190,7 +190,7 @@
       "hairColor": "Noir",
       "species": "Humain",
       "affiliation": "Sans affiliation",
-      "role": "Non-Sorcier",
+      "role": "Non-Sorcier.ere",
       "firstArc": "Sauvetage au pont de la cascade"
     },
     {
@@ -199,7 +199,7 @@
       "image": "ininia.jpg",
       "gender": "Feminin",
       "hairColor": "Blond",
-      "species": "Sorcier",
+      "species": "Sorcier.ere",
       "affiliation": "Confrerie du Capuchon",
       "role": "Antagoniste",
       "firstArc": "Sauvetage au pont de la cascade"
@@ -210,7 +210,7 @@
       "image": "restys.jpg",
       "gender": "Inconnu",
       "hairColor": "Blond",
-      "species": "Sorcier",
+      "species": "Sorcier.ere",
       "affiliation": "Confrerie du Capuchon",
       "role": "Antagoniste",
       "firstArc": "Fete de la Nuit d'Argent"
@@ -221,9 +221,9 @@
       "image": "beldarute.jpg",
       "gender": "Masculin",
       "hairColor": "Blanc",
-      "species": "Sorcier",
+      "species": "Sorcier.ere",
       "affiliation": "Trois Sages",
-      "role": "Maitre Sorcier",
+      "role": "Maitre Sorcier.ere",
       "firstArc": "Deuxieme examen"
     },
     {
@@ -232,9 +232,9 @@
       "image": "vinanna.jpg",
       "gender": "Feminin",
       "hairColor": "Gris",
-      "species": "Sorcier",
+      "species": "Sorcier.ere",
       "affiliation": "Trois Sages",
-      "role": "Maitre Sorcier",
+      "role": "Maitre Sorcier.ere",
       "firstArc": "Fete de la Nuit d'Argent"
     },
     {
@@ -243,7 +243,7 @@
       "image": "engendale.jpg",
       "gender": "Masculin",
       "hairColor": "Blanc",
-      "species": "Sorcier",
+      "species": "Sorcier.ere",
       "affiliation": "Trois Sages",
       "role": "Antagoniste",
       "firstArc": "Fete de la Nuit d'Argent"
@@ -254,9 +254,9 @@
       "image": "lagrah.jpg",
       "gender": "Masculin",
       "hairColor": "Noir",
-      "species": "Sorcier",
+      "species": "Sorcier.ere",
       "affiliation": "Trois Sages",
-      "role": "Maitre Sorcier",
+      "role": "Maitre Sorcier.ere",
       "firstArc": "Fete de la Nuit d'Argent"
     },
     {
@@ -265,7 +265,7 @@
       "image": "easthies.jpg",
       "gender": "Masculin",
       "hairColor": "Noir",
-      "species": "Sorcier",
+      "species": "Sorcier.ere",
       "affiliation": "Milice Magique",
       "role": "Chevalier",
       "firstArc": "Sauvetage au pont de la cascade"
@@ -276,7 +276,7 @@
       "image": "lulucy.jpg",
       "gender": "Feminin",
       "hairColor": "Blond",
-      "species": "Sorcier",
+      "species": "Sorcier.ere",
       "affiliation": "Milice Magique",
       "role": "Chevalier",
       "firstArc": "Sauvetage au pont de la cascade"
@@ -287,7 +287,7 @@
       "image": "galga.jpg",
       "gender": "Masculin",
       "hairColor": "Multicolor",
-      "species": "Sorcier",
+      "species": "Sorcier.ere",
       "affiliation": "Milice Magique",
       "role": "Chevalier",
       "firstArc": "Sauvetage au pont de la cascade"
@@ -298,7 +298,7 @@
       "image": "utowin.jpg",
       "gender": "Masculin",
       "hairColor": "Orange",
-      "species": "Sorcier",
+      "species": "Sorcier.ere",
       "affiliation": "Milice Magique",
       "role": "Chevalier",
       "firstArc": "Sauvetage au pont de la cascade"
@@ -307,9 +307,9 @@
       "id": 23,
       "name": "Echo",
       "image": "ekoh.jpg",
-      "gender": "Feminin",
+      "gender": "Masculin",
       "hairColor": "Brun",
-      "species": "Sorcier",
+      "species": "Sorcier.ere",
       "affiliation": "Milice Magique",
       "role": "Chevalier",
       "firstArc": "Deuxieme examen"
@@ -320,7 +320,7 @@
       "image": "etlan.jpg",
       "gender": "Masculin",
       "hairColor": "Brun",
-      "species": "Sorcier",
+      "species": "Sorcier.ere",
       "affiliation": "Milice Magique",
       "role": "Chevalier",
       "firstArc": "Deuxieme examen"
@@ -330,8 +330,8 @@
       "name": "Erienne",
       "image": "eryenne.jpg",
       "gender": "Feminin",
-      "hairColor": "Inconnu",
-      "species": "Sorcier",
+      "hairColor": "Noir",
+      "species": "Sorcier.ere",
       "affiliation": "Academie",
       "role": "Neutre",
       "firstArc": "Esrest arc"
@@ -341,8 +341,8 @@
       "name": "Yinny",
       "image": "yinny.jpg",
       "gender": "Masculin",
-      "hairColor": "Brun",
-      "species": "Sorcier",
+      "hairColor": "Noir",
+      "species": "Sorcier.ere",
       "affiliation": "Academie",
       "role": "Apprenti.e",
       "firstArc": "Deuxieme examen"
@@ -353,9 +353,9 @@
       "image": "alaira.jpg",
       "gender": "Feminin",
       "hairColor": "Multicolor",
-      "species": "Sorcier",
+      "species": "Sorcier.ere",
       "affiliation": "Academie",
-      "role": "Maitre Sorcier",
+      "role": "Maitre Sorcier.ere",
       "firstArc": "Deuxieme examen"
     },
     {
@@ -364,9 +364,9 @@
       "image": "kukrow.jpg",
       "gender": "Masculin",
       "hairColor": "Noir",
-      "species": "Sorcier",
+      "species": "Sorcier.ere",
       "affiliation": "Academie",
-      "role": "Maitre Sorcier",
+      "role": "Maitre Sorcier.ere",
       "firstArc": "Deuxieme examen"
     },
     {
@@ -375,7 +375,7 @@
       "image": "riliphin.jpg",
       "gender": "Masculin",
       "hairColor": "Bleu",
-      "species": "Sorcier",
+      "species": "Sorcier.ere",
       "affiliation": "Academie",
       "role": "Apprenti.e",
       "firstArc": "Esrest arc"
@@ -385,10 +385,10 @@
       "name": "Hayhart",
       "image": "hiehart.jpg",
       "gender": "Masculin",
-      "hairColor": "Brun",
-      "species": "Sorcier",
+      "hairColor": "Noir",
+      "species": "Sorcier.ere",
       "affiliation": "Academie",
-      "role": "Maitre Sorcier",
+      "role": "Maitre Sorcier.ere",
       "firstArc": "Fete de la Nuit d'Argent"
     },
     {
@@ -397,7 +397,7 @@
       "image": "jujy.jpg",
       "gender": "Feminin",
       "hairColor": "Noir",
-      "species": "Sorcier",
+      "species": "Sorcier.ere",
       "affiliation": "Academie",
       "role": "Apprenti.e",
       "firstArc": "Fete de la Nuit d'Argent"
@@ -408,7 +408,7 @@
       "image": "loroga.jpg",
       "gender": "Masculin",
       "hairColor": "Noir",
-      "species": "Sorcier",
+      "species": "Sorcier.ere",
       "affiliation": "Academie",
       "role": "Apprenti.e",
       "firstArc": "Deuxieme examen"
@@ -421,7 +421,7 @@
       "hairColor": "Brun",
       "species": "Humain",
       "affiliation": "Academie",
-      "role": "Non-Sorcier",
+      "role": "Non-Sorcier.ere",
       "firstArc": "Deuxieme examen"
     },
     {
@@ -432,7 +432,7 @@
       "hairColor": "Blond",
       "species": "Humain",
       "affiliation": "Academie",
-      "role": "Non-Sorcier",
+      "role": "Non-Sorcier.ere",
       "firstArc": "Deuxieme examen"
     },
     {
@@ -441,9 +441,9 @@
       "image": "atwert.jpg",
       "gender": "Masculin",
       "hairColor": "Noir",
-      "species": "Sorcier",
+      "species": "Sorcier.ere",
       "affiliation": "Sans affiliation",
-      "role": "Maitre Sorcier",
+      "role": "Maitre Sorcier.ere",
       "firstArc": "Fete de la Nuit d'Argent"
     },
     {
@@ -452,9 +452,9 @@
       "image": "adina.jpg",
       "gender": "Feminin",
       "hairColor": "Noir",
-      "species": "Sorcier",
+      "species": "Sorcier.ere",
       "affiliation": "Tour-Bibliotheque",
-      "role": "Maitre Sorcier",
+      "role": "Maitre Sorcier.ere",
       "firstArc": "Deuxieme examen"
     },
     {
@@ -465,7 +465,7 @@
       "hairColor": "Brun",
       "species": "Humain",
       "affiliation": "Sans affiliation",
-      "role": "Non-Sorcier",
+      "role": "Non-Sorcier.ere",
       "firstArc": "Prologue"
     },
     {
@@ -473,7 +473,7 @@
       "name": "Dinlerdy Esrest",
       "image": "deanreldy.jpg",
       "gender": "Masculin",
-      "hairColor": "Brun",
+      "hairColor": "Blond",
       "species": "Humain",
       "affiliation": "Famille Royale d'Esrest",
       "role": "Royaute",
@@ -495,7 +495,7 @@
       "name": "Eoleo Ezrest",
       "image": "eoleo.jpg",
       "gender": "Masculin",
-      "hairColor": "Brun",
+      "hairColor": "Blond",
       "species": "Humain",
       "affiliation": "Famille Royale d'Esrest",
       "role": "Royaute",
@@ -503,7 +503,7 @@
     },
     {
       "id": 41,
-      "name": "Dame Miia",
+      "name": "Dame Mia",
       "image": "miia.jpg",
       "gender": "Feminin",
       "hairColor": "Brun",
@@ -514,7 +514,7 @@
     },
     {
       "id": 42,
-      "name": "Marquis de Cladd",
+      "name": "Marquis de Clad",
       "image": "lord-cladd.jpg",
       "gender": "Masculin",
       "hairColor": "Inconnu",
