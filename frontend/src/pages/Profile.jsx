@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
+import useTitle from "../hooks/useTitle";
 import Avatar from "../components/Avatar";
 import "./Profile.css";
 
 export default function Profile() {
+  useTitle('Mon profil');
   const navigate = useNavigate();
   const { user, token, logout, loading, refreshUser } = useAuth();
   const [animes, setAnimes] = useState([]);
@@ -130,10 +132,11 @@ export default function Profile() {
   return (
     <div className="profile-container">
       <header className="profile-header">
-        <Link to="/" className="back-link">&larr; Retour</Link>
-        <h1>Mon Profil</h1>
+        <Link to="/" className="back-link">← Accueil</Link>
+        <h1>Mon profil</h1>
       </header>
 
+      <div className="profile-body">
       <div className="profile-content">
         {/* Carte utilisateur */}
         <div className="profile-card user-info">
@@ -271,6 +274,7 @@ export default function Profile() {
             )}
           </div>
         </div>
+      </div>
       </div>
 
       {/* Modal de selection d'avatar */}

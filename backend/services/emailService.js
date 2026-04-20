@@ -14,19 +14,19 @@ const transporter = nodemailer.createTransport({
   },
   tls: {
     rejectUnauthorized: false // Accepter les certificats auto-signés OVH
-  },
-  debug: true,
-  logger: true
-});
-
-// Vérifier la connexion au démarrage
-transporter.verify((error, success) => {
-  if (error) {
-    console.error('Email service error:', error);
-  } else {
-    console.log('Email service ready - SMTP connected successfully');
   }
 });
+
+// Vérifier la connexion au démarrage seulement si SMTP est configuré
+if (process.env.SMTP_HOST) {
+  transporter.verify((error) => {
+    if (error) {
+      console.error('Email service error:', error.message);
+    } else {
+      console.log('Email service ready');
+    }
+  });
+}
 
 /**
  * Envoyer un email de vérification

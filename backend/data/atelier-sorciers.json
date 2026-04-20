@@ -1,6 +1,6 @@
 {
-  "id": "atelier-Sorcier.eres",
-  "name": "L'Atelier des Sorcier.eres",
+  "id": "atelier-sorciers",
+  "name": "L'Atelier des Sorciers",
   "icon": "cardIcon.jpg",
   "background": "background.webp",
   "maxAttempts": 26,

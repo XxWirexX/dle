@@ -87,14 +87,14 @@ router.get('/:animeId', authMiddleware, (req, res) => {
 router.put('/:animeId', authMiddleware, (req, res) => {
   try {
     const { animeId } = req.params;
-    const { won, isDuo, attempts } = req.body;
+    const { won, isDuo, attempts, isDaily } = req.body;
     const userId = req.user.userId;
 
     if (typeof won !== 'boolean') {
       return res.status(400).json({ error: 'Le champ "won" est requis (boolean)' });
     }
 
-    const stats = updateStats(userId, animeId, won, isDuo || false, attempts || 0);
+    const stats = updateStats(userId, animeId, won, isDuo || false, attempts || 0, isDaily || false);
 
     res.json({
       played: stats.games_played,

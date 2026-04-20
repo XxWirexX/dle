@@ -40,34 +40,69 @@ setupSocketHandlers(io);
 
 app.use("/api/images", express.static(path.join(__dirname, "public/images")));
 
-app.get("/api/animes", (req, res) => {
-    const dossier = path.join(__dirname, "data");
-
-    const fichiers = fs.readdirSync(dossier);
-    const fichiersJson = fichiers.filter(f => f.endsWith(".json"));
-
-    const objets = fichiersJson.map(fichier => {
-        const contenu = fs.readFileSync(path.join(dossier, fichier), "utf-8");
-        return JSON.parse(contenu);
+// ── Cache mémoire : tous les JSONs parsés une seule fois au démarrage ──
+const gameCache = new Map();
+(function loadCache() {
+  const dossier = path.join(__dirname, "data");
+  fs.readdirSync(dossier)
+    .filter(f => f.endsWith(".json"))
+    .forEach(fichier => {
+      const data = JSON.parse(fs.readFileSync(path.join(dossier, fichier), "utf-8"));
+      gameCache.set(data.id, data);
     });
+  console.log(`Game cache loaded (${gameCache.size} animes)`);
+})();
 
-
-    res.send(objets)
+app.get("/api/animes", (req, res) => {
+  // Renvoie les métadonnées sans les personnages (la home n'en a pas besoin)
+  const list = Array.from(gameCache.values()).map(({ characters, ...meta }) => ({
+    ...meta,
+    characterCount: (characters || []).length
+  }));
+  res.json(list);
 });
 
 app.get("/api/anime/:id", (req, res) => {
-  const id = req.params.id;
-  const dossier = path.join(__dirname, "data");
-  const cheminFichier = path.join(dossier, `${id}.json`);
+  const data = gameCache.get(req.params.id);
+  if (!data) return res.status(404).send("Anime introuvable");
 
-  if (!fs.existsSync(cheminFichier)) {
-    return res.status(404).send("Anime introuvable");
+  // ?lite=true → metadata + 8 premiers personnages (pour la page Detail)
+  if (req.query.lite === "true") {
+    const { characters, ...meta } = data;
+    return res.json({ ...meta, characters: (characters || []).slice(0, 8) });
   }
 
-  const contenu = fs.readFileSync(cheminFichier, "utf-8");
-  const objet = JSON.parse(contenu);
+  res.json(data);
+});
 
-  res.json(objet);
+app.get("/api/daily/:id", (req, res) => {
+  const id = req.params.id;
+  const data = gameCache.get(id);
+  if (!data) return res.status(404).json({ error: "Anime introuvable" });
+
+  const characters = data.characters || [];
+
+  if (characters.length === 0) {
+    return res.status(400).json({ error: "Pas de personnages" });
+  }
+
+  // Date du jour UTC (même perso pour tout le monde dans le monde)
+  const dateStr = new Date().toISOString().split('T')[0];
+
+  // Hash déterministe : même seed = même perso
+  const seed = `${id}-${dateStr}`;
+  let hash = 0;
+  for (let i = 0; i < seed.length; i++) {
+    hash = Math.imul(31, hash) + seed.charCodeAt(i) | 0;
+  }
+  const index = Math.abs(hash) % characters.length;
+
+  // Numéro du jour depuis le 01/01/2024
+  const epoch = new Date('2024-01-01T00:00:00Z');
+  const today = new Date(dateStr + 'T00:00:00Z');
+  const dayNumber = Math.floor((today - epoch) / (1000 * 60 * 60 * 24));
+
+  res.json({ characterIndex: index, date: dateStr, dayNumber });
 });
 
 

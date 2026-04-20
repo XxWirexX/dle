@@ -3,11 +3,13 @@ import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import CharactersTable from "../components/CharactersTable";
 import GameNavbar from "../components/GameNavbar";
+import useTitle from "../hooks/useTitle";
 import "./Game.css";
 
 export default function CharactersList() {
   const { id } = useParams();
   const [gameData, setGameData] = useState(null);
+  useTitle(gameData ? `Personnages — ${gameData.name}` : null);
   const [characters, setCharacters] = useState([]);
   const [loading, setLoading] = useState(true);
 

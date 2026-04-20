@@ -41,6 +41,23 @@ try {
   db.exec(`ALTER TABLE user_stats ADD COLUMN total_attempts INTEGER DEFAULT 0`);
 } catch (e) { /* colonne existe déjà */ }
 
+// Migration daily challenge
+try {
+  db.exec(`ALTER TABLE user_stats ADD COLUMN daily_played INTEGER DEFAULT 0`);
+} catch (e) { /* colonne existe déjà */ }
+try {
+  db.exec(`ALTER TABLE user_stats ADD COLUMN daily_wins INTEGER DEFAULT 0`);
+} catch (e) { /* colonne existe déjà */ }
+try {
+  db.exec(`ALTER TABLE user_stats ADD COLUMN daily_streak INTEGER DEFAULT 0`);
+} catch (e) { /* colonne existe déjà */ }
+try {
+  db.exec(`ALTER TABLE user_stats ADD COLUMN daily_max_streak INTEGER DEFAULT 0`);
+} catch (e) { /* colonne existe déjà */ }
+try {
+  db.exec(`ALTER TABLE user_stats ADD COLUMN last_daily_date TEXT`);
+} catch (e) { /* colonne existe déjà */ }
+
 // Migration avatars
 try {
   db.exec(`ALTER TABLE users ADD COLUMN avatar_color TEXT`);
@@ -186,8 +203,7 @@ function getAllStatsForUser(userId) {
   return stmt.all(userId);
 }
 
-function updateStats(userId, animeId, won, isDuo = false, attempts = 0) {
-  // Récupérer les stats actuelles
+function updateStats(userId, animeId, won, isDuo = false, attempts = 0, isDaily = false) {
   const current = getStats(userId, animeId);
 
   const gamesPlayed = current.games_played + 1;
@@ -198,9 +214,29 @@ function updateStats(userId, animeId, won, isDuo = false, attempts = 0) {
   const duoWins = current.duo_wins + (isDuo && won ? 1 : 0);
   const totalAttempts = current.total_attempts + attempts;
 
+  // Daily stats — ne compter qu'une fois par jour
+  let dailyPlayed = current.daily_played || 0;
+  let dailyWins = current.daily_wins || 0;
+  let dailyStreak = current.daily_streak || 0;
+  let dailyMaxStreak = current.daily_max_streak || 0;
+  let lastDailyDate = current.last_daily_date || null;
+
+  const today = new Date().toISOString().split('T')[0];
+  if (isDaily && lastDailyDate !== today) {
+    dailyPlayed += 1;
+    dailyWins += won ? 1 : 0;
+    dailyStreak = won ? dailyStreak + 1 : 0;
+    dailyMaxStreak = Math.max(dailyMaxStreak, dailyStreak);
+    lastDailyDate = today;
+  }
+
   const stmt = db.prepare(`
-    INSERT INTO user_stats (user_id, anime_id, games_played, wins, current_streak, max_streak, duo_played, duo_wins, total_attempts)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO user_stats (
+      user_id, anime_id, games_played, wins, current_streak, max_streak,
+      duo_played, duo_wins, total_attempts,
+      daily_played, daily_wins, daily_streak, daily_max_streak, last_daily_date
+    )
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ON CONFLICT(user_id, anime_id) DO UPDATE SET
       games_played = excluded.games_played,
       wins = excluded.wins,
@@ -208,19 +244,32 @@ function updateStats(userId, animeId, won, isDuo = false, attempts = 0) {
       max_streak = excluded.max_streak,
       duo_played = excluded.duo_played,
       duo_wins = excluded.duo_wins,
-      total_attempts = excluded.total_attempts
+      total_attempts = excluded.total_attempts,
+      daily_played = excluded.daily_played,
+      daily_wins = excluded.daily_wins,
+      daily_streak = excluded.daily_streak,
+      daily_max_streak = excluded.daily_max_streak,
+      last_daily_date = excluded.last_daily_date
   `);
 
-  stmt.run(userId, animeId, gamesPlayed, wins, currentStreak, maxStreak, duoPlayed, duoWins, totalAttempts);
+  stmt.run(
+    userId, animeId, gamesPlayed, wins, currentStreak, maxStreak,
+    duoPlayed, duoWins, totalAttempts,
+    dailyPlayed, dailyWins, dailyStreak, dailyMaxStreak, lastDailyDate
+  );
 
   return {
     games_played: gamesPlayed,
-    wins: wins,
+    wins,
     current_streak: currentStreak,
     max_streak: maxStreak,
     duo_played: duoPlayed,
     duo_wins: duoWins,
-    total_attempts: totalAttempts
+    total_attempts: totalAttempts,
+    daily_played: dailyPlayed,
+    daily_wins: dailyWins,
+    daily_streak: dailyStreak,
+    daily_max_streak: dailyMaxStreak
   };
 }
 

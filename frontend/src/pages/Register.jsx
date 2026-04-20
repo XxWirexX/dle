@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
+import useTitle from '../hooks/useTitle';
 import './Auth.css';
 
 export default function Register() {
+  useTitle('Inscription');
   const navigate = useNavigate();
   const { register } = useAuth();
 
@@ -30,6 +32,10 @@ export default function Register() {
 
   return (
     <div className="auth-container">
+      <Link to="/" className="auth-brand">
+        <img src="/images/logo.jpg" alt="DLE" className="auth-brand-logo" />
+        <span className="auth-brand-name">DLE</span>
+      </Link>
       <div className="auth-card">
         <h1 className="auth-title">Inscription</h1>
 

@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { Link, useSearchParams, useNavigate } from 'react-router-dom';
+import useTitle from '../hooks/useTitle';
 import './Auth.css';
 
 export default function ResetPassword() {
+  useTitle('Nouveau mot de passe');
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const token = searchParams.get('token');

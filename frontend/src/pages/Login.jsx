@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
+import useTitle from '../hooks/useTitle';
 import './Auth.css';
 
 export default function Login() {
+  useTitle('Connexion');
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { login } = useAuth();
@@ -32,6 +34,10 @@ export default function Login() {
 
   return (
     <div className="auth-container">
+      <Link to="/" className="auth-brand">
+        <img src="/images/logo.jpg" alt="DLE" className="auth-brand-logo" />
+        <span className="auth-brand-name">DLE</span>
+      </Link>
       <div className="auth-card">
         <h1 className="auth-title">Connexion</h1>
 

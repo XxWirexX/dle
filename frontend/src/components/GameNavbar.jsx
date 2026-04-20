@@ -13,13 +13,13 @@ export default function GameNavbar({ gameId }) {
           to={`/anime/${gameId}/play`}
           className={({ isActive }) => `nav-tab ${isActive ? 'active' : ''}`}
         >
-          🎮 Game
+          Game
         </NavLink>
         <NavLink
           to={`/anime/${gameId}/characters`}
           className={({ isActive }) => `nav-tab ${isActive ? 'active' : ''}`}
         >
-          📋 Characters
+          Characters
         </NavLink>
       </div>
     </nav>

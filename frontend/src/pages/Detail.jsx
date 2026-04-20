@@ -2,16 +2,18 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
+import useTitle from "../hooks/useTitle";
 import "./Detail.css";
 
 export default function Detail() {
   const { id } = useParams();
   const { user, loading: authLoading } = useAuth();
   const [anime, setAnime] = useState(null);
+  useTitle(anime?.name ?? null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`/api/anime/${id}`)
+    fetch(`/api/anime/${id}?lite=true`)
       .then((res) => res.json())
       .then((data) => {
         setAnime(data);
@@ -83,15 +85,23 @@ export default function Detail() {
           <h2 className="section-title">Modes de jeu</h2>
           <div className="game-modes">
             <Link to={`/anime/${id}/play`} className="mode-card solo">
-              <div className="mode-icon">🎮</div>
+              <div className="mode-icon">S</div>
               <div className="mode-info">
                 <h3>Solo</h3>
                 <p>Trouve le personnage mystère en utilisant les indices</p>
               </div>
               <div className="mode-arrow">→</div>
             </Link>
+            <Link to={`/anime/${id}/play?mode=daily`} className="mode-card daily">
+              <div className="mode-icon">★</div>
+              <div className="mode-info">
+                <h3>Défi du jour</h3>
+                <p>Un personnage différent chaque jour, identique pour tous</p>
+              </div>
+              <div className="mode-arrow">→</div>
+            </Link>
             <Link to={`/anime/${id}/play?mode=duo`} className={`mode-card duo ${!user && !authLoading ? 'requires-login' : ''}`}>
-              <div className="mode-icon">{!user && !authLoading ? '🔒' : '👥'}</div>
+              <div className="mode-icon">2</div>
               <div className="mode-info">
                 <h3>Duo</h3>
                 <p>Affronte un autre joueur en temps réel</p>
@@ -110,9 +120,9 @@ export default function Detail() {
               <div key={attr.key} className="attribute-card">
                 <div className="attribute-name">{attr.label}</div>
                 <div className="attribute-type">
-                  {attr.type === "ordered" && "📊 Ordonné"}
-                  {attr.type === "text" && "📝 Texte"}
-                  {attr.type === "number" && "🔢 Nombre"}
+                  {attr.type === "ordered" && "Ordonné"}
+                  {attr.type === "text" && "Texte"}
+                  {attr.type === "number" && "Nombre"}
                 </div>
                 {attr.hints && (
                   <div className="attribute-hints">
@@ -134,7 +144,7 @@ export default function Detail() {
         <section className="detail-section">
           <div className="section-header">
             <h2 className="section-title">Personnages</h2>
-            <Link to={`/anime/images/${id}/characters`} className="see-all-btn">
+            <Link to={`/anime/${id}/characters`} className="see-all-btn">
               Voir tous →
             </Link>
           </div>

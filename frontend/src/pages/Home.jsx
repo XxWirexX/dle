@@ -1,12 +1,14 @@
 // src/pages/Home.jsx
 import "./Home.css";
 import {useEffect, useState} from "react";
+import useTitle from "../hooks/useTitle";
 import Card from "../components/Card.jsx";
 import {Link} from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import Avatar from "../components/Avatar";
 
 export default function Home() {
+  useTitle(null);
   const [mangas, setMangas] = useState([]);
   const { user, loading } = useAuth();
 
@@ -14,7 +16,6 @@ export default function Home() {
     fetch("/api/animes")
       .then(res => res.json())
       .then(data => {
-        console.log(data);
         setMangas(data);
       });
   }, []);
@@ -24,16 +25,16 @@ export default function Home() {
       <header className="home-header">
         <div className="logo-container">
           <img src="/images/logo.jpg" alt="Mangadle" className="logo" />
-          <h1 className="site-title">Mangadle</h1>
+          <h1 className="site-title">DLE</h1>
         </div>
 
         <nav className="nav-buttons">
           <Link to="/" className="nav-btn active">
             Manga
           </Link>
-          <Link to="/video-games" className="nav-btn">
+          <span className="nav-btn nav-btn-disabled">
             Video Games
-          </Link>
+          </span>
         </nav>
 
         <div className="user-section">
@@ -49,6 +50,7 @@ export default function Home() {
         </div>
       </header>
 
+      <p className="home-section-title">Manga — {mangas.length} jeux disponibles</p>
       <div className="games-grid">
         {mangas.map((game) => (
           <Card key={game.id} game={game} />

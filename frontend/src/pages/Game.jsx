@@ -3,6 +3,7 @@ import { useParams, useLocation } from "react-router-dom";
 import DuoGame from "./DuoGame";
 import GameNavbar from "../components/GameNavbar";
 import useAuth from "../hooks/useAuth";
+import useTitle from "../hooks/useTitle";
 import "./Game.css";
 
 // Hook pour persister l'état - utilise l'API si connecté, sinon localStorage
@@ -87,7 +88,6 @@ function useStats(animeId) {
 // Sélection aléatoire d'une cible
 function pickTarget(list) {
   const i = Math.floor(Math.random() * list.length);
-    console.log(list[i]);
   return list[i];
 }
 
@@ -172,6 +172,7 @@ function SoloGame() {
   const { id } = useParams();
 
   const [gameData, setGameData] = useState(null);
+  useTitle(gameData ? `Solo — ${gameData.name}` : null);
   const [pool, setPool] = useState([]);
   const [target, setTarget] = useState(null);
   const [attempts, setAttempts] = useState([]);
@@ -195,7 +196,7 @@ function SoloGame() {
         setPool(characters);
         setTarget(pickTarget(characters));
       })
-      .catch(console.error);
+      .catch(() => {});
   }, [id]);
 
   // Fermer les suggestions au clic extérieur
@@ -306,40 +307,71 @@ function SoloGame() {
           </div>
 
           {/* Barre de recherche */}
-          <div className="search-container" ref={searchRef}>
-            <input
-              type="text"
-              placeholder={`Rechercher un personnage...`}
-              value={query}
-              onChange={(e) => {
-                setQuery(e.target.value);
-                setShowSuggestions(true);
-              }}
-              onFocus={() => setShowSuggestions(true)}
-              onKeyDown={handleKeyDown}
-              className="search-input"
-              disabled={gameOver}
-            />
+          {!gameOver && (
+            <div className="search-container" ref={searchRef}>
+              <input
+                type="text"
+                placeholder={`Rechercher un personnage...`}
+                value={query}
+                onChange={(e) => {
+                  setQuery(e.target.value);
+                  setShowSuggestions(true);
+                }}
+                onFocus={() => setShowSuggestions(true)}
+                onKeyDown={handleKeyDown}
+                className="search-input"
+              />
 
-            {/* Suggestions */}
-            {showSuggestions && filteredSuggestions.length > 0 && !gameOver && (
-              <div className="suggestions-dropdown">
-                {filteredSuggestions.map((char) => (
-                  <button
-                    key={char.id}
-                    onClick={() => validateSelection(char)}
-                    className="suggestion-item"
-                  >
-                    <div className="suggestion-image">
-                      <img src={`/api/images/${gameData.id}/characters/${char.image}`} alt={char.name} />
-                    </div>
-                    <div className="suggestion-name">{char.name}</div>
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
+              {showSuggestions && filteredSuggestions.length > 0 && (
+                <div className="suggestions-dropdown">
+                  {filteredSuggestions.map((char) => (
+                    <button
+                      key={char.id}
+                      onClick={() => validateSelection(char)}
+                      className="suggestion-item"
+                    >
+                      <div className="suggestion-image">
+                        <img src={`/api/images/${gameData.id}/characters/${char.image}`} alt={char.name} />
+                      </div>
+                      <div className="suggestion-name">{char.name}</div>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
         </div>
+
+        {/* Message de fin */}
+        {gameOver && (
+          <div className="game-over-message">
+            <div className={`game-over-character ${attempts.some((a) => a.isCorrect) ? "win" : "lose"}`}>
+              <img src={`/api/images/${gameData.id}/characters/${target.image}`} alt={target.name} />
+            </div>
+            <div className={`game-over-result ${attempts.some((a) => a.isCorrect) ? "win" : "lose"}`}>
+              {attempts.some((a) => a.isCorrect) ? "Trouvé !" : "Dommage !"}
+            </div>
+            <p className="game-over-name">{target.name}</p>
+            <div className="game-over-stats">
+              <div className="stat-chip">
+                <span className="stat-chip-value">{attempts.length}/{maxAttempts}</span>
+                <span className="stat-chip-label">Essais</span>
+              </div>
+              <div className="stat-chip">
+                <span className="stat-chip-value">{stats.played}</span>
+                <span className="stat-chip-label">Parties</span>
+              </div>
+              <div className="stat-chip">
+                <span className="stat-chip-value">{stats.wins}</span>
+                <span className="stat-chip-label">Victoires</span>
+              </div>
+              <div className="stat-chip">
+                <span className="stat-chip-value">{stats.streak}</span>
+                <span className="stat-chip-label">Série</span>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Tableau des essais */}
         <div className="attempts-wrapper">
@@ -424,22 +456,284 @@ function SoloGame() {
           </div>
         )}
 
-        {/* Message de fin */}
+      </div>
+    </div>
+  );
+}
+
+// Génère la grille emoji style Wordle
+function generateShareText(attempts, attributes, gameName, dayNumber, maxAttempts) {
+  const isWon = attempts.some(a => a.isCorrect);
+  const count = isWon ? attempts.length : 'X';
+  const grid = [...attempts].reverse().map(attempt =>
+    attributes.map(attr => {
+      const fb = attempt.feedback[attr.key];
+      if (fb?.type === 'correct') return '🟩';
+      if (fb?.type === 'close') return '🟨';
+      return '⬛';
+    }).join('')
+  ).join('\n');
+  return `Mangadle - ${gameName} #${dayNumber}\n${count}/${maxAttempts}\n\n${grid}`;
+}
+
+function DailyGame() {
+  const { id } = useParams();
+  const { token, user } = useAuth();
+
+  const [gameData, setGameData] = useState(null);
+  useTitle(gameData ? `Défi du jour — ${gameData.name}` : null);
+  const [pool, setPool] = useState([]);
+  const [target, setTarget] = useState(null);
+  const [attempts, setAttempts] = useState([]);
+  const [gameOver, setGameOver] = useState(false);
+  const [query, setQuery] = useState("");
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [showHints, setShowHints] = useState(false);
+  const [statsUpdated, setStatsUpdated] = useState(false);
+  const [dayNumber, setDayNumber] = useState(0);
+  const [dateStr, setDateStr] = useState('');
+  const [copied, setCopied] = useState(false);
+
+  const searchRef = useRef(null);
+
+  useEffect(() => {
+    const today = new Date().toISOString().split('T')[0];
+    setDateStr(today);
+
+    Promise.all([
+      fetch(`/api/anime/${id}`).then(r => r.json()),
+      fetch(`/api/daily/${id}`).then(r => r.json())
+    ]).then(([data, daily]) => {
+      setGameData(data);
+      setDayNumber(daily.dayNumber);
+      const characters = data.characters || [];
+      setPool(characters);
+      const dailyTarget = characters[daily.characterIndex];
+      setTarget(dailyTarget);
+
+      // Restaurer une partie déjà jouée depuis le localStorage
+      const stored = localStorage.getItem(`daily-${id}-${today}`);
+      if (stored) {
+        try {
+          const result = JSON.parse(stored);
+          // Reconstruire les feedbacks à partir des guesses sauvegardés
+          const restoredAttempts = (result.guessIds || []).map(guessId => {
+            const char = characters.find(c => c.id === guessId);
+            if (!char) return null;
+            const fb = getFeedbackObject(char, dailyTarget, data.attributes || []);
+            return { guess: char, feedback: fb, isCorrect: char.id === dailyTarget.id };
+          }).filter(Boolean);
+          setAttempts(restoredAttempts);
+          setGameOver(true);
+          setStatsUpdated(true);
+        } catch { /* localStorage corrompu, on ignore */ }
+      }
+    }).catch(() => {});
+  }, [id]);
+
+  useEffect(() => {
+    function handleClickOutside(e) {
+      if (searchRef.current && !searchRef.current.contains(e.target)) {
+        setShowSuggestions(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  // Sauvegarder les stats à la fin de partie
+  useEffect(() => {
+    if (!gameOver || statsUpdated || !target || !dateStr) return;
+    setStatsUpdated(true);
+
+    const won = attempts.some(a => a.isCorrect);
+
+    // Sauvegarder dans localStorage (guessIds pour reconstituer sans données sensibles)
+    localStorage.setItem(`daily-${id}-${dateStr}`, JSON.stringify({
+      won,
+      guessIds: [...attempts].reverse().map(a => a.guess.id)
+    }));
+
+    // Sauvegarder via l'API si connecté
+    if (token && user) {
+      fetch(`/api/stats/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ won, attempts: attempts.length, isDuo: false, isDaily: true })
+      }).catch(() => {});
+    }
+  }, [gameOver, statsUpdated, attempts, target, dateStr, id, token, user]);
+
+  function validateSelection(char) {
+    if (gameOver || !target || !gameData) return;
+    if (attempts.some(a => a.guess.id === char.id)) return;
+
+    const fb = getFeedbackObject(char, target, gameData.attributes || []);
+    const isCorrect = char.id === target.id;
+    const next = [{ guess: char, feedback: fb, isCorrect }, ...attempts];
+    setAttempts(next);
+    setQuery("");
+    setShowSuggestions(false);
+
+    if (isCorrect || next.length >= (gameData.maxAttempts || 26)) {
+      setGameOver(true);
+    }
+  }
+
+  function handleKeyDown(e) {
+    if (e.key === "Enter" && filteredSuggestions.length > 0) {
+      validateSelection(filteredSuggestions[0]);
+    }
+  }
+
+  function copyResult() {
+    if (!gameData) return;
+    const text = generateShareText(
+      attempts, gameData.attributes || [], gameData.name, dayNumber, gameData.maxAttempts || 26
+    );
+    navigator.clipboard.writeText(text).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }).catch(() => {});
+  }
+
+  const filteredSuggestions = query.trim()
+    ? pool.filter(c => {
+        if (attempts.some(a => a.guess.id === c.id)) return false;
+        return c.name.toLowerCase().includes(query.toLowerCase());
+      })
+    : [];
+
+  if (!gameData || !target || pool.length === 0) {
+    return <div className="loading">Chargement du défi du jour...</div>;
+  }
+
+  const attributes = gameData.attributes || [];
+  const maxAttempts = gameData.maxAttempts || 26;
+  const isWon = attempts.some(a => a.isCorrect);
+  const hintsData = attributes.filter(attr => attr.hints || attr.order);
+
+  return (
+    <div className="game-container" style={{ backgroundImage: `url(/api/images/${id}/${gameData.background})` }}>
+      <GameNavbar gameId={id} />
+      <div className="game-overlay">
+        <div className="game-header">
+          <div className="daily-badge">DÉFI DU JOUR #{dayNumber}</div>
+          <h1 className="game-title">{gameData.name}</h1>
+          <div className="daily-meta">
+            <span className="daily-date">{dateStr}</span>
+            <span className="daily-attempts-count">{attempts.length} / {maxAttempts}</span>
+          </div>
+
+          {!gameOver && (
+            <div className="search-container" ref={searchRef}>
+              <input
+                type="text"
+                placeholder="Rechercher un personnage..."
+                value={query}
+                onChange={e => { setQuery(e.target.value); setShowSuggestions(true); }}
+                onFocus={() => setShowSuggestions(true)}
+                onKeyDown={handleKeyDown}
+                className="search-input"
+              />
+              {showSuggestions && filteredSuggestions.length > 0 && (
+                <div className="suggestions-dropdown">
+                  {filteredSuggestions.map(char => (
+                    <button key={char.id} onClick={() => validateSelection(char)} className="suggestion-item">
+                      <div className="suggestion-image">
+                        <img src={`/api/images/${gameData.id}/characters/${char.image}`} alt={char.name} />
+                      </div>
+                      <div className="suggestion-name">{char.name}</div>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+
         {gameOver && (
           <div className="game-over-message">
-            <div className={`game-over-title ${attempts.some((a) => a.isCorrect) ? "win" : "lose"}`}>
-              {attempts.some((a) => a.isCorrect)
-                ? `Bravo ! Tu as trouve : ${target.name}`
-                : `La reponse etait : ${target.name}`}
+            <div className={`game-over-character ${isWon ? "win" : "lose"}`}>
+              <img src={`/api/images/${gameData.id}/characters/${target.image}`} alt={target.name} />
             </div>
-            <div className="game-over-stats">
-              Essais : {attempts.length}/{maxAttempts} |
-              Parties : {stats.played} |
-              Victoires : {stats.wins} |
-              Serie : {stats.streak}
+            <div className={`game-over-result ${isWon ? "win" : "lose"}`}>
+              {isWon ? "Trouvé !" : "Dommage !"}
+            </div>
+            <p className="game-over-name">{target.name}</p>
+            <div className="daily-share-section">
+              <pre className="daily-emoji-grid">
+                {generateShareText(attempts, attributes, gameData.name, dayNumber, maxAttempts)}
+              </pre>
+              <button onClick={copyResult} className={`copy-btn${copied ? " copied" : ""}`}>
+                {copied ? "✓ Copié !" : "Partager le résultat"}
+              </button>
+              <p className="daily-comeback">Reviens demain pour un nouveau défi !</p>
             </div>
           </div>
         )}
+
+        <div className="attempts-wrapper">
+          <div className="attempts-table">
+            <div className="table-headers">
+              <div className="table-header">Image</div>
+              <div className="table-header">Name</div>
+              {attributes.map(attr => (
+                <div key={attr.key} className="table-header">{attr.label}</div>
+              ))}
+            </div>
+            <div className="attempts-list">
+              {attempts.map((a, i) => (
+                <div key={i} className="attempt-row">
+                  <div className="cell-image">
+                    <div className="character-image">
+                      <img src={`/api/images/${gameData.id}/characters/${a.guess.image}`} alt={a.guess.name} />
+                    </div>
+                  </div>
+                  <div className={`cell bg-${a.isCorrect ? "correct" : "wrong"}`}>
+                    <div className="cell-text">{a.guess.name}</div>
+                  </div>
+                  {attributes.map(attr => {
+                    const fb = a.feedback[attr.key];
+                    const showArrow = attr.type === "number" || attr.type === "ordered";
+                    return (
+                      <div key={attr.key} className={`${showArrow ? "cell-with-arrow" : "cell"} bg-${fb?.type || "wrong"}`}>
+                        <div className="cell-text-sm">{a.guess[attr.key] || "-"}</div>
+                        {showArrow && fb?.type === "higher" && <div className="arrow">▼</div>}
+                        {showArrow && fb?.type === "lower" && <div className="arrow">▲</div>}
+                        {showArrow && fb?.type === "close" && fb?.direction === "higher" && <div className="arrow">▼</div>}
+                        {showArrow && fb?.type === "close" && fb?.direction === "lower" && <div className="arrow">▲</div>}
+                      </div>
+                    );
+                  })}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {hintsData.length > 0 && !gameOver && (
+          <div className="hints-section">
+            <button onClick={() => setShowHints(!showHints)} className="hints-toggle">
+              {showHints ? "▲ Masquer les indices" : "▼ Afficher les indices"}
+            </button>
+            {showHints && (
+              <div className="hints-content">
+                {hintsData.map(attr => (
+                  <div key={attr.key} className="hint-category">
+                    <h3 className="hint-title">{attr.label}</h3>
+                    <div className="hint-list">
+                      {(attr.hints || attr.order || []).map((item, i) => (
+                        <div key={i} className="hint-item">{item}</div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
       </div>
     </div>
   );
@@ -449,6 +743,10 @@ export default function Game() {
   const search = new URLSearchParams(useLocation().search);
   const mode = search.get("mode") || "solo";
   const { user, loading } = useAuth();
+
+  if (mode === "daily") {
+    return <DailyGame />;
+  }
 
   // Mode duo requiert une connexion
   if (mode === "duo") {

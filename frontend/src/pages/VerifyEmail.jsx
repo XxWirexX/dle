@@ -1,8 +1,10 @@
 import { useEffect, useState, useRef } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
+import useTitle from '../hooks/useTitle';
 import './Auth.css';
 
 export default function VerifyEmail() {
+  useTitle('Vérification email');
   const [searchParams] = useSearchParams();
   const [status, setStatus] = useState('loading'); // loading, success, error
   const [message, setMessage] = useState('');

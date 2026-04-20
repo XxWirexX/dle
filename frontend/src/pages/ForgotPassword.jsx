@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import useTitle from '../hooks/useTitle';
 import './Auth.css';
 
 export default function ForgotPassword() {
+  useTitle('Mot de passe oublié');
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState('idle'); // idle, loading, sent
   const [error, setError] = useState('');
