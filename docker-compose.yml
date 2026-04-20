@@ -1,0 +1,23 @@
+services:
+  dle:
+    build: .
+    container_name: dle_web
+    restart: always
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - FRONTEND_URL=https://dle.wireredblue.xyz
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.dle.rule=Host(`dle.wireredblue.xyz`)"
+      - "traefik.http.routers.dle.entrypoints=websecure"
+      - "traefik.http.routers.dle.tls.certresolver=letsencrypt"
+      - "traefik.http.services.dle.loadbalancer.server.port=3000"
+      - "traefik.http.routers.dle.priority=10"
+      - "traefik.http.routers.dle.middlewares=custom-errors@docker"
+    networks:
+      - proxy
+
+networks:
+  proxy:
+    external: true

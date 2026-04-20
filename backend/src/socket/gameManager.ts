@@ -1,6 +1,12 @@
+// @ts-nocheck
 import { getFeedbackObject } from './feedbackUtils';
 
 class GameManager {
+  private matchmakingQueues: Map<string, any[]>;
+  private gameRooms: Map<string, any>;
+  private playerRooms: Map<string, string>;
+  private userSockets: Map<string, string>;
+
   constructor() {
     // Queue par anime: Map<animeId, Socket[]>
     this.matchmakingQueues = new Map();

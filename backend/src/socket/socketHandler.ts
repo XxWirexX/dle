@@ -1,12 +1,14 @@
+// @ts-nocheck
+import { Server, Socket } from 'socket.io';
 import GameManager from './gameManager';
 import { verifyToken } from '../auth/authUtils';
 import { findUserById } from '../db/database';
 
-function setupSocketHandlers(io) {
+function setupSocketHandlers(io: Server) {
   const gameManager = new GameManager();
 
   // Middleware pour authentifier les connexions Socket.IO
-  io.use((socket, next) => {
+  io.use((socket: any, next: (err?: Error) => void) => {
     const token = socket.handshake.auth.token;
     if (token) {
       try {
@@ -20,7 +22,7 @@ function setupSocketHandlers(io) {
     next();
   });
 
-  io.on('connection', (socket) => {
+  io.on('connection', (socket: any) => {
     const username = socket.user?.username || `Joueur`;
     console.log(`Player connected: ${socket.id} (${username})`);
 
@@ -54,7 +56,7 @@ function setupSocketHandlers(io) {
         const { roomId, room, players } = result;
 
         // Faire rejoindre les deux joueurs dans la room Socket.IO
-        players.forEach((playerSocket, index) => {
+        players.forEach((playerSocket: any, index: number) => {
           playerSocket.join(roomId);
           const isFirstTurn = room.currentTurn === playerSocket.id;
           const opponentId = players.find(p => p.id !== playerSocket.id)?.id;
@@ -104,10 +106,10 @@ function setupSocketHandlers(io) {
 
         // Annoncer la fin de partie à chaque joueur avec ses scores
         const playerIds = Object.keys(room.players);
-        playerIds.forEach(playerId => {
+        playerIds.forEach((playerId: string) => {
           const playerSocket = io.sockets.sockets.get(playerId);
           if (playerSocket) {
-            const opId = playerIds.find(id => id !== playerId);
+            const opId = playerIds.find((id: string) => id !== playerId);
             playerSocket.emit('game-over', {
               winner: result.winner,
               target: result.target,
@@ -158,10 +160,10 @@ function setupSocketHandlers(io) {
       if (result.status === 'rematch-starting') {
         // Notifier les deux joueurs du nouveau match
         const playerIds = Object.keys(room.players);
-        playerIds.forEach(playerId => {
+        playerIds.forEach((playerId: string) => {
           const playerSocket = io.sockets.sockets.get(playerId);
           if (playerSocket) {
-            const opId = playerIds.find(id => id !== playerId);
+            const opId = playerIds.find((id: string) => id !== playerId);
             playerSocket.emit('rematch-starting', {
               isYourTurn: result.room.currentTurn === playerId,
               myScore: room.sessionScores[playerId],

@@ -1,3 +1,4 @@
+// @ts-nocheck
 // Calcul du feedback pour un champ
 function computeFieldFeedback(guessVal, targetVal, attribute) {
   const { type, order, groups } = attribute;

@@ -43,7 +43,7 @@ export default function Profile() {
           name: c.name,
           image: `/api/images/${g.animeId}/characters/${c.image}`
         }))
-      })))
+      }))))
       .catch(() => {});
   }, [showAvatarPicker, avatarOptions.length]);
 

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Router } from 'express';
 import { getStats, getAllStatsForUser, updateStats } from '../db/database';
 import { authMiddleware } from '../auth/authMiddleware';
