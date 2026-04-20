@@ -1,7 +1,7 @@
 module.exports = {
   apps: [{
     name: 'dle-backend',
-    script: 'main.js',
+    script: 'dist/main.js',
     env: {
       // Dev
       NODE_ENV: 'development',
