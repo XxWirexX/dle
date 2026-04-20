@@ -106,6 +106,12 @@ app.get("/api/daily/:id", (req, res) => {
 });
 
 
+// Serve frontend (must be after all API routes)
+app.use(express.static(path.join(__dirname, "public/dist")));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "public/dist/index.html"));
+});
+
 server.listen(PORT, () => {
   console.log(`Server listening at http://localhost:${PORT}`);
   console.log(`Socket.IO enabled for multiplayer`);
