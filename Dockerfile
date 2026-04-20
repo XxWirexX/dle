@@ -31,6 +31,7 @@ RUN npm install --production
 COPY --from=backend-builder /app/dist ./dist
 COPY backend/data ./data
 COPY --from=frontend-builder /app/frontend/dist ./public/dist
+RUN mkdir -p db
 
 EXPOSE 3000
 

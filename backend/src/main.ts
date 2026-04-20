@@ -35,7 +35,7 @@ app.use('/api/images', express.static(path.join(__dirname, '../../public/images'
 
 const gameCache = new Map<string, Record<string, unknown>>();
 (function loadCache() {
-  const dossier = path.join(__dirname, '../../data');
+  const dossier = path.join(__dirname, '../data');
   fs.readdirSync(dossier)
     .filter(f => f.endsWith('.json'))
     .forEach(fichier => {
