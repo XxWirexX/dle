@@ -1,11 +1,11 @@
-// src/pages/Home.jsx
 import "./Home.css";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import useTitle from "../hooks/useTitle";
 import Card from "../components/Card.jsx";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import Avatar from "../components/Avatar";
+import animeService from "../services/animeService.js";
 
 export default function Home() {
   useTitle(null);
@@ -13,11 +13,7 @@ export default function Home() {
   const { user, loading } = useAuth();
 
   useEffect(() => {
-    fetch("/api/animes")
-      .then(res => res.json())
-      .then(data => {
-        setMangas(data);
-      });
+    animeService.getAll().then(setMangas).catch(() => {});
   }, []);
 
   return (
@@ -29,12 +25,8 @@ export default function Home() {
         </div>
 
         <nav className="nav-buttons">
-          <Link to="/" className="nav-btn active">
-            Manga
-          </Link>
-          <span className="nav-btn nav-btn-disabled">
-            Video Games
-          </span>
+          <Link to="/" className="nav-btn active">Manga</Link>
+          <span className="nav-btn nav-btn-disabled">Video Games</span>
         </nav>
 
         <div className="user-section">
@@ -43,9 +35,7 @@ export default function Home() {
               <Avatar user={user} size="md" />
             </Link>
           ) : (
-            <Link to="/login" className="nav-btn login-btn">
-              Connexion
-            </Link>
+            <Link to="/login" className="nav-btn login-btn">Connexion</Link>
           )}
         </div>
       </header>

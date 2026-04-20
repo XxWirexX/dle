@@ -1,9 +1,9 @@
-// src/pages/CharactersList.jsx
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import CharactersTable from "../components/CharactersTable";
-import GameNavbar from "../components/GameNavbar";
-import useTitle from "../hooks/useTitle";
+import CharactersTable from "../../components/CharactersTable";
+import GameNavbar from "../../components/GameNavbar";
+import useTitle from "../../hooks/useTitle";
+import animeService from "../../services/animeService.js";
 import "./Game.css";
 
 export default function CharactersList() {
@@ -14,24 +14,20 @@ export default function CharactersList() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`/api/anime/${id}`)
-      .then((res) => res.json())
+    animeService.getGame(id)
       .then((data) => {
         setGameData(data);
         setCharacters(data.characters || []);
         setLoading(false);
       })
-      .catch((err) => {
-        console.error("Error loading characters:", err);
-        setLoading(false);
-      });
+      .catch(() => setLoading(false));
   }, [id]);
 
   if (loading) {
     return (
       <div className="game-container">
         <div className="game-overlay">
-          <div className="loading">Loading characters...</div>
+          <div className="loading">Chargement...</div>
         </div>
       </div>
     );
@@ -42,10 +38,8 @@ export default function CharactersList() {
       <div className="game-container">
         <div className="game-overlay">
           <div className="loading" style={{ flexDirection: 'column', gap: '1rem' }}>
-            <span style={{ color: '#ef4444' }}>Game not found</span>
-            <Link to="/" className="back-btn">
-              ← Retour a l'accueil
-            </Link>
+            <span style={{ color: '#ef4444' }}>Anime introuvable</span>
+            <Link to="/" className="back-btn">← Retour a l'accueil</Link>
           </div>
         </div>
       </div>
@@ -53,19 +47,12 @@ export default function CharactersList() {
   }
 
   return (
-    <div
-      className="characters-list-container"
-      style={{ backgroundImage: `url(/api/images/${id}/${gameData.background})` }}
-    >
+    <div className="characters-list-container" style={{ backgroundImage: `url(/api/images/${id}/${gameData.background})` }}>
       <GameNavbar gameId={id} />
       <div className="characters-list-overlay">
         <div className="characters-list-content">
-          <h1 className="characters-list-title">{gameData.name} - All Characters</h1>
-          <CharactersTable
-            characters={characters}
-            attributes={gameData.attributes || []}
-            gameId={id}
-          />
+          <h1 className="characters-list-title">{gameData.name} — Personnages</h1>
+          <CharactersTable characters={characters} attributes={gameData.attributes || []} gameId={id} />
         </div>
       </div>
     </div>

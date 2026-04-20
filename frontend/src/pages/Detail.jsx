@@ -1,8 +1,8 @@
-// src/pages/Detail.jsx
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import useTitle from "../hooks/useTitle";
+import animeService from "../services/animeService.js";
 import "./Detail.css";
 
 export default function Detail() {
@@ -13,8 +13,7 @@ export default function Detail() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`/api/anime/${id}?lite=true`)
-      .then((res) => res.json())
+    animeService.getDetail(id)
       .then((data) => {
         setAnime(data);
         setLoading(false);

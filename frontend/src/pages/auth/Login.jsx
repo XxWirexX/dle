@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import useAuth from '../hooks/useAuth';
-import useTitle from '../hooks/useTitle';
+import useAuth from '../../hooks/useAuth';
+import useTitle from '../../hooks/useTitle';
 import './Auth.css';
 
 export default function Login() {
@@ -21,7 +21,6 @@ export default function Login() {
     e.preventDefault();
     setError('');
     setLoading(true);
-
     try {
       await login(email, password);
       navigate(redirect || '/');
@@ -46,41 +45,22 @@ export default function Login() {
 
           <div className="form-group">
             <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              autoComplete="email"
-            />
+            <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} required autoComplete="email" />
           </div>
 
           <div className="form-group">
             <label htmlFor="password">Mot de passe</label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              autoComplete="current-password"
-            />
+            <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} required autoComplete="current-password" />
           </div>
 
           <button type="submit" className="auth-btn" disabled={loading}>
             {loading ? 'Connexion...' : 'Se connecter'}
           </button>
 
-          <Link to="/forgot-password" className="forgot-password-link">
-            Mot de passe oublie ?
-          </Link>
+          <Link to="/forgot-password" className="forgot-password-link">Mot de passe oublie ?</Link>
         </form>
 
-        <p className="auth-link">
-          Pas encore de compte ? <Link to="/register">S'inscrire</Link>
-        </p>
-
+        <p className="auth-link">Pas encore de compte ? <Link to="/register">S'inscrire</Link></p>
         <Link to="/" className="auth-back">Retour a l'accueil</Link>
       </div>
     </div>

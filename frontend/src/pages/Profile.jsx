@@ -3,6 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import useTitle from "../hooks/useTitle";
 import Avatar from "../components/Avatar";
+import animeService from "../services/animeService.js";
+import statsService from "../services/statsService.js";
+import authService from "../services/authService.js";
 import "./Profile.css";
 
 export default function Profile() {
@@ -23,49 +26,31 @@ export default function Profile() {
   }, [user, loading, navigate]);
 
   useEffect(() => {
-    fetch("/api/animes")
-      .then(res => res.json())
-      .then(data => setAnimes(data))
-      .catch(console.error);
+    animeService.getAll().then(setAnimes).catch(() => {});
   }, []);
 
   useEffect(() => {
     if (!token) return;
-
     setLoadingStats(true);
-    fetch("/api/stats/all", {
-      headers: { Authorization: `Bearer ${token}` }
-    })
-      .then(r => r.ok ? r.json() : null)
-      .then(data => {
-        setStats(data);
-        setLoadingStats(false);
-      })
+    statsService.getAll(token)
+      .then(data => { setStats(data); setLoadingStats(false); })
       .catch(() => setLoadingStats(false));
   }, [token]);
 
-  // Charger les personnages pour le choix d'avatar
   useEffect(() => {
     if (!showAvatarPicker || avatarOptions.length > 0) return;
-
-    Promise.all(
-      animes.map(anime =>
-        fetch(`/api/anime/${anime.id}`)
-          .then(r => r.json())
-          .then(data => ({
-            animeId: anime.id,
-            animeName: anime.name,
-            characters: (data.characters || []).slice(0, 10).map(c => ({
-              id: c.id,
-              name: c.name,
-              image: `/api/images/${anime.id}/characters/${c.image}`
-            }))
-          }))
-      )
-    ).then(results => {
-      setAvatarOptions(results);
-    });
-  }, [showAvatarPicker, animes, avatarOptions.length]);
+    animeService.getAllAvatars()
+      .then(results => setAvatarOptions(results.map(g => ({
+        animeId: g.animeId,
+        animeName: g.animeName,
+        characters: g.characters.map(c => ({
+          id: c.id,
+          name: c.name,
+          image: `/api/images/${g.animeId}/characters/${c.image}`
+        }))
+      })))
+      .catch(() => {});
+  }, [showAvatarPicker, avatarOptions.length]);
 
   function handleLogout() {
     logout();
@@ -75,22 +60,10 @@ export default function Profile() {
   async function handleSelectAvatar(imagePath) {
     setSavingAvatar(true);
     try {
-      const res = await fetch('/api/auth/avatar', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
-        },
-        body: JSON.stringify({ avatarImage: imagePath })
-      });
-
-      if (res.ok) {
-        await refreshUser();
-        setShowAvatarPicker(false);
-      }
-    } catch (err) {
-      console.error('Failed to update avatar:', err);
-    } finally {
+      await authService.updateAvatar(token, imagePath);
+      await refreshUser();
+      setShowAvatarPicker(false);
+    } catch { /* ignore */ } finally {
       setSavingAvatar(false);
     }
   }
@@ -98,22 +71,10 @@ export default function Profile() {
   async function handleResetAvatar() {
     setSavingAvatar(true);
     try {
-      const res = await fetch('/api/auth/avatar', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
-        },
-        body: JSON.stringify({ avatarImage: null })
-      });
-
-      if (res.ok) {
-        await refreshUser();
-        setShowAvatarPicker(false);
-      }
-    } catch (err) {
-      console.error('Failed to reset avatar:', err);
-    } finally {
+      await authService.updateAvatar(token, null);
+      await refreshUser();
+      setShowAvatarPicker(false);
+    } catch { /* ignore */ } finally {
       setSavingAvatar(false);
     }
   }

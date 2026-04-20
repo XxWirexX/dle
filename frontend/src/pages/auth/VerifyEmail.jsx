@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import useTitle from '../hooks/useTitle';
+import useTitle from '../../hooks/useTitle';
+import authService from '../../services/authService.js';
 import './Auth.css';
 
 export default function VerifyEmail() {
@@ -11,36 +12,24 @@ export default function VerifyEmail() {
   const hasVerified = useRef(false);
 
   useEffect(() => {
-    // Protection contre le double-appel de StrictMode
     if (hasVerified.current) return;
     hasVerified.current = true;
 
     const token = searchParams.get('token');
-
     if (!token) {
       setStatus('error');
       setMessage('Token manquant');
       return;
     }
 
-    fetch('/api/auth/verify-email', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ token })
-    })
-      .then(res => res.json())
+    authService.verifyEmail(token)
       .then(data => {
-        if (data.error) {
-          setStatus('error');
-          setMessage(data.error);
-        } else {
-          setStatus('success');
-          setMessage(data.message);
-        }
+        setStatus('success');
+        setMessage(data.message);
       })
-      .catch(() => {
+      .catch(err => {
         setStatus('error');
-        setMessage('Erreur de connexion');
+        setMessage(err.message || 'Erreur de connexion');
       });
   }, [searchParams]);
 
@@ -50,18 +39,14 @@ export default function VerifyEmail() {
         <h1 className="auth-title">Verification Email</h1>
 
         {status === 'loading' && (
-          <div className="auth-message">
-            <p>Verification en cours...</p>
-          </div>
+          <div className="auth-message"><p>Verification en cours...</p></div>
         )}
-
         {status === 'success' && (
           <div className="auth-message success">
             <p>{message}</p>
             <Link to="/login" className="auth-btn">Se connecter</Link>
           </div>
         )}
-
         {status === 'error' && (
           <div className="auth-message error">
             <p>{message}</p>

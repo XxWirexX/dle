@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import useTitle from '../hooks/useTitle';
+import useTitle from '../../hooks/useTitle';
+import authService from '../../services/authService.js';
 import './Auth.css';
 
 export default function ForgotPassword() {
@@ -13,24 +14,11 @@ export default function ForgotPassword() {
     e.preventDefault();
     setError('');
     setStatus('loading');
-
     try {
-      const res = await fetch('/api/auth/forgot-password', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email })
-      });
-
-      const data = await res.json();
-
-      if (data.error) {
-        setError(data.error);
-        setStatus('idle');
-      } else {
-        setStatus('sent');
-      }
-    } catch {
-      setError('Erreur de connexion');
+      await authService.forgotPassword(email);
+      setStatus('sent');
+    } catch (err) {
+      setError(err.message || 'Erreur de connexion');
       setStatus('idle');
     }
   }

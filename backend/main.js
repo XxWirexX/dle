@@ -19,6 +19,7 @@ const io = new Server(server, {
 
 const fs = require("fs");
 const path = require("path");
+const { toListItem, toDetail, toGame, toAvatarGroup } = require("./mappers/animeMapper");
 
 // Security headers
 app.use(helmet({
@@ -54,25 +55,23 @@ const gameCache = new Map();
 })();
 
 app.get("/api/animes", (req, res) => {
-  // Renvoie les métadonnées sans les personnages (la home n'en a pas besoin)
-  const list = Array.from(gameCache.values()).map(({ characters, ...meta }) => ({
-    ...meta,
-    characterCount: (characters || []).length
-  }));
-  res.json(list);
+  res.json(Array.from(gameCache.values()).map(toListItem));
+});
+
+// Avatar picker : tous les animes avec leurs 10 premiers persos (id/name/image)
+app.get("/api/animes/avatars", (req, res) => {
+  res.json(Array.from(gameCache.values()).map(toAvatarGroup));
 });
 
 app.get("/api/anime/:id", (req, res) => {
   const data = gameCache.get(req.params.id);
-  if (!data) return res.status(404).send("Anime introuvable");
+  if (!data) return res.status(404).json({ error: "Anime introuvable" });
 
-  // ?lite=true → metadata + 8 premiers personnages (pour la page Detail)
-  if (req.query.lite === "true") {
-    const { characters, ...meta } = data;
-    return res.json({ ...meta, characters: (characters || []).slice(0, 8) });
+  if (req.query.view === "detail") {
+    return res.json(toDetail(data));
   }
 
-  res.json(data);
+  res.json(toGame(data));
 });
 
 app.get("/api/daily/:id", (req, res) => {
