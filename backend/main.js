@@ -108,7 +108,7 @@ app.get("/api/daily/:id", (req, res) => {
 
 // Serve frontend (must be after all API routes)
 app.use(express.static(path.join(__dirname, "public/dist")));
-app.get("*", (req, res) => {
+app.get("/*splat", (req, res) => {
   res.sendFile(path.join(__dirname, "public/dist/index.html"));
 });
 
