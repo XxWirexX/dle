@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { Link, useSearchParams, useNavigate } from 'react-router-dom';
-import useTitle from '../hooks/useTitle';
+import useTitle from '../../hooks/useTitle';
+import authService from '../../services/authService.js';
 import './Auth.css';
 
 export default function ResetPassword() {
   useTitle('Nouveau mot de passe');
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const token = searchParams.get('token');
+  const resetToken = searchParams.get('token');
 
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -17,37 +18,22 @@ export default function ResetPassword() {
   async function handleSubmit(e) {
     e.preventDefault();
     setError('');
-
     if (password !== confirmPassword) {
       setError('Les mots de passe ne correspondent pas');
       return;
     }
-
     setStatus('loading');
-
     try {
-      const res = await fetch('/api/auth/reset-password', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ token, password })
-      });
-
-      const data = await res.json();
-
-      if (data.error) {
-        setError(data.error);
-        setStatus('idle');
-      } else {
-        setStatus('success');
-        setTimeout(() => navigate('/login'), 2000);
-      }
-    } catch {
-      setError('Erreur de connexion');
+      await authService.resetPassword(resetToken, password);
+      setStatus('success');
+      setTimeout(() => navigate('/login'), 2000);
+    } catch (err) {
+      setError(err.message || 'Erreur de connexion');
       setStatus('idle');
     }
   }
 
-  if (!token) {
+  if (!resetToken) {
     return (
       <div className="auth-container">
         <div className="auth-card">

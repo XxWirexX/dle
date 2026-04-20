@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { AuthContext } from './AuthContext.js';
+import authService from '../services/authService.js';
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
@@ -14,13 +15,7 @@ export function AuthProvider({ children }) {
 
     let cancelled = false;
 
-    fetch('/api/auth/me', {
-      headers: { Authorization: `Bearer ${token}` }
-    })
-      .then(r => {
-        if (!r.ok) throw new Error('Token invalide');
-        return r.json();
-      })
+    authService.me(token)
       .then(data => {
         if (!cancelled) {
           setUser(data.user);
@@ -40,17 +35,7 @@ export function AuthProvider({ children }) {
   }, [token]);
 
   const login = useCallback(async (email, password) => {
-    const res = await fetch('/api/auth/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password })
-    });
-
-    const data = await res.json();
-    if (!res.ok) {
-      throw new Error(data.error || 'Erreur de connexion');
-    }
-
+    const data = await authService.login(email, password);
     localStorage.setItem('token', data.token);
     setToken(data.token);
     setUser(data.user);
@@ -58,17 +43,7 @@ export function AuthProvider({ children }) {
   }, []);
 
   const register = useCallback(async (email, password, username) => {
-    const res = await fetch('/api/auth/register', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password, username })
-    });
-
-    const data = await res.json();
-    if (!res.ok) {
-      throw new Error(data.error || "Erreur d'inscription");
-    }
-
+    const data = await authService.register(email, password, username);
     localStorage.setItem('token', data.token);
     setToken(data.token);
     setUser(data.user);
@@ -83,19 +58,10 @@ export function AuthProvider({ children }) {
 
   const refreshUser = useCallback(async () => {
     if (!token) return;
-
     try {
-      const res = await fetch('/api/auth/me', {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-
-      if (res.ok) {
-        const data = await res.json();
-        setUser(data.user);
-      }
-    } catch (error) {
-      console.error('Failed to refresh user:', error);
-    }
+      const data = await authService.me(token);
+      setUser(data.user);
+    } catch { /* token invalide, on laisse l'état en place */ }
   }, [token]);
 
   return (

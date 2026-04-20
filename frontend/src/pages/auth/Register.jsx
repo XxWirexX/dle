@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import useAuth from '../hooks/useAuth';
-import useTitle from '../hooks/useTitle';
+import useAuth from '../../hooks/useAuth';
+import useTitle from '../../hooks/useTitle';
 import './Auth.css';
 
 export default function Register() {
@@ -19,7 +19,6 @@ export default function Register() {
     e.preventDefault();
     setError('');
     setLoading(true);
-
     try {
       await register(email, password, username);
       navigate('/');
@@ -44,44 +43,18 @@ export default function Register() {
 
           <div className="form-group">
             <label htmlFor="username">Pseudo</label>
-            <input
-              type="text"
-              id="username"
-              name="display-name"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-              minLength={2}
-              maxLength={20}
-              pattern="[a-zA-Z0-9_]+"
-              autoComplete="off"
-            />
+            <input type="text" id="username" name="display-name" value={username} onChange={(e) => setUsername(e.target.value)} required minLength={2} maxLength={20} pattern="[a-zA-Z0-9_]+" autoComplete="off" />
             <small>2-20 caracteres, lettres, chiffres et _ uniquement</small>
           </div>
 
           <div className="form-group">
             <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              autoComplete="email"
-            />
+            <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} required autoComplete="email" />
           </div>
 
           <div className="form-group">
             <label htmlFor="password">Mot de passe</label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              minLength={8}
-              autoComplete="new-password"
-            />
+            <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} required minLength={8} autoComplete="new-password" />
             <small>Min 8 caracteres, 1 majuscule, 1 minuscule, 1 chiffre</small>
           </div>
 
@@ -90,10 +63,7 @@ export default function Register() {
           </button>
         </form>
 
-        <p className="auth-link">
-          Deja un compte ? <Link to="/login">Se connecter</Link>
-        </p>
-
+        <p className="auth-link">Deja un compte ? <Link to="/login">Se connecter</Link></p>
         <Link to="/" className="auth-back">Retour a l'accueil</Link>
       </div>
     </div>
