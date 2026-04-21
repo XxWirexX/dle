@@ -31,7 +31,9 @@ app.use('/api/stats', statsRoutes);
 
 setupSocketHandlers(io);
 
-app.use('/api/images', express.static(path.join(__dirname, '../../public/images')));
+app.use('/api/images', express.static(path.join(__dirname, '../public/images')));
+
+app.use(express.static(path.join(__dirname, '../public/dist')));
 
 const gameCache = new Map<string, Record<string, unknown>>();
 (function loadCache() {
@@ -87,6 +89,10 @@ app.get('/api/daily/:id', (req: Request, res: Response) => {
   const dayNumber = Math.floor((today.getTime() - epoch.getTime()) / (1000 * 60 * 60 * 24));
 
   res.json({ characterIndex: index, date: dateStr, dayNumber });
+});
+
+app.get('/{*path}', (_req: Request, res: Response) => {
+  res.sendFile(path.join(__dirname, '../public/dist/index.html'));
 });
 
 app.use((err: unknown, _req: Request, res: Response, _next: NextFunction) => {

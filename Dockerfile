@@ -30,6 +30,7 @@ RUN npm install --production
 
 COPY --from=backend-builder /app/dist ./dist
 COPY backend/data ./data
+COPY backend/public/images ./public/images
 COPY --from=frontend-builder /app/frontend/dist ./public/dist
 RUN mkdir -p db
 
