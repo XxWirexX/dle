@@ -15,6 +15,7 @@ export interface Attribute {
   label: string;
   type: AttributeType;
   order?: string[];
+  options?: string[];
   hints?: string[];
 }
 

@@ -8,6 +8,7 @@ interface DailyInfo {
 
 const dailyService = {
   getDaily: (id: string): Promise<DailyInfo> => request(`/api/daily/${id}`),
+  getCustomDaily: (id: string): Promise<DailyInfo> => request(`/api/custom-dles/${id}/daily`),
 };
 
 export default dailyService;

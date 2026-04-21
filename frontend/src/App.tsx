@@ -10,6 +10,8 @@ import VerifyEmail from './pages/auth/VerifyEmail';
 import ForgotPassword from './pages/auth/ForgotPassword';
 import ResetPassword from './pages/auth/ResetPassword';
 import RequireAuth from './components/RequireAuth';
+import CreateDle from './pages/CreateDle';
+import CustomDetail from './pages/CustomDetail';
 import './App.css';
 
 function App() {
@@ -26,6 +28,10 @@ function App() {
         <Route path="/anime/:id" element={<Detail />} />
         <Route path="/anime/:id/play" element={<Game />} />
         <Route path="/anime/:id/characters" element={<CharactersList />} />
+        <Route path="/create" element={<RequireAuth><CreateDle /></RequireAuth>} />
+        <Route path="/custom/:id" element={<CustomDetail />} />
+        <Route path="/custom/:id/edit" element={<RequireAuth><CreateDle /></RequireAuth>} />
+        <Route path="/custom/:id/play" element={<Game />} />
       </Routes>
     </BrowserRouter>
   );

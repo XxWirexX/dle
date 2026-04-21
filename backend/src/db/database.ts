@@ -29,6 +29,23 @@ db.exec(`
     FOREIGN KEY (user_id) REFERENCES users(id),
     UNIQUE(user_id, anime_id)
   );
+
+  CREATE TABLE IF NOT EXISTS custom_dles (
+    id TEXT PRIMARY KEY,
+    owner_id INTEGER NOT NULL,
+    name TEXT NOT NULL,
+    icon_url TEXT,
+    icon_public_id TEXT,
+    background_url TEXT,
+    background_public_id TEXT,
+    max_attempts INTEGER NOT NULL DEFAULT 10,
+    attributes TEXT NOT NULL,
+    characters TEXT NOT NULL,
+    visibility TEXT NOT NULL DEFAULT 'private',
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (owner_id) REFERENCES users(id) ON DELETE CASCADE
+  );
 `);
 
 // Migration: ajouter les nouvelles colonnes si elles n'existent pas
@@ -274,6 +291,103 @@ function updateStats(userId, animeId, won, isDuo = false, attempts = 0, isDaily 
   };
 }
 
+// Fonctions DLE custom
+function createCustomDle(data) {
+  const stmt = db.prepare(`
+    INSERT INTO custom_dles (
+      id, owner_id, name, icon_url, icon_public_id,
+      background_url, background_public_id, max_attempts,
+      attributes, characters, visibility
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `);
+  stmt.run(
+    data.id, data.ownerId, data.name,
+    data.iconUrl, data.iconPublicId,
+    data.backgroundUrl, data.backgroundPublicId,
+    data.maxAttempts,
+    JSON.stringify(data.attributes),
+    JSON.stringify(data.characters),
+    data.visibility
+  );
+}
+
+function findCustomDleById(id) {
+  const stmt = db.prepare(`
+    SELECT cd.*, u.username AS owner_username
+    FROM custom_dles cd
+    LEFT JOIN users u ON u.id = cd.owner_id
+    WHERE cd.id = ?
+  `);
+  const row = stmt.get(id);
+  if (!row) return null;
+  return hydrateCustomDle(row);
+}
+
+function findCustomDlesByOwner(ownerId) {
+  const stmt = db.prepare('SELECT * FROM custom_dles WHERE owner_id = ? ORDER BY created_at DESC');
+  return stmt.all(ownerId).map(hydrateCustomDle);
+}
+
+function findPublicCustomDles() {
+  const stmt = db.prepare(`
+    SELECT cd.*, u.username AS owner_username
+    FROM custom_dles cd
+    JOIN users u ON u.id = cd.owner_id
+    WHERE cd.visibility = 'public'
+    ORDER BY cd.created_at DESC
+  `);
+  return stmt.all().map(hydrateCustomDle);
+}
+
+function updateCustomDle(id, data) {
+  const stmt = db.prepare(`
+    UPDATE custom_dles SET
+      name = ?,
+      icon_url = ?,
+      icon_public_id = ?,
+      background_url = ?,
+      background_public_id = ?,
+      max_attempts = ?,
+      attributes = ?,
+      characters = ?,
+      visibility = ?,
+      updated_at = CURRENT_TIMESTAMP
+    WHERE id = ?
+  `);
+  stmt.run(
+    data.name,
+    data.iconUrl,
+    data.iconPublicId,
+    data.backgroundUrl,
+    data.backgroundPublicId,
+    data.maxAttempts,
+    JSON.stringify(data.attributes),
+    JSON.stringify(data.characters),
+    data.visibility,
+    id
+  );
+}
+
+function deleteCustomDle(id) {
+  const stmt = db.prepare('DELETE FROM custom_dles WHERE id = ?');
+  stmt.run(id);
+}
+
+function findCustomDlesByIds(ids) {
+  if (!ids || ids.length === 0) return [];
+  const placeholders = ids.map(() => '?').join(',');
+  const stmt = db.prepare(`SELECT id, name, icon_url FROM custom_dles WHERE id IN (${placeholders})`);
+  return stmt.all(...ids);
+}
+
+function hydrateCustomDle(row) {
+  return {
+    ...row,
+    attributes: JSON.parse(row.attributes),
+    characters: JSON.parse(row.characters),
+  };
+}
+
 export {
   db,
   createUser,
@@ -290,4 +404,11 @@ export {
   getStats,
   getAllStatsForUser,
   updateStats,
+  createCustomDle,
+  findCustomDleById,
+  findCustomDlesByOwner,
+  findPublicCustomDles,
+  findCustomDlesByIds,
+  updateCustomDle,
+  deleteCustomDle,
 };

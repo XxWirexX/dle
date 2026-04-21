@@ -1,5 +1,6 @@
 import { useState, useRef, useCallback } from "react";
 import useClickOutside from "../../hooks/useClickOutside";
+import { resolveCharacterImage } from "../../utils/imageUrl";
 
 export default function SearchBar({ pool, attempts, gameId, onSelect }) {
   const [query, setQuery] = useState("");
@@ -41,7 +42,7 @@ export default function SearchBar({ pool, attempts, gameId, onSelect }) {
           {suggestions.map(char => (
             <button key={char.id} onClick={() => handleSelect(char)} className="suggestion-item">
               <div className="suggestion-image">
-                <img src={`/api/images/${gameId}/characters/${char.image}`} alt={char.name} />
+                <img src={resolveCharacterImage(char.image, gameId)} alt={char.name} />
               </div>
               <div className="suggestion-name">{char.name}</div>
             </button>

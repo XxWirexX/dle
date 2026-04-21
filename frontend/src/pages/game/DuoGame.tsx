@@ -7,10 +7,12 @@ import TurnIndicator from "../../components/game/TurnIndicator";
 import RematchModal from "../../components/game/RematchModal";
 import ChatBox from "../../components/game/ChatBox";
 import animeService from "../../services/animeService";
+import customDleService from "../../services/customDleService";
 import statsService from "../../services/statsService";
+import { resolveCharacterImage, resolveBackgroundImage } from "../../utils/imageUrl";
 import "./Game.css";
 
-export default function DuoGame() {
+export default function DuoGame({ isCustom = false }) {
   const { id } = useParams();
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -39,10 +41,11 @@ export default function DuoGame() {
   const [chatOpen, setChatOpen] = useState(false);
 
   useEffect(() => {
-    animeService.getGame(id)
+    const fetcher = isCustom ? customDleService.getGame(id) : animeService.getGame(id);
+    fetcher
       .then((data) => { setLocalGameData(data); setPool(data.characters || []); })
       .catch(() => {});
-  }, [id]);
+  }, [id, isCustom]);
 
   useEffect(() => {
     connect();
@@ -101,13 +104,15 @@ export default function DuoGame() {
     ? pool.filter(c => !playedIds.has(c.id) && c.name.toLowerCase().includes(query.toLowerCase()))
     : [];
 
+  const backUrl = isCustom ? '/' : `/anime/${id}`;
+
   if (connectionError) {
     return (
       <div className="game-container"><div className="game-overlay">
         <div className="connection-error">
           <h2>Erreur de connexion</h2>
           <p>{connectionError}</p>
-          <button onClick={() => navigate(`/anime/${id}`)} className="back-btn">Retour</button>
+          <button onClick={() => navigate(backUrl)} className="back-btn">Retour</button>
         </div>
       </div></div>
     );
@@ -119,7 +124,7 @@ export default function DuoGame() {
         <div className="connection-error">
           <h2>Impossible de rejoindre</h2>
           <p>{queueError}</p>
-          <button onClick={() => navigate(`/anime/${id}`)} className="back-btn">Retour</button>
+          <button onClick={() => navigate(backUrl)} className="back-btn">Retour</button>
         </div>
       </div></div>
     );
@@ -130,7 +135,7 @@ export default function DuoGame() {
   if (inQueue || (!roomId && isConnected)) {
     return (
       <div className="game-container"><div className="game-overlay">
-        <WaitingRoom position={queuePosition || 1} onCancel={() => { leaveQueue(id); navigate(`/anime/${id}`); }} animeName={localGameData.name} />
+        <WaitingRoom position={queuePosition || 1} onCancel={() => { leaveQueue(id); navigate(backUrl); }} animeName={localGameData.name} />
       </div></div>
     );
   }
@@ -144,10 +149,10 @@ export default function DuoGame() {
   const isWinner = winner === socketId;
 
   return (
-    <div className="game-container duo-mode" style={{ backgroundImage: `url(/api/images/${id}/${localGameData.background})` }}>
+    <div className="game-container duo-mode" style={{ backgroundImage: `url(${resolveBackgroundImage(localGameData.background, id)})` }}>
       <div className="game-overlay">
         <div className="nav-back">
-          <Link to={`/anime/${id}`} className="back-btn" onClick={() => leaveRoom()}>&larr; Quitter</Link>
+          <Link to={backUrl} className="back-btn" onClick={() => leaveRoom()}>&larr; Quitter</Link>
         </div>
 
         <div className="game-header">
@@ -182,7 +187,7 @@ export default function DuoGame() {
                 {filteredSuggestions.map(char => (
                   <button key={char.id} onClick={() => validateSelection(char)} className="suggestion-item">
                     <div className="suggestion-image">
-                      <img src={`/api/images/${id}/characters/${char.image}`} alt={char.name} />
+                      <img src={resolveCharacterImage(char.image, id)} alt={char.name} />
                     </div>
                     <div className="suggestion-name">{char.name}</div>
                   </button>
@@ -214,7 +219,7 @@ export default function DuoGame() {
                     </div>
                     <div className="cell-image">
                       <div className="character-image">
-                        <img src={`/api/images/${id}/characters/${a.guess.image}`} alt={a.guess.name} />
+                        <img src={resolveCharacterImage(a.guess.image, id)} alt={a.guess.name} />
                       </div>
                     </div>
                     <div className={`cell bg-${a.isCorrect ? "correct" : "wrong"}`}>
@@ -267,7 +272,7 @@ export default function DuoGame() {
             myAttempts={myAttempts.length}
             opponentAttempts={opponentAttempts.length}
             onRematch={requestRematch}
-            onLeave={() => { leaveRoom(); navigate(`/anime/${id}`); }}
+            onLeave={() => { leaveRoom(); navigate(backUrl); }}
             rematchRequested={rematchRequested}
             opponentWantsRematch={opponentWantsRematch}
             opponentDisconnected={opponentDisconnected}
@@ -285,7 +290,7 @@ export default function DuoGame() {
             <div className="opponent-gone-modal">
               <h2>{opponentDisconnected ? "Adversaire deconnecte" : "Adversaire parti"}</h2>
               <p>La partie est terminee.</p>
-              <button onClick={() => { leaveRoom(); navigate(`/anime/${id}`); }} className="leave-btn">Retour</button>
+              <button onClick={() => { leaveRoom(); navigate(backUrl); }} className="leave-btn">Retour</button>
             </div>
           </div>
         )}

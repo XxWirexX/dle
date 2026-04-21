@@ -12,11 +12,13 @@ import useTitle from "../../hooks/useTitle";
 import { getFeedbackObject } from "../../utils/feedback";
 import { pickTarget, generateShareText } from "../../utils/gameUtils";
 import animeService from "../../services/animeService";
+import customDleService from "../../services/customDleService";
 import dailyService from "../../services/dailyService";
 import statsService from "../../services/statsService";
+import { resolveBackgroundImage } from "../../utils/imageUrl";
 import "./Game.css";
 
-function SoloGame() {
+function SoloGame({ isCustom = false }) {
   const { id } = useParams();
   const [gameData, setGameData] = useState(null);
   useTitle(gameData ? `Solo — ${gameData.name}` : null);
@@ -28,7 +30,8 @@ function SoloGame() {
   const { stats, updateStats } = useStats(id);
 
   useEffect(() => {
-    animeService.getGame(id)
+    const fetcher = isCustom ? customDleService.getGame(id) : animeService.getGame(id);
+    fetcher
       .then(data => {
         setGameData(data);
         const chars = data.characters || [];
@@ -36,7 +39,7 @@ function SoloGame() {
         setTarget(pickTarget(chars));
       })
       .catch(() => {});
-  }, [id]);
+  }, [id, isCustom]);
 
   useEffect(() => {
     if (!gameOver || statsUpdated) return;
@@ -76,8 +79,8 @@ function SoloGame() {
   const maxAttempts = gameData.maxAttempts || 26;
 
   return (
-    <div className="game-container" style={{ backgroundImage: `url(/api/images/${id}/${gameData.background})` }}>
-      <GameNavbar gameId={id} />
+    <div className="game-container" style={{ backgroundImage: `url(${resolveBackgroundImage(gameData.background, id)})` }}>
+      <GameNavbar gameId={id} isCustom={isCustom} />
       <div className="game-overlay">
         <div className="game-header">
           <h1 className="game-title">{gameData.name}</h1>
@@ -106,7 +109,7 @@ function SoloGame() {
   );
 }
 
-function DailyGame() {
+function DailyGame({ isCustom = false }) {
   const { id } = useParams();
   const { user } = useAuth();
   const [gameData, setGameData] = useState(null);
@@ -125,8 +128,8 @@ function DailyGame() {
     setDateStr(today);
 
     Promise.all([
-      animeService.getGame(id),
-      dailyService.getDaily(id),
+      isCustom ? customDleService.getGame(id) : animeService.getGame(id),
+      isCustom ? dailyService.getCustomDaily(id) : dailyService.getDaily(id),
     ]).then(([data, daily]) => {
       setGameData(data);
       setDayNumber(daily.dayNumber);
@@ -191,8 +194,8 @@ function DailyGame() {
   const isWon = attempts.some(a => a.isCorrect);
 
   return (
-    <div className="game-container" style={{ backgroundImage: `url(/api/images/${id}/${gameData.background})` }}>
-      <GameNavbar gameId={id} />
+    <div className="game-container" style={{ backgroundImage: `url(${resolveBackgroundImage(gameData.background, id)})` }}>
+      <GameNavbar gameId={id} isCustom={isCustom} />
       <div className="game-overlay">
         <div className="game-header">
           <div className="daily-badge">DÉFI DU JOUR #{dayNumber}</div>
@@ -226,10 +229,12 @@ function DailyGame() {
 }
 
 export default function Game() {
-  const mode = new URLSearchParams(useLocation().search).get("mode") || "solo";
+  const location = useLocation();
+  const isCustom = location.pathname.startsWith('/custom/');
+  const mode = new URLSearchParams(location.search).get("mode") || "solo";
   const { user, loading } = useAuth();
 
-  if (mode === "daily") return <DailyGame />;
+  if (mode === "daily") return <DailyGame isCustom={isCustom} />;
 
   if (mode === "duo") {
     if (loading) return <div className="loading">Chargement...</div>;
@@ -238,8 +243,8 @@ export default function Game() {
       window.location.href = `/login?redirect=${encodeURIComponent(returnUrl)}`;
       return <div className="loading">Redirection...</div>;
     }
-    return <DuoGame />;
+    return <DuoGame isCustom={isCustom} />;
   }
 
-  return <SoloGame />;
+  return <SoloGame isCustom={isCustom} />;
 }

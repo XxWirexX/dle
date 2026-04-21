@@ -6,8 +6,10 @@ import Avatar from "../components/Avatar";
 import animeService from "../services/animeService";
 import statsService from "../services/statsService";
 import authService from "../services/authService";
+import customDleService from "../services/customDleService";
 import type { AnimeListItem, AvatarGroup } from "../types/anime";
 import type { AllStats } from "../types/stats";
+import type { CustomDleListItem } from "../types/customDle";
 import "./Profile.css";
 
 export default function Profile() {
@@ -19,10 +21,24 @@ export default function Profile() {
   const [showAvatarPicker, setShowAvatarPicker] = useState(false);
   const [avatarOptions, setAvatarOptions] = useState<AvatarGroup[]>([]);
   const [savingAvatar, setSavingAvatar] = useState(false);
+  const [myDles, setMyDles] = useState<CustomDleListItem[]>([]);
 
   useEffect(() => {
     animeService.getAll().then(setAnimes).catch(() => {});
   }, []);
+
+  useEffect(() => {
+    if (!user) return;
+    customDleService.getMine().then(setMyDles).catch(() => {});
+  }, [user]);
+
+  async function handleDeleteDle(id: string) {
+    if (!confirm('Supprimer ce DLE ? Cette action est irréversible.')) return;
+    try {
+      await customDleService.delete(id);
+      setMyDles(dles => dles.filter(d => d.id !== id));
+    } catch { /* ignore */ }
+  }
 
   useEffect(() => {
     if (!user) return;
@@ -102,6 +118,38 @@ export default function Profile() {
           <button onClick={handleLogout} className="logout-btn">
             Se deconnecter
           </button>
+        </div>
+
+        {/* Mes DLEs custom */}
+        <div className="profile-card my-dles">
+          <div className="my-dles-header">
+            <h3>Mes DLEs</h3>
+            <Link to="/create" className="btn-create-dle">+ Créer un DLE</Link>
+          </div>
+          {myDles.length === 0 ? (
+            <p className="no-stats">Aucun DLE créé pour l'instant.</p>
+          ) : (
+            <div className="my-dles-list">
+              {myDles.map(dle => (
+                <div key={dle.id} className="my-dle-row">
+                  <Link to={`/custom/${dle.id}`} className="my-dle-link">
+                    {dle.iconUrl && <img src={dle.iconUrl} alt={dle.name} className="my-dle-icon" />}
+                    <div className="my-dle-info">
+                      <span className="my-dle-name">{dle.name}</span>
+                      <span className="my-dle-meta">
+                        {dle.characterCount} persos · {dle.attributeCount} attributs · {dle.visibility}
+                      </span>
+                    </div>
+                  </Link>
+                  <div className="my-dle-actions">
+                    <Link to={`/custom/${dle.id}/play`} className="btn-play-dle">Jouer</Link>
+                    <Link to={`/custom/${dle.id}/edit`} className="btn-edit-dle" title="Modifier">✎</Link>
+                    <button onClick={() => handleDeleteDle(dle.id)} className="btn-delete-dle" title="Supprimer">×</button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Stats globales */}
@@ -190,15 +238,21 @@ export default function Profile() {
         <div className="profile-card game-stats">
           <h3>Stats par jeu</h3>
           <div className="games-stats-list">
-            {animes.map(anime => {
-              const s = byAnime[anime.id];
+            {Object.entries(byAnime).map(([id, s]) => {
               if (!s || s.played === 0) return null;
+              const official = animes.find(a => a.id === id);
+              const isCustom = !!s.isCustom;
+              const name = official?.name || s.customName || id;
+              const detailUrl = isCustom ? `/custom/${id}` : `/anime/${id}`;
               const soloGames = s.played - (s.duoPlayed || 0);
               const soloWins = s.wins - (s.duoWins || 0);
               return (
-                <div key={anime.id} className="game-stat-row">
+                <Link key={id} to={detailUrl} className="game-stat-row">
                   <div className="game-info">
-                    <span className="game-name">{anime.name}</span>
+                    <span className="game-name">
+                      {name}
+                      {isCustom && <span className="stats-custom-badge">Custom</span>}
+                    </span>
                     <span className="game-total">{s.played} parties - {s.wins} victoires</span>
                   </div>
                   <div className="game-modes">
@@ -215,7 +269,7 @@ export default function Profile() {
                       <span className="streak-value">{s.streak}/{s.maxStreak}</span>
                     </div>
                   </div>
-                </div>
+                </Link>
               );
             })}
             {Object.keys(byAnime).length === 0 && (

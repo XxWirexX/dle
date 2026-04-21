@@ -1,3 +1,5 @@
+import { resolveCharacterImage } from "../../utils/imageUrl";
+
 export default function AttemptsTable({ attempts, attributes, gameId }) {
   return (
     <div className="attempts-wrapper">
@@ -14,7 +16,7 @@ export default function AttemptsTable({ attempts, attributes, gameId }) {
             <div key={i} className="attempt-row">
               <div className="cell-image">
                 <div className="character-image">
-                  <img src={`/api/images/${gameId}/characters/${a.guess.image}`} alt={a.guess.name} />
+                  <img src={resolveCharacterImage(a.guess.image, gameId)} alt={a.guess.name} />
                 </div>
               </div>
               <div className={`cell bg-${a.isCorrect ? "correct" : "wrong"}`}>
