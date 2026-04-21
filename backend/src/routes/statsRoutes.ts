@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { Router } from 'express';
-import { getStats, getAllStatsForUser, updateStats } from '../db/database';
+import { getStats, getAllStatsForUser, updateStats, findCustomDlesByIds } from '../db/database';
 import { authMiddleware } from '../auth/authMiddleware';
 
 const router = Router();
@@ -34,6 +34,18 @@ router.get('/all', authMiddleware, (req, res) => {
         duoWins: s.duo_wins || 0,
         totalAttempts: s.total_attempts || 0
       };
+    });
+
+    // Enrichir avec les infos des DLEs custom (on ne peut pas distinguer officiel vs custom juste par l'ID,
+    // donc on tente un lookup en DB pour tous les IDs non-reconnus)
+    const playedIds = Object.keys(statsByAnime);
+    const customDles = findCustomDlesByIds(playedIds);
+    customDles.forEach((cd) => {
+      if (statsByAnime[cd.id]) {
+        statsByAnime[cd.id].customName = cd.name;
+        statsByAnime[cd.id].customIcon = cd.icon_url;
+        statsByAnime[cd.id].isCustom = true;
+      }
     });
 
     const soloPlayed = totalPlayed - totalDuoPlayed;

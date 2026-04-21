@@ -9,6 +9,7 @@ import path from 'path';
 import { toListItem, toDetail, toGame, toAvatarGroup } from './mappers/animeMapper';
 import authRoutes from './routes/authRoutes';
 import statsRoutes from './routes/statsRoutes';
+import customDleRoutes from './routes/customDleRoutes';
 import setupSocketHandlers from './socket/socketHandler';
 import { AppError } from './errors/AppError';
 
@@ -28,6 +29,7 @@ app.use(express.json());
 
 app.use('/api/auth', authRoutes);
 app.use('/api/stats', statsRoutes);
+app.use('/api/custom-dles', customDleRoutes);
 
 setupSocketHandlers(io);
 

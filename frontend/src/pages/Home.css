@@ -154,3 +154,199 @@
     padding: 1.25rem 1rem 0.5rem;
   }
 }
+
+/* ─── Community section ───────────────────────────────── */
+.community-section {
+  margin-top: 60px;
+  padding: 0 2rem 40px;
+}
+
+.community-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.community-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: #e5e7eb;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.community-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  background: linear-gradient(135deg, #6366f1, #a855f7);
+  color: white;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+.community-create-btn {
+  padding: 8px 16px;
+  background: linear-gradient(135deg, #6366f1, #a855f7);
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 13px;
+  box-shadow: 0 4px 14px rgba(139, 92, 246, 0.3);
+  transition: transform 0.15s;
+}
+
+.community-create-btn:hover { transform: translateY(-1px); }
+
+.community-empty {
+  padding: 40px 20px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px dashed rgba(139, 92, 246, 0.3);
+  border-radius: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 14px;
+}
+
+.community-empty a {
+  color: #a5b4fc;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.community-empty a:hover { color: #c7d2fe; }
+
+.community-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.custom-card {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  cursor: pointer;
+  aspect-ratio: 3 / 4;
+  background: #141831;
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.custom-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 28px rgba(139, 92, 246, 0.25);
+  border-color: rgba(139, 92, 246, 0.5);
+}
+
+.custom-card-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  filter: brightness(0.7);
+  transition: transform 0.3s;
+}
+
+.custom-card:hover .custom-card-bg { transform: scale(1.05); }
+
+.custom-card-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 30%, rgba(10, 11, 20, 0.5) 55%, rgba(10, 11, 20, 0.95) 100%);
+}
+
+.custom-card-icon {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.custom-card-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.custom-card-body {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 16px;
+  color: white;
+}
+
+.custom-card-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 4px;
+  line-height: 1.2;
+}
+
+.custom-card-meta {
+  display: flex;
+  gap: 6px;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 2px;
+}
+
+.custom-card-owner {
+  font-size: 11px;
+  color: #c4b5fd;
+  margin-bottom: 10px;
+}
+
+.custom-card-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.custom-card-btn {
+  padding: 7px 10px;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 12px;
+  cursor: pointer;
+  transition: filter 0.15s, transform 0.1s;
+}
+
+.custom-card-btn:hover { filter: brightness(1.18); }
+.custom-card-btn:active { transform: scale(0.97); }
+
+.custom-card-btn.solo  { background: linear-gradient(135deg, #6366f1, #8b5cf6); }
+.custom-card-btn.duo   { background: linear-gradient(135deg, #a855f7, #ec4899); }
+.custom-card-btn.daily {
+  width: 100%;
+  background: linear-gradient(135deg, #f59e0b, #ef4444);
+  padding: 8px;
+  font-size: 12px;
+}
+
+@media (max-width: 600px) {
+  .community-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+  .custom-card-title { font-size: 15px; }
+  .community-section { padding: 0 1rem 30px; }
+}

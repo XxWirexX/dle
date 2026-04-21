@@ -6,6 +6,9 @@ export interface Stats {
   duoPlayed?: number;
   duoWins?: number;
   totalAttempts?: number;
+  customName?: string;
+  customIcon?: string | null;
+  isCustom?: boolean;
 }
 
 export interface GlobalStats {

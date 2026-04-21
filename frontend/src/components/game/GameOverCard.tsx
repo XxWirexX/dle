@@ -1,8 +1,10 @@
+import { resolveCharacterImage } from "../../utils/imageUrl";
+
 export default function GameOverCard({ target, gameId, isWon, attempts, maxAttempts, stats, children }) {
   return (
     <div className="game-over-message">
       <div className={`game-over-character ${isWon ? "win" : "lose"}`}>
-        <img src={`/api/images/${gameId}/characters/${target.image}`} alt={target.name} />
+        <img src={resolveCharacterImage(target.image, gameId)} alt={target.name} />
       </div>
       <div className={`game-over-result ${isWon ? "win" : "lose"}`}>
         {isWon ? "Trouvé !" : "Dommage !"}
