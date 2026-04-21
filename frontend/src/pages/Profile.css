@@ -1,58 +1,70 @@
 .profile-container {
   min-height: 100vh;
-  padding: 2rem;
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
+  background: var(--bg);
 }
 
 .profile-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
   display: flex;
   align-items: center;
-  gap: 2rem;
-  margin-bottom: 2rem;
-  padding: 1rem 2rem;
-  background-color: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(10px);
-  border-radius: 1rem;
+  gap: 1.5rem;
+  padding: 0 1.5rem;
+  height: 52px;
+  background: rgba(13, 13, 20, 0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 0;
 }
 
 .profile-header h1 {
-  margin: 0;
-  font-size: 1.75rem;
-  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.profile-body {
+  padding: 2rem;
 }
 
 .back-link {
-  color: rgba(255, 255, 255, 0.7);
-  text-decoration: none;
-  font-size: 1rem;
+  color: var(--text-3);
+  font-size: 0.875rem;
+  font-weight: 500;
   transition: color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
 }
 
 .back-link:hover {
-  color: #3b82f6;
+  color: var(--accent-2);
 }
 
 .profile-content {
   display: grid;
   grid-template-columns: 300px 1fr;
-  gap: 1.5rem;
+  gap: 1.25rem;
   max-width: 1200px;
   margin: 0 auto;
 }
 
 .profile-card {
-  background-color: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(10px);
-  border-radius: 1rem;
-  padding: 1.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  border: 1px solid var(--border);
 }
 
 .profile-card h3 {
   margin: 0 0 1rem 0;
-  font-size: 1.1rem;
-  color: rgba(255, 255, 255, 0.9);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  border-bottom: 1px solid var(--border);
   padding-bottom: 0.75rem;
 }
 
@@ -350,6 +362,10 @@
   color: rgba(255, 255, 255, 0.7);
   text-align: center;
   padding: 4rem;
+}
+
+.profile-body {
+  padding: 1.5rem;
 }
 
 /* Responsive */
