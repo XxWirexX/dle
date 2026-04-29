@@ -51,7 +51,7 @@ class GameManager {
   }
 
   // Ajouter un joueur à la queue
-  joinQueue(socket, animeId, gameData, user = null) {
+  joinQueue(socket, animeId, gameData, user = null, difficulty = null) {
     // Vérifier si l'utilisateur connecté est déjà occupé
     if (user?.userId) {
       const busyCheck = this.isUserBusy(user.userId);
@@ -74,7 +74,7 @@ class GameManager {
       return { status: 'already-in-queue', position: existingIndex + 1 };
     }
 
-    queue.push({ socket, gameData, user });
+    queue.push({ socket, gameData, user, difficulty });
     const position = queue.length;
 
     // Si on a 2 joueurs, créer une room
@@ -122,7 +122,24 @@ class GameManager {
   createRoom(player1, player2, animeId) {
     const roomId = this.generateRoomId();
     const gameData = player1.gameData;
-    const characters = gameData.characters || [];
+    let characters = gameData.characters || [];
+
+    // Filtrer par difficulté si spécifiée
+    const difficulty1 = player1.difficulty;
+    const difficulty2 = player2.difficulty;
+    if (difficulty1 && difficulty2) {
+      // Si les deux ont choisi la même difficulté, filtrer par ça
+      if (difficulty1 === difficulty2) {
+        characters = characters.filter(c => c.difficulty === difficulty1);
+      }
+      // Sinon, prendre l'intersection (caractères qui matchent une des deux difficultés)
+      // ou juste utiliser tous les caractères
+    } else if (difficulty1) {
+      characters = characters.filter(c => c.difficulty === difficulty1);
+    } else if (difficulty2) {
+      characters = characters.filter(c => c.difficulty === difficulty2);
+    }
+
     const target = this.pickTarget(characters);
 
     // Choisir aléatoirement qui commence
@@ -136,7 +153,7 @@ class GameManager {
       id: roomId,
       animeId,
       target,
-      gameData,
+      gameData: { ...gameData, characters },
       players: {
         [player1.socket.id]: {
           attempts: [],

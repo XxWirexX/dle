@@ -27,8 +27,8 @@ function setupSocketHandlers(io: Server) {
     console.log(`Player connected: ${socket.id} (${username})`);
 
     // Rejoindre la queue de matchmaking
-    socket.on('join-queue', ({ animeId, gameData }) => {
-      console.log(`${socket.id} joining queue for anime: ${animeId}`);
+    socket.on('join-queue', ({ animeId, gameData, difficulty }) => {
+      console.log(`${socket.id} joining queue for anime: ${animeId}${difficulty ? ` (difficulty: ${difficulty})` : ''}`);
 
       // Vérifier que l'utilisateur est connecté et a vérifié son email
       if (!socket.user) {
@@ -42,7 +42,7 @@ function setupSocketHandlers(io: Server) {
         return;
       }
 
-      const result = gameManager.joinQueue(socket, animeId, gameData, socket.user);
+      const result = gameManager.joinQueue(socket, animeId, gameData, socket.user, difficulty);
 
       if (result.status === 'already-in-game') {
         socket.emit('queue-error', { error: 'Tu es déjà dans une partie en cours' });

@@ -12,17 +12,19 @@ import statsService from "../../services/statsService";
 import { resolveCharacterImage, resolveBackgroundImage } from "../../utils/imageUrl";
 import "./Game.css";
 
-export default function DuoGame({ isCustom = false }) {
+export default function DuoGame({ isCustom = false, difficulty = null }) {
   const { id } = useParams();
   const navigate = useNavigate();
   const { user } = useAuth();
 
   const [localGameData, setLocalGameData] = useState(null);
   const [pool, setPool] = useState([]);
+  const [filteredPool, setFilteredPool] = useState([]);
   const [query, setQuery] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [showHints, setShowHints] = useState(false);
   const [statsUpdated, setStatsUpdated] = useState(false);
+  const [selectedDifficulty, setSelectedDifficulty] = useState(difficulty);
 
   const searchRef = useRef(null);
   const hasJoinedQueue = useRef(false);
@@ -40,12 +42,24 @@ export default function DuoGame({ isCustom = false }) {
 
   const [chatOpen, setChatOpen] = useState(false);
 
+  // Get difficulty attribute if it exists
+  const difficultyAttr = localGameData?.attributes?.find(a => a.key === 'difficulty');
+  const difficultyValues = difficultyAttr ? [...new Set(localGameData.characters.map(c => c.difficulty).filter(Boolean))] : [];
+
   useEffect(() => {
     const fetcher = isCustom ? customDleService.getGame(id) : animeService.getGame(id);
     fetcher
-      .then((data) => { setLocalGameData(data); setPool(data.characters || []); })
+      .then((data) => {
+        setLocalGameData(data);
+        setPool(data.characters || []);
+        // Apply difficulty filtering if specified
+        const filtered = selectedDifficulty
+          ? (data.characters || []).filter(c => c.difficulty === selectedDifficulty)
+          : (data.characters || []);
+        setFilteredPool(filtered);
+      })
       .catch(() => {});
-  }, [id, isCustom]);
+  }, [id, isCustom, selectedDifficulty]);
 
   useEffect(() => {
     connect();
@@ -55,10 +69,10 @@ export default function DuoGame({ isCustom = false }) {
   useEffect(() => {
     if (isConnected && localGameData && !roomId && !inQueue && !queueError && !hasJoinedQueue.current) {
       hasJoinedQueue.current = true;
-      joinQueue(id, localGameData);
+      joinQueue(id, localGameData, selectedDifficulty);
     }
     if (!isConnected) hasJoinedQueue.current = false;
-  }, [isConnected, localGameData, id, joinQueue, roomId, inQueue, queueError]);
+  }, [isConnected, localGameData, id, joinQueue, roomId, inQueue, queueError, selectedDifficulty]);
 
   useEffect(() => {
     function handleClickOutside(e) {
@@ -101,7 +115,7 @@ export default function DuoGame({ isCustom = false }) {
   }
 
   const filteredSuggestions = query.trim()
-    ? pool.filter(c => !playedIds.has(c.id) && c.name.toLowerCase().includes(query.toLowerCase()))
+    ? filteredPool.filter(c => !playedIds.has(c.id) && c.name.toLowerCase().includes(query.toLowerCase()))
     : [];
 
   const backUrl = isCustom ? '/' : `/anime/${id}`;
@@ -130,12 +144,20 @@ export default function DuoGame({ isCustom = false }) {
     );
   }
 
-  if (!localGameData || pool.length === 0) return <div className="loading">Chargement...</div>;
+  if (!localGameData || filteredPool.length === 0) return <div className="loading">Chargement...</div>;
 
   if (inQueue || (!roomId && isConnected)) {
     return (
       <div className="game-container"><div className="game-overlay">
-        <WaitingRoom position={queuePosition || 1} onCancel={() => { leaveQueue(id); navigate(backUrl); }} animeName={localGameData.name} />
+        <WaitingRoom
+          position={queuePosition || 1}
+          onCancel={() => { leaveQueue(id); navigate(backUrl); }}
+          animeName={localGameData.name}
+          difficultyAttr={difficultyAttr}
+          difficultyValues={difficultyValues}
+          selectedDifficulty={selectedDifficulty}
+          onDifficultyChange={setSelectedDifficulty}
+        />
       </div></div>
     );
   }

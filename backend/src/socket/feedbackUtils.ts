@@ -39,6 +39,14 @@ function computeFieldFeedback(guessVal, targetVal, attribute) {
   const gLower = guessVal ? guessVal.toString().toLowerCase() : null;
   const tLower = targetVal ? targetVal.toString().toLowerCase() : null;
 
+  // Type booléen - exact match only
+  if (type === "boolean") {
+    if (gLower === tLower) {
+      return { type: "correct", label: guessVal };
+    }
+    return { type: "wrong", label: guessVal };
+  }
+
   // Si les deux sont identiques (y compris "unknown" === "unknown"), c'est correct
   if (gLower && tLower && gLower === tLower) {
     return { type: "correct", label: guessVal };

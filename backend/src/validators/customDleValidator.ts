@@ -3,7 +3,7 @@ import { z } from 'zod';
 const attributeSchema = z.object({
   key: z.string().min(1).max(40).regex(/^[a-z0-9_]+$/i, 'clé invalide'),
   label: z.string().min(1).max(40),
-  type: z.enum(['number', 'ordered', 'text', 'multi']),
+  type: z.enum(['number', 'ordered', 'text', 'multi', 'multiple', 'boolean']),
   order: z.array(z.string().min(1).max(60)).max(30).optional(),
   options: z.array(z.string().min(1).max(60)).max(30).optional(),
   hints: z.array(z.string().min(1).max(200)).max(10).optional(),

@@ -11,6 +11,7 @@ export enum AttributeType {
   Ordered = "ordered",
   Text    = "text",
   Multi   = "multi",
+  Boolean = "boolean",
 }
 
 export enum GameMode {

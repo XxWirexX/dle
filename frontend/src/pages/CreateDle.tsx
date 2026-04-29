@@ -24,6 +24,7 @@ const TYPE_META: Record<AttributeType, { icon: string; label: string; hint: stri
   [AttributeType.Number]:  { icon: '123', label: 'Nombre',  hint: 'Valeur chiffrée, indicateur ▲/▼',                   color: 'cyan'    },
   [AttributeType.Ordered]: { icon: '⇅',  label: 'Ordonné', hint: 'Liste ordonnée (ex: Faible < Moyen < Fort)',        color: 'amber'   },
   [AttributeType.Multi]:   { icon: '⋮⋮',  label: 'Multi',   hint: 'Sélection multiple depuis un pool de valeurs',      color: 'magenta' },
+  [AttributeType.Boolean]: { icon: '✓✗',  label: 'Booléen', hint: 'Vrai ou Faux',                                      color: 'purple'  },
 };
 
 export default function CreateDle() {
@@ -658,6 +659,20 @@ function AttrCell({ attribute, value, onChange }: {
         options={attribute.options || []}
         onChange={onChange}
       />
+    );
+  }
+
+  if (attribute.type === AttributeType.Boolean) {
+    const isTrue = String(value ?? '').toLowerCase() === 'true';
+    return (
+      <select
+        value={isTrue ? 'true' : 'false'}
+        onChange={(e) => onChange(e.target.value)}
+        className="cd-cell-input cd-cell-select"
+      >
+        <option value="true">Vrai</option>
+        <option value="false">Faux</option>
+      </select>
     );
   }
 

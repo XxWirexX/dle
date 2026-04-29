@@ -18,16 +18,23 @@ import statsService from "../../services/statsService";
 import { resolveBackgroundImage } from "../../utils/imageUrl";
 import "./Game.css";
 
-function SoloGame({ isCustom = false }) {
+function SoloGame({ isCustom = false, difficulty = null }) {
+  const location = useLocation();
   const { id } = useParams();
   const [gameData, setGameData] = useState(null);
   useTitle(gameData ? `Solo — ${gameData.name}` : null);
   const [pool, setPool] = useState([]);
+  const [filteredPool, setFilteredPool] = useState([]);
   const [target, setTarget] = useState(null);
   const [attempts, setAttempts] = useState([]);
   const [gameOver, setGameOver] = useState(false);
   const [statsUpdated, setStatsUpdated] = useState(false);
+  const [selectedDifficulty, setSelectedDifficulty] = useState(difficulty);
   const { stats, updateStats } = useStats(id);
+
+  // Get difficulty attribute if it exists
+  const difficultyAttr = gameData?.attributes?.find(a => a.key === 'difficulty');
+  const difficultyValues = difficultyAttr ? [...new Set(gameData.characters.map(c => c.difficulty).filter(Boolean))] : [];
 
   useEffect(() => {
     const fetcher = isCustom ? customDleService.getGame(id) : animeService.getGame(id);
@@ -36,10 +43,28 @@ function SoloGame({ isCustom = false }) {
         setGameData(data);
         const chars = data.characters || [];
         setPool(chars);
-        setTarget(pickTarget(chars));
+
+        // Apply difficulty filtering if specified
+        const filtered = selectedDifficulty
+          ? chars.filter(c => c.difficulty === selectedDifficulty)
+          : chars;
+        setFilteredPool(filtered);
+        setTarget(pickTarget(filtered));
       })
       .catch(() => {});
   }, [id, isCustom]);
+
+  useEffect(() => {
+    if (!pool.length) return;
+    // Update filtered pool when difficulty changes
+    const filtered = selectedDifficulty
+      ? pool.filter(c => c.difficulty === selectedDifficulty)
+      : pool;
+    setFilteredPool(filtered);
+    setTarget(pickTarget(filtered));
+    setAttempts([]);
+    setGameOver(false);
+  }, [selectedDifficulty, pool]);
 
   useEffect(() => {
     if (!gameOver || statsUpdated) return;
@@ -67,13 +92,13 @@ function SoloGame({ isCustom = false }) {
   }
 
   function newGame() {
-    setTarget(pickTarget(pool));
+    setTarget(pickTarget(filteredPool));
     setAttempts([]);
     setGameOver(false);
     setStatsUpdated(false);
   }
 
-  if (!gameData || !target || pool.length === 0) return <div className="loading">Chargement...</div>;
+  if (!gameData || !target || filteredPool.length === 0) return <div className="loading">Chargement...</div>;
 
   const attributes = gameData.attributes || [];
   const maxAttempts = gameData.maxAttempts || 26;
@@ -84,11 +109,27 @@ function SoloGame({ isCustom = false }) {
       <div className="game-overlay">
         <div className="game-header">
           <h1 className="game-title">{gameData.name}</h1>
+
+          {difficultyAttr && difficultyValues.length > 0 && (
+            <div className="difficulty-selector">
+              <span className="difficulty-label">Difficulté:</span>
+              {difficultyValues.map(diff => (
+                <button
+                  key={diff}
+                  className={`difficulty-btn ${selectedDifficulty === diff ? 'active' : ''}`}
+                  onClick={() => setSelectedDifficulty(diff)}
+                >
+                  {diff}
+                </button>
+              ))}
+            </div>
+          )}
+
           <div className="header-buttons">
             <button onClick={newGame} className="new-game-btn">Nouvelle partie</button>
             <button onClick={() => setGameOver(true)} className="reveal-btn">Reveler</button>
           </div>
-          {!gameOver && <SearchBar pool={pool} attempts={attempts} gameId={id} onSelect={validateSelection} />}
+          {!gameOver && <SearchBar pool={filteredPool} attempts={attempts} gameId={id} onSelect={validateSelection} />}
         </div>
 
         {gameOver && (
@@ -109,12 +150,13 @@ function SoloGame({ isCustom = false }) {
   );
 }
 
-function DailyGame({ isCustom = false }) {
+function DailyGame({ isCustom = false, difficulty = null }) {
   const { id } = useParams();
   const { user } = useAuth();
   const [gameData, setGameData] = useState(null);
   useTitle(gameData ? `Défi du jour — ${gameData.name}` : null);
   const [pool, setPool] = useState([]);
+  const [filteredPool, setFilteredPool] = useState([]);
   const [target, setTarget] = useState(null);
   const [attempts, setAttempts] = useState([]);
   const [gameOver, setGameOver] = useState(false);
@@ -122,6 +164,11 @@ function DailyGame({ isCustom = false }) {
   const [dayNumber, setDayNumber] = useState(0);
   const [dateStr, setDateStr] = useState('');
   const [copied, setCopied] = useState(false);
+  const [selectedDifficulty, setSelectedDifficulty] = useState(difficulty);
+
+  // Get difficulty attribute if it exists
+  const difficultyAttr = gameData?.attributes?.find(a => a.key === 'difficulty');
+  const difficultyValues = difficultyAttr ? [...new Set(gameData.characters.map(c => c.difficulty).filter(Boolean))] : [];
 
   useEffect(() => {
     const today = new Date().toISOString().split('T')[0];
@@ -135,7 +182,13 @@ function DailyGame({ isCustom = false }) {
       setDayNumber(daily.dayNumber);
       const chars = data.characters || [];
       setPool(chars);
-      const dailyTarget = chars[daily.characterIndex];
+
+      // Apply difficulty filtering if specified
+      const filtered = selectedDifficulty
+        ? chars.filter(c => c.difficulty === selectedDifficulty)
+        : chars;
+      setFilteredPool(filtered);
+      const dailyTarget = filtered[daily.characterIndex] || filtered[0];
       setTarget(dailyTarget);
 
       const stored = localStorage.getItem(`daily-${id}-${today}`);
@@ -143,7 +196,7 @@ function DailyGame({ isCustom = false }) {
         try {
           const result = JSON.parse(stored);
           const restored = (result.guessIds || []).map(guessId => {
-            const char = chars.find(c => c.id === guessId);
+            const char = filtered.find(c => c.id === guessId);
             if (!char) return null;
             return { guess: char, feedback: getFeedbackObject(char, dailyTarget, data.attributes || []), isCorrect: char.id === dailyTarget.id };
           }).filter(Boolean);
@@ -153,7 +206,16 @@ function DailyGame({ isCustom = false }) {
         } catch { /* localStorage corrompu */ }
       }
     }).catch(() => {});
-  }, [id]);
+  }, [id, selectedDifficulty]);
+
+  useEffect(() => {
+    if (!pool.length) return;
+    const filtered = selectedDifficulty
+      ? pool.filter(c => c.difficulty === selectedDifficulty)
+      : pool;
+    setFilteredPool(filtered);
+    // Note: don't reset attempts/target for daily as it's deterministic
+  }, [selectedDifficulty, pool]);
 
   useEffect(() => {
     if (!gameOver || statsUpdated || !target || !dateStr) return;
@@ -187,7 +249,7 @@ function DailyGame({ isCustom = false }) {
     }).catch(() => {});
   }
 
-  if (!gameData || !target || pool.length === 0) return <div className="loading">Chargement du défi du jour...</div>;
+  if (!gameData || !target || filteredPool.length === 0) return <div className="loading">Chargement du défi du jour...</div>;
 
   const attributes = gameData.attributes || [];
   const maxAttempts = gameData.maxAttempts || 26;
@@ -200,11 +262,27 @@ function DailyGame({ isCustom = false }) {
         <div className="game-header">
           <div className="daily-badge">DÉFI DU JOUR #{dayNumber}</div>
           <h1 className="game-title">{gameData.name}</h1>
+
+          {difficultyAttr && difficultyValues.length > 0 && (
+            <div className="difficulty-selector">
+              <span className="difficulty-label">Difficulté:</span>
+              {difficultyValues.map(diff => (
+                <button
+                  key={diff}
+                  className={`difficulty-btn ${selectedDifficulty === diff ? 'active' : ''}`}
+                  onClick={() => setSelectedDifficulty(diff)}
+                >
+                  {diff}
+                </button>
+              ))}
+            </div>
+          )}
+
           <div className="daily-meta">
             <span className="daily-date">{dateStr}</span>
             <span className="daily-attempts-count">{attempts.length} / {maxAttempts}</span>
           </div>
-          {!gameOver && <SearchBar pool={pool} attempts={attempts} gameId={id} onSelect={validateSelection} />}
+          {!gameOver && <SearchBar pool={filteredPool} attempts={attempts} gameId={id} onSelect={validateSelection} />}
         </div>
 
         {gameOver && (
@@ -232,9 +310,10 @@ export default function Game() {
   const location = useLocation();
   const isCustom = location.pathname.startsWith('/custom/');
   const mode = new URLSearchParams(location.search).get("mode") || "solo";
+  const difficulty = new URLSearchParams(location.search).get("difficulty") || null;
   const { user, loading } = useAuth();
 
-  if (mode === "daily") return <DailyGame isCustom={isCustom} />;
+  if (mode === "daily") return <DailyGame isCustom={isCustom} difficulty={difficulty} />;
 
   if (mode === "duo") {
     if (loading) return <div className="loading">Chargement...</div>;
@@ -243,8 +322,8 @@ export default function Game() {
       window.location.href = `/login?redirect=${encodeURIComponent(returnUrl)}`;
       return <div className="loading">Redirection...</div>;
     }
-    return <DuoGame isCustom={isCustom} />;
+    return <DuoGame isCustom={isCustom} difficulty={difficulty} />;
   }
 
-  return <SoloGame isCustom={isCustom} />;
+  return <SoloGame isCustom={isCustom} difficulty={difficulty} />;
 }

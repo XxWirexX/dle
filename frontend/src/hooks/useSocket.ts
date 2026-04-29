@@ -217,9 +217,9 @@ export default function useSocket() {
   }, []);
 
   // Actions
-  const joinQueue = useCallback((animeId, gameData) => {
+  const joinQueue = useCallback((animeId, gameData, difficulty = null) => {
     if (socketRef.current?.connected) {
-      socketRef.current.emit('join-queue', { animeId, gameData });
+      socketRef.current.emit('join-queue', { animeId, gameData, difficulty });
     }
   }, []);
 
