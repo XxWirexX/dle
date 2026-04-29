@@ -18,6 +18,18 @@ import statsService from "../../services/statsService";
 import { resolveBackgroundImage } from "../../utils/imageUrl";
 import "./Game.css";
 
+// Helper to filter characters by difficulty level (inclusive of lower difficulties)
+function getDifficultyLevel(difficulty) {
+  const levels = { facile: 1, moyen: 2, difficile: 3 };
+  return levels[difficulty?.toLowerCase()] || 0;
+}
+
+function filterByDifficulty(characters, selectedDifficulty) {
+  if (!selectedDifficulty) return characters;
+  const selectedLevel = getDifficultyLevel(selectedDifficulty);
+  return characters.filter(c => getDifficultyLevel(c.difficulty) <= selectedLevel);
+}
+
 function SoloGame({ isCustom = false, difficulty = null }) {
   const location = useLocation();
   const { id } = useParams();
@@ -45,9 +57,7 @@ function SoloGame({ isCustom = false, difficulty = null }) {
         setPool(chars);
 
         // Apply difficulty filtering if specified
-        const filtered = selectedDifficulty
-          ? chars.filter(c => c.difficulty === selectedDifficulty)
-          : chars;
+        const filtered = filterByDifficulty(chars, selectedDifficulty);
         setFilteredPool(filtered);
         setTarget(pickTarget(filtered));
       })
@@ -57,9 +67,7 @@ function SoloGame({ isCustom = false, difficulty = null }) {
   useEffect(() => {
     if (!pool.length) return;
     // Update filtered pool when difficulty changes
-    const filtered = selectedDifficulty
-      ? pool.filter(c => c.difficulty === selectedDifficulty)
-      : pool;
+    const filtered = filterByDifficulty(pool, selectedDifficulty);
     setFilteredPool(filtered);
     setTarget(pickTarget(filtered));
     setAttempts([]);
@@ -210,9 +218,7 @@ function DailyGame({ isCustom = false, difficulty = null }) {
 
   useEffect(() => {
     if (!pool.length) return;
-    const filtered = selectedDifficulty
-      ? pool.filter(c => c.difficulty === selectedDifficulty)
-      : pool;
+    const filtered = filterByDifficulty(pool, selectedDifficulty);
     setFilteredPool(filtered);
     // Note: don't reset attempts/target for daily as it's deterministic
   }, [selectedDifficulty, pool]);

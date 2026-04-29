@@ -124,20 +124,25 @@ class GameManager {
     const gameData = player1.gameData;
     let characters = gameData.characters || [];
 
-    // Filtrer par difficulté si spécifiée
+    // Helper to get difficulty level (facile=1, moyen=2, difficile=3)
+    const getDifficultyLevel = (diff) => {
+      const levels = { facile: 1, moyen: 2, difficile: 3 };
+      return levels[diff?.toLowerCase()] || 0;
+    };
+
+    // Filtrer par difficulté si spécifiée (inclusive - includes lower difficulties)
     const difficulty1 = player1.difficulty;
     const difficulty2 = player2.difficulty;
-    if (difficulty1 && difficulty2) {
-      // Si les deux ont choisi la même difficulté, filtrer par ça
-      if (difficulty1 === difficulty2) {
-        characters = characters.filter(c => c.difficulty === difficulty1);
+
+    if (difficulty1 || difficulty2) {
+      // Get the max difficulty level selected (most restrictive filter)
+      const level1 = getDifficultyLevel(difficulty1);
+      const level2 = getDifficultyLevel(difficulty2);
+      const maxLevel = Math.max(level1, level2);
+
+      if (maxLevel > 0) {
+        characters = characters.filter(c => getDifficultyLevel(c.difficulty) <= maxLevel);
       }
-      // Sinon, prendre l'intersection (caractères qui matchent une des deux difficultés)
-      // ou juste utiliser tous les caractères
-    } else if (difficulty1) {
-      characters = characters.filter(c => c.difficulty === difficulty1);
-    } else if (difficulty2) {
-      characters = characters.filter(c => c.difficulty === difficulty2);
     }
 
     const target = this.pickTarget(characters);

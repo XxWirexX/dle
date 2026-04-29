@@ -42,9 +42,9 @@ function computeFieldFeedback(guessVal, targetVal, attribute) {
   // Type booléen - exact match only
   if (type === "boolean") {
     if (gLower === tLower) {
-      return { type: "correct", label: guessVal };
+      return { type: "correct", label: "oui" };
     }
-    return { type: "wrong", label: guessVal };
+    return { type: "wrong", label: "non" };
   }
 
   // Si les deux sont identiques (y compris "unknown" === "unknown"), c'est correct

@@ -12,6 +12,18 @@ import statsService from "../../services/statsService";
 import { resolveCharacterImage, resolveBackgroundImage } from "../../utils/imageUrl";
 import "./Game.css";
 
+// Helper to filter characters by difficulty level (inclusive of lower difficulties)
+function getDifficultyLevel(difficulty) {
+  const levels = { facile: 1, moyen: 2, difficile: 3 };
+  return levels[difficulty?.toLowerCase()] || 0;
+}
+
+function filterByDifficulty(characters, selectedDifficulty) {
+  if (!selectedDifficulty) return characters;
+  const selectedLevel = getDifficultyLevel(selectedDifficulty);
+  return characters.filter(c => getDifficultyLevel(c.difficulty) <= selectedLevel);
+}
+
 export default function DuoGame({ isCustom = false, difficulty = null }) {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -52,10 +64,8 @@ export default function DuoGame({ isCustom = false, difficulty = null }) {
       .then((data) => {
         setLocalGameData(data);
         setPool(data.characters || []);
-        // Apply difficulty filtering if specified
-        const filtered = selectedDifficulty
-          ? (data.characters || []).filter(c => c.difficulty === selectedDifficulty)
-          : (data.characters || []);
+        // Apply difficulty filtering if specified (inclusive)
+        const filtered = filterByDifficulty(data.characters || [], selectedDifficulty);
         setFilteredPool(filtered);
       })
       .catch(() => {});

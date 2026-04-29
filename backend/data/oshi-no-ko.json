@@ -9,7 +9,11 @@
       "key": "gender",
       "label": "Genre",
       "type": "text",
-      "hints": ["Feminin", "Masculin", "Inconnu"]
+      "hints": [
+        "Feminin",
+        "Masculin",
+        "Inconnu"
+      ]
     },
     {
       "key": "age",
@@ -20,13 +24,44 @@
       "key": "hairColor",
       "label": "Couleur des cheveux",
       "type": "text",
-      "hints": ["Noir", "Brun", "Blond", "Roux", "Blanc", "Argent", "Rouge", "Bleu", "Rose", "Violet", "Vert", "Orange", "Gris", "Multicolor", "Inconnu"]
+      "hints": [
+        "Noir",
+        "Brun",
+        "Blond",
+        "Roux",
+        "Blanc",
+        "Argent",
+        "Rouge",
+        "Bleu",
+        "Rose",
+        "Violet",
+        "Vert",
+        "Orange",
+        "Gris",
+        "Multicolor",
+        "Inconnu"
+      ]
     },
     {
       "key": "eyeColor",
       "label": "Couleur des yeux",
       "type": "text",
-      "hints": ["Noir", "Blanc", "Argent", "Rouge", "Bleu", "Rose", "Violet", "Vert", "Orange", "Gris", "Marron", "Multicolor", "Inconnu"]
+      "hints": [
+        "Noir",
+        "Blanc",
+        "Argent",
+        "Rouge",
+        "Bleu",
+        "Rose",
+        "Violet",
+        "Vert",
+        "Orange",
+        "Gris",
+        "Marron",
+        "Ambre",
+        "Multicolor",
+        "Inconnu"
+      ]
     },
     {
       "key": "starryEyes",
@@ -37,13 +72,33 @@
       "key": "role",
       "label": "Rôle",
       "type": "multiple",
-      "hints": ["Patiente", "Docteur", "Idole", "Acteur.ice", "Chanteur.euse", "Comedien.ne", "Producteur.ice", "Realisateur.ice", "Influenceur.ice", "Manager", "Mangaka", "Autre"]
+      "hints": [
+        "Patiente",
+        "Docteur",
+        "Idole",
+        "Acteur.ice",
+        "Chanteur.euse",
+        "Comedien.ne",
+        "Producteur.ice",
+        "Realisateur.ice",
+        "Influenceur.ice",
+        "Manager",
+        "Mangaka",
+        "Autre"
+      ]
     },
     {
       "key": "affiliation",
       "label": "Affiliation",
       "type": "multiple",
-      "hints": ["B-Komachi", "Ichigo Production", "Lalalie", "Kamiki Productions", "Autre", "Aucune"]
+      "hints": [
+        "B-Komachi",
+        "Ichigo Production",
+        "Lalalie",
+        "Kamiki Productions",
+        "Autre",
+        "Aucune"
+      ]
     },
     {
       "key": "status",
@@ -54,13 +109,30 @@
       "key": "firstArc",
       "label": "Premier Arc",
       "type": "text",
-      "hints": ["Enfance", "Show Business", "Téléréalité de rencontre", "Première Scène", "Pièce de théatre", "Vie privée", "Clé de voute", "Scandale", "Film", "La fin du jeu", "Vers les étoiles et les rêves"]
+      "hints": [
+        "Enfance",
+        "Show Business",
+        "Téléréalité de rencontre",
+        "Première Scène",
+        "Pièce de théatre",
+        "Vie privée",
+        "Clé de voute",
+        "Scandale",
+        "Film",
+        "La fin du jeu",
+        "Vers les étoiles et les rêves"
+      ]
     },
     {
       "key": "difficulty",
       "label": "Difficulté",
       "type": "text",
-      "hints": ["facile", "moyen", "difficile"]
+      "hints": [
+        "facile",
+        "moyen",
+        "difficile",
+        "tres difficile"
+      ]
     }
   ],
   "characters": [
@@ -70,11 +142,15 @@
       "image": "goro-amamiya.jpg",
       "gender": "Homme",
       "age": 35,
-      "hairColor": "Noir",
-      "eyeColor": "Noir",
+      "hairColor": "Brun",
+      "eyeColor": "Marron",
       "starryEyes": false,
-      "role": ["Docteur"],
-      "affiliation": ["Aucune"],
+      "role": [
+        "Docteur"
+      ],
+      "affiliation": [
+        "Aucune"
+      ],
       "status": false,
       "firstArc": "Enfance",
       "difficulty": "facile"
@@ -88,8 +164,12 @@
       "hairColor": "Roux",
       "eyeColor": "Bleu",
       "starryEyes": false,
-      "role": ["Patiente"],
-      "affiliation": ["Aucune"],
+      "role": [
+        "Patiente"
+      ],
+      "affiliation": [
+        "Aucune"
+      ],
       "status": false,
       "firstArc": "Enfance",
       "difficulty": "moyen"
@@ -103,8 +183,13 @@
       "hairColor": "Violet",
       "eyeColor": "Bleu",
       "starryEyes": true,
-      "role": ["Idole"],
-      "affiliation": ["B-Komachi", "Ichigo Production"],
+      "role": [
+        "Idole"
+      ],
+      "affiliation": [
+        "B-Komachi",
+        "Ichigo Production"
+      ],
       "status": false,
       "firstArc": "Enfance",
       "difficulty": "facile"
@@ -118,8 +203,12 @@
       "hairColor": "Blond",
       "eyeColor": "Marron",
       "starryEyes": false,
-      "role": ["Manager"],
-      "affiliation": ["Ichigo Production"],
+      "role": [
+        "Manager"
+      ],
+      "affiliation": [
+        "Ichigo Production"
+      ],
       "status": true,
       "firstArc": "Enfance",
       "difficulty": "moyen"
@@ -130,11 +219,16 @@
       "image": "aqua-hoshino.jpg",
       "gender": "Homme",
       "age": 18,
-      "hairColor": "Noir",
+      "hairColor": "Blond",
       "eyeColor": "Bleu",
       "starryEyes": true,
-      "role": ["Acteur.ice", "Realisateur.ice"],
-      "affiliation": ["Ichigo Production"],
+      "role": [
+        "Acteur.ice",
+        "Realisateur.ice"
+      ],
+      "affiliation": [
+        "Ichigo Production"
+      ],
       "status": false,
       "firstArc": "Enfance",
       "difficulty": "facile"
@@ -145,11 +239,17 @@
       "image": "ruby-hoshino.jpg",
       "gender": "Femme",
       "age": 18,
-      "hairColor": "Rose",
+      "hairColor": "Blond",
       "eyeColor": "Rose",
       "starryEyes": true,
-      "role": ["Idole", "Acteur.ice"],
-      "affiliation": ["B-Komachi", "Ichigo Production"],
+      "role": [
+        "Idole",
+        "Acteur.ice"
+      ],
+      "affiliation": [
+        "B-Komachi",
+        "Ichigo Production"
+      ],
       "status": true,
       "firstArc": "Enfance",
       "difficulty": "facile"
@@ -159,12 +259,16 @@
       "name": "Miyako Saitou",
       "image": "miyako-saitou.jpg",
       "gender": "Femme",
-      "age": 38,
+      "age": 35,
       "hairColor": "Blond",
       "eyeColor": "Rouge",
       "starryEyes": false,
-      "role": ["Manager"],
-      "affiliation": ["Ichigo Production"],
+      "role": [
+        "Manager"
+      ],
+      "affiliation": [
+        "Ichigo Production"
+      ],
       "status": true,
       "firstArc": "Enfance",
       "difficulty": "facile"
@@ -174,12 +278,16 @@
       "name": "Taishi Gotanda",
       "image": "taishi-gotanda.jpg",
       "gender": "Homme",
-      "age": 40,
+      "age": 45,
       "hairColor": "Brun",
       "eyeColor": "Marron",
       "starryEyes": false,
-      "role": ["Realisateur.ice"],
-      "affiliation": ["Aucune"],
+      "role": [
+        "Realisateur.ice"
+      ],
+      "affiliation": [
+        "Aucune"
+      ],
       "status": true,
       "firstArc": "Enfance",
       "difficulty": "moyen"
@@ -193,8 +301,14 @@
       "hairColor": "Rouge",
       "eyeColor": "Rouge",
       "starryEyes": false,
-      "role": ["Acteur.ice", "Idole"],
-      "affiliation": ["B-Komachi", "Ichigo Production"],
+      "role": [
+        "Acteur.ice",
+        "Idole"
+      ],
+      "affiliation": [
+        "B-Komachi",
+        "Ichigo Production"
+      ],
       "status": true,
       "firstArc": "Enfance",
       "difficulty": "facile"
@@ -204,12 +318,16 @@
       "name": "Ryosuke Sugano",
       "image": "ryosuke-sugano.jpg",
       "gender": "Homme",
-      "age": 20,
+      "age": 22,
       "hairColor": "Brun",
       "eyeColor": "Marron",
       "starryEyes": false,
-      "role": ["Autre"],
-      "affiliation": ["Aucune"],
+      "role": [
+        "Autre"
+      ],
+      "affiliation": [
+        "Aucune"
+      ],
       "status": false,
       "firstArc": "Enfance",
       "difficulty": "moyen"
@@ -219,12 +337,16 @@
       "name": "Masaya Kaburagi",
       "image": "masaya-kaburagi.jpg",
       "gender": "Homme",
-      "age": 45,
-      "hairColor": "Noir",
+      "age": "Inconnu",
+      "hairColor": "Brun",
       "eyeColor": "Marron",
       "starryEyes": false,
-      "role": ["Producteur.ice"],
-      "affiliation": ["Autre"],
+      "role": [
+        "Producteur.ice"
+      ],
+      "affiliation": [
+        "Autre"
+      ],
       "status": true,
       "firstArc": "Show Business",
       "difficulty": "moyen"
@@ -234,12 +356,16 @@
       "name": "Melt Narushima",
       "image": "melt-narushima.jpg",
       "gender": "Homme",
-      "age": 17,
-      "hairColor": "Blond",
-      "eyeColor": "Bleu",
+      "age": 18,
+      "hairColor": "Violet",
+      "eyeColor": "Ambre",
       "starryEyes": false,
-      "role": ["Acteur.ice"],
-      "affiliation": ["Autre"],
+      "role": [
+        "Acteur.ice"
+      ],
+      "affiliation": [
+        "Autre"
+      ],
       "status": true,
       "firstArc": "Show Business",
       "difficulty": "moyen"
@@ -249,12 +375,16 @@
       "name": "Yoriko Kichijouji",
       "image": "yoriko-kichijouji.jpg",
       "gender": "Femme",
-      "age": 30,
-      "hairColor": "Brun",
+      "age": 34,
+      "hairColor": "Blond",
       "eyeColor": "Marron",
       "starryEyes": false,
-      "role": ["Mangaka"],
-      "affiliation": ["Aucune"],
+      "role": [
+        "Mangaka"
+      ],
+      "affiliation": [
+        "Aucune"
+      ],
       "status": true,
       "firstArc": "Show Business",
       "difficulty": "difficile"
@@ -264,12 +394,17 @@
       "name": "Frill Shiranui",
       "image": "frill-shiranui.jpg",
       "gender": "Femme",
-      "age": 16,
-      "hairColor": "Blanc",
-      "eyeColor": "Violet",
+      "age": 18,
+      "hairColor": "Vert",
+      "eyeColor": "Vert",
       "starryEyes": false,
-      "role": ["Acteur.ice", "Idole"],
-      "affiliation": ["Autre"],
+      "role": [
+        "Acteur.ice",
+        "Model"
+      ],
+      "affiliation": [
+        "Autre"
+      ],
       "status": true,
       "firstArc": "Show Business",
       "difficulty": "moyen"
@@ -279,12 +414,17 @@
       "name": "Minami Kotobuki",
       "image": "minami-kotobuki.jpg",
       "gender": "Femme",
-      "age": 16,
-      "hairColor": "Brun",
-      "eyeColor": "Marron",
+      "age": 18,
+      "hairColor": "Rose",
+      "eyeColor": "Rose",
       "starryEyes": false,
-      "role": ["Acteur.ice"],
-      "affiliation": ["Aucune"],
+      "role": [
+        "Acteur.ice",
+        "Model"
+      ],
+      "affiliation": [
+        "Aucune"
+      ],
       "status": true,
       "firstArc": "Show Business",
       "difficulty": "difficile"
@@ -294,12 +434,16 @@
       "name": "Akane Kurokawa",
       "image": "akane-kurokawa.jpg",
       "gender": "Femme",
-      "age": 17,
-      "hairColor": "Noir",
-      "eyeColor": "Violet",
-      "starryEyes": false,
-      "role": ["Acteur.ice"],
-      "affiliation": ["Lalalie"],
+      "age": 18,
+      "hairColor": "Bleu",
+      "eyeColor": "Bleu",
+      "starryEyes": true,
+      "role": [
+        "Acteur.ice"
+      ],
+      "affiliation": [
+        "Lalalie"
+      ],
       "status": true,
       "firstArc": "Téléréalité de rencontre",
       "difficulty": "facile"
@@ -309,12 +453,18 @@
       "name": "Mem-Cho",
       "image": "mem-cho.jpg",
       "gender": "Femme",
-      "age": 25,
+      "age": "Inconnu",
       "hairColor": "Blond",
-      "eyeColor": "Marron",
+      "eyeColor": "Bleu",
       "starryEyes": false,
-      "role": ["Influenceur.ice", "Idole"],
-      "affiliation": ["B-Komachi", "Ichigo Production"],
+      "role": [
+        "Influenceur.ice",
+        "Idole"
+      ],
+      "affiliation": [
+        "B-Komachi",
+        "Ichigo Production"
+      ],
       "status": true,
       "firstArc": "Téléréalité de rencontre",
       "difficulty": "facile"
@@ -324,12 +474,17 @@
       "name": "Yuki Sumi",
       "image": "yuki-sumi.jpg",
       "gender": "Femme",
-      "age": 17,
-      "hairColor": "Blond",
-      "eyeColor": "Bleu",
+      "age": 15,
+      "hairColor": "Noir",
+      "eyeColor": "Marron",
       "starryEyes": false,
-      "role": ["Acteur.ice"],
-      "affiliation": ["Autre"],
+      "role": [
+        "Acteur.ice",
+        "Model"
+      ],
+      "affiliation": [
+        "Autre"
+      ],
       "status": true,
       "firstArc": "Téléréalité de rencontre",
       "difficulty": "moyen"
@@ -340,11 +495,15 @@
       "image": "nobuyuki-kumano.jpg",
       "gender": "Homme",
       "age": 17,
-      "hairColor": "Brun",
+      "hairColor": "Noir",
       "eyeColor": "Marron",
       "starryEyes": false,
-      "role": ["Autre"],
-      "affiliation": ["Aucune"],
+      "role": [
+        "Danceur.euse"
+      ],
+      "affiliation": [
+        "Aucune"
+      ],
       "status": true,
       "firstArc": "Téléréalité de rencontre",
       "difficulty": "difficile"
@@ -354,12 +513,17 @@
       "name": "Kengo Morimoto",
       "image": "kengo-morimoto.jpg",
       "gender": "Homme",
-      "age": 17,
-      "hairColor": "Noir",
-      "eyeColor": "Marron",
+      "age": 19,
+      "hairColor": "Blanc",
+      "eyeColor": "Gris",
       "starryEyes": false,
-      "role": ["Chanteur.euse"],
-      "affiliation": ["Aucune"],
+      "role": [
+        "Chanteur.euse",
+        "Musicien.ne"
+      ],
+      "affiliation": [
+        "Aucune"
+      ],
       "status": true,
       "firstArc": "Téléréalité de rencontre",
       "difficulty": "difficile"
@@ -369,12 +533,16 @@
       "name": "Pieyon",
       "image": "pieyon.jpg",
       "gender": "Homme",
-      "age": 25,
+      "age": "Inconnu",
       "hairColor": "Inconnu",
       "eyeColor": "Inconnu",
       "starryEyes": false,
-      "role": ["Influenceur.ice"],
-      "affiliation": ["Ichigo Production"],
+      "role": [
+        "Influenceur.ice"
+      ],
+      "affiliation": [
+        "Autre"
+      ],
       "status": true,
       "firstArc": "Téléréalité de rencontre",
       "difficulty": "moyen"
@@ -384,12 +552,16 @@
       "name": "Sumiaki Raida",
       "image": "sumiaki-raida.jpg",
       "gender": "Homme",
-      "age": 40,
-      "hairColor": "Noir",
+      "age": 35,
+      "hairColor": "Noir/Blanc",
       "eyeColor": "Marron",
       "starryEyes": false,
-      "role": ["Producteur.ice"],
-      "affiliation": ["Autre"],
+      "role": [
+        "Producteur.ice"
+      ],
+      "affiliation": [
+        "Autre"
+      ],
       "status": true,
       "firstArc": "Première Scène",
       "difficulty": "difficile"
@@ -401,10 +573,14 @@
       "gender": "Femme",
       "age": 18,
       "hairColor": "Brun",
-      "eyeColor": "Marron",
+      "eyeColor": "Inconnu",
       "starryEyes": false,
-      "role": ["Idole"],
-      "affiliation": ["Autre"],
+      "role": [
+        "Idole"
+      ],
+      "affiliation": [
+        "Autre"
+      ],
       "status": true,
       "firstArc": "Première Scène",
       "difficulty": "difficile"
@@ -414,12 +590,16 @@
       "name": "Toshirou Kindaichi",
       "image": "toshirou-kindaichi.jpg",
       "gender": "Homme",
-      "age": 45,
-      "hairColor": "Gris",
-      "eyeColor": "Marron",
+      "age": 56,
+      "hairColor": "Noir",
+      "eyeColor": "Noir",
       "starryEyes": false,
-      "role": ["Realisateur.ice"],
-      "affiliation": ["Lalalie"],
+      "role": [
+        "Realisateur.ice"
+      ],
+      "affiliation": [
+        "Lalalie"
+      ],
       "status": true,
       "firstArc": "Pièce de théatre",
       "difficulty": "moyen"
@@ -429,12 +609,16 @@
       "name": "Abiko Samejima",
       "image": "abiko-samejima.jpg",
       "gender": "Femme",
-      "age": 30,
-      "hairColor": "Noir",
-      "eyeColor": "Marron",
+      "age": 22,
+      "hairColor": "Violet",
+      "eyeColor": "Violet",
       "starryEyes": false,
-      "role": ["Mangaka"],
-      "affiliation": ["Aucune"],
+      "role": [
+        "Mangaka"
+      ],
+      "affiliation": [
+        "Aucune"
+      ],
       "status": true,
       "firstArc": "Pièce de théatre",
       "difficulty": "moyen"
@@ -444,12 +628,16 @@
       "name": "Goa",
       "image": "goa.jpg",
       "gender": "Homme",
-      "age": 35,
+      "age": 39,
       "hairColor": "Brun",
-      "eyeColor": "Marron",
+      "eyeColor": "Violet",
       "starryEyes": false,
-      "role": ["Autre"],
-      "affiliation": ["Aucune"],
+      "role": [
+        "Autre"
+      ],
+      "affiliation": [
+        "Scénariste"
+      ],
       "status": true,
       "firstArc": "Pièce de théatre",
       "difficulty": "difficile"
@@ -459,12 +647,16 @@
       "name": "Taiki Himekawa",
       "image": "taiki-himekawa.jpg",
       "gender": "Homme",
-      "age": 20,
-      "hairColor": "Brun",
-      "eyeColor": "Marron",
+      "age": 22,
+      "hairColor": "Noir",
+      "eyeColor": "Violet",
       "starryEyes": false,
-      "role": ["Acteur.ice"],
-      "affiliation": ["Lalalie"],
+      "role": [
+        "Acteur.ice"
+      ],
+      "affiliation": [
+        "Lalalie"
+      ],
       "status": true,
       "firstArc": "Pièce de théatre",
       "difficulty": "moyen"
@@ -475,11 +667,15 @@
       "image": "sakuya-kamoshida.jpg",
       "gender": "Homme",
       "age": 22,
-      "hairColor": "Brun",
-      "eyeColor": "Marron",
+      "hairColor": "Vert",
+      "eyeColor": "Vert",
       "starryEyes": false,
-      "role": ["Acteur.ice"],
-      "affiliation": ["Lalalie"],
+      "role": [
+        "Acteur.ice"
+      ],
+      "affiliation": [
+        "Lalalie"
+      ],
       "status": true,
       "firstArc": "Pièce de théatre",
       "difficulty": "difficile"
@@ -489,27 +685,35 @@
       "name": "Himura",
       "image": "himura.jpg",
       "gender": "Homme",
-      "age": 40,
-      "hairColor": "Gris",
-      "eyeColor": "Marron",
+      "age": 45,
+      "hairColor": "Noir",
+      "eyeColor": "Violet",
       "starryEyes": false,
-      "role": ["Autre"],
-      "affiliation": ["Aucune"],
+      "role": [
+        "Autre"
+      ],
+      "affiliation": [
+        "Aucune"
+      ],
       "status": true,
       "firstArc": "Vie privée",
-      "difficulty": "difficile"
+      "difficulty": "tres difficile"
     },
     {
       "id": 30,
       "name": "Airi Himekawa",
       "image": "airi-himekawa.jpg",
       "gender": "Femme",
-      "age": 40,
-      "hairColor": "Brun",
-      "eyeColor": "Marron",
+      "age": "Inconnu",
+      "hairColor": "Noir",
+      "eyeColor": "Violet",
       "starryEyes": false,
-      "role": ["Acteur.ice"],
-      "affiliation": ["Lalalie"],
+      "role": [
+        "Acteur.ice"
+      ],
+      "affiliation": [
+        "Lalalie"
+      ],
       "status": false,
       "firstArc": "Vie privée",
       "difficulty": "moyen"
@@ -521,10 +725,14 @@
       "gender": "Homme",
       "age": 50,
       "hairColor": "Gris",
-      "eyeColor": "Marron",
+      "eyeColor": "Rouge",
       "starryEyes": false,
-      "role": ["Autre"],
-      "affiliation": ["Lalalie"],
+      "role": [
+        "Acteur.ice"
+      ],
+      "affiliation": [
+        "Lalalie"
+      ],
       "status": false,
       "firstArc": "Vie privée",
       "difficulty": "difficile"
@@ -534,12 +742,16 @@
       "name": "Shun Yoshizumi",
       "image": "shun-yoshizumi.jpg",
       "gender": "Homme",
-      "age": 25,
-      "hairColor": "Brun",
-      "eyeColor": "Marron",
+      "age": "Inconnu",
+      "hairColor": "Vert",
+      "eyeColor": "Vert",
       "starryEyes": false,
-      "role": ["Manager"],
-      "affiliation": ["Ichigo Production"],
+      "role": [
+        "Manager"
+      ],
+      "affiliation": [
+        "Ichigo Production"
+      ],
       "status": true,
       "firstArc": "Clé de voute",
       "difficulty": "difficile"
@@ -550,11 +762,15 @@
       "image": "mimi-yoshizumi.jpg",
       "gender": "Femme",
       "age": 22,
-      "hairColor": "Brun",
-      "eyeColor": "Marron",
+      "hairColor": "Noir",
+      "eyeColor": "Violet",
       "starryEyes": false,
-      "role": ["Influenceur.ice"],
-      "affiliation": ["Aucune"],
+      "role": [
+        "Influenceur.ice"
+      ],
+      "affiliation": [
+        "Aucune"
+      ],
       "status": true,
       "firstArc": "Clé de voute",
       "difficulty": "difficile"
@@ -565,11 +781,15 @@
       "image": "hikaru-kamiki.jpg",
       "gender": "Homme",
       "age": 33,
-      "hairColor": "Noir",
+      "hairColor": "Blond",
       "eyeColor": "Bleu",
-      "starryEyes": false,
-      "role": ["Acteur.ice"],
-      "affiliation": ["Kamiki Productions"],
+      "starryEyes": true,
+      "role": [
+        "Acteur.ice"
+      ],
+      "affiliation": [
+        "Autre"
+      ],
       "status": false,
       "firstArc": "Clé de voute",
       "difficulty": "moyen"
@@ -583,8 +803,12 @@
       "hairColor": "Brun",
       "eyeColor": "Marron",
       "starryEyes": false,
-      "role": ["Realisateur.ice"],
-      "affiliation": ["Aucune"],
+      "role": [
+        "Realisateur.ice"
+      ],
+      "affiliation": [
+        "Aucune"
+      ],
       "status": true,
       "firstArc": "Scandale",
       "difficulty": "difficile"
@@ -598,8 +822,12 @@
       "hairColor": "Brun",
       "eyeColor": "Marron",
       "starryEyes": false,
-      "role": ["Acteur.ice"],
-      "affiliation": ["Kamiki Productions"],
+      "role": [
+        "Acteur.ice"
+      ],
+      "affiliation": [
+        "Kamiki Productions"
+      ],
       "status": false,
       "firstArc": "Film",
       "difficulty": "difficile"
@@ -613,8 +841,12 @@
       "hairColor": "Brun",
       "eyeColor": "Vert",
       "starryEyes": false,
-      "role": ["Idole"],
-      "affiliation": ["B-Komachi"],
+      "role": [
+        "Idole"
+      ],
+      "affiliation": [
+        "B-Komachi"
+      ],
       "status": true,
       "firstArc": "Film",
       "difficulty": "moyen"
@@ -628,8 +860,12 @@
       "hairColor": "Roux",
       "eyeColor": "Marron",
       "starryEyes": false,
-      "role": ["Autre"],
-      "affiliation": ["Aucune"],
+      "role": [
+        "Autre"
+      ],
+      "affiliation": [
+        "Aucune"
+      ],
       "status": true,
       "firstArc": "Film",
       "difficulty": "difficile"
@@ -643,11 +879,495 @@
       "hairColor": "Noir",
       "eyeColor": "Noir",
       "starryEyes": false,
-      "role": ["Acteur.ice"],
-      "affiliation": ["Aucune"],
+      "role": [
+        "Acteur.ice"
+      ],
+      "affiliation": [
+        "Aucune"
+      ],
       "status": true,
       "firstArc": "Film",
       "difficulty": "moyen"
+    },
+    {
+      "id": 40,
+      "name": "Meimei",
+      "image": "meimei.jpg",
+      "gender": "Femme",
+      "age": 16,
+      "hairColor": "Noir",
+      "eyeColor": "Marron",
+      "starryEyes": false,
+      "role": [
+        "Idole"
+      ],
+      "affiliation": [
+        "B-Komachi",
+        "Ichigo Production"
+      ],
+      "status": true,
+      "firstArc": "Enfance",
+      "difficulty": "tres difficile"
+    },
+    {
+      "id": 41,
+      "name": "Takamine",
+      "image": "takamine.jpg",
+      "gender": "Femme",
+      "age": 16,
+      "hairColor": "Brun",
+      "eyeColor": "Marron",
+      "starryEyes": false,
+      "role": [
+        "Idole"
+      ],
+      "affiliation": [
+        "B-Komachi",
+        "Ichigo Production"
+      ],
+      "status": true,
+      "firstArc": "Enfance",
+      "difficulty": "tres difficile"
+    },
+    {
+      "id": 42,
+      "name": "Watanabe",
+      "image": "watanabe.jpg",
+      "gender": "Femme",
+      "age": 16,
+      "hairColor": "Brun",
+      "eyeColor": "Marron",
+      "starryEyes": false,
+      "role": [
+        "Idole"
+      ],
+      "affiliation": [
+        "B-Komachi",
+        "Ichigo Production"
+      ],
+      "status": true,
+      "firstArc": "Enfance",
+      "difficulty": "tres difficile"
+    },
+    {
+      "id": 43,
+      "name": "Ari Pyan",
+      "image": "ari-pyan.jpg",
+      "gender": "Femme",
+      "age": 16,
+      "hairColor": "Blond",
+      "eyeColor": "Marron",
+      "starryEyes": false,
+      "role": [
+        "Idole"
+      ],
+      "affiliation": [
+        "B-Komachi",
+        "Ichigo Production"
+      ],
+      "status": true,
+      "firstArc": "Enfance",
+      "difficulty": "tres difficile"
+    },
+    {
+      "id": 44,
+      "name": "Kyun",
+      "image": "kyun.jpg",
+      "gender": "Femme",
+      "age": 16,
+      "hairColor": "Noir",
+      "eyeColor": "Marron",
+      "starryEyes": false,
+      "role": [
+        "Idole"
+      ],
+      "affiliation": [
+        "B-Komachi",
+        "Ichigo Production"
+      ],
+      "status": true,
+      "firstArc": "Enfance",
+      "difficulty": "tres difficile"
+    },
+    {
+      "id": 45,
+      "name": "Masashi Tanaka",
+      "image": "masashi-tanaka.jpg",
+      "gender": "Homme",
+      "age": 35,
+      "hairColor": "Brun",
+      "eyeColor": "Marron",
+      "starryEyes": false,
+      "role": [
+        "Autre"
+      ],
+      "affiliation": [
+        "Ichigo Production"
+      ],
+      "status": true,
+      "firstArc": "Show Business",
+      "difficulty": "tres difficile"
+    },
+    {
+      "id": 46,
+      "name": "Lara",
+      "image": "lara.jpg",
+      "gender": "Femme",
+      "age": 18,
+      "hairColor": "Brun",
+      "eyeColor": "Marron",
+      "starryEyes": false,
+      "role": [
+        "Idole"
+      ],
+      "affiliation": [
+        "Autre"
+      ],
+      "status": true,
+      "firstArc": "Show Business",
+      "difficulty": "difficile"
+    },
+    {
+      "id": 47,
+      "name": "Hikaru Kanzaki",
+      "image": "hikaru-kanzaki.jpg",
+      "gender": "Homme",
+      "age": 30,
+      "hairColor": "Brun",
+      "eyeColor": "Marron",
+      "starryEyes": false,
+      "role": [
+        "Autre"
+      ],
+      "affiliation": [
+        "Ichigo Production"
+      ],
+      "status": true,
+      "firstArc": "Show Business",
+      "difficulty": "tres difficile"
+    },
+    {
+      "id": 48,
+      "name": "Rio Mitano",
+      "image": "rio-mitano.jpg",
+      "gender": "Femme",
+      "age": 20,
+      "hairColor": "Brun",
+      "eyeColor": "Marron",
+      "starryEyes": false,
+      "role": [
+        "Acteur.ice"
+      ],
+      "affiliation": [
+        "Lalalie"
+      ],
+      "status": true,
+      "firstArc": "Pièce de théatre",
+      "difficulty": "difficile"
+    },
+    {
+      "id": 49,
+      "name": "Mei Adashino",
+      "image": "mei-adashino.jpg",
+      "gender": "Femme",
+      "age": 20,
+      "hairColor": "Noir",
+      "eyeColor": "Marron",
+      "starryEyes": false,
+      "role": [
+        "Acteur.ice"
+      ],
+      "affiliation": [
+        "Lalalie"
+      ],
+      "status": true,
+      "firstArc": "Pièce de théatre",
+      "difficulty": "difficile"
+    },
+    {
+      "id": 50,
+      "name": "Koyuki Yoshidomi",
+      "image": "koyuki-yoshidomi.jpg",
+      "gender": "Femme",
+      "age": 20,
+      "hairColor": "Brun",
+      "eyeColor": "Marron",
+      "starryEyes": false,
+      "role": [
+        "Acteur.ice"
+      ],
+      "affiliation": [
+        "Lalalie"
+      ],
+      "status": true,
+      "firstArc": "Pièce de théatre",
+      "difficulty": "difficile"
+    },
+    {
+      "id": 51,
+      "name": "Kiiro Hayashibara",
+      "image": "kiiro-hayashibara.jpg",
+      "gender": "Femme",
+      "age": 20,
+      "hairColor": "Blond",
+      "eyeColor": "Marron",
+      "starryEyes": false,
+      "role": [
+        "Acteur.ice"
+      ],
+      "affiliation": [
+        "Lalalie"
+      ],
+      "status": true,
+      "firstArc": "Pièce de théatre",
+      "difficulty": "difficile"
+    },
+    {
+      "id": 52,
+      "name": "Ryouma Funato",
+      "image": "ryouma-funato.jpg",
+      "gender": "Homme",
+      "age": 25,
+      "hairColor": "Brun",
+      "eyeColor": "Marron",
+      "starryEyes": false,
+      "role": [
+        "Acteur.ice"
+      ],
+      "affiliation": [
+        "Lalalie"
+      ],
+      "status": true,
+      "firstArc": "Pièce de théatre",
+      "difficulty": "difficile"
+    },
+    {
+      "id": 53,
+      "name": "Tanji Yamanaka",
+      "image": "tanji-yamanaka.jpg",
+      "gender": "Homme",
+      "age": 20,
+      "hairColor": "Brun",
+      "eyeColor": "Marron",
+      "starryEyes": false,
+      "role": [
+        "Acteur.ice"
+      ],
+      "affiliation": [
+        "Lalalie"
+      ],
+      "status": true,
+      "firstArc": "Pièce de théatre",
+      "difficulty": "tres difficile"
+    },
+    {
+      "id": 54,
+      "name": "Luna",
+      "image": "luna.jpg",
+      "gender": "Femme",
+      "age": 25,
+      "hairColor": "Brun",
+      "eyeColor": "Marron",
+      "starryEyes": false,
+      "role": [
+        "Autre"
+      ],
+      "affiliation": [
+        "Aucune"
+      ],
+      "status": true,
+      "firstArc": "Vie privée",
+      "difficulty": "tres difficile"
+    },
+    {
+      "id": 55,
+      "name": "Anemone Monemone",
+      "image": "anemone-monemone.jpg",
+      "gender": "Femme",
+      "age": 22,
+      "hairColor": "Blond",
+      "eyeColor": "Marron",
+      "starryEyes": false,
+      "role": [
+        "Influenceur.ice"
+      ],
+      "affiliation": [
+        "Aucune"
+      ],
+      "status": true,
+      "firstArc": "Vie privée",
+      "difficulty": "difficile"
+    },
+    {
+      "id": 56,
+      "name": "Tetsu Urushibara",
+      "image": "tetsu-urushibara.jpg",
+      "gender": "Homme",
+      "age": 45,
+      "hairColor": "Gris",
+      "eyeColor": "Marron",
+      "starryEyes": false,
+      "role": [
+        "Realisateur.ice"
+      ],
+      "affiliation": [
+        "Autre"
+      ],
+      "status": true,
+      "firstArc": "Clé de voute",
+      "difficulty": "difficile"
+    },
+    {
+      "id": 57,
+      "name": "Meiya",
+      "image": "meiya.jpg",
+      "gender": "Femme",
+      "age": 20,
+      "hairColor": "Brun",
+      "eyeColor": "Marron",
+      "starryEyes": false,
+      "role": [
+        "Autre"
+      ],
+      "affiliation": [
+        "Aucune"
+      ],
+      "status": true,
+      "firstArc": "Clé de voute",
+      "difficulty": "difficile"
+    },
+    {
+      "id": 58,
+      "name": "Mimoji Kote",
+      "image": "mimoji-kote.jpg",
+      "gender": "Homme",
+      "age": 50,
+      "hairColor": "Gris",
+      "eyeColor": "Marron",
+      "starryEyes": false,
+      "role": [
+        "Producteur.ice"
+      ],
+      "affiliation": [
+        "Autre"
+      ],
+      "status": true,
+      "firstArc": "Clé de voute",
+      "difficulty": "tres difficile"
+    },
+    {
+      "id": 59,
+      "name": "Mako Azami",
+      "image": "mako-azami.jpg",
+      "gender": "Femme",
+      "age": 19,
+      "hairColor": "Noir",
+      "eyeColor": "Marron",
+      "starryEyes": false,
+      "role": [
+        "Acteur.ice"
+      ],
+      "affiliation": [
+        "Aucune"
+      ],
+      "status": true,
+      "firstArc": "Clé de voute",
+      "difficulty": "difficile"
+    },
+    {
+      "id": 60,
+      "name": "Kazuhiko Itano",
+      "image": "kazuhiko-itano.jpg",
+      "gender": "Homme",
+      "age": 40,
+      "hairColor": "Brun",
+      "eyeColor": "Marron",
+      "starryEyes": false,
+      "role": [
+        "Autre"
+      ],
+      "affiliation": [
+        "Aucune"
+      ],
+      "status": true,
+      "firstArc": "Scandale",
+      "difficulty": "tres difficile"
+    },
+    {
+      "id": 61,
+      "name": "Mio Honda",
+      "image": "mio-honda.jpg",
+      "gender": "Femme",
+      "age": 30,
+      "hairColor": "Brun",
+      "eyeColor": "Marron",
+      "starryEyes": false,
+      "role": [
+        "Manager"
+      ],
+      "affiliation": [
+        "Autre"
+      ],
+      "status": true,
+      "firstArc": "Film",
+      "difficulty": "tres difficile"
+    },
+    {
+      "id": 62,
+      "name": "Tomato Jan",
+      "image": "tomato-jan.jpg",
+      "gender": "Femme",
+      "age": 35,
+      "hairColor": "Brun",
+      "eyeColor": "Marron",
+      "starryEyes": false,
+      "role": [
+        "Acteur.ice"
+      ],
+      "affiliation": [
+        "Autre"
+      ],
+      "status": true,
+      "firstArc": "Film",
+      "difficulty": "tres difficile"
+    },
+    {
+      "id": 63,
+      "name": "Tomo Ayabe",
+      "image": "tomo-ayabe.jpg",
+      "gender": "Homme",
+      "age": 30,
+      "hairColor": "Brun",
+      "eyeColor": "Marron",
+      "starryEyes": false,
+      "role": [
+        "Acteur.ice"
+      ],
+      "affiliation": [
+        "Autre"
+      ],
+      "status": true,
+      "firstArc": "Film",
+      "difficulty": "tres difficile"
+    },
+    {
+      "id": 64,
+      "name": "Ayumi Hoshino",
+      "image": "ayumi-hoshino.jpg",
+      "gender": "Femme",
+      "age": 40,
+      "hairColor": "Violet",
+      "eyeColor": "Marron",
+      "starryEyes": false,
+      "role": [
+        "Autre"
+      ],
+      "affiliation": [
+        "Aucune"
+      ],
+      "status": true,
+      "firstArc": "Film",
+      "difficulty": "difficile"
     }
   ]
 }
