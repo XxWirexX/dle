@@ -35,7 +35,9 @@ setupSocketHandlers(io);
 
 app.use('/api/images', express.static(path.join(__dirname, '../public/images')));
 
-app.use(express.static(path.join(__dirname, '../public/dist')));
+// Serve frontend dist only in production
+// In dev, use Vite dev server on port 5173
+// app.use(express.static(path.join(__dirname, '../public/dist')));
 
 const gameCache = new Map<string, Record<string, unknown>>();
 (function loadCache() {
@@ -93,9 +95,10 @@ app.get('/api/daily/:id', (req: Request, res: Response) => {
   res.json({ characterIndex: index, date: dateStr, dayNumber });
 });
 
-app.get('/{*path}', (_req: Request, res: Response) => {
-  res.sendFile(path.join(__dirname, '../public/dist/index.html'));
-});
+// SPA fallback - commented out for dev (use Vite dev server instead)
+// app.get('/{*path}', (_req: Request, res: Response) => {
+//   res.sendFile(path.join(__dirname, '../public/dist/index.html'));
+// });
 
 app.use((err: unknown, _req: Request, res: Response, _next: NextFunction) => {
   if (err instanceof AppError) {

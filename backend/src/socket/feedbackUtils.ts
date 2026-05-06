@@ -3,8 +3,13 @@
 function computeFieldFeedback(guessVal, targetVal, attribute) {
   const { type, order, groups } = attribute;
 
+  // DEBUG: log pour les booléens
+  if (attribute.key === 'starryEyes' || attribute.key === 'status') {
+    console.log(`[DEBUG ${attribute.key}] type=${type}, guessVal=${guessVal} (${typeof guessVal}), targetVal=${targetVal} (${typeof targetVal})`);
+  }
+
   // Type multiple (tableaux de valeurs, ex: haki)
-  if (type === "multiple") {
+  if (type === "multiple" || type === "multi") {
     const gArray = Array.isArray(guessVal) ? guessVal : [];
     const tArray = Array.isArray(targetVal) ? targetVal : [];
     const gSet = new Set(gArray.map(v => v.toLowerCase()));
@@ -41,7 +46,11 @@ function computeFieldFeedback(guessVal, targetVal, attribute) {
 
   // Type booléen - exact match only
   if (type === "boolean") {
-    if (gLower === tLower) {
+    // Convert both to boolean for comparison
+    const gBool = guessVal === true || guessVal === "true" || String(guessVal).toLowerCase() === "true";
+    const tBool = targetVal === true || targetVal === "true" || String(targetVal).toLowerCase() === "true";
+
+    if (gBool === tBool) {
       return { type: "correct", label: "oui" };
     }
     return { type: "wrong", label: "non" };
@@ -124,9 +133,14 @@ function computeFieldFeedback(guessVal, targetVal, attribute) {
 
 // Calcul du feedback pour tous les attributs
 function getFeedbackObject(guess, target, attributes) {
+  console.log(`[FEEDBACK] Calculating feedback for attributes:`, attributes.map(a => a.key));
   const obj = {};
   attributes.forEach((attr) => {
-    obj[attr.key] = computeFieldFeedback(guess[attr.key], target[attr.key], attr);
+    const result = computeFieldFeedback(guess[attr.key], target[attr.key], attr);
+    obj[attr.key] = result;
+    if (attr.key === 'starryEyes' || attr.key === 'status') {
+      console.log(`[FEEDBACK] ${attr.key}: guess=${guess[attr.key]} target=${target[attr.key]} => ${result.type} (${result.label})`);
+    }
   });
   return obj;
 }

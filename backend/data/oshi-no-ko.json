@@ -71,7 +71,7 @@
     {
       "key": "role",
       "label": "Rôle",
-      "type": "multiple",
+      "type": "multi",
       "hints": [
         "Patiente",
         "Docteur",
@@ -90,7 +90,7 @@
     {
       "key": "affiliation",
       "label": "Affiliation",
-      "type": "multiple",
+      "type": "multi",
       "hints": [
         "B-Komachi",
         "Ichigo Production",
@@ -108,8 +108,8 @@
     {
       "key": "firstArc",
       "label": "Premier Arc",
-      "type": "text",
-      "hints": [
+      "type": "ordered",
+      "order": [
         "Enfance",
         "Show Business",
         "Téléréalité de rencontre",
@@ -799,12 +799,12 @@
       "name": "Masanori Shima",
       "image": "masanori-shima.jpg",
       "gender": "Homme",
-      "age": 30,
+      "age": "Inconnu",
       "hairColor": "Brun",
       "eyeColor": "Marron",
       "starryEyes": false,
       "role": [
-        "Realisateur.ice"
+        "Réalisateur.ice"
       ],
       "affiliation": [
         "Aucune"
@@ -818,15 +818,15 @@
       "name": "Yura Katayose",
       "image": "yura-katayose.jpg",
       "gender": "Femme",
-      "age": 28,
-      "hairColor": "Brun",
-      "eyeColor": "Marron",
-      "starryEyes": false,
+      "age": 25,
+      "hairColor": "Bleu",
+      "eyeColor": "Bleu",
+      "starryEyes": true,
       "role": [
         "Acteur.ice"
       ],
       "affiliation": [
-        "Kamiki Productions"
+        "Autre"
       ],
       "status": false,
       "firstArc": "Film",
@@ -837,7 +837,7 @@
       "name": "Fuyuko Niino",
       "image": "fuyuko-niino.jpg",
       "gender": "Femme",
-      "age": 35,
+      "age": 20,
       "hairColor": "Brun",
       "eyeColor": "Vert",
       "starryEyes": false,
@@ -845,7 +845,8 @@
         "Idole"
       ],
       "affiliation": [
-        "B-Komachi"
+        "B-Komachi",
+        "Ichigo Production"
       ],
       "status": true,
       "firstArc": "Film",
@@ -856,9 +857,9 @@
       "name": "Marina Tendouji",
       "image": "marina-tendouji.jpg",
       "gender": "Femme",
-      "age": 40,
-      "hairColor": "Roux",
-      "eyeColor": "Marron",
+      "age": 54,
+      "hairColor": "Brun",
+      "eyeColor": "Bleu",
       "starryEyes": false,
       "role": [
         "Autre"
@@ -876,8 +877,8 @@
       "image": "tsukuyomi.jpg",
       "gender": "Femme",
       "age": 14,
-      "hairColor": "Noir",
-      "eyeColor": "Noir",
+      "hairColor": "Blanc",
+      "eyeColor": "Rouge",
       "starryEyes": false,
       "role": [
         "Acteur.ice"
@@ -894,9 +895,9 @@
       "name": "Meimei",
       "image": "meimei.jpg",
       "gender": "Femme",
-      "age": 16,
-      "hairColor": "Noir",
-      "eyeColor": "Marron",
+      "age": 20,
+      "hairColor": "Blond",
+      "eyeColor": "Bleu",
       "starryEyes": false,
       "role": [
         "Idole"
@@ -914,9 +915,9 @@
       "name": "Takamine",
       "image": "takamine.jpg",
       "gender": "Femme",
-      "age": 16,
+      "age": 34,
       "hairColor": "Brun",
-      "eyeColor": "Marron",
+      "eyeColor": "Violet",
       "starryEyes": false,
       "role": [
         "Idole"
@@ -934,9 +935,9 @@
       "name": "Watanabe",
       "image": "watanabe.jpg",
       "gender": "Femme",
-      "age": 16,
+      "age": 34,
       "hairColor": "Brun",
-      "eyeColor": "Marron",
+      "eyeColor": "Vert",
       "starryEyes": false,
       "role": [
         "Idole"
@@ -954,9 +955,9 @@
       "name": "Ari Pyan",
       "image": "ari-pyan.jpg",
       "gender": "Femme",
-      "age": 16,
-      "hairColor": "Blond",
-      "eyeColor": "Marron",
+      "age": 34,
+      "hairColor": "Vert",
+      "eyeColor": "Bleu",
       "starryEyes": false,
       "role": [
         "Idole"
@@ -974,9 +975,9 @@
       "name": "Kyun",
       "image": "kyun.jpg",
       "gender": "Femme",
-      "age": 16,
-      "hairColor": "Noir",
-      "eyeColor": "Marron",
+      "age": 34,
+      "hairColor": "Brun",
+      "eyeColor": "Orange",
       "starryEyes": false,
       "role": [
         "Idole"
@@ -994,8 +995,8 @@
       "name": "Masashi Tanaka",
       "image": "masashi-tanaka.jpg",
       "gender": "Homme",
-      "age": 35,
-      "hairColor": "Brun",
+      "age": "Inconnu",
+      "hairColor": "Noir",
       "eyeColor": "Marron",
       "starryEyes": false,
       "role": [
@@ -1032,7 +1033,7 @@
       "name": "Hikaru Kanzaki",
       "image": "hikaru-kanzaki.jpg",
       "gender": "Homme",
-      "age": 30,
+      "age": "Inconnu",
       "hairColor": "Brun",
       "eyeColor": "Marron",
       "starryEyes": false,
@@ -1071,8 +1072,8 @@
       "image": "mei-adashino.jpg",
       "gender": "Femme",
       "age": 20,
-      "hairColor": "Noir",
-      "eyeColor": "Marron",
+      "hairColor": "Blanc",
+      "eyeColor": "Rouge",
       "starryEyes": false,
       "role": [
         "Acteur.ice"
@@ -1107,10 +1108,10 @@
       "id": 51,
       "name": "Kiiro Hayashibara",
       "image": "kiiro-hayashibara.jpg",
-      "gender": "Femme",
+      "gender": "Homme",
       "age": 20,
-      "hairColor": "Blond",
-      "eyeColor": "Marron",
+      "hairColor": "Vert",
+      "eyeColor": "Vert",
       "starryEyes": false,
       "role": [
         "Acteur.ice"
@@ -1128,8 +1129,8 @@
       "image": "ryouma-funato.jpg",
       "gender": "Homme",
       "age": 25,
-      "hairColor": "Brun",
-      "eyeColor": "Marron",
+      "hairColor": "Blond",
+      "eyeColor": "Bleu",
       "starryEyes": false,
       "role": [
         "Acteur.ice"
@@ -1185,8 +1186,8 @@
       "image": "anemone-monemone.jpg",
       "gender": "Femme",
       "age": 22,
-      "hairColor": "Blond",
-      "eyeColor": "Marron",
+      "hairColor": "Noir",
+      "eyeColor": "Bleu",
       "starryEyes": false,
       "role": [
         "Influenceur.ice"
@@ -1204,7 +1205,7 @@
       "image": "tetsu-urushibara.jpg",
       "gender": "Homme",
       "age": 45,
-      "hairColor": "Gris",
+      "hairColor": "Brun",
       "eyeColor": "Marron",
       "starryEyes": false,
       "role": [
@@ -1223,11 +1224,11 @@
       "image": "meiya.jpg",
       "gender": "Femme",
       "age": 20,
-      "hairColor": "Brun",
-      "eyeColor": "Marron",
+      "hairColor": "Blanc",
+      "eyeColor": "Violet",
       "starryEyes": false,
       "role": [
-        "Autre"
+        "Cosplayer.euse"
       ],
       "affiliation": [
         "Aucune"
@@ -1242,7 +1243,7 @@
       "image": "mimoji-kote.jpg",
       "gender": "Homme",
       "age": 50,
-      "hairColor": "Gris",
+      "hairColor": "Marron",
       "eyeColor": "Marron",
       "starryEyes": false,
       "role": [
@@ -1261,7 +1262,7 @@
       "image": "mako-azami.jpg",
       "gender": "Femme",
       "age": 19,
-      "hairColor": "Noir",
+      "hairColor": "Brun",
       "eyeColor": "Marron",
       "starryEyes": false,
       "role": [

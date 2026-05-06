@@ -109,6 +109,7 @@ function SoloGame({ isCustom = false, difficulty = null }) {
   if (!gameData || !target || filteredPool.length === 0) return <div className="loading">Chargement...</div>;
 
   const attributes = gameData.attributes || [];
+  const displayAttributes = attributes.filter(a => a.key !== 'difficulty');
   const maxAttempts = gameData.maxAttempts || 26;
 
   return (
@@ -151,8 +152,8 @@ function SoloGame({ isCustom = false, difficulty = null }) {
           />
         )}
 
-        <AttemptsTable attempts={attempts} attributes={attributes} gameId={id} />
-        {!gameOver && <HintsSection attributes={attributes} />}
+        <AttemptsTable attempts={attempts} attributes={displayAttributes} gameId={id} />
+        {!gameOver && <HintsSection attributes={displayAttributes} />}
       </div>
     </div>
   );
@@ -258,6 +259,7 @@ function DailyGame({ isCustom = false, difficulty = null }) {
   if (!gameData || !target || filteredPool.length === 0) return <div className="loading">Chargement du défi du jour...</div>;
 
   const attributes = gameData.attributes || [];
+  const displayAttributes = attributes.filter(a => a.key !== 'difficulty');
   const maxAttempts = gameData.maxAttempts || 26;
   const isWon = attempts.some(a => a.isCorrect);
 
@@ -295,7 +297,7 @@ function DailyGame({ isCustom = false, difficulty = null }) {
           <GameOverCard target={target} gameId={id} isWon={isWon} attempts={attempts} maxAttempts={maxAttempts}>
             <div className="daily-share-section">
               <pre className="daily-emoji-grid">
-                {generateShareText(attempts, attributes, gameData.name, dayNumber, maxAttempts)}
+                {generateShareText(attempts, displayAttributes, gameData.name, dayNumber, maxAttempts)}
               </pre>
               <button onClick={copyResult} className={`copy-btn${copied ? " copied" : ""}`}>
                 {copied ? "✓ Copié !" : "Partager le résultat"}
@@ -305,8 +307,8 @@ function DailyGame({ isCustom = false, difficulty = null }) {
           </GameOverCard>
         )}
 
-        <AttemptsTable attempts={attempts} attributes={attributes} gameId={id} />
-        {!gameOver && <HintsSection attributes={attributes} />}
+        <AttemptsTable attempts={attempts} attributes={displayAttributes} gameId={id} />
+        {!gameOver && <HintsSection attributes={displayAttributes} />}
       </div>
     </div>
   );

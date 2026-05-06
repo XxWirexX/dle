@@ -6,6 +6,7 @@ import WaitingRoom from "../../components/game/WaitingRoom";
 import TurnIndicator from "../../components/game/TurnIndicator";
 import RematchModal from "../../components/game/RematchModal";
 import ChatBox from "../../components/game/ChatBox";
+import SafeImage from "../../components/SafeImage";
 import animeService from "../../services/animeService";
 import customDleService from "../../services/customDleService";
 import statsService from "../../services/statsService";
@@ -177,7 +178,8 @@ export default function DuoGame({ isCustom = false, difficulty = null }) {
   }
 
   const attributes = localGameData.attributes || [];
-  const hintsData = attributes.filter(attr => attr.hints || attr.order);
+  const displayAttributes = attributes.filter(a => a.key !== 'difficulty');
+  const hintsData = displayAttributes.filter(attr => attr.hints || attr.order);
   const isWinner = winner === socketId;
 
   return (
@@ -219,7 +221,7 @@ export default function DuoGame({ isCustom = false, difficulty = null }) {
                 {filteredSuggestions.map(char => (
                   <button key={char.id} onClick={() => validateSelection(char)} className="suggestion-item">
                     <div className="suggestion-image">
-                      <img src={resolveCharacterImage(char.image, id)} alt={char.name} />
+                      <SafeImage src={resolveCharacterImage(char.image, id)} alt={char.name} />
                     </div>
                     <div className="suggestion-name">{char.name}</div>
                   </button>
@@ -239,7 +241,7 @@ export default function DuoGame({ isCustom = false, difficulty = null }) {
                 <div className="table-header">Joueur</div>
                 <div className="table-header">Image</div>
                 <div className="table-header">Name</div>
-                {attributes.map(attr => (
+                {displayAttributes.map(attr => (
                   <div key={attr.key} className="table-header">{attr.label}</div>
                 ))}
               </div>
@@ -251,18 +253,27 @@ export default function DuoGame({ isCustom = false, difficulty = null }) {
                     </div>
                     <div className="cell-image">
                       <div className="character-image">
-                        <img src={resolveCharacterImage(a.guess.image, id)} alt={a.guess.name} />
+                        <SafeImage src={resolveCharacterImage(a.guess.image, id)} alt={a.guess.name} />
                       </div>
                     </div>
                     <div className={`cell bg-${a.isCorrect ? "correct" : "wrong"}`}>
                       <div className="cell-text">{a.guess.name}</div>
                     </div>
-                    {attributes.map(attr => {
+                    {displayAttributes.map(attr => {
                       const fb = a.feedback[attr.key];
                       const showArrow = attr.type === "number" || attr.type === "ordered";
+                      let displayValue = a.guess[attr.key];
+
+                      // Handle boolean display
+                      if (attr.type === "boolean") {
+                        displayValue = displayValue === true || displayValue === "true" ? "oui" : "non";
+                      } else if (displayValue === undefined || displayValue === null) {
+                        displayValue = "-";
+                      }
+
                       return (
                         <div key={attr.key} className={`${showArrow ? "cell-with-arrow" : "cell"} bg-${fb?.type || "wrong"}`}>
-                          <div className="cell-text-sm">{a.guess[attr.key] || "-"}</div>
+                          <div className="cell-text-sm">{displayValue}</div>
                           {showArrow && fb?.type === "higher" && <div className="arrow">▼</div>}
                           {showArrow && fb?.type === "lower" && <div className="arrow">▲</div>}
                         </div>

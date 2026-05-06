@@ -7,8 +7,21 @@ export function computeFieldFeedback(
   targetVal: string | number | undefined,
   attribute: Attribute,
 ): FieldFeedback {
-  const gLower = guessVal ? guessVal.toString().toLowerCase() : null;
-  const tLower = targetVal ? targetVal.toString().toLowerCase() : null;
+  const { type, order } = attribute;
+
+  // Handle boolean type first (before falsy checks that would break boolean false)
+  if (type === AttributeType.Boolean) {
+    const gBool = guessVal === true || guessVal === "true" || String(guessVal).toLowerCase() === "true";
+    const tBool = targetVal === true || targetVal === "true" || String(targetVal).toLowerCase() === "true";
+
+    if (gBool === tBool) {
+      return { type: FeedbackType.Correct, label: gBool ? "oui" : "non" };
+    }
+    return { type: FeedbackType.Wrong, label: gBool ? "oui" : "non" };
+  }
+
+  const gLower = guessVal !== null && guessVal !== undefined ? guessVal.toString().toLowerCase() : null;
+  const tLower = targetVal !== null && targetVal !== undefined ? targetVal.toString().toLowerCase() : null;
 
   if (gLower && tLower && gLower === tLower) {
     return { type: FeedbackType.Correct, label: String(guessVal) };
@@ -20,8 +33,6 @@ export function computeFieldFeedback(
   if (gIsUnknown || tIsUnknown) {
     return { type: FeedbackType.Wrong, label: String(guessVal ?? '-') };
   }
-
-  const { type, order } = attribute;
 
   if (type === AttributeType.Number) {
     const g = Number(guessVal);
