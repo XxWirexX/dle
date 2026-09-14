@@ -1523,7 +1523,22 @@
 @media (max-width: 768px) {
   .game-overlay { padding: 1.25rem 1rem; }
 
+  /* Le bouton "Quitter" (mode duo) est en position absolue et chevauche
+     le titre centré sur petit écran : on le repasse dans le flux normal. */
+  .nav-back {
+    position: static;
+    display: flex;
+    margin-bottom: 1rem;
+  }
+
   .game-title { font-size: 1.6rem; }
+
+  /* Indice visuel qu'il y a d'autres colonnes à droite (tableau plus
+     large que l'écran sur mobile, sans ça rien ne le suggère). */
+  .attempts-wrapper {
+    -webkit-mask-image: linear-gradient(to right, black calc(100% - 28px), transparent 100%);
+    mask-image: linear-gradient(to right, black calc(100% - 28px), transparent 100%);
+  }
 
   .table-header {
     font-size: 0.55rem;
