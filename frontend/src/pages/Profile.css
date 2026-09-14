@@ -192,7 +192,7 @@
   margin-bottom: 0.75rem;
 }
 
-.mode-icon {
+.mode-header .mode-icon {
   font-size: 1.2rem;
 }
 
@@ -313,7 +313,7 @@
   color: rgba(255, 255, 255, 0.5);
 }
 
-.game-modes {
+.game-stat-row .game-modes {
   display: flex;
   gap: 1.5rem;
   align-items: center;
@@ -374,12 +374,6 @@
 }
 
 /* Loading */
-.loading {
-  color: rgba(255, 255, 255, 0.7);
-  text-align: center;
-  padding: 4rem;
-}
-
 .profile-body {
   padding: 1.5rem;
 }
@@ -436,7 +430,7 @@
     gap: 0.75rem;
   }
 
-  .game-modes {
+  .game-stat-row .game-modes {
     width: 100%;
     justify-content: space-between;
   }

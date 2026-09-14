@@ -92,6 +92,12 @@
 
 .cd-step.done + .cd-step .cd-step-line { background: #10b981; }
 
+@media (max-width: 480px) {
+  .cd-stepper { width: 100%; }
+  .cd-step-line { flex: 1; width: auto; min-width: 8px; margin: 0 6px; }
+  .cd-step-label { display: none; }
+}
+
 /* ─── Main / Sections ─────────────────────────────────── */
 .cd-main {
   max-width: 1200px;

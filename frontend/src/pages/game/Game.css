@@ -810,7 +810,7 @@
 
 .my-attempts-section { min-width: 0; }
 
-.section-title {
+.attempts-section .section-title {
   font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -1130,9 +1130,9 @@
   border-radius: 10px;
 }
 
-.stat-item { display: flex; flex-direction: column; gap: 4px; }
-.stat-label { font-size: 0.65rem; color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 0.06em; }
-.stat-value { font-size: 1.25rem; font-weight: 700; }
+.rematch-stats .stat-item { display: flex; flex-direction: column; gap: 4px; }
+.rematch-stats .stat-label { font-size: 0.65rem; color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 0.06em; }
+.rematch-stats .stat-value { font-size: 1.25rem; font-weight: 700; }
 
 .rematch-actions { display: flex; flex-direction: column; gap: 8px; }
 

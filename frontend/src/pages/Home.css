@@ -349,4 +349,11 @@
   }
   .custom-card-title { font-size: 15px; }
   .community-section { padding: 0 1rem 30px; }
+
+  /* Cibles tactiles plus grandes sur mobile */
+  .custom-card-btn {
+    padding: 9px 10px;
+    font-size: 12.5px;
+    min-height: 34px;
+  }
 }

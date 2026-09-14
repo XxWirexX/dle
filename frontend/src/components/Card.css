@@ -161,3 +161,12 @@
 .duo-btn:hover {
   background: rgba(168, 85, 247, 0.4);
 }
+
+/* Cibles tactiles plus grandes sur mobile (boutons trop petits sinon) */
+@media (max-width: 480px) {
+  .action-btn {
+    padding: 0.55rem 0;
+    font-size: 0.72rem;
+    min-height: 34px;
+  }
+}
