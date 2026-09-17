@@ -1,0 +1,41 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: dle_db
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=dle
+      - POSTGRES_PASSWORD=dle
+      - POSTGRES_DB=dle
+    ports:
+      - "5432:5432"
+    volumes:
+      - dle_db_data:/var/lib/postgresql/data
+
+  app:
+    build: .
+    container_name: dle_web
+    restart: unless-stopped
+    depends_on:
+      - db
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=postgres://dle:dle@db:5432/dle
+      - FRONTEND_URL=https://dle.wireredblue.xyz
+    env_file:
+      - .env
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.dle.rule=Host(`dle.wireredblue.xyz`)"
+      - "traefik.http.routers.dle.entrypoints=websecure"
+      - "traefik.http.routers.dle.tls.certresolver=letsencrypt"
+      - "traefik.http.services.dle.loadbalancer.server.port=3000"
+    networks:
+      - proxy
+
+volumes:
+  dle_db_data:
+
+networks:
+  proxy:
+    external: true
