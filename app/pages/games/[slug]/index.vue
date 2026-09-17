@@ -63,13 +63,14 @@ const typeLabels: Record<string, string> = {
             <div class="mode-arrow">→</div>
           </NuxtLink>
 
-          <div class="mode-card multi disabled">
+          <NuxtLink :to="`/games/${slug}/multiplayer`" class="mode-card multi">
             <div class="mode-icon">M</div>
             <div class="mode-info">
               <h3>Multijoueur</h3>
-              <p>Bientôt disponible</p>
+              <p>Affronte 1 à 7 autres joueurs en temps réel</p>
             </div>
-          </div>
+            <div class="mode-arrow">→</div>
+          </NuxtLink>
         </div>
       </section>
 
