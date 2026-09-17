@@ -1,0 +1,49 @@
+{
+  "name": "dle",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "typecheck": "nuxt typecheck",
+    "test": "vitest run",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "tsx server/db/migrate.ts",
+    "migrate:legacy": "tsx scripts/migrate-legacy-data.ts"
+  },
+  "dependencies": {
+    "@nuxt/image": "^2.1.0",
+    "@vueuse/core": "^15.0.0",
+    "@vueuse/nuxt": "^15.0.0",
+    "bcrypt": "^6.0.0",
+    "cloudinary": "^2.11.0",
+    "drizzle-orm": "^0.45.2",
+    "engine.io": "^6.6.10",
+    "jsonwebtoken": "^9.0.3",
+    "nanoid": "^6.0.1",
+    "nodemailer": "^10.0.10",
+    "nuxt": "^4.5.2",
+    "postgres": "^3.4.9",
+    "socket.io": "^4.8.3",
+    "socket.io-client": "^4.8.3",
+    "vue": "^3.5.42",
+    "vue-router": "^5.3.1",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/nodemailer": "^8.0.2",
+    "@vitest/coverage-v8": "^5.0.1",
+    "@vue/test-utils": "^2.5.1",
+    "dotenv": "^17.4.2",
+    "drizzle-kit": "^0.31.10",
+    "happy-dom": "^20.14.5",
+    "sharp": "^0.35.4",
+    "tsx": "^4.23.13",
+    "vitest": "^5.0.1"
+  }
+}

@@ -1,0 +1,242 @@
+<script setup lang="ts">
+const { user, logout } = useAuth()
+const { pendingInvite, dismissInvite, acceptInvite } = useMultiplayer()
+const router = useRouter()
+
+const userMenuOpen = ref(false)
+
+async function onLogout() {
+  userMenuOpen.value = false
+  await logout()
+  await router.push('/')
+}
+
+function onAcceptInvite() {
+  const slug = acceptInvite()
+  if (slug) router.push(`/games/${slug}/multiplayer`)
+}
+</script>
+
+<template>
+  <div class="layout">
+    <header class="navbar">
+      <NuxtLink to="/" class="brand">
+        <span class="brand-mark">D</span>
+        <span class="brand-name">DLE</span>
+      </NuxtLink>
+
+      <nav class="nav-links">
+        <NuxtLink to="/" class="nav-link">Jeux</NuxtLink>
+      </nav>
+
+      <div class="user-area">
+        <template v-if="user">
+          <div class="user-menu" @click="userMenuOpen = !userMenuOpen">
+            <span class="avatar" :style="{ background: user.avatarColor }">
+              <img v-if="user.avatarImageUrl" :src="user.avatarImageUrl" :alt="user.username">
+              <span v-else>{{ user.username[0]?.toUpperCase() }}</span>
+            </span>
+            <span class="username">{{ user.username }}</span>
+          </div>
+
+          <div v-if="userMenuOpen" class="dropdown" @click="userMenuOpen = false">
+            <NuxtLink to="/profile" class="dropdown-item">Mon profil</NuxtLink>
+            <NuxtLink to="/friends" class="dropdown-item">Amis</NuxtLink>
+            <button class="dropdown-item danger" @click="onLogout">Se déconnecter</button>
+          </div>
+        </template>
+        <NuxtLink v-else to="/login" class="btn btn-primary btn-sm">Connexion</NuxtLink>
+      </div>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <div v-if="pendingInvite" class="invite-toast">
+      <p><strong>{{ pendingInvite.fromUsername }}</strong> t'invite à jouer sur <strong>{{ pendingInvite.gameName }}</strong></p>
+      <div class="invite-actions">
+        <button class="btn btn-primary btn-sm" @click="onAcceptInvite">Rejoindre</button>
+        <button class="btn btn-sm" @click="dismissInvite">Ignorer</button>
+      </div>
+    </div>
+  </div>
+</template>
+
+<style scoped>
+.layout {
+  min-height: 100vh;
+  background: var(--bg);
+}
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 0 1.5rem;
+  height: 52px;
+  background: rgba(13, 13, 20, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.brand-mark {
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, var(--accent), #8b5cf6);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.8rem;
+}
+
+.brand-name {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--accent);
+  letter-spacing: 0.02em;
+}
+
+.nav-links {
+  display: flex;
+  gap: 0.15rem;
+}
+
+.nav-link {
+  padding: 0.35rem 0.85rem;
+  color: var(--text-2);
+  font-weight: 500;
+  font-size: 0.875rem;
+  border-radius: 5px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.nav-link:hover {
+  background: rgba(255, 255, 255, 0.07);
+  color: var(--text);
+}
+
+.nav-link.router-link-exact-active {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.user-area {
+  margin-left: auto;
+  position: relative;
+}
+
+.user-menu {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  border-radius: 8px;
+  transition: background 0.15s;
+}
+
+.user-menu:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.avatar {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.75rem;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.username {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 160px;
+  background: rgba(10, 10, 20, 0.98);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border-2);
+  border-radius: 10px;
+  padding: 0.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+.dropdown-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 0.5rem 0.6rem;
+  border-radius: 6px;
+  border: none;
+  background: none;
+  color: var(--text-2);
+  font-size: 0.85rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.dropdown-item:hover {
+  background: rgba(255, 255, 255, 0.07);
+  color: var(--text);
+}
+
+.dropdown-item.danger:hover {
+  background: rgba(239, 68, 68, 0.15);
+  color: #fca5a5;
+}
+
+.invite-toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  max-width: 320px;
+  padding: 1rem 1.2rem;
+  background: rgba(10, 10, 20, 0.98);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border-2);
+  border-radius: 14px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  color: var(--text);
+  font-size: 0.875rem;
+}
+
+.invite-toast p { margin-bottom: 0.75rem; }
+.invite-actions { display: flex; gap: 0.5rem; }
+</style>

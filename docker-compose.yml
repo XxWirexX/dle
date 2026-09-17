@@ -1,22 +1,59 @@
 services:
-  dle:
-    build: .
+  db:
+    image: postgres:16-alpine
+    container_name: dle_db
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=dle
+      - POSTGRES_PASSWORD=dle
+      - POSTGRES_DB=dle
+    ports:
+      - "5432:5432"
+    volumes:
+      - dle_db_data:/var/lib/postgresql/data
+
+  app:
+    build:
+      context: .
+      target: runtime
     container_name: dle_web
-    restart: always
+    restart: unless-stopped
+    depends_on:
+      - db
     environment:
       - NODE_ENV=production
-      - PORT=3000
+      - DATABASE_URL=postgres://dle:dle@db:5432/dle
       - FRONTEND_URL=https://dle.wireredblue.xyz
+    env_file:
+      - .env
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.dle.rule=Host(`dle.wireredblue.xyz`)"
       - "traefik.http.routers.dle.entrypoints=websecure"
       - "traefik.http.routers.dle.tls.certresolver=letsencrypt"
       - "traefik.http.services.dle.loadbalancer.server.port=3000"
-      - "traefik.http.routers.dle.priority=10"
-      - "traefik.http.routers.dle.middlewares=custom-errors@docker"
     networks:
       - proxy
+
+  # Image "outil" pour appliquer les migrations Drizzle — jamais démarrée
+  # par `docker compose up`, seulement via `docker compose run --rm migrate`
+  # (voir .github/workflows/deploy.yml). Le profil "tools" l'exclut de `up`.
+  migrate:
+    build:
+      context: .
+      target: migrate
+    container_name: dle_migrate
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgres://dle:dle@db:5432/dle
+    networks:
+      - proxy
+    profiles:
+      - tools
+
+volumes:
+  dle_db_data:
 
 networks:
   proxy:

@@ -1,39 +1,27 @@
-# Stage 1: Build frontend
-FROM node:20-alpine AS frontend-builder
+# --- deps : dépendances (dev incluses, nécessaires pour build et migrate) ---
+FROM node:22-alpine AS deps
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm ci
 
-WORKDIR /app/frontend
-
-COPY frontend/package*.json ./
-RUN npm install
-
-COPY frontend/ ./
+# --- build : produit .output/ (bundle Nitro autonome, node_modules tracés) ---
+FROM deps AS build
+WORKDIR /app
+COPY . .
 RUN npm run build
 
-# Stage 2: Build backend (TypeScript)
-FROM node:20-alpine AS backend-builder
-
+# --- migrate : image "outil", jamais déployée en continu — voir le
+# service `migrate` de docker-compose.yml (npm run db:migrate via tsx,
+# qui a besoin des devDependencies et des fichiers source, pas de build).
+FROM deps AS migrate
 WORKDIR /app
+COPY . .
+CMD ["npm", "run", "db:migrate"]
 
-COPY backend/package*.json ./
-RUN npm install
-
-COPY backend/ ./
-RUN npm run build
-
-# Stage 3: Production
-FROM node:20-alpine
-
+# --- runtime : image de prod, seulement le bundle buildé ---
+FROM node:22-alpine AS runtime
 WORKDIR /app
-
-COPY backend/package*.json ./
-RUN npm install --production
-
-COPY --from=backend-builder /app/dist ./dist
-COPY backend/data ./data
-COPY backend/public/images ./public/images
-COPY --from=frontend-builder /app/frontend/dist ./public/dist
-RUN mkdir -p db
-
+ENV NODE_ENV=production
+COPY --from=build /app/.output ./.output
 EXPOSE 3000
-
-CMD ["node", "dist/main.js"]
+CMD ["node", ".output/server/index.mjs"]

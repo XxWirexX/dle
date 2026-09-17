@@ -1,0 +1,13 @@
+node_modules
+.output
+.nuxt
+.nitro
+.cache
+.data
+.git
+.github
+legacy-content
+*.log
+.env
+.env.*
+!.env.example

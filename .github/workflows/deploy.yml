@@ -1,5 +1,8 @@
 name: Deploy to VPS
 
+# Le "cutover" se fait naturellement : ce workflow ne se déclenche que sur
+# main, donc il ne prend effet qu'au merge de la réécriture — pas besoin d'y
+# retoucher à ce moment-là.
 on:
   push:
     branches:
@@ -10,9 +13,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -22,5 +22,7 @@ jobs:
           script: |
             cd /home/debian/projects/dle
             git pull origin main
-            docker compose up -d --build
+            docker compose build
+            docker compose run --rm migrate
+            docker compose up -d
             docker image prune -f
