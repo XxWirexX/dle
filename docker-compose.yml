@@ -13,7 +13,9 @@ services:
       - dle_db_data:/var/lib/postgresql/data
 
   app:
-    build: .
+    build:
+      context: .
+      target: runtime
     container_name: dle_web
     restart: unless-stopped
     depends_on:
@@ -32,6 +34,23 @@ services:
       - "traefik.http.services.dle.loadbalancer.server.port=3000"
     networks:
       - proxy
+
+  # Image "outil" pour appliquer les migrations Drizzle — jamais démarrée
+  # par `docker compose up`, seulement via `docker compose run --rm migrate`
+  # (voir .github/workflows/deploy.yml). Le profil "tools" l'exclut de `up`.
+  migrate:
+    build:
+      context: .
+      target: migrate
+    container_name: dle_migrate
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgres://dle:dle@db:5432/dle
+    networks:
+      - proxy
+    profiles:
+      - tools
 
 volumes:
   dle_db_data:
