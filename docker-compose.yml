@@ -38,6 +38,11 @@ services:
   # Image "outil" pour appliquer les migrations Drizzle — jamais démarrée
   # par `docker compose up`, seulement via `docker compose run --rm migrate`
   # (voir .github/workflows/deploy.yml). Le profil "tools" l'exclut de `up`.
+  #
+  # `env_file` donne aussi accès aux identifiants Cloudinary (nécessaires à
+  # `npm run migrate:legacy`, pas seulement aux migrations de schéma) ; le
+  # volume monte `legacy-content/` à l'exécution plutôt que de compter sur
+  # l'image, qui l'exclut volontairement via .dockerignore.
   migrate:
     build:
       context: .
@@ -47,6 +52,10 @@ services:
       - db
     environment:
       - DATABASE_URL=postgres://dle:dle@db:5432/dle
+    env_file:
+      - .env
+    volumes:
+      - ./legacy-content:/app/legacy-content:ro
     networks:
       - proxy
     profiles:
