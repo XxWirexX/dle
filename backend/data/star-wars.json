@@ -2,7 +2,7 @@
   "id": "star-wars",
   "name": "Star Wars",
   "icon": "cardIcon.jpg",
-  "background": "background.webp",
+  "background": "background.jpg",
   "maxAttempts": 26,
   "attributes": [
     {
@@ -197,7 +197,7 @@
     {
       "id": 1,
       "name": "Luke Skywalker",
-      "image": "luke-skywalker.jpg",
+      "image": "luke-skywalker.png",
       "gender": "Male",
       "specie": "Human",
       "affiliation": [
@@ -219,7 +219,7 @@
     {
       "id": 2,
       "name": "Obi-Wan Kenobi",
-      "image": "obi-wan-kenobi.jpg",
+      "image": "obi-wan-kenobi.png",
       "gender": "Male",
       "specie": "Human",
       "affiliation": [
@@ -243,7 +243,7 @@
     {
       "id": 3,
       "name": "Yoda",
-      "image": "yoda.jpg",
+      "image": "yoda.png",
       "gender": "Male",
       "specie": "Yoda's species",
       "affiliation": [
@@ -267,7 +267,7 @@
     {
       "id": 4,
       "name": "Mace Windu",
-      "image": "mace-windu.jpg",
+      "image": "mace-windu.png",
       "gender": "Male",
       "specie": "Human",
       "affiliation": [
@@ -289,7 +289,7 @@
     {
       "id": 5,
       "name": "Qui-Gon Jinn",
-      "image": "qui-gon-jinn.jpg",
+      "image": "qui-gon-jinn.png",
       "gender": "Male",
       "specie": "Human",
       "affiliation": [
@@ -308,7 +308,7 @@
     {
       "id": 6,
       "name": "Ahsoka Tano",
-      "image": "ahsoka-tano.jpg",
+      "image": "ahsoka-tano.png",
       "gender": "Female",
       "specie": "Togruta",
       "affiliation": [
@@ -330,7 +330,7 @@
     {
       "id": 7,
       "name": "Anakin Skywalker",
-      "image": "anakin-skywalker.jpg",
+      "image": "anakin-skywalker.png",
       "gender": "Male",
       "specie": "Human",
       "affiliation": [
@@ -353,7 +353,7 @@
     {
       "id": 8,
       "name": "Plo Koon",
-      "image": "plo-koon.jpg",
+      "image": "plo-koon.png",
       "gender": "Male",
       "specie": "Kel Dor",
       "affiliation": [
@@ -375,7 +375,7 @@
     {
       "id": 9,
       "name": "Kit Fisto",
-      "image": "kit-fisto.jpg",
+      "image": "kit-fisto.png",
       "gender": "Male",
       "specie": "Nautolan",
       "affiliation": [
@@ -396,7 +396,7 @@
     {
       "id": 10,
       "name": "Shaak Ti",
-      "image": "shaak-ti.jpg",
+      "image": "shaak-ti.png",
       "gender": "Female",
       "specie": "Togruta",
       "affiliation": [
@@ -417,7 +417,7 @@
     {
       "id": 11,
       "name": "Aayla Secura",
-      "image": "aayla-secura.jpg",
+      "image": "aayla-secura.png",
       "gender": "Female",
       "specie": "Twi'lek",
       "affiliation": [
@@ -438,7 +438,7 @@
     {
       "id": 12,
       "name": "Ki-Adi-Mundi",
-      "image": "ki-adi-mundi.jpg",
+      "image": "ki-adi-mundi.png",
       "gender": "Male",
       "specie": "Cerean",
       "affiliation": [
@@ -460,7 +460,7 @@
     {
       "id": 13,
       "name": "Adi Gallia",
-      "image": "adi-gallia.jpg",
+      "image": "adi-gallia.png",
       "gender": "Female",
       "specie": "Tholothian",
       "affiliation": [
@@ -480,7 +480,7 @@
     {
       "id": 14,
       "name": "Saesee Tiin",
-      "image": "saesee-tiin.jpg",
+      "image": "saesee-tiin.png",
       "gender": "Male",
       "specie": "Iktotchi",
       "affiliation": [
@@ -500,7 +500,7 @@
     {
       "id": 15,
       "name": "Luminara Unduli",
-      "image": "luminara-unduli.jpg",
+      "image": "luminara-unduli.png",
       "gender": "Female",
       "specie": "Mirialan",
       "affiliation": [
@@ -520,7 +520,7 @@
     {
       "id": 16,
       "name": "Barriss Offee",
-      "image": "barriss-offee.jpg",
+      "image": "barriss-offee.png",
       "gender": "Female",
       "specie": "Mirialan",
       "affiliation": [
@@ -540,7 +540,7 @@
     {
       "id": 17,
       "name": "Darth Vader",
-      "image": "darth-vader.jpg",
+      "image": "darth-vader.png",
       "gender": "Male",
       "specie": "Human",
       "affiliation": [
@@ -563,7 +563,7 @@
     {
       "id": 18,
       "name": "Emperor Palpatine",
-      "image": "emperor-palpatine.jpg",
+      "image": "emperor-palpatine.png",
       "gender": "Male",
       "specie": "Human",
       "affiliation": [
@@ -588,7 +588,7 @@
     {
       "id": 19,
       "name": "Darth Maul",
-      "image": "darth-maul.jpg",
+      "image": "darth-maul.png",
       "gender": "Male",
       "specie": "Zabrak",
       "affiliation": [
@@ -609,7 +609,7 @@
     {
       "id": 20,
       "name": "Count Dooku",
-      "image": "count-dooku.jpg",
+      "image": "count-dooku.png",
       "gender": "Male",
       "specie": "Human",
       "affiliation": [
@@ -631,7 +631,7 @@
     {
       "id": 21,
       "name": "Kylo Ren",
-      "image": "kylo-ren.jpg",
+      "image": "kylo-ren.png",
       "gender": "Male",
       "specie": "Human",
       "affiliation": [
@@ -652,7 +652,7 @@
     {
       "id": 22,
       "name": "Grand Moff Tarkin",
-      "image": "grand-moff-tarkin.jpg",
+      "image": "grand-moff-tarkin.png",
       "gender": "Male",
       "specie": "Human",
       "affiliation": [
@@ -673,7 +673,7 @@
     {
       "id": 23,
       "name": "Captain Phasma",
-      "image": "captain-phasma.jpg",
+      "image": "captain-phasma.png",
       "gender": "Female",
       "specie": "Human",
       "affiliation": [
@@ -693,7 +693,7 @@
     {
       "id": 24,
       "name": "Savage Opress",
-      "image": "savage-opress.jpg",
+      "image": "savage-opress.png",
       "gender": "Male",
       "specie": "Zabrak",
       "affiliation": [
@@ -713,7 +713,7 @@
     {
       "id": 25,
       "name": "Princess Leia",
-      "image": "princess-leia.jpg",
+      "image": "princess-leia.png",
       "gender": "Female",
       "specie": "Human",
       "affiliation": [
@@ -738,7 +738,7 @@
     {
       "id": 26,
       "name": "Han Solo",
-      "image": "han-solo.jpg",
+      "image": "han-solo.png",
       "gender": "Male",
       "specie": "Human",
       "affiliation": [
@@ -761,7 +761,7 @@
     {
       "id": 27,
       "name": "Chewbacca",
-      "image": "chewbacca.jpg",
+      "image": "chewbacca.png",
       "gender": "Male",
       "specie": "Wookiee",
       "affiliation": [
@@ -786,7 +786,7 @@
     {
       "id": 28,
       "name": "Lando Calrissian",
-      "image": "lando-calrissian.jpg",
+      "image": "lando-calrissian.png",
       "gender": "Male",
       "specie": "Human",
       "affiliation": [
@@ -809,7 +809,7 @@
     {
       "id": 29,
       "name": "Finn",
-      "image": "finn.jpg",
+      "image": "finn.png",
       "gender": "Male",
       "specie": "Human",
       "affiliation": [
@@ -831,7 +831,7 @@
     {
       "id": 30,
       "name": "Rey",
-      "image": "rey.jpg",
+      "image": "rey.png",
       "gender": "Female",
       "specie": "Human",
       "affiliation": [
@@ -854,7 +854,7 @@
     {
       "id": 31,
       "name": "Poe Dameron",
-      "image": "poe-dameron.jpg",
+      "image": "poe-dameron.png",
       "gender": "Male",
       "specie": "Human",
       "affiliation": [
@@ -875,7 +875,7 @@
     {
       "id": 32,
       "name": "Mon Mothma",
-      "image": "mon-mothma.jpg",
+      "image": "mon-mothma.png",
       "gender": "Female",
       "specie": "Human",
       "affiliation": [
@@ -896,7 +896,7 @@
     {
       "id": 33,
       "name": "Jyn Erso",
-      "image": "jyn-erso.jpg",
+      "image": "jyn-erso.png",
       "gender": "Female",
       "specie": "Human",
       "affiliation": [
@@ -915,7 +915,7 @@
     {
       "id": 34,
       "name": "Cassian Andor",
-      "image": "cassian-andor.jpg",
+      "image": "cassian-andor.png",
       "gender": "Male",
       "specie": "Human",
       "affiliation": [
@@ -935,7 +935,7 @@
     {
       "id": 35,
       "name": "Admiral Ackbar",
-      "image": "admiral-ackbar.jpg",
+      "image": "admiral-ackbar.png",
       "gender": "Male",
       "specie": "Mon Calamari",
       "affiliation": [
@@ -955,7 +955,7 @@
     {
       "id": 36,
       "name": "Nien Nunb",
-      "image": "nien-nunb.jpg",
+      "image": "nien-nunb.png",
       "gender": "Male",
       "specie": "Sullustan",
       "affiliation": [
@@ -975,7 +975,7 @@
     {
       "id": 37,
       "name": "Wicket W. Warrick",
-      "image": "wicket-warrick.jpg",
+      "image": "wicket-warrick.png",
       "gender": "Male",
       "specie": "Ewok",
       "affiliation": [
@@ -995,7 +995,7 @@
     {
       "id": 38,
       "name": "Boba Fett",
-      "image": "boba-fett.jpg",
+      "image": "boba-fett.png",
       "gender": "Male",
       "specie": "Human",
       "affiliation": [
@@ -1020,7 +1020,7 @@
     {
       "id": 39,
       "name": "Jango Fett",
-      "image": "jango-fett.jpg",
+      "image": "jango-fett.png",
       "gender": "Male",
       "specie": "Human",
       "affiliation": [
@@ -1040,7 +1040,7 @@
     {
       "id": 40,
       "name": "Din Djarin",
-      "image": "din-djarin.jpg",
+      "image": "din-djarin.png",
       "gender": "Male",
       "specie": "Human",
       "affiliation": [
@@ -1061,7 +1061,7 @@
     {
       "id": 41,
       "name": "Bossk",
-      "image": "bossk.jpg",
+      "image": "bossk.png",
       "gender": "Male",
       "specie": "Trandoshan",
       "affiliation": [
@@ -1080,7 +1080,7 @@
     {
       "id": 42,
       "name": "Greedo",
-      "image": "greedo.jpg",
+      "image": "greedo.png",
       "gender": "Male",
       "specie": "Rodian",
       "affiliation": [
@@ -1099,7 +1099,7 @@
     {
       "id": 43,
       "name": "Bo-Katan Kryze",
-      "image": "bo-katan-kryze.jpg",
+      "image": "bo-katan-kryze.png",
       "gender": "Female",
       "specie": "Human",
       "affiliation": [
@@ -1120,7 +1120,7 @@
     {
       "id": 44,
       "name": "C-3PO",
-      "image": "c-3po.jpg",
+      "image": "c-3po.png",
       "gender": "Male",
       "specie": "Droid",
       "affiliation": [
@@ -1149,7 +1149,7 @@
     {
       "id": 45,
       "name": "R2-D2",
-      "image": "r2-d2.jpg",
+      "image": "r2-d2.png",
       "gender": "Other",
       "specie": "Droid",
       "affiliation": [
@@ -1178,7 +1178,7 @@
     {
       "id": 46,
       "name": "BB-8",
-      "image": "bb-8.jpg",
+      "image": "bb-8.png",
       "gender": "Other",
       "specie": "Droid",
       "affiliation": [
@@ -1199,7 +1199,7 @@
     {
       "id": 47,
       "name": "K-2SO",
-      "image": "k-2so.jpg",
+      "image": "k-2so.png",
       "gender": "Other",
       "specie": "Droid",
       "affiliation": [
@@ -1218,7 +1218,7 @@
     {
       "id": 48,
       "name": "General Grievous",
-      "image": "general-grievous.jpg",
+      "image": "general-grievous.png",
       "gender": "Male",
       "specie": "Droid",
       "affiliation": [
@@ -1239,7 +1239,7 @@
     {
       "id": 49,
       "name": "Nute Gunray",
-      "image": "nute-gunray.jpg",
+      "image": "nute-gunray.png",
       "gender": "Male",
       "specie": "Neimodian",
       "affiliation": [
@@ -1261,7 +1261,7 @@
     {
       "id": 50,
       "name": "Poggle the Lesser",
-      "image": "poggle-the-lesser.jpg",
+      "image": "poggle-the-lesser.png",
       "gender": "Male",
       "specie": "Geonosian",
       "affiliation": [
@@ -1281,7 +1281,7 @@
     {
       "id": 51,
       "name": "Wat Tambor",
-      "image": "wat-tambor.jpg",
+      "image": "wat-tambor.png",
       "gender": "Male",
       "specie": "Skakoan",
       "affiliation": [
@@ -1300,7 +1300,7 @@
     {
       "id": 52,
       "name": "San Hill",
-      "image": "san-hill.jpg",
+      "image": "san-hill.png",
       "gender": "Male",
       "specie": "Muun",
       "affiliation": [
@@ -1319,7 +1319,7 @@
     {
       "id": 53,
       "name": "Jabba the Hutt",
-      "image": "jabba-the-hutt.jpg",
+      "image": "jabba-the-hutt.png",
       "gender": "Male",
       "specie": "Hutt",
       "affiliation": [
@@ -1340,7 +1340,7 @@
     {
       "id": 54,
       "name": "Bib Fortuna",
-      "image": "bib-fortuna.jpg",
+      "image": "bib-fortuna.png",
       "gender": "Male",
       "specie": "Twi'lek",
       "affiliation": [
@@ -1361,7 +1361,7 @@
     {
       "id": 55,
       "name": "Tessek",
-      "image": "tessek.jpg",
+      "image": "tessek.png",
       "gender": "Male",
       "specie": "Quarren",
       "affiliation": [
@@ -1380,7 +1380,7 @@
     {
       "id": 56,
       "name": "Padme Amidala",
-      "image": "padme-amidala.jpg",
+      "image": "padme-amidala.png",
       "gender": "Female",
       "specie": "Human",
       "affiliation": [
@@ -1401,7 +1401,7 @@
     {
       "id": 57,
       "name": "Maz Kanata",
-      "image": "maz-kanata.jpg",
+      "image": "maz-kanata.png",
       "gender": "Female",
       "specie": "Unknown",
       "affiliation": [
@@ -1421,7 +1421,7 @@
     {
       "id": 58,
       "name": "Grogu",
-      "image": "grogu.jpg",
+      "image": "grogu.png",
       "gender": "Male",
       "specie": "Yoda's species",
       "affiliation": [
@@ -1442,7 +1442,7 @@
     {
       "id": 59,
       "name": "Ezra Bridger",
-      "image": "ezra-bridger.jpg",
+      "image": "ezra-bridger.png",
       "gender": "Male",
       "specie": "Human",
       "affiliation": [
@@ -1464,7 +1464,7 @@
     {
       "id": 60,
       "name": "Kanan Jarrus",
-      "image": "kanan-jarrus.jpg",
+      "image": "kanan-jarrus.png",
       "gender": "Male",
       "specie": "Human",
       "affiliation": [
@@ -1484,7 +1484,7 @@
     {
       "id": 61,
       "name": "Hera Syndulla",
-      "image": "hera-syndulla.jpg",
+      "image": "hera-syndulla.png",
       "gender": "Female",
       "specie": "Twi'lek",
       "affiliation": [
@@ -1504,7 +1504,7 @@
     {
       "id": 62,
       "name": "Sabine Wren",
-      "image": "sabine-wren.jpg",
+      "image": "sabine-wren.png",
       "gender": "Female",
       "specie": "Human",
       "affiliation": [
@@ -1526,7 +1526,7 @@
     {
       "id": 63,
       "name": "Zeb Orrelios",
-      "image": "zeb-orrelios.jpg",
+      "image": "zeb-orrelios.png",
       "gender": "Male",
       "specie": "Unknown",
       "affiliation": [
@@ -1545,7 +1545,7 @@
     {
       "id": 64,
       "name": "Jar Jar Binks",
-      "image": "jar-jar-binks.jpg",
+      "image": "jar-jar-binks.png",
       "gender": "Male",
       "specie": "Gungan",
       "affiliation": [
@@ -1556,7 +1556,8 @@
       ],
       "appearance": [
         "The Phantom Menace",
-        "Attack of the Clones"
+        "Attack of the Clones",
+        "Revenge of the Sith"
       ],
       "home-planet": [
         "Naboo"
@@ -1565,7 +1566,7 @@
     {
       "id": 65,
       "name": "Watto",
-      "image": "watto.jpg",
+      "image": "watto.png",
       "gender": "Male",
       "specie": "Toydarian",
       "affiliation": [
@@ -1584,7 +1585,7 @@
     {
       "id": 66,
       "name": "Sebulba",
-      "image": "sebulba.jpg",
+      "image": "sebulba.png",
       "gender": "Male",
       "specie": "Dug",
       "affiliation": [
@@ -1603,7 +1604,7 @@
     {
       "id": 67,
       "name": "Ratts Tyerell",
-      "image": "ratts-tyerell.jpg",
+      "image": "ratts-tyerell.png",
       "gender": "Male",
       "specie": "Aleena",
       "affiliation": [
@@ -1622,7 +1623,7 @@
     {
       "id": 68,
       "name": "Dud Bolt",
-      "image": "dud-bolt.jpg",
+      "image": "dud-bolt.png",
       "gender": "Male",
       "specie": "Vulptereen",
       "affiliation": [
@@ -1641,7 +1642,7 @@
     {
       "id": 69,
       "name": "Ben Quadinaros",
-      "image": "ben-quadinaros.jpg",
+      "image": "ben-quadinaros.png",
       "gender": "Male",
       "specie": "Xexto",
       "affiliation": [
@@ -1660,7 +1661,7 @@
     {
       "id": 70,
       "name": "Fode and Beed",
-      "image": "fode-and-beed.jpg",
+      "image": "fode-and-beed.png",
       "gender": "Male",
       "specie": "Toong",
       "affiliation": [
@@ -1679,7 +1680,7 @@
     {
       "id": 71,
       "name": "Mas Amedda",
-      "image": "mas-amedda.jpg",
+      "image": "mas-amedda.png",
       "gender": "Male",
       "specie": "Chagrian",
       "affiliation": [
@@ -1701,7 +1702,7 @@
     {
       "id": 72,
       "name": "Zam Wesell",
-      "image": "zam-wesell.jpg",
+      "image": "zam-wesell.png",
       "gender": "Female",
       "specie": "Clawdite",
       "affiliation": [
@@ -1720,7 +1721,7 @@
     {
       "id": 73,
       "name": "Dexter Jettster",
-      "image": "dexter-jettster.jpg",
+      "image": "dexter-jettster.png",
       "gender": "Male",
       "specie": "Besalisk",
       "affiliation": [
@@ -1739,7 +1740,7 @@
     {
       "id": 74,
       "name": "Lama Su",
-      "image": "lama-su.jpg",
+      "image": "lama-su.png",
       "gender": "Male",
       "specie": "Kaminoan",
       "affiliation": [
@@ -1759,7 +1760,7 @@
     {
       "id": 75,
       "name": "Taun We",
-      "image": "taun-we.jpg",
+      "image": "taun-we.png",
       "gender": "Female",
       "specie": "Kaminoan",
       "affiliation": [
@@ -1778,7 +1779,7 @@
     {
       "id": 76,
       "name": "Tion Medon",
-      "image": "tion-medon.jpg",
+      "image": "tion-medon.png",
       "gender": "Male",
       "specie": "Pau'an",
       "affiliation": [
