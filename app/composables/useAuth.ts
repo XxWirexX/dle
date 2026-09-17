@@ -6,11 +6,7 @@ export function useAuth() {
 
   async function fetchMe() {
     try {
-      // Pendant le SSR, `$fetch` vers notre propre API est une requête
-      // interne distincte : il faut transmettre explicitement le cookie
-      // pour que la session soit reconnue côté serveur.
-      const headers = import.meta.server ? useRequestHeaders(['cookie']) : undefined
-      const data = await $fetch('/api/auth/me', { headers })
+      const data = await apiFetch('/api/auth/me')
       user.value = data.user
     } catch {
       user.value = null

@@ -53,20 +53,6 @@ export class RoomManager {
   private rooms = new Map<string, Room>()
   private playerRoom = new Map<string, string>()
   private queues = new Map<string, QueueEntry[]>()
-  private userSockets = new Map<number, string>()
-
-  // ─── Présence / registre utilisateur ─────────────────────────────
-  registerSocket(userId: number, socketId: string) {
-    this.userSockets.set(userId, socketId)
-  }
-
-  unregisterSocket(userId: number) {
-    this.userSockets.delete(userId)
-  }
-
-  socketIdForUser(userId: number): string | undefined {
-    return this.userSockets.get(userId)
-  }
 
   getRoomIdForSocket(socketId: string): string | undefined {
     return this.playerRoom.get(socketId)

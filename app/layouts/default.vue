@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const { user, logout } = useAuth()
+const { pendingInvite, dismissInvite, acceptInvite } = useMultiplayer()
 const router = useRouter()
 
 const userMenuOpen = ref(false)
@@ -8,6 +9,11 @@ async function onLogout() {
   userMenuOpen.value = false
   await logout()
   await router.push('/')
+}
+
+function onAcceptInvite() {
+  const slug = acceptInvite()
+  if (slug) router.push(`/games/${slug}/multiplayer`)
 }
 </script>
 
@@ -46,6 +52,14 @@ async function onLogout() {
     <main>
       <slot />
     </main>
+
+    <div v-if="pendingInvite" class="invite-toast">
+      <p><strong>{{ pendingInvite.fromUsername }}</strong> t'invite à jouer sur <strong>{{ pendingInvite.gameName }}</strong></p>
+      <div class="invite-actions">
+        <button class="btn btn-primary btn-sm" @click="onAcceptInvite">Rejoindre</button>
+        <button class="btn btn-sm" @click="dismissInvite">Ignorer</button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -207,8 +221,22 @@ async function onLogout() {
   color: #fca5a5;
 }
 
-.btn-sm {
-  padding: 0.38rem 0.9rem;
-  font-size: 0.85rem;
+.invite-toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  max-width: 320px;
+  padding: 1rem 1.2rem;
+  background: rgba(10, 10, 20, 0.98);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border-2);
+  border-radius: 14px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  color: var(--text);
+  font-size: 0.875rem;
 }
+
+.invite-toast p { margin-bottom: 0.75rem; }
+.invite-actions { display: flex; gap: 0.5rem; }
 </style>

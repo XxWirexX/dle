@@ -12,8 +12,18 @@ if (gameError.value || !game.value) {
 
 const {
   room, inQueue, error, messages, mySocketId,
-  quickMatch, leaveQueue, createRoom, joinRoom, startRoom, guess, rematch, sendChat, leaveRoom,
+  quickMatch, leaveQueue, createRoom, joinRoom, startRoom, guess, rematch, sendChat, leaveRoom, inviteFriend,
 } = useMultiplayer()
+
+const { friends, refresh: refreshFriends } = useFriends()
+if (user.value) await refreshFriends()
+const onlineFriends = computed(() => friends.value.filter((f) => f.online))
+const invitedFriendIds = ref<number[]>([])
+
+function onInviteFriend(friendUserId: number) {
+  inviteFriend(friendUserId, slug, 8)
+  invitedFriendIds.value = [...invitedFriendIds.value, friendUserId]
+}
 
 const joinCodeInput = ref(typeof route.query.code === 'string' ? route.query.code : '')
 const createMaxPlayers = ref(2)
@@ -89,6 +99,23 @@ onBeforeUnmount(() => {
               <input v-model="joinCodeInput" placeholder="CODE" maxlength="6" style="text-transform: uppercase">
               <button class="btn btn-primary" :disabled="!joinCodeInput" @click="joinRoom(joinCodeInput)">Rejoindre</button>
             </div>
+          </div>
+
+          <div v-if="onlineFriends.length > 0" class="option-card">
+            <h3>Inviter un ami</h3>
+            <p>{{ onlineFriends.length }} ami{{ onlineFriends.length > 1 ? 's' : '' }} en ligne</p>
+            <ul class="friend-invite-list">
+              <li v-for="f in onlineFriends" :key="f.userId">
+                <span>{{ f.username }}</span>
+                <button
+                  class="btn btn-sm"
+                  :disabled="invitedFriendIds.includes(f.userId)"
+                  @click="onInviteFriend(f.userId)"
+                >
+                  {{ invitedFriendIds.includes(f.userId) ? 'Invité' : 'Inviter' }}
+                </button>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
@@ -227,6 +254,28 @@ onBeforeUnmount(() => {
 
 .join-code { display: flex; align-items: center; gap: 0.75rem; color: var(--text-2); }
 .join-code strong { color: var(--accent-2); font-size: 1.2rem; letter-spacing: 0.1em; }
+
+.friend-invite-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.friend-invite-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.4rem 0.6rem;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 8px;
+  color: var(--text-2);
+  font-size: 0.85rem;
+}
 
 .player-list { list-style: none; padding: 0; margin: 0; color: #fff; }
 .player-list li { padding: 0.3rem 0; }

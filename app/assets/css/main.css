@@ -119,6 +119,11 @@ p { margin: 0; }
   box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
 }
 
+.btn-sm {
+  padding: 0.38rem 0.9rem;
+  font-size: 0.85rem;
+}
+
 .banner {
   padding: 0.65rem 0.9rem;
   border-radius: 7px;

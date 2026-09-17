@@ -1,19 +1,32 @@
 import type { Server, Socket } from 'socket.io'
 import { roomManager } from './roomManager'
+import { presence } from './presence'
 import { getCachedGamePlayData } from '../gameCache'
+import { listAcceptedFriends } from '../../db/queries/friends'
 import type { AuthTokenPayload } from '#shared/types/user'
 
 interface AuthedSocket extends Socket {
   data: { user: AuthTokenPayload | null }
 }
 
+async function broadcastPresence(userId: number, online: boolean) {
+  const friends = await listAcceptedFriends(userId)
+  for (const friend of friends) {
+    presence.notifyUser(friend.userId, 'friend:presence', { userId, online })
+  }
+}
+
 export function registerMultiplayerHandlers(io: Server) {
+  presence.bind(io)
+
   io.on('connection', (rawSocket) => {
     const socket = rawSocket as AuthedSocket
     const user = socket.data.user
 
     if (user) {
-      roomManager.registerSocket(user.userId, socket.id)
+      const wasOffline = !presence.isOnline(user.userId)
+      presence.connect(user.userId, socket.id)
+      if (wasOffline) broadcastPresence(user.userId, true).catch(() => {})
     }
 
     socket.on('mp:quick-match', async ({ slug, difficulty }: { slug: string; difficulty: string | null }) => {
@@ -74,6 +87,38 @@ export function registerMultiplayerHandlers(io: Server) {
       io.to(result.room.id).emit('mp:room-update', roomManager.toSnapshot(result.room))
     })
 
+    // Invitation directe depuis la liste d'amis : crée (ou réutilise) un
+    // salon privé et pousse un événement à l'ami s'il est en ligne — pas
+    // de file d'attente persistante pour un ami hors-ligne, ça n'a jamais
+    // été demandé et ça ajouterait un système à maintenir pour rien.
+    socket.on('mp:invite-friend', async ({ friendUserId, slug, maxPlayers }: { friendUserId: number; slug: string; maxPlayers: number }) => {
+      if (!user) return socket.emit('mp:error', { message: 'Connecte-toi pour jouer en multijoueur' })
+      if (!presence.isOnline(friendUserId)) return socket.emit('mp:error', { message: "Cet ami n'est pas en ligne" })
+
+      let room = roomManager.getRoom(socket.id)
+      if (!room || room.status !== 'waiting') {
+        const gameData = await getCachedGamePlayData(slug)
+        if (!gameData) return socket.emit('mp:error', { message: 'Jeu introuvable' })
+        room = roomManager.createPrivateRoom(
+          { socketId: socket.id, userId: user.userId, username: user.username, difficulty: null },
+          slug,
+          gameData,
+          maxPlayers,
+          null,
+        )
+        socket.join(room.id)
+        socket.emit('mp:room-update', roomManager.toSnapshot(room))
+      }
+
+      presence.notifyUser(friendUserId, 'friend:invite', {
+        fromUsername: user.username,
+        slug,
+        gameName: room.gameData.name,
+        joinCode: room.joinCode,
+      })
+      socket.emit('mp:invite-sent', {})
+    })
+
     socket.on('mp:start-room', () => {
       const result = roomManager.startRoomByHost(socket.id)
       if (!result.ok) return socket.emit('mp:error', { message: result.error })
@@ -110,9 +155,13 @@ export function registerMultiplayerHandlers(io: Server) {
     })
 
     socket.on('disconnect', () => {
-      if (user) roomManager.unregisterSocket(user.userId)
       const result = roomManager.handleDisconnect(socket.id)
       if (result) io.to(result.room.id).emit('mp:room-update', roomManager.toSnapshot(result.room))
+
+      if (user) {
+        const trulyOffline = presence.disconnect(user.userId, socket.id)
+        if (trulyOffline) broadcastPresence(user.userId, false).catch(() => {})
+      }
     })
   })
 }
