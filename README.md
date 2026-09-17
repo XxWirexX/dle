@@ -17,11 +17,15 @@ la réécriture ; en résumé :
 
 ## Setup
 
+Guide complet (config, récupération + import des données de l'ancienne
+version, dépannage) : [`docs/SETUP.md`](docs/SETUP.md). En résumé :
+
 ```bash
 npm install
 cp .env.example .env   # renseigner les vraies valeurs
 docker compose up -d db   # Postgres local
 npm run db:migrate
+npm run migrate:legacy   # importe legacy-content/ — voir docs/SETUP.md
 npm run dev
 ```
 
@@ -31,5 +35,6 @@ npm run dev
 - `npm run build` / `npm run preview` — build de prod
 - `npm run db:generate` / `npm run db:migrate` — migrations Drizzle
 - `npm run migrate:legacy` — importe `legacy-content/` dans Postgres +
-  Cloudinary (à lancer une fois, en local, avec `.env` renseigné)
+  Cloudinary (à lancer une fois, en local, avec `.env` renseigné —
+  détails dans `docs/SETUP.md`)
 - `npm test` — tests Vitest
