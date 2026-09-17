@@ -1,4 +1,8 @@
 services:
+  # Pas de `networks:` ici -> rejoint le réseau par défaut du projet
+  # ("default"). `app`/`migrate` doivent aussi y être en plus de `proxy`
+  # (réservé au routage Traefik), sinon le nom d'hôte "db" ne se résout pas
+  # pour eux — deux réseaux séparés, pas un partagé.
   db:
     image: postgres:16-alpine
     container_name: dle_db
@@ -34,6 +38,7 @@ services:
       - "traefik.http.services.dle.loadbalancer.server.port=3000"
     networks:
       - proxy
+      - default
 
   # Image "outil" pour appliquer les migrations Drizzle — jamais démarrée
   # par `docker compose up`, seulement via `docker compose run --rm migrate`
@@ -58,6 +63,7 @@ services:
       - ./legacy-content:/app/legacy-content:ro
     networks:
       - proxy
+      - default
     profiles:
       - tools
 
