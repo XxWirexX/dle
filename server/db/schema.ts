@@ -146,6 +146,11 @@ export const usersRelations = relations(users, ({ many }) => ({
   games: many(games),
 }))
 
+export const userGameStatsRelations = relations(userGameStats, ({ one }) => ({
+  user: one(users, { fields: [userGameStats.userId], references: [users.id] }),
+  game: one(games, { fields: [userGameStats.gameId], references: [games.id] }),
+}))
+
 export const friendshipsRelations = relations(friendships, ({ one }) => ({
   requester: one(users, { fields: [friendships.requesterId], references: [users.id], relationName: 'requester' }),
   addressee: one(users, { fields: [friendships.addresseeId], references: [users.id], relationName: 'addressee' }),

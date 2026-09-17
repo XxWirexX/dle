@@ -18,10 +18,24 @@ if (gameError.value || dailyError.value || !game.value || !daily.value) {
 const attributes = game.value.attributes
 const characters = game.value.characters
 
+const { user } = useAuth()
 const showHints = ref(false)
 const revealedTarget = ref<Character | null>(null)
 const guessing = ref(false)
 const { attempts, gameOver, won, addAttempt, forfeit, guessedIds } = useGuessGame(game.value.maxAttempts)
+
+async function reportCompletion() {
+  if (!user.value) return
+  // Ordre chronologique (les tentatives sont stockées la plus récente en
+  // premier) : le serveur revérifie lui-même le résultat, voir l'endpoint.
+  const attemptCharacterIds = [...attempts.value].reverse().map((a) => a.character.id)
+  try {
+    await $fetch(`/api/games/${slug}/daily/complete`, { method: 'POST', body: { attemptCharacterIds } })
+  } catch {
+    // Pas grave si ça échoue (déjà comptabilisé aujourd'hui, etc.) — ça
+    // ne doit jamais bloquer l'affichage du résultat au joueur.
+  }
+}
 
 async function onGuess(character: Character) {
   if (gameOver.value || guessing.value) return
@@ -32,7 +46,10 @@ async function onGuess(character: Character) {
       body: { characterId: character.id },
     })
     addAttempt(character, result.feedback, result.isCorrect)
-    if (result.isCorrect) revealedTarget.value = character
+    if (result.isCorrect) {
+      revealedTarget.value = character
+      await reportCompletion()
+    }
   } finally {
     guessing.value = false
   }
@@ -42,6 +59,7 @@ async function reveal() {
   const result = await $fetch(`/api/games/${slug}/daily/reveal`, { method: 'POST' })
   revealedTarget.value = result.target as Character
   forfeit()
+  await reportCompletion()
 }
 
 const hintAttributes = computed(() => attributes.filter((a) => a.hints || a.order))

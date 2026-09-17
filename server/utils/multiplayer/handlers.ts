@@ -3,6 +3,7 @@ import { roomManager } from './roomManager'
 import { presence } from './presence'
 import { getCachedGamePlayData } from '../gameCache'
 import { listAcceptedFriends } from '../../db/queries/friends'
+import { findGameIdBySlug, updateStats } from '../../db/queries/stats'
 import type { AuthTokenPayload } from '#shared/types/user'
 
 interface AuthedSocket extends Socket {
@@ -13,6 +14,19 @@ async function broadcastPresence(userId: number, online: boolean) {
   const friends = await listAcceptedFriends(userId)
   for (const friend of friends) {
     presence.notifyUser(friend.userId, 'friend:presence', { userId, online })
+  }
+}
+
+// Le multi a déjà autorité totale côté serveur sur le résultat (voir
+// makeGuess) : on enregistre donc les stats de tous les joueurs directement
+// ici, sans passer par un endpoint HTTP côté client comme pour le solo/daily.
+async function recordMultiplayerStats(room: NonNullable<ReturnType<typeof roomManager.getRoom>>) {
+  const gameRow = await findGameIdBySlug(room.slug)
+  if (!gameRow) return
+  for (const player of room.players.values()) {
+    const playerAttempts = room.attempts.filter((a) => a.socketId === player.socketId).length
+    const won = room.winnerSocketId === player.socketId
+    await updateStats(player.userId, gameRow.id, { won, attempts: playerAttempts, isMultiplayer: true })
   }
 }
 
@@ -130,6 +144,7 @@ export function registerMultiplayerHandlers(io: Server) {
       const result = roomManager.makeGuess(socket.id, characterId)
       if (!result.ok) return socket.emit('mp:error', { message: result.error })
       if (room) io.to(room.id).emit('mp:room-update', roomManager.toSnapshot(room))
+      if (room && result.gameOver) recordMultiplayerStats(room).catch(() => {})
     })
 
     socket.on('mp:rematch', () => {

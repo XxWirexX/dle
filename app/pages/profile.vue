@@ -1,0 +1,206 @@
+<script setup lang="ts">
+definePageMeta({ middleware: 'auth' })
+
+const { user } = useAuth()
+const { data: stats, pending, error } = await useFetch('/api/stats', { key: 'my-stats' })
+</script>
+
+<template>
+  <div class="profile-page">
+    <div v-if="user" class="profile-header">
+      <span class="avatar" :style="{ background: user.avatarColor }">
+        <img v-if="user.avatarImageUrl" :src="user.avatarImageUrl" :alt="user.username">
+        <span v-else>{{ user.username[0]?.toUpperCase() }}</span>
+      </span>
+      <div>
+        <h1 class="username">{{ user.username }}</h1>
+        <p class="email">{{ user.email }}</p>
+      </div>
+    </div>
+
+    <p v-if="pending" class="muted">Chargement des statistiques...</p>
+    <p v-else-if="error" class="banner banner-error">Impossible de charger les statistiques.</p>
+
+    <template v-else-if="stats">
+      <section class="global-stats">
+        <div class="stat-card">
+          <div class="stat-value">{{ stats.global.totalPlayed }}</div>
+          <div class="stat-label">Parties jouées</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">{{ stats.global.winRate }}%</div>
+          <div class="stat-label">Taux de victoire</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">{{ stats.global.avgAttempts }}</div>
+          <div class="stat-label">Essais en moyenne</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">{{ stats.global.bestStreak }}</div>
+          <div class="stat-label">Meilleure série</div>
+        </div>
+      </section>
+
+      <section class="detail-stats">
+        <div class="detail-card">
+          <div class="detail-title">Solo</div>
+          <div class="detail-row"><span>Parties</span><span>{{ stats.global.soloPlayed }}</span></div>
+          <div class="detail-row"><span>Victoires</span><span>{{ stats.global.soloWins }}</span></div>
+          <div class="detail-row"><span>Taux de victoire</span><span>{{ stats.global.soloWinRate }}%</span></div>
+        </div>
+        <div class="detail-card">
+          <div class="detail-title">Multijoueur</div>
+          <div class="detail-row"><span>Parties</span><span>{{ stats.global.multiplayerPlayed }}</span></div>
+          <div class="detail-row"><span>Victoires</span><span>{{ stats.global.multiplayerWins }}</span></div>
+          <div class="detail-row"><span>Taux de victoire</span><span>{{ stats.global.multiplayerWinRate }}%</span></div>
+        </div>
+      </section>
+
+      <section class="by-game">
+        <h2 class="section-title">Par jeu</h2>
+        <p v-if="stats.byGame.length === 0" class="muted">Aucune partie jouée pour l'instant.</p>
+        <ul v-else class="game-list">
+          <li v-for="g in stats.byGame" :key="g.gameId" class="game-row">
+            <NuxtLink :to="`/games/${g.gameSlug}`" class="game-name">{{ g.gameName }}</NuxtLink>
+            <div class="game-metrics">
+              <span class="metric">{{ g.gamesPlayed }} partie{{ g.gamesPlayed > 1 ? 's' : '' }}</span>
+              <span class="metric">{{ g.wins }} victoire{{ g.wins > 1 ? 's' : '' }}</span>
+              <span class="metric">Série {{ g.currentStreak }} (max {{ g.maxStreak }})</span>
+              <span class="metric daily" v-if="g.dailyPlayed > 0">
+                Quotidien : {{ g.dailyWins }}/{{ g.dailyPlayed }} · série {{ g.dailyStreak }} (max {{ g.dailyMaxStreak }})
+              </span>
+              <span class="metric" v-if="g.multiplayerPlayed > 0">
+                Multi : {{ g.multiplayerWins }}/{{ g.multiplayerPlayed }}
+              </span>
+            </div>
+          </li>
+        </ul>
+      </section>
+    </template>
+  </div>
+</template>
+
+<style scoped>
+.profile-page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 800;
+  font-size: 1.5rem;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+.username { font-size: 1.4rem; font-weight: 800; color: var(--text); }
+.email { color: var(--text-3); font-size: 0.85rem; }
+
+.muted { color: var(--text-3); }
+
+.global-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.stat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.1rem;
+  text-align: center;
+}
+
+.stat-value { font-size: 1.6rem; font-weight: 800; color: var(--accent); margin-bottom: 0.2rem; }
+.stat-label { color: var(--text-3); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; }
+
+.detail-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.detail-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.1rem;
+}
+
+.detail-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.3rem 0;
+  color: var(--text-2);
+  font-size: 0.875rem;
+}
+
+.detail-row span:last-child { color: var(--text); font-weight: 600; }
+
+.section-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 0.75rem;
+}
+
+.game-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+
+.game-row {
+  padding: 0.9rem 1rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.game-name {
+  display: block;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 0.4rem;
+}
+
+.game-name:hover { color: var(--accent); }
+
+.game-metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+}
+
+.metric { color: var(--text-3); font-size: 0.8rem; }
+.metric.daily { color: rgba(217, 119, 6, 0.9); }
+</style>

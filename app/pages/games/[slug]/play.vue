@@ -23,18 +23,37 @@ const target = ref<Character>(pickRandom())
 const showHints = ref(false)
 const { attempts, gameOver, won, addAttempt, reset, forfeit, guessedIds } = useGuessGame(game.value.maxAttempts)
 
+const { user } = useAuth()
+const statsReported = ref(false)
+
+// Solo : pas d'enjeu compétitif, le client est seul juge du résultat.
+async function reportStats() {
+  if (!user.value || statsReported.value) return
+  statsReported.value = true
+  try {
+    await $fetch(`/api/stats/${slug}`, { method: 'PUT', body: { won: won.value, attempts: attempts.value.length } })
+  } catch {
+    // Pas grave si ça échoue, ça ne doit jamais bloquer l'affichage du résultat.
+  }
+}
+
 function onGuess(character: Character) {
   if (gameOver.value) return
   const feedback = computeGuessFeedback(character, target.value, attributes)
   addAttempt(character, feedback, character.id === target.value.id)
+  if (gameOver.value) reportStats()
 }
 
 function newGame() {
   target.value = pickRandom()
   reset()
+  statsReported.value = false
 }
 
-const reveal = forfeit
+function reveal() {
+  forfeit()
+  reportStats()
+}
 
 const hintAttributes = computed(() => attributes.filter((a) => a.hints || a.order))
 </script>
