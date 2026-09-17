@@ -29,6 +29,11 @@ const IMAGES_DIR = path.join(__dirname, '../legacy-content/anime-images')
 const DRY_RUN = process.env.MIGRATE_DRY_RUN === '1'
 const CONCURRENCY = 4
 
+// Résolutions max à l'upload, par usage réel dans l'app (voir uploadImage).
+const MAX_DIMENSION_ICON = 400 // affichée jusqu'à 200px (app/pages/games/[slug]/index.vue)
+const MAX_DIMENSION_BACKGROUND = 1920 // affichée jusqu'à 1600px, plein écran
+const MAX_DIMENSION_CHARACTER = 320 // affichée jusqu'à 160px (portraits de résultat)
+
 if (!process.env.DATABASE_URL) {
   throw new Error('DATABASE_URL manquant — copie .env.example vers .env et renseigne-le.')
 }
@@ -96,14 +101,18 @@ async function withRetry<T>(fn: () => Promise<T>, label: string, retries = 3): P
   throw new Error('unreachable')
 }
 
-async function uploadImage(localPath: string, publicId: string): Promise<{ url: string; publicId: string | null }> {
+async function uploadImage(localPath: string, publicId: string, maxDimension: number): Promise<{ url: string; publicId: string | null }> {
   if (DRY_RUN) {
     return { url: `local-dry-run://${path.relative(IMAGES_DIR, localPath)}`, publicId: null }
   }
 
-  // Redimensionne à 300×300 max et encode en webp pour réduire la taille envoyée.
+  // Redimensionne (sans jamais agrandir) et encode en webp pour réduire la
+  // taille envoyée. `maxDimension` dépend de l'usage réel de l'image côté
+  // app — les backgrounds s'affichent plein écran jusqu'à 1600px
+  // (cloudinaryUrl(..., 1600)), donc un cap à 300px comme pour une vignette
+  // de personnage les rendrait flous une fois réaffichés en grand.
   const buffer = await sharp(localPath)
-    .resize(300, 300, { fit: 'inside', withoutEnlargement: true })
+    .resize(maxDimension, maxDimension, { fit: 'inside', withoutEnlargement: true })
     .webp({ quality: 80 })
     .toBuffer()
 
@@ -167,10 +176,10 @@ async function migrateGame(file: string) {
   const backgroundPath = path.join(IMAGES_DIR, slug, data.background)
 
   const icon = fs.existsSync(iconPath)
-    ? await withRetry(() => uploadImage(iconPath, `dle/games/${slug}/icon`), `${slug}/icon`)
+    ? await withRetry(() => uploadImage(iconPath, `dle/games/${slug}/icon`, MAX_DIMENSION_ICON), `${slug}/icon`)
     : null
   const background = fs.existsSync(backgroundPath)
-    ? await withRetry(() => uploadImage(backgroundPath, `dle/games/${slug}/background`), `${slug}/background`)
+    ? await withRetry(() => uploadImage(backgroundPath, `dle/games/${slug}/background`, MAX_DIMENSION_BACKGROUND), `${slug}/background`)
     : null
 
   // --- Upsert du jeu ---
@@ -220,7 +229,7 @@ async function migrateGame(file: string) {
     data.characters.map((char) => async () => {
       const localImage = findLocalImage(slug, 'characters', char.image)
       const image = localImage
-        ? await uploadImage(localImage, `dle/games/${slug}/characters/${char.id}`)
+        ? await uploadImage(localImage, `dle/games/${slug}/characters/${char.id}`, MAX_DIMENSION_CHARACTER)
         : { url: '', publicId: null }
       const { id: _id, name, image: _img, ...attributeValues } = char
       done++
