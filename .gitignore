@@ -1,0 +1,12 @@
+node_modules/
+.env
+.env.*
+!.env.example
+dist/
+build/
+*.log
+.DS_Store
+
+# Ancien contenu (JSON personnages + images) gardé localement pour la
+# migration vers la nouvelle DB + CDN, jamais commit tel quel.
+/legacy-content/
