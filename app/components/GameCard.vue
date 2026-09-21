@@ -11,6 +11,15 @@ function onToggleFavorite(e: Event) {
   e.stopPropagation()
   toggle(props.game.slug, props.game.id)
 }
+
+// Un <a> ne peut pas être imbriqué dans un autre <a> (HTML invalide, cause
+// une erreur d'hydratation) — la carte entière est déjà un NuxtLink, donc
+// ce lien secondaire est un bouton qui navigue manuellement.
+function onDailyClick(e: Event) {
+  e.preventDefault()
+  e.stopPropagation()
+  navigateTo(`/games/${props.game.slug}/daily`)
+}
 </script>
 
 <template>
@@ -33,9 +42,9 @@ function onToggleFavorite(e: Event) {
     </button>
     <div class="card-body">
       <div class="card-actions">
-        <NuxtLink :to="`/games/${game.slug}/daily`" class="daily-link" @click.stop>
+        <button class="daily-link" @click="onDailyClick">
           Défi du jour
-        </NuxtLink>
+        </button>
         <span v-if="dailyStreak && dailyStreak > 0" class="streak-badge">🔥 {{ dailyStreak }}</span>
       </div>
       <h3 class="card-title">{{ game.name }}</h3>
@@ -132,6 +141,8 @@ function onToggleFavorite(e: Event) {
   font-weight: 700;
   letter-spacing: 0.02em;
   text-transform: uppercase;
+  font-family: inherit;
+  cursor: pointer;
   transition: background 0.15s;
 }
 

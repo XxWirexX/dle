@@ -28,6 +28,14 @@ const sortedGames = computed(() => {
 
 <template>
   <div class="home">
+    <NuxtLink to="/random" class="random-banner">
+      <div class="random-banner-text">
+        <span class="random-banner-title">Mode Random</span>
+        <span class="random-banner-subtitle">Enchaîne plusieurs DLE différents à la suite</span>
+      </div>
+      <span class="random-banner-cta">Jouer →</span>
+    </NuxtLink>
+
     <h2 class="section-title">Jeux disponibles</h2>
     <div class="grid">
       <GameCard v-for="game in sortedGames" :key="game.slug" :game="game" :daily-streak="dailyStreaks[game.slug]" />
@@ -41,6 +49,29 @@ const sortedGames = computed(() => {
   max-width: 1400px;
   margin: 0 auto;
 }
+
+.random-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  padding: 1.1rem 1.5rem;
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.18), rgba(99, 102, 241, 0.1));
+  border: 1px solid var(--border-2);
+  border-radius: 14px;
+  transition: border-color 0.15s, transform 0.15s;
+}
+
+.random-banner:hover {
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.random-banner-text { display: flex; flex-direction: column; gap: 0.15rem; }
+.random-banner-title { font-weight: 800; color: var(--text); font-size: 1.05rem; }
+.random-banner-subtitle { color: var(--text-2); font-size: 0.85rem; }
+.random-banner-cta { font-weight: 700; color: var(--accent); white-space: nowrap; }
 
 .section-title {
   padding: 1.75rem 0 0.75rem;
