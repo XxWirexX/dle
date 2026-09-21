@@ -29,6 +29,10 @@ function pick(character: Character) {
   showSuggestions.value = false
 }
 
+function pickFirst() {
+  if (suggestions.value.length > 0) pick(suggestions.value[0]!)
+}
+
 onClickOutside(containerRef, () => { showSuggestions.value = false })
 </script>
 
@@ -41,6 +45,7 @@ onClickOutside(containerRef, () => { showSuggestions.value = false })
       :placeholder="placeholder ?? 'Rechercher un personnage...'"
       :disabled="disabled"
       @focus="showSuggestions = true"
+      @keydown.enter.prevent="pickFirst"
     >
 
     <div v-if="showSuggestions && suggestions.length > 0" class="suggestions">

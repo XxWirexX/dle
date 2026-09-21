@@ -23,6 +23,15 @@ export default defineEventHandler(async (event) => {
   const soloPlayed = totals.totalPlayed - totals.dailyPlayed - totals.multiplayerPlayed
   const soloWins = totals.totalWins - totals.dailyWins - totals.multiplayerWins
 
+  // Le jeu le plus joué, si au moins une partie a été faite quelque part.
+  const favoriteGame = rows.reduce((best, r) => (!best || r.gamesPlayed > best.gamesPlayed ? r : best), null as typeof rows[number] | null)
+
+  const byGame = rows.map((r) => ({
+    ...r,
+    avgAttempts: r.gamesPlayed > 0 ? Number((r.totalAttempts / r.gamesPlayed).toFixed(1)) : 0,
+    winRate: r.gamesPlayed > 0 ? Math.round((r.wins / r.gamesPlayed) * 100) : 0,
+  }))
+
   return {
     global: {
       totalPlayed: totals.totalPlayed,
@@ -36,7 +45,8 @@ export default defineEventHandler(async (event) => {
       multiplayerWinRate: totals.multiplayerPlayed > 0 ? Math.round((totals.multiplayerWins / totals.multiplayerPlayed) * 100) : 0,
       avgAttempts: totals.totalPlayed > 0 ? (totals.totalAttempts / totals.totalPlayed).toFixed(1) : '0',
       bestStreak: totals.bestStreak,
+      favoriteGame: favoriteGame ? { gameSlug: favoriteGame.gameSlug, gameName: favoriteGame.gameName, gamesPlayed: favoriteGame.gamesPlayed } : null,
     },
-    byGame: rows,
+    byGame,
   }
 })

@@ -105,6 +105,9 @@ export const userGameStats = pgTable('user_game_stats', {
   currentStreak: integer('current_streak').notNull().default(0),
   maxStreak: integer('max_streak').notNull().default(0),
   totalAttempts: integer('total_attempts').notNull().default(0),
+  // Le moins d'essais jamais fait pour une victoire sur ce jeu — null tant
+  // qu'aucune victoire n'a été enregistrée.
+  bestAttempts: integer('best_attempts'),
   dailyPlayed: integer('daily_played').notNull().default(0),
   dailyWins: integer('daily_wins').notNull().default(0),
   dailyStreak: integer('daily_streak').notNull().default(0),
