@@ -2,11 +2,17 @@
 import type { Attribute } from '#shared/types/game'
 import type { FeedAttempt } from '#shared/types/multiplayer'
 
-defineProps<{
+const props = defineProps<{
   attributes: Attribute[]
   attempts: FeedAttempt[]
   mySocketId: string | null
 }>()
+
+// La room accumule les tentatives dans l'ordre chronologique (push), mais
+// on affiche la plus récente en premier pour éviter d'avoir à scroller.
+const reversedAttempts = computed(() =>
+  props.attempts.map((attempt, i) => ({ attempt, i })).reverse(),
+)
 </script>
 
 <template>
@@ -20,7 +26,7 @@ defineProps<{
 
       <TransitionGroup name="row" tag="div" class="rows">
         <div
-          v-for="(attempt, i) in attempts"
+          v-for="{ attempt, i } in reversedAttempts"
           :key="`${attempt.socketId}-${attempt.character.id}-${i}`"
           class="row"
           :class="{ mine: attempt.socketId === mySocketId }"

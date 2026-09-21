@@ -26,7 +26,15 @@ export default defineEventHandler(async (event) => {
   const passwordHash = await hashPassword(password)
   const { row, verificationToken } = await createUser(email, passwordHash, username)
 
-  await sendVerificationEmail(email, username, verificationToken)
+  // Un envoi SMTP en échec ne doit jamais empêcher la création du compte
+  // (déjà actée en base à ce stade) ni bloquer la connexion qui suit —
+  // seul le mail de vérification est perdu, l'utilisateur peut en
+  // redemander un via /resend-verification.
+  try {
+    await sendVerificationEmail(email, username, verificationToken)
+  } catch (err) {
+    console.error('[register] Échec d\'envoi de l\'email de vérification:', err)
+  }
 
   const token = signToken({ userId: row.id, username: row.username })
   setAuthCookie(event, token)
