@@ -85,6 +85,21 @@ function normalizeType(type: string | undefined): AttributeType {
   return 'text'
 }
 
+// Certains jeux legacy (star-wars notamment) stockent des valeurs de
+// personnage sous forme de tableau pour un attribut déclaré (ou par défaut)
+// "text" — le flag `partialMatch: true` de la v1 le signalait déjà, mais le
+// moteur d'origine l'ignorait complètement et appliquait quand même sa
+// correspondance par sous-chaîne sur `Array.toString()` (ex: "Clone
+// Wars,Rebels" vs "The Phantom Menace,Clone Wars" ne matche pas alors que
+// "Clone Wars" est un élément commun) — un vrai bug hérité, jamais un
+// comportement voulu. On se base sur la vraie forme des données plutôt que
+// sur le type déclaré : si un perso a un tableau pour cette clé, c'est du
+// "multiple" (comparaison par intersection d'ensembles), point final.
+function inferType(attr: LegacyAttribute, characters: LegacyCharacter[]): AttributeType {
+  const hasArrayValue = characters.some((c) => Array.isArray(c[attr.key]))
+  return hasArrayValue ? 'multiple' : normalizeType(attr.type)
+}
+
 async function withRetry<T>(fn: () => Promise<T>, label: string, retries = 3): Promise<T> {
   for (let attempt = 1; attempt <= retries; attempt++) {
     try {
@@ -215,7 +230,7 @@ async function migrateGame(file: string) {
       gameId,
       key: attr.key,
       label: attr.label,
-      type: normalizeType(attr.type),
+      type: inferType(attr, data.characters),
       sortOrder: i,
       orderValues: attr.order ?? null,
       hints: attr.hints ?? null,

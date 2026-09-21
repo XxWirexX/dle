@@ -22,7 +22,34 @@ const { user } = useAuth()
 const showHints = ref(false)
 const revealedTarget = ref<Character | null>(null)
 const guessing = ref(false)
+const copied = ref(false)
 const { attempts, gameOver, won, addAttempt, forfeit, guessedIds } = useGuessGame(game.value.maxAttempts)
+
+// Appelé une fois de façon synchrone ici (pas dans le computed plus bas) :
+// useRequestURL() a besoin du contexte Nuxt actif, indisponible si on
+// l'appelle depuis une callback réévaluée plus tard.
+const shareUrl = `${useRequestURL().origin}/games/${slug}/daily`
+
+const shareText = computed(() => generateShareText({
+  gameName: game.value!.name,
+  dayNumber: daily.value!.dayNumber,
+  attempts: attempts.value,
+  attributes,
+  maxAttempts: game.value!.maxAttempts,
+  won: won.value,
+  url: shareUrl,
+}))
+
+async function copyResult() {
+  try {
+    await navigator.clipboard.writeText(shareText.value)
+    copied.value = true
+    setTimeout(() => { copied.value = false }, 2000)
+  } catch {
+    // Presse-papiers indisponible (permissions navigateur, contexte non
+    // sécurisé...) — pas grave, le texte reste affiché à l'écran.
+  }
+}
 
 async function reportCompletion() {
   if (!user.value) return
@@ -98,6 +125,13 @@ const hintAttributes = computed(() => attributes.filter((a) => a.hints || a.orde
         <div class="result" :class="won ? 'win' : 'lose'">{{ won ? 'Trouvé !' : 'Dommage' }}</div>
         <div v-if="revealedTarget" class="target-name">{{ revealedTarget.name }}</div>
         <div class="stats-line">{{ attempts.length }} essai{{ attempts.length > 1 ? 's' : '' }} · reviens demain pour un nouveau défi</div>
+
+        <div class="share-section">
+          <pre class="share-grid">{{ shareText }}</pre>
+          <button class="btn btn-primary btn-sm" @click="copyResult">
+            {{ copied ? '✓ Copié !' : 'Partager le résultat' }}
+          </button>
+        </div>
       </div>
       <div v-else class="header-buttons">
         <button class="btn btn-danger" @click="reveal">Abandonner</button>
@@ -217,7 +251,24 @@ const hintAttributes = computed(() => attributes.filter((a) => a.hints || a.orde
 .result.lose { color: #f87171; }
 
 .target-name { color: var(--text-2); font-weight: 600; margin-bottom: 0.75rem; }
-.stats-line { color: var(--text-3); font-size: 0.85rem; }
+.stats-line { color: var(--text-3); font-size: 0.85rem; margin-bottom: 1.25rem; }
+
+.share-section { display: flex; flex-direction: column; align-items: center; gap: 0.75rem; }
+
+.share-grid {
+  font-family: inherit;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--text-2);
+  white-space: pre-wrap;
+  word-break: break-word;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.85rem 1rem;
+  margin: 0;
+  text-align: left;
+}
 
 .hints-toggle {
   display: block;
