@@ -1,0 +1,1 @@
+ALTER TABLE "user_game_stats" ADD COLUMN "best_attempts" integer;

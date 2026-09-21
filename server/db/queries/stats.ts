@@ -4,6 +4,7 @@ import { userGameStats, games } from '../schema'
 
 const EMPTY_STATS = {
   gamesPlayed: 0, wins: 0, currentStreak: 0, maxStreak: 0, totalAttempts: 0,
+  bestAttempts: null as number | null,
   dailyPlayed: 0, dailyWins: 0, dailyStreak: 0, dailyMaxStreak: 0, lastDailyDate: null as string | null,
   multiplayerPlayed: 0, multiplayerWins: 0,
 }
@@ -24,6 +25,7 @@ export interface StatsRow {
   currentStreak: number
   maxStreak: number
   totalAttempts: number
+  bestAttempts: number | null
   dailyPlayed: number
   dailyWins: number
   dailyStreak: number
@@ -48,6 +50,7 @@ export async function getAllStatsForUser(userId: number): Promise<StatsRow[]> {
       currentStreak: r.currentStreak,
       maxStreak: r.maxStreak,
       totalAttempts: r.totalAttempts,
+      bestAttempts: r.bestAttempts,
       dailyPlayed: r.dailyPlayed,
       dailyWins: r.dailyWins,
       dailyStreak: r.dailyStreak,
@@ -77,6 +80,9 @@ export async function updateStats(userId: number, gameId: number, opts: UpdateSt
   const currentStreak = opts.won ? current.currentStreak + 1 : 0
   const maxStreak = Math.max(current.maxStreak, currentStreak)
   const totalAttempts = current.totalAttempts + attempts
+  const bestAttempts = opts.won && attempts > 0
+    ? (current.bestAttempts === null ? attempts : Math.min(current.bestAttempts, attempts))
+    : current.bestAttempts
   const multiplayerPlayed = current.multiplayerPlayed + (opts.isMultiplayer ? 1 : 0)
   const multiplayerWins = current.multiplayerWins + (opts.isMultiplayer && opts.won ? 1 : 0)
 
@@ -93,7 +99,7 @@ export async function updateStats(userId: number, gameId: number, opts: UpdateSt
   }
 
   const values = {
-    userId, gameId, gamesPlayed, wins, currentStreak, maxStreak, totalAttempts,
+    userId, gameId, gamesPlayed, wins, currentStreak, maxStreak, totalAttempts, bestAttempts,
     dailyPlayed, dailyWins, dailyStreak, dailyMaxStreak, lastDailyDate,
     multiplayerPlayed, multiplayerWins,
   }

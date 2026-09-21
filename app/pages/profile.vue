@@ -41,6 +41,16 @@ const { data: stats, pending, error } = await useFetch('/api/stats', { key: 'my-
         </div>
       </section>
 
+      <NuxtLink
+        v-if="stats.global.favoriteGame"
+        :to="`/games/${stats.global.favoriteGame.gameSlug}`"
+        class="favorite-game"
+      >
+        <span class="favorite-label">⭐ Jeu favori</span>
+        <span class="favorite-name">{{ stats.global.favoriteGame.gameName }}</span>
+        <span class="favorite-count">{{ stats.global.favoriteGame.gamesPlayed }} partie{{ stats.global.favoriteGame.gamesPlayed > 1 ? 's' : '' }}</span>
+      </NuxtLink>
+
       <section class="detail-stats">
         <div class="detail-card">
           <div class="detail-title">Solo</div>
@@ -64,7 +74,11 @@ const { data: stats, pending, error } = await useFetch('/api/stats', { key: 'my-
             <NuxtLink :to="`/games/${g.gameSlug}`" class="game-name">{{ g.gameName }}</NuxtLink>
             <div class="game-metrics">
               <span class="metric">{{ g.gamesPlayed }} partie{{ g.gamesPlayed > 1 ? 's' : '' }}</span>
-              <span class="metric">{{ g.wins }} victoire{{ g.wins > 1 ? 's' : '' }}</span>
+              <span class="metric">{{ g.winRate }}% de victoires</span>
+              <span class="metric">{{ g.avgAttempts }} essais en moyenne</span>
+              <span class="metric" v-if="g.bestAttempts !== null">
+                Record : {{ g.bestAttempts }} essai{{ g.bestAttempts > 1 ? 's' : '' }}
+              </span>
               <span class="metric">Série {{ g.currentStreak }} (max {{ g.maxStreak }})</span>
               <span class="metric daily" v-if="g.dailyPlayed > 0">
                 Quotidien : {{ g.dailyWins }}/{{ g.dailyPlayed }} · série {{ g.dailyStreak }} (max {{ g.dailyMaxStreak }})
@@ -132,6 +146,21 @@ const { data: stats, pending, error } = await useFetch('/api/stats', { key: 'my-
 
 .stat-value { font-size: 1.6rem; font-weight: 800; color: var(--accent); margin-bottom: 0.2rem; }
 .stat-label { color: var(--text-3); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; }
+
+.favorite-game {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.9rem 1.1rem;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.12), rgba(139, 92, 246, 0.12));
+  border: 1px solid var(--border-2);
+  border-radius: 12px;
+}
+
+.favorite-label { font-size: 0.8rem; color: var(--text-2); font-weight: 600; }
+.favorite-name { font-weight: 800; color: var(--text); }
+.favorite-count { margin-left: auto; color: var(--text-3); font-size: 0.8rem; }
 
 .detail-stats {
   display: grid;
