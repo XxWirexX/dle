@@ -8,6 +8,8 @@ if (error.value) {
   throw createError({ statusCode: 404, statusMessage: 'Jeu introuvable' })
 }
 
+const { data: leaderboard } = await useFetch(`/api/games/${slug}/leaderboard`, { key: `game-leaderboard-${slug}` })
+
 const typeLabels: Record<string, string> = {
   text: 'Texte',
   number: 'Nombre',
@@ -82,6 +84,22 @@ const typeLabels: Record<string, string> = {
             <div class="attribute-type">{{ typeLabels[attr.type] ?? attr.type }}</div>
           </div>
         </div>
+      </section>
+
+      <section v-if="leaderboard && leaderboard.entries.length > 0" class="section">
+        <h2 class="section-title">Classement</h2>
+        <ol class="leaderboard">
+          <li v-for="(entry, i) in leaderboard.entries" :key="entry.userId" class="leaderboard-row">
+            <span class="leaderboard-rank">{{ i + 1 }}</span>
+            <span class="leaderboard-avatar" :style="{ background: entry.avatarColor }">
+              <img v-if="entry.avatarImageUrl" :src="entry.avatarImageUrl" :alt="entry.username">
+              <span v-else>{{ entry.username[0]?.toUpperCase() }}</span>
+            </span>
+            <span class="leaderboard-name">{{ entry.username }}</span>
+            <span class="leaderboard-stat">{{ entry.wins }} victoire{{ entry.wins > 1 ? 's' : '' }}</span>
+            <span class="leaderboard-stat muted">série max {{ entry.maxStreak }}</span>
+          </li>
+        </ol>
       </section>
 
       <section class="section">
@@ -256,6 +274,47 @@ const typeLabels: Record<string, string> = {
 
 .character-image { width: 56px; height: 56px; border-radius: 50%; overflow: hidden; border: 2px solid var(--border-2); }
 .character-name { font-size: 0.68rem; font-weight: 600; color: var(--text-2); text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; }
+
+.leaderboard { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+
+.leaderboard-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 1rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.leaderboard-rank {
+  width: 1.5rem;
+  text-align: center;
+  font-weight: 800;
+  color: var(--text-3);
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+
+.leaderboard-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.75rem;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.leaderboard-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+.leaderboard-name { font-weight: 700; color: var(--text); flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.leaderboard-stat { font-size: 0.8rem; color: var(--text-2); white-space: nowrap; }
+.leaderboard-stat.muted { color: var(--text-3); }
 
 @media (max-width: 768px) {
   .header { flex-direction: column; text-align: center; padding: 2rem 1.25rem 1.5rem; gap: 1.25rem; }

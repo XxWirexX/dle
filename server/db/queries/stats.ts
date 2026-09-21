@@ -1,4 +1,4 @@
-import { eq, and } from 'drizzle-orm'
+import { eq, and, desc, gt } from 'drizzle-orm'
 import { db } from '../client'
 import { userGameStats, games } from '../schema'
 
@@ -114,4 +114,38 @@ export async function updateStats(userId: number, gameId: number, opts: UpdateSt
 
 export function findGameIdBySlug(slug: string) {
   return db.query.games.findFirst({ where: eq(games.slug, slug), columns: { id: true, maxAttempts: true } })
+}
+
+export interface GameLeaderboardEntry {
+  userId: number
+  username: string
+  avatarColor: string
+  avatarImageUrl: string | null
+  wins: number
+  gamesPlayed: number
+  maxStreak: number
+}
+
+// Classement des joueurs sur un jeu donné : victoires d'abord, puis
+// meilleure série pour départager — seuls ceux qui ont au moins une
+// victoire apparaissent (pas d'intérêt à classer des 0 partout).
+export async function getGameLeaderboard(gameId: number, limit = 10): Promise<GameLeaderboardEntry[]> {
+  const rows = await db.query.userGameStats.findMany({
+    where: and(eq(userGameStats.gameId, gameId), gt(userGameStats.wins, 0)),
+    orderBy: [desc(userGameStats.wins), desc(userGameStats.maxStreak)],
+    limit,
+    with: { user: { columns: { id: true, username: true, avatarColor: true, avatarImageUrl: true } } },
+  })
+
+  return rows
+    .filter((r) => r.user)
+    .map((r) => ({
+      userId: r.userId,
+      username: r.user!.username,
+      avatarColor: r.user!.avatarColor,
+      avatarImageUrl: r.user!.avatarImageUrl,
+      wins: r.wins,
+      gamesPlayed: r.gamesPlayed,
+      maxStreak: r.maxStreak,
+    }))
 }
