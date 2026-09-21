@@ -139,6 +139,21 @@ export const favoriteGames = pgTable('favorite_games', {
   userGameIdx: uniqueIndex('favorite_games_user_game_idx').on(t.userId, t.gameId),
 }))
 
+// Un enregistrement par joueur/jeu/jour, distinct de `user_game_stats`
+// (compteurs cumulés) — nécessaire pour classer le défi du jour par vitesse
+// de résolution, pas seulement par nombre d'essais.
+export const dailyCompletions = pgTable('daily_completions', {
+  id: serial('id').primaryKey(),
+  userId: integer('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  gameId: integer('game_id').notNull().references(() => games.id, { onDelete: 'cascade' }),
+  date: varchar('date', { length: 10 }).notNull(),
+  attempts: integer('attempts').notNull(),
+  won: boolean('won').notNull(),
+  completedAt: timestamp('completed_at').notNull().defaultNow(),
+}, (t) => ({
+  userGameDateIdx: uniqueIndex('daily_completions_user_game_date_idx').on(t.userId, t.gameId, t.date),
+}))
+
 export const gamesRelations = relations(games, ({ many, one }) => ({
   attributes: many(attributes),
   characters: many(characters),
@@ -161,6 +176,11 @@ export const usersRelations = relations(users, ({ many }) => ({
 export const userGameStatsRelations = relations(userGameStats, ({ one }) => ({
   user: one(users, { fields: [userGameStats.userId], references: [users.id] }),
   game: one(games, { fields: [userGameStats.gameId], references: [games.id] }),
+}))
+
+export const dailyCompletionsRelations = relations(dailyCompletions, ({ one }) => ({
+  user: one(users, { fields: [dailyCompletions.userId], references: [users.id] }),
+  game: one(games, { fields: [dailyCompletions.gameId], references: [games.id] }),
 }))
 
 export const friendshipsRelations = relations(friendships, ({ one }) => ({

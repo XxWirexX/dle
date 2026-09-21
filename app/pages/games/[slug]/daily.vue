@@ -40,6 +40,10 @@ const shareText = computed(() => generateShareText({
   url: shareUrl,
 }))
 
+function formatTime(iso: string): string {
+  return new Date(iso).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })
+}
+
 async function copyResult() {
   try {
     await navigator.clipboard.writeText(shareText.value)
@@ -51,17 +55,39 @@ async function copyResult() {
   }
 }
 
-async function reportCompletion() {
-  if (!user.value) return
-  // Ordre chronologique (les tentatives sont stockées la plus récente en
-  // premier) : le serveur revérifie lui-même le résultat, voir l'endpoint.
-  const attemptCharacterIds = [...attempts.value].reverse().map((a) => a.character.id)
+interface LeaderboardEntry {
+  userId: number
+  username: string
+  avatarColor: string
+  avatarImageUrl: string | null
+  attempts: number
+  completedAt: string
+}
+
+const leaderboard = ref<LeaderboardEntry[]>([])
+
+async function loadLeaderboard() {
   try {
-    await $fetch(`/api/games/${slug}/daily/complete`, { method: 'POST', body: { attemptCharacterIds } })
+    const data = await $fetch<{ entries: LeaderboardEntry[] }>(`/api/games/${slug}/daily/leaderboard`)
+    leaderboard.value = data.entries
   } catch {
-    // Pas grave si ça échoue (déjà comptabilisé aujourd'hui, etc.) — ça
-    // ne doit jamais bloquer l'affichage du résultat au joueur.
+    // Pas grave si ça échoue — le classement est un bonus, pas le cœur du jeu.
   }
+}
+
+async function reportCompletion() {
+  if (user.value) {
+    // Ordre chronologique (les tentatives sont stockées la plus récente en
+    // premier) : le serveur revérifie lui-même le résultat, voir l'endpoint.
+    const attemptCharacterIds = [...attempts.value].reverse().map((a) => a.character.id)
+    try {
+      await $fetch(`/api/games/${slug}/daily/complete`, { method: 'POST', body: { attemptCharacterIds } })
+    } catch {
+      // Pas grave si ça échoue (déjà comptabilisé aujourd'hui, etc.) — ça
+      // ne doit jamais bloquer l'affichage du résultat au joueur.
+    }
+  }
+  await loadLeaderboard()
 }
 
 async function onGuess(character: Character) {
@@ -131,6 +157,27 @@ const hintAttributes = computed(() => attributes.filter((a) => a.hints || a.orde
           <button class="btn btn-primary btn-sm" @click="copyResult">
             {{ copied ? '✓ Copié !' : 'Partager le résultat' }}
           </button>
+        </div>
+
+        <div v-if="leaderboard.length > 0" class="daily-leaderboard">
+          <div class="leaderboard-title">Classement du jour</div>
+          <ol class="leaderboard">
+            <li
+              v-for="(entry, i) in leaderboard"
+              :key="entry.userId"
+              class="leaderboard-row"
+              :class="{ me: user && entry.userId === user.id }"
+            >
+              <span class="leaderboard-rank">{{ i + 1 }}</span>
+              <span class="leaderboard-avatar" :style="{ background: entry.avatarColor }">
+                <img v-if="entry.avatarImageUrl" :src="entry.avatarImageUrl" :alt="entry.username">
+                <span v-else>{{ entry.username[0]?.toUpperCase() }}</span>
+              </span>
+              <span class="leaderboard-name">{{ entry.username }}</span>
+              <span class="leaderboard-stat">{{ entry.attempts }} essai{{ entry.attempts > 1 ? 's' : '' }}</span>
+              <span class="leaderboard-stat muted">{{ formatTime(entry.completedAt) }}</span>
+            </li>
+          </ol>
         </div>
       </div>
       <div v-else class="header-buttons">
@@ -269,6 +316,54 @@ const hintAttributes = computed(() => attributes.filter((a) => a.hints || a.orde
   margin: 0;
   text-align: left;
 }
+
+.daily-leaderboard { margin-top: 1.25rem; text-align: left; }
+
+.leaderboard-title {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 0.6rem;
+  text-align: center;
+}
+
+.leaderboard { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.4rem; max-height: 16rem; overflow-y: auto; }
+
+.leaderboard-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 0.75rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.leaderboard-row.me { border-color: rgba(59, 130, 246, 0.4); background: rgba(59, 130, 246, 0.08); }
+
+.leaderboard-rank { width: 1.25rem; text-align: center; font-weight: 800; color: var(--text-3); font-size: 0.8rem; flex-shrink: 0; }
+
+.leaderboard-avatar {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.68rem;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.leaderboard-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+.leaderboard-name { font-weight: 700; color: var(--text); flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.85rem; }
+.leaderboard-stat { font-size: 0.75rem; color: var(--text-2); white-space: nowrap; }
+.leaderboard-stat.muted { color: var(--text-3); }
 
 .hints-toggle {
   display: block;
