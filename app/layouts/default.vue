@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const { user, logout } = useAuth()
-const { pendingInvite, dismissInvite, acceptInvite } = useMultiplayer()
+const { pendingInvites, dismissInvite, acceptInvite } = useMultiplayer()
 const router = useRouter()
 
 const userMenuOpen = ref(false)
@@ -11,10 +11,14 @@ async function onLogout() {
   await router.push('/')
 }
 
-function onAcceptInvite() {
-  const slug = acceptInvite()
+function onAcceptInvite(joinCode: string) {
+  const slug = acceptInvite(joinCode)
   if (slug) router.push(`/games/${slug}/multiplayer`)
 }
+
+// Un seul toast affiché à la fois (le plus récent) pour ne pas empiler les
+// popups — les autres invitations restent visibles sur /notifications.
+const latestInvite = computed(() => pendingInvites.value[pendingInvites.value.length - 1] ?? null)
 </script>
 
 <template>
@@ -27,6 +31,10 @@ function onAcceptInvite() {
 
       <nav class="nav-links">
         <NuxtLink to="/" class="nav-link">Jeux</NuxtLink>
+        <NuxtLink v-if="user" to="/notifications" class="nav-link notif-link">
+          Notifications
+          <span v-if="pendingInvites.length" class="notif-badge">{{ pendingInvites.length }}</span>
+        </NuxtLink>
       </nav>
 
       <div class="user-area">
@@ -53,11 +61,11 @@ function onAcceptInvite() {
       <slot />
     </main>
 
-    <div v-if="pendingInvite" class="invite-toast">
-      <p><strong>{{ pendingInvite.fromUsername }}</strong> t'invite à jouer sur <strong>{{ pendingInvite.gameName }}</strong></p>
+    <div v-if="latestInvite" class="invite-toast">
+      <p><strong>{{ latestInvite.fromUsername }}</strong> t'invite à jouer sur <strong>{{ latestInvite.gameName }}</strong></p>
       <div class="invite-actions">
-        <button class="btn btn-primary btn-sm" @click="onAcceptInvite">Rejoindre</button>
-        <button class="btn btn-sm" @click="dismissInvite">Ignorer</button>
+        <button class="btn btn-primary btn-sm" @click="onAcceptInvite(latestInvite.joinCode)">Rejoindre</button>
+        <button class="btn btn-sm" @click="dismissInvite(latestInvite.joinCode)">Ignorer</button>
       </div>
     </div>
   </div>
@@ -133,6 +141,26 @@ function onAcceptInvite() {
 .nav-link.router-link-exact-active {
   color: var(--text);
   font-weight: 600;
+}
+
+.notif-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.notif-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 800;
 }
 
 .user-area {
