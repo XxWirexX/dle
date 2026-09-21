@@ -130,6 +130,15 @@ export const friendships = pgTable('friendships', {
   pairIdx: uniqueIndex('friendships_pair_idx').on(t.requesterId, t.addresseeId),
 }))
 
+export const favoriteGames = pgTable('favorite_games', {
+  id: serial('id').primaryKey(),
+  userId: integer('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  gameId: integer('game_id').notNull().references(() => games.id, { onDelete: 'cascade' }),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+}, (t) => ({
+  userGameIdx: uniqueIndex('favorite_games_user_game_idx').on(t.userId, t.gameId),
+}))
+
 export const gamesRelations = relations(games, ({ many, one }) => ({
   attributes: many(attributes),
   characters: many(characters),

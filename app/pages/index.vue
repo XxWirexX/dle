@@ -1,12 +1,36 @@
 <script setup lang="ts">
 const { data: games } = await useFetch('/api/games', { key: 'games-list' })
+
+const { user } = useAuth()
+const { favoriteIds, refresh: refreshFavorites } = useFavorites()
+
+const dailyStreaks = ref<Record<string, number>>({})
+if (user.value) {
+  await refreshFavorites()
+  try {
+    const stats = await apiFetch<{ byGame: { gameSlug: string; dailyStreak: number }[] }>('/api/stats')
+    dailyStreaks.value = Object.fromEntries(stats.byGame.map((g) => [g.gameSlug, g.dailyStreak]))
+  } catch {
+    // Pas grave si ça échoue — la page reste utilisable sans les badges de série.
+  }
+}
+
+// Favoris d'abord, puis le reste dans l'ordre d'origine (pas de tri
+// secondaire arbitraire — l'ordre de la liste des jeux ne bouge pas pour
+// le reste).
+const sortedGames = computed(() => {
+  if (!games.value) return []
+  const favorites = games.value.filter((g) => favoriteIds.value.has(g.id))
+  const rest = games.value.filter((g) => !favoriteIds.value.has(g.id))
+  return [...favorites, ...rest]
+})
 </script>
 
 <template>
   <div class="home">
     <h2 class="section-title">Jeux disponibles</h2>
     <div class="grid">
-      <GameCard v-for="game in games" :key="game.slug" :game="game" />
+      <GameCard v-for="game in sortedGames" :key="game.slug" :game="game" :daily-streak="dailyStreaks[game.slug]" />
     </div>
   </div>
 </template>
