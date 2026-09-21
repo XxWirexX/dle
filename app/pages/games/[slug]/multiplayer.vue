@@ -20,6 +20,14 @@ if (user.value) await refreshFriends()
 const onlineFriends = computed(() => friends.value.filter((f) => f.online))
 const invitedFriendIds = ref<number[]>([])
 
+// Dans la salle d'attente, on ne propose que les amis en ligne qui ne sont
+// pas déjà dans le salon (pas d'intérêt à réinviter quelqu'un présent).
+const invitableFriends = computed(() => {
+  if (!room.value) return onlineFriends.value
+  const inRoom = new Set(room.value.players.map((p) => p.userId))
+  return onlineFriends.value.filter((f) => !inRoom.has(f.userId))
+})
+
 function onInviteFriend(friendUserId: number) {
   inviteFriend(friendUserId, slug, 8)
   invitedFriendIds.value = [...invitedFriendIds.value, friendUserId]
@@ -101,11 +109,11 @@ onBeforeUnmount(() => {
             </div>
           </div>
 
-          <div v-if="onlineFriends.length > 0" class="option-card">
+          <div v-if="invitableFriends.length > 0" class="option-card">
             <h3>Inviter un ami</h3>
-            <p>{{ onlineFriends.length }} ami{{ onlineFriends.length > 1 ? 's' : '' }} en ligne</p>
+            <p>{{ invitableFriends.length }} ami{{ invitableFriends.length > 1 ? 's' : '' }} en ligne</p>
             <ul class="friend-invite-list">
-              <li v-for="f in onlineFriends" :key="f.userId">
+              <li v-for="f in invitableFriends" :key="f.userId">
                 <span>{{ f.username }}</span>
                 <button
                   class="btn btn-sm"
@@ -131,6 +139,23 @@ onBeforeUnmount(() => {
           <li v-for="p in room.players" :key="p.socketId">{{ p.username }} <span v-if="p.socketId === room.hostSocketId">(hôte)</span></li>
         </ul>
         <p class="muted">{{ room.players.length }} / {{ room.maxPlayers }} joueurs</p>
+
+        <div v-if="invitableFriends.length > 0 && room.players.length < room.maxPlayers" class="option-card invite-in-room">
+          <h3>Inviter un ami</h3>
+          <ul class="friend-invite-list">
+            <li v-for="f in invitableFriends" :key="f.userId">
+              <span>{{ f.username }}</span>
+              <button
+                class="btn btn-sm"
+                :disabled="invitedFriendIds.includes(f.userId)"
+                @click="onInviteFriend(f.userId)"
+              >
+                {{ invitedFriendIds.includes(f.userId) ? 'Invité' : 'Inviter' }}
+              </button>
+            </li>
+          </ul>
+        </div>
+
         <button v-if="isHost" class="btn btn-primary" :disabled="room.players.length < 2" @click="startRoom">
           Démarrer la partie
         </button>
@@ -279,6 +304,8 @@ onBeforeUnmount(() => {
 
 .player-list { list-style: none; padding: 0; margin: 0; color: #fff; }
 .player-list li { padding: 0.3rem 0; }
+
+.invite-in-room { width: 100%; margin: 1rem 0; }
 
 .muted { color: var(--text-3); font-size: 0.85rem; }
 
