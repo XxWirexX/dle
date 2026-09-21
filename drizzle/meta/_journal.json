@@ -15,6 +15,13 @@
       "when": 1790006029151,
       "tag": "0001_majestic_earthquake",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1790007196693,
+      "tag": "0002_bent_famine",
+      "breakpoints": true
     }
   ]
 }
