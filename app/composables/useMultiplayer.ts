@@ -1,5 +1,5 @@
 import { io, type Socket } from 'socket.io-client'
-import type { RoomSnapshot, ChatMessage } from '#shared/types/multiplayer'
+import type { RoomSnapshot, ChatMessage, RoomMode } from '#shared/types/multiplayer'
 
 let socket: Socket | null = null
 
@@ -75,9 +75,9 @@ export function useMultiplayer() {
     inQueue.value = false
   }
 
-  function createRoom(slug: string, maxPlayers: number, difficulty: string | null = null) {
+  function createRoom(slug: string, maxPlayers: number, difficulty: string | null = null, mode: RoomMode = 'classic') {
     connect()
-    socket?.emit('mp:create-room', { slug, maxPlayers, difficulty })
+    socket?.emit('mp:create-room', { slug, maxPlayers, difficulty, mode })
   }
 
   function joinRoom(code: string) {

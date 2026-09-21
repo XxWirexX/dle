@@ -1,7 +1,7 @@
 import { nanoid, customAlphabet } from 'nanoid'
 import { computeGuessFeedback } from '#shared/utils/feedback'
-import type { GamePlayData, Character } from '#shared/types/game'
-import type { RoomSnapshot, RoomPlayerInfo, FeedAttempt, ChatMessage } from '#shared/types/multiplayer'
+import type { GamePlayData, Character, FieldFeedback } from '#shared/types/game'
+import type { RoomSnapshot, RoomPlayerInfo, FeedAttempt, ChatMessage, RoomMode, LastGuess } from '#shared/types/multiplayer'
 
 const joinCode = customAlphabet('ABCDEFGHJKLMNPQRSTUVWXYZ23456789', 6) // sans caractères ambigus
 
@@ -43,6 +43,20 @@ interface Room {
   messages: ChatMessage[]
   status: 'waiting' | 'playing' | 'finished'
   winnerSocketId: string | null
+  mode: RoomMode
+  // Mode "hard" uniquement : le plateau propre à chaque joueur (champs
+  // correct/proche déjà débloqués, jamais les faux) et sa dernière
+  // tentative isolée (remplacée, jamais accumulée, à chaque nouveau guess).
+  hardBoards: Map<string, Record<string, FieldFeedback>>
+  hardLastGuess: Map<string, LastGuess | null>
+  // Exclusion propre à chaque joueur en mode "hard" — contrairement au mode
+  // classique, un personnage tenté par quelqu'un d'autre ne doit pas
+  // disparaître sans explication de la recherche des autres joueurs.
+  hardGuessedIds: Map<string, Set<number>>
+  // Nombre de tentatives par joueur, quel que soit le mode — en mode
+  // "hard" `attempts` reste vide, donc les stats ont besoin d'un compteur
+  // dédié plutôt que de déduire un décompte depuis le feed partagé.
+  guessCounts: Map<string, number>
 }
 
 export type GuessResult =
@@ -110,8 +124,8 @@ export class RoomManager {
   }
 
   // ─── Salons privés (2 à N joueurs) ────────────────────────────────
-  createPrivateRoom(entry: QueueEntry, slug: string, gameData: GamePlayData, maxPlayers: number, difficulty: string | null): Room {
-    return this.createRoom({ slug, gameData, hostEntry: entry, maxPlayers, isPrivate: true, difficulty })
+  createPrivateRoom(entry: QueueEntry, slug: string, gameData: GamePlayData, maxPlayers: number, difficulty: string | null, mode: RoomMode = 'classic'): Room {
+    return this.createRoom({ slug, gameData, hostEntry: entry, maxPlayers, isPrivate: true, difficulty, mode })
   }
 
   joinPrivateRoom(entry: QueueEntry, code: string): { ok: true; room: Room } | { ok: false; error: string } {
@@ -142,6 +156,7 @@ export class RoomManager {
     maxPlayers: number
     isPrivate: boolean
     difficulty: string | null
+    mode?: RoomMode
   }): Room {
     const pool = opts.difficulty
       ? opts.gameData.characters.filter((c) => difficultyLevel(c.attributes.difficulty) <= difficultyLevel(opts.difficulty))
@@ -165,6 +180,11 @@ export class RoomManager {
       messages: [],
       status: 'waiting',
       winnerSocketId: null,
+      mode: opts.mode ?? 'classic',
+      hardBoards: new Map(),
+      hardLastGuess: new Map(),
+      hardGuessedIds: new Map(),
+      guessCounts: new Map(),
     }
 
     this.addPlayerToRoom(room, opts.hostEntry)
@@ -191,6 +211,10 @@ export class RoomManager {
     room.guessedCharacterIds = new Set()
     room.attempts = []
     room.winnerSocketId = null
+    room.hardBoards = new Map()
+    room.hardLastGuess = new Map()
+    room.hardGuessedIds = new Map()
+    room.guessCounts = new Map()
   }
 
   getRoom(socketId: string): Room | null {
@@ -218,7 +242,11 @@ export class RoomManager {
     if (!room) return { ok: false, error: 'Salon introuvable' }
     if (room.status !== 'playing') return { ok: false, error: 'La partie n\'est pas en cours' }
     if (this.currentTurnSocketId(room) !== socketId) return { ok: false, error: "Ce n'est pas ton tour" }
-    if (room.guessedCharacterIds.has(characterId)) return { ok: false, error: 'Ce personnage a déjà été joué' }
+
+    const alreadyGuessed = room.mode === 'hard'
+      ? (room.hardGuessedIds.get(socketId)?.has(characterId) ?? false)
+      : room.guessedCharacterIds.has(characterId)
+    if (alreadyGuessed) return { ok: false, error: 'Ce personnage a déjà été joué' }
 
     // Résolu depuis les données du jeu connues du serveur — jamais depuis
     // ce que le client prétend avoir deviné (c'était la faille de la v1 :
@@ -231,9 +259,26 @@ export class RoomManager {
     const feedback = computeGuessFeedback(guess, target, room.gameData.attributes)
     const isCorrect = guess.id === target.id
 
-    room.guessedCharacterIds.add(characterId)
     const player = room.players.get(socketId)!
-    room.attempts.push({ socketId, username: player.username, character: guess, feedback, isCorrect })
+    room.guessCounts.set(socketId, (room.guessCounts.get(socketId) ?? 0) + 1)
+
+    if (room.mode === 'hard') {
+      const guessed = room.hardGuessedIds.get(socketId) ?? new Set<number>()
+      guessed.add(characterId)
+      room.hardGuessedIds.set(socketId, guessed)
+      // Le plateau ne s'enrichit que des champs correct/proche — les faux
+      // ne laissent jamais de trace, et la dernière tentative remplace la
+      // précédente au lieu de s'accumuler dans un historique visible.
+      const board = room.hardBoards.get(socketId) ?? {}
+      for (const [key, fieldFeedback] of Object.entries(feedback)) {
+        if (fieldFeedback.type === 'correct' || fieldFeedback.type === 'close') board[key] = fieldFeedback
+      }
+      room.hardBoards.set(socketId, board)
+      room.hardLastGuess.set(socketId, { character: guess, feedback, isCorrect })
+    } else {
+      room.guessedCharacterIds.add(characterId)
+      room.attempts.push({ socketId, username: player.username, character: guess, feedback, isCorrect })
+    }
 
     let gameOver = false
     if (isCorrect) {
@@ -343,7 +388,10 @@ export class RoomManager {
     return { room }
   }
 
-  toSnapshot(room: Room): RoomSnapshot {
+  // `forSocketId` : obligatoire en mode "hard" pour renvoyer le plateau et
+  // la dernière tentative propres à CE joueur — jamais ceux d'un autre,
+  // c'est tout le principe du mode. Ignoré en mode classique (partagé).
+  toSnapshot(room: Room, forSocketId?: string): RoomSnapshot {
     const players: RoomPlayerInfo[] = [...room.players.values()].map((p) => ({
       socketId: p.socketId,
       userId: p.userId,
@@ -360,10 +408,14 @@ export class RoomManager {
       maxAttempts: room.gameData.maxAttempts,
       attributes: room.gameData.attributes,
       status: room.status,
+      mode: room.mode,
       players,
       hostSocketId: room.hostSocketId,
       currentTurnSocketId: this.currentTurnSocketId(room),
-      attempts: room.attempts,
+      attempts: room.mode === 'classic' ? room.attempts : [],
+      myBoard: room.mode === 'hard' && forSocketId ? (room.hardBoards.get(forSocketId) ?? {}) : undefined,
+      myLastGuess: room.mode === 'hard' && forSocketId ? (room.hardLastGuess.get(forSocketId) ?? null) : undefined,
+      myGuessedIds: room.mode === 'hard' && forSocketId ? [...(room.hardGuessedIds.get(forSocketId) ?? [])] : undefined,
       winnerSocketId: room.winnerSocketId,
       joinCode: room.joinCode,
       maxPlayers: room.maxPlayers,
