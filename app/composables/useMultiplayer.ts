@@ -8,6 +8,7 @@ export interface FriendInvite {
   slug: string
   gameName: string
   joinCode: string
+  receivedAt: number
 }
 
 export function useMultiplayer() {
@@ -17,7 +18,11 @@ export function useMultiplayer() {
   const messages = useState<ChatMessage[]>('mp-messages', () => [])
   const connected = useState<boolean>('mp-connected', () => false)
   const onlineFriendIds = useState<number[]>('mp-online-friends', () => [])
-  const pendingInvite = useState<FriendInvite | null>('mp-pending-invite', () => null)
+  // Liste (pas juste la dernière) : on garde toutes les invitations reçues
+  // tant qu'elles ne sont pas acceptées/refusées/expirées, pour la page
+  // notifications — une invitation ne doit pas être perdue si une autre
+  // arrive par-dessus.
+  const pendingInvites = useState<FriendInvite[]>('mp-pending-invites', () => [])
 
   function connect() {
     if (socket?.connected) return
@@ -51,8 +56,17 @@ export function useMultiplayer() {
         : onlineFriendIds.value.filter((id) => id !== userId)
     })
 
-    socket.on('friend:invite', (invite: FriendInvite) => {
-      pendingInvite.value = invite
+    socket.on('friend:invite', (invite: Omit<FriendInvite, 'receivedAt'>) => {
+      // On remplace une éventuelle invitation déjà en attente du même salon
+      // (ex: reconnexion) plutôt que d'en empiler une doublon.
+      pendingInvites.value = [
+        ...pendingInvites.value.filter((i) => i.joinCode !== invite.joinCode),
+        { ...invite, receivedAt: Date.now() },
+      ]
+    })
+
+    socket.on('friend:invite-expired', ({ joinCode }: { joinCode: string | null }) => {
+      pendingInvites.value = pendingInvites.value.filter((i) => i.joinCode !== joinCode)
     })
   }
 
@@ -115,16 +129,16 @@ export function useMultiplayer() {
     if (!onlineFriendIds.value.includes(userId)) onlineFriendIds.value = [...onlineFriendIds.value, userId]
   }
 
-  function dismissInvite() {
-    pendingInvite.value = null
+  function dismissInvite(joinCode: string) {
+    pendingInvites.value = pendingInvites.value.filter((i) => i.joinCode !== joinCode)
   }
 
-  function acceptInvite() {
-    if (!pendingInvite.value) return
-    joinRoom(pendingInvite.value.joinCode)
-    const slug = pendingInvite.value.slug
-    pendingInvite.value = null
-    return slug
+  function acceptInvite(joinCode: string) {
+    const invite = pendingInvites.value.find((i) => i.joinCode === joinCode)
+    if (!invite) return
+    joinRoom(invite.joinCode)
+    pendingInvites.value = pendingInvites.value.filter((i) => i.joinCode !== joinCode)
+    return invite.slug
   }
 
   const mySocketId = computed(() => socket?.id ?? null)
@@ -136,7 +150,7 @@ export function useMultiplayer() {
     messages,
     connected,
     onlineFriendIds,
-    pendingInvite,
+    pendingInvites,
     mySocketId,
     connect,
     disconnect,

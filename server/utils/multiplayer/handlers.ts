@@ -34,6 +34,15 @@ async function recordMultiplayerStats(room: NonNullable<ReturnType<typeof roomMa
   }
 }
 
+// Prévient les amis invités qu'un salon n'est plus rejoignable — soit
+// l'hôte est parti avant que quiconque ne rejoigne (le salon vient d'être
+// supprimé), soit la partie a démarré sans eux.
+function expireInvites(room: { joinCode: string | null; invitedUserIds: Set<number> }) {
+  for (const userId of room.invitedUserIds) {
+    presence.notifyUser(userId, 'friend:invite-expired', { joinCode: room.joinCode })
+  }
+}
+
 // Chaque joueur reçoit son propre snapshot (nécessaire en mode "hard" pour
 // ne jamais exposer le plateau ou la dernière tentative d'un autre joueur ;
 // inoffensif en mode classique où le contenu est de toute façon identique
@@ -56,6 +65,13 @@ export function registerMultiplayerHandlers(io: Server) {
       const wasOffline = !presence.isOnline(user.userId)
       presence.connect(user.userId, socket.id)
       if (wasOffline) broadcastPresence(user.userId, true).catch(() => {})
+
+      // Republie les invitations encore valables : rien n'est persisté côté
+      // client, donc un simple rechargement de page (ou la navigation vers
+      // /notifications) les perdrait sinon.
+      for (const invite of roomManager.getInvitesForUser(user.userId)) {
+        socket.emit('friend:invite', invite)
+      }
     }
 
     socket.on('mp:quick-match', async ({ slug, difficulty }: { slug: string; difficulty: string | null }) => {
@@ -140,6 +156,8 @@ export function registerMultiplayerHandlers(io: Server) {
         socket.emit('mp:room-update', roomManager.toSnapshot(room, socket.id))
       }
 
+      room.invitedUserIds.add(friendUserId)
+
       presence.notifyUser(friendUserId, 'friend:invite', {
         fromUsername: user.username,
         slug,
@@ -153,6 +171,7 @@ export function registerMultiplayerHandlers(io: Server) {
       const result = roomManager.startRoomByHost(socket.id)
       if (!result.ok) return socket.emit('mp:error', { message: result.error })
       broadcastRoom(io, result.room)
+      expireInvites(result.room)
     })
 
     socket.on('mp:guess', ({ characterId }: { characterId: number }) => {
@@ -180,14 +199,22 @@ export function registerMultiplayerHandlers(io: Server) {
       const result = roomManager.leaveRoom(socket.id)
       if (roomId) {
         socket.leave(roomId)
-        if (result) broadcastRoom(io, result.room)
+        if (result) {
+          broadcastRoom(io, result.room)
+          // Salon vidé par ce départ : plus personne à rejoindre, les
+          // invitations en attente pour ce salon n'ont plus de sens.
+          if (result.room.players.size === 0) expireInvites(result.room)
+        }
       }
       socket.emit('mp:left-room', {})
     })
 
     socket.on('disconnect', () => {
       const result = roomManager.handleDisconnect(socket.id)
-      if (result) broadcastRoom(io, result.room)
+      if (result) {
+        broadcastRoom(io, result.room)
+        if (result.room.players.size === 0) expireInvites(result.room)
+      }
 
       if (user) {
         const trulyOffline = presence.disconnect(user.userId, socket.id)

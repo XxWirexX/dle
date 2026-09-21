@@ -57,6 +57,10 @@ interface Room {
   // "hard" `attempts` reste vide, donc les stats ont besoin d'un compteur
   // dédié plutôt que de déduire un décompte depuis le feed partagé.
   guessCounts: Map<string, number>
+  // Amis invités dans ce salon (via mp:invite-friend) alors qu'il était
+  // encore en attente — sert uniquement à savoir qui prévenir si le salon
+  // devient invalide (hôte parti, partie démarrée) avant qu'ils rejoignent.
+  invitedUserIds: Set<number>
 }
 
 export type GuessResult =
@@ -128,6 +132,25 @@ export class RoomManager {
     return this.createRoom({ slug, gameData, hostEntry: entry, maxPlayers, isPrivate: true, difficulty, mode })
   }
 
+  // Invitations encore valables pour cet utilisateur — utilisé à la
+  // (re)connexion pour republier les invitations reçues avant un rechargement
+  // de page, puisque rien n'est persisté côté client entre deux connexions.
+  getInvitesForUser(userId: number): { fromUsername: string; slug: string; gameName: string; joinCode: string }[] {
+    const invites: { fromUsername: string; slug: string; gameName: string; joinCode: string }[] = []
+    for (const room of this.rooms.values()) {
+      if (room.status !== 'waiting' || !room.joinCode) continue
+      if (!room.invitedUserIds.has(userId)) continue
+      const host = room.players.get(room.hostSocketId)
+      invites.push({
+        fromUsername: host?.username ?? '?',
+        slug: room.slug,
+        gameName: room.gameData.name,
+        joinCode: room.joinCode,
+      })
+    }
+    return invites
+  }
+
   joinPrivateRoom(entry: QueueEntry, code: string): { ok: true; room: Room } | { ok: false; error: string } {
     const room = [...this.rooms.values()].find((r) => r.joinCode === code.toUpperCase())
     if (!room) return { ok: false, error: 'Salon introuvable' }
@@ -185,6 +208,7 @@ export class RoomManager {
       hardLastGuess: new Map(),
       hardGuessedIds: new Map(),
       guessCounts: new Map(),
+      invitedUserIds: new Set(),
     }
 
     this.addPlayerToRoom(room, opts.hostEntry)
