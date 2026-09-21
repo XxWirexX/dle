@@ -26,7 +26,13 @@ const suggestions = computed(() => {
 function pick(character: Character) {
   emit('select', character)
   query.value = ''
-  showSuggestions.value = false
+  // Après une sélection au clavier (Entrée), le champ reste focus — pas de
+  // nouvel événement `focus` pour repasser showSuggestions à true, donc
+  // retaper juste après ne remontrait plus jamais de suggestions tant que
+  // l'utilisateur ne recliquait pas dans le champ. On le laisse "armé" :
+  // rien ne s'affiche tant que la requête est vide (suggestions.length
+  // === 0), et la liste réapparaît dès qu'un nouveau texte matche.
+  showSuggestions.value = true
 }
 
 function pickFirst() {
