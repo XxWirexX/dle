@@ -6,18 +6,42 @@ const { friends, incoming, outgoing, loading, refresh, sendRequest, respond, rem
 const usernameInput = ref('')
 const sendError = ref('')
 const sendSuccess = ref('')
+const sending = ref(false)
+const respondingId = ref<number | null>(null)
+const removingId = ref<number | null>(null)
 
 await refresh()
 
 async function onSend() {
   sendError.value = ''
   sendSuccess.value = ''
+  sending.value = true
   try {
     await sendRequest(usernameInput.value.trim())
     sendSuccess.value = `Demande envoyée à ${usernameInput.value.trim()}`
     usernameInput.value = ''
   } catch (err: any) {
     sendError.value = err?.data?.message || 'Erreur lors de l\'envoi'
+  } finally {
+    sending.value = false
+  }
+}
+
+async function onRespond(friendshipId: number, accept: boolean) {
+  respondingId.value = friendshipId
+  try {
+    await respond(friendshipId, accept)
+  } finally {
+    respondingId.value = null
+  }
+}
+
+async function onRemove(friendshipId: number) {
+  removingId.value = friendshipId
+  try {
+    await remove(friendshipId)
+  } finally {
+    removingId.value = null
   }
 }
 </script>
@@ -28,8 +52,8 @@ async function onSend() {
 
     <div class="add-friend">
       <form class="add-form" @submit.prevent="onSend">
-        <input v-model="usernameInput" placeholder="Pseudo de ton ami..." required>
-        <button type="submit" class="btn btn-primary">Ajouter</button>
+        <input v-model="usernameInput" placeholder="Pseudo de ton ami..." :disabled="sending" required>
+        <button type="submit" class="btn btn-primary" :disabled="sending">{{ sending ? 'Envoi...' : 'Ajouter' }}</button>
       </form>
       <p v-if="sendError" class="banner banner-error">{{ sendError }}</p>
       <p v-if="sendSuccess" class="banner banner-success">{{ sendSuccess }}</p>
@@ -42,8 +66,10 @@ async function onSend() {
           <span class="avatar" :style="{ background: r.avatarColor }">{{ r.username[0]?.toUpperCase() }}</span>
           <span class="name">{{ r.username }}</span>
           <div class="actions">
-            <button class="btn btn-primary btn-sm" @click="respond(r.friendshipId, true)">Accepter</button>
-            <button class="btn btn-sm" @click="respond(r.friendshipId, false)">Refuser</button>
+            <button class="btn btn-primary btn-sm" :disabled="respondingId === r.friendshipId" @click="onRespond(r.friendshipId, true)">
+              {{ respondingId === r.friendshipId ? '...' : 'Accepter' }}
+            </button>
+            <button class="btn btn-sm" :disabled="respondingId === r.friendshipId" @click="onRespond(r.friendshipId, false)">Refuser</button>
           </div>
         </li>
       </ul>
@@ -73,7 +99,9 @@ async function onSend() {
           <span class="name">{{ f.username }}</span>
           <span class="muted">{{ f.online ? 'En ligne' : 'Hors ligne' }}</span>
           <div class="actions">
-            <button class="btn btn-sm" @click="remove(f.friendshipId)">Retirer</button>
+            <button class="btn btn-sm" :disabled="removingId === f.friendshipId" @click="onRemove(f.friendshipId)">
+              {{ removingId === f.friendshipId ? '...' : 'Retirer' }}
+            </button>
           </div>
         </li>
       </ul>

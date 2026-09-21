@@ -40,6 +40,27 @@ const createMaxPlayers = ref(2)
 const createMode = ref<RoomMode>('classic')
 const showCreatePanel = ref(false)
 
+// Les actions socket sont fire-and-forget (pas de promesse à attendre) : le
+// retour visuel vient de l'event mp:room-update / mp:error qui suit, donc on
+// bascule un état "en cours" le temps que l'un des deux arrive, plutôt que
+// de laisser le bouton sans réaction pendant l'aller-retour serveur.
+const creatingRoom = ref(false)
+const joiningRoom = ref(false)
+watch([room, error], () => {
+  creatingRoom.value = false
+  joiningRoom.value = false
+})
+
+function onCreateRoom() {
+  creatingRoom.value = true
+  createRoom(slug, createMaxPlayers.value, null, createMode.value)
+}
+
+function onJoinRoom() {
+  joiningRoom.value = true
+  joinRoom(joinCodeInput.value)
+}
+
 const isHost = computed(() => !!room.value && room.value.hostSocketId === mySocketId.value)
 // En mode "hard" l'exclusion est propre à chaque joueur (myGuessedIds),
 // puisqu'il n'y a pas de feed partagé pour la dériver comme en classique.
@@ -109,7 +130,7 @@ onBeforeUnmount(() => {
                   <option value="hard">Difficile — chacun son plateau, pas de feed</option>
                 </select>
               </label>
-              <button class="btn btn-primary" @click="createRoom(slug, createMaxPlayers, null, createMode)">Créer</button>
+              <button class="btn btn-primary" :disabled="creatingRoom" @click="onCreateRoom">{{ creatingRoom ? 'Création...' : 'Créer' }}</button>
             </div>
             <button v-else class="btn" @click="showCreatePanel = true">Créer un salon</button>
           </div>
@@ -118,8 +139,8 @@ onBeforeUnmount(() => {
             <h3>Rejoindre un salon</h3>
             <p>Entre le code que ton ami t'a partagé.</p>
             <div class="create-form">
-              <input v-model="joinCodeInput" placeholder="CODE" maxlength="6" style="text-transform: uppercase">
-              <button class="btn btn-primary" :disabled="!joinCodeInput" @click="joinRoom(joinCodeInput)">Rejoindre</button>
+              <input v-model="joinCodeInput" placeholder="CODE" maxlength="6" style="text-transform: uppercase" :disabled="joiningRoom">
+              <button class="btn btn-primary" :disabled="!joinCodeInput || joiningRoom" @click="onJoinRoom">{{ joiningRoom ? 'Connexion...' : 'Rejoindre' }}</button>
             </div>
           </div>
 
