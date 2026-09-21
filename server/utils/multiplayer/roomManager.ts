@@ -281,6 +281,13 @@ export class RoomManager {
     if (!room) return null
 
     const wasHost = room.hostSocketId === socketId
+    // Capturé avant de retirer qui que ce soit du tableau : retirer un
+    // joueur AVANT le tour en cours décale les index de tout le monde, donc
+    // réutiliser l'ancien currentTurnIndex tel quel peut pointer sur un
+    // joueur différent, ou sortir des bornes et déclencher un reset
+    // arbitraire à l'index 0 alors que ce n'était même pas son tour.
+    const currentSocketId = room.status === 'playing' ? this.currentTurnSocketId(room) : null
+
     room.players.delete(socketId)
     this.playerRoom.delete(socketId)
     room.turnOrder = room.turnOrder.filter((id) => id !== socketId)
@@ -291,8 +298,22 @@ export class RoomManager {
       room.hostSocketId = room.turnOrder[0] ?? [...room.players.keys()][0]!
     }
 
-    if (room.status === 'playing' && this.currentTurnSocketId(room) === null && room.turnOrder.length > 0) {
-      room.currentTurnIndex = 0
+    if (room.status === 'playing' && room.turnOrder.length > 0) {
+      if (currentSocketId && currentSocketId !== socketId) {
+        // Ce n'était pas le tour du joueur qui part : on retrouve la
+        // position du vrai joueur courant dans le tableau qui vient de se
+        // décaler, plutôt que de deviner à partir de l'ancien index.
+        const newIndex = room.turnOrder.indexOf(currentSocketId)
+        room.currentTurnIndex = newIndex !== -1 ? newIndex : 0
+      } else {
+        // C'était son tour (ou aucun tour valide n'existait) : l'ancien
+        // index pointe maintenant naturellement sur le joueur suivant,
+        // puisque tout ce qui suivait a glissé d'un cran.
+        room.currentTurnIndex = room.currentTurnIndex % room.turnOrder.length
+        if (!room.players.get(room.turnOrder[room.currentTurnIndex]!)?.connected) {
+          this.advanceTurn(room)
+        }
+      }
     }
 
     return { room, wasHost }
@@ -302,6 +323,15 @@ export class RoomManager {
     this.leaveAllQueues(socketId)
     const room = this.getRoom(socketId)
     if (!room) return null
+
+    // En salle d'attente, un fantôme déconnecté ne fait que bloquer un
+    // siège (et l'hôte si c'est lui) sans qu'aucun état de partie ne
+    // justifie de le garder — on le retire complètement, comme un vrai
+    // départ, plutôt que de le laisser bloquer indéfiniment le salon.
+    if (room.status === 'waiting') {
+      const result = this.leaveRoom(socketId)
+      return result ? { room: result.room } : null
+    }
 
     const player = room.players.get(socketId)
     if (player) player.connected = false
