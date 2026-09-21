@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { RoomMode } from '#shared/types/multiplayer'
+
 definePageMeta({ layout: false })
 
 const route = useRoute()
@@ -35,10 +37,16 @@ function onInviteFriend(friendUserId: number) {
 
 const joinCodeInput = ref(typeof route.query.code === 'string' ? route.query.code : '')
 const createMaxPlayers = ref(2)
+const createMode = ref<RoomMode>('classic')
 const showCreatePanel = ref(false)
 
 const isHost = computed(() => !!room.value && room.value.hostSocketId === mySocketId.value)
-const guessedIds = computed(() => room.value?.attempts.map((a) => a.character.id) ?? [])
+// En mode "hard" l'exclusion est propre à chaque joueur (myGuessedIds),
+// puisqu'il n'y a pas de feed partagé pour la dériver comme en classique.
+const guessedIds = computed(() => {
+  if (!room.value) return []
+  return room.value.mode === 'hard' ? (room.value.myGuessedIds ?? []) : room.value.attempts.map((a) => a.character.id)
+})
 const isMyTurn = computed(() => !!room.value && room.value.currentTurnSocketId === mySocketId.value)
 const iWon = computed(() => !!room.value && room.value.winnerSocketId === mySocketId.value)
 const winnerName = computed(() => room.value?.players.find((p) => p.socketId === room.value?.winnerSocketId)?.username)
@@ -95,7 +103,13 @@ onBeforeUnmount(() => {
               <label>Nombre de joueurs max
                 <input v-model.number="createMaxPlayers" type="number" min="2" max="8">
               </label>
-              <button class="btn btn-primary" @click="createRoom(slug, createMaxPlayers)">Créer</button>
+              <label>Mode
+                <select v-model="createMode">
+                  <option value="classic">Classique — feed partagé des tentatives</option>
+                  <option value="hard">Difficile — chacun son plateau, pas de feed</option>
+                </select>
+              </label>
+              <button class="btn btn-primary" @click="createRoom(slug, createMaxPlayers, null, createMode)">Créer</button>
             </div>
             <button v-else class="btn" @click="showCreatePanel = true">Créer un salon</button>
           </div>
@@ -165,7 +179,9 @@ onBeforeUnmount(() => {
 
       <!-- ─── Partie en cours / terminée ─── -->
       <div v-else class="playing">
-        <div class="mode-badge">Multijoueur</div>
+        <div class="mode-badge" :class="{ hard: room.mode === 'hard' }">
+          Multijoueur{{ room.mode === 'hard' ? ' — Difficile' : '' }}
+        </div>
         <h1 class="title">{{ game.name }}</h1>
 
         <div class="scoreboard">
@@ -200,8 +216,22 @@ onBeforeUnmount(() => {
           </div>
         </div>
 
+        <template v-if="room.mode === 'hard'">
+          <div v-if="room.myLastGuess" class="hard-last-guess">
+            <div class="hard-last-guess-title">Ta dernière tentative</div>
+            <div class="hard-last-guess-row">
+              <div class="portrait">
+                <SafeImage :src="room.myLastGuess.character.imageUrl" :alt="room.myLastGuess.character.name" :width="60" />
+              </div>
+              <span class="hard-last-guess-name">{{ room.myLastGuess.character.name }}</span>
+              <GameFeedbackCell v-for="attr in room.attributes" :key="attr.key" :feedback="room.myLastGuess.feedback[attr.key]!" />
+            </div>
+          </div>
+          <GameHardBoard :attributes="room.attributes" :board="room.myBoard ?? {}" />
+        </template>
+
         <GameSharedAttemptsFeed
-          v-if="room.attempts.length > 0"
+          v-else-if="room.attempts.length > 0"
           :attributes="room.attributes"
           :attempts="room.attempts"
           :my-socket-id="mySocketId"
@@ -268,13 +298,16 @@ onBeforeUnmount(() => {
 .option-card p { color: var(--text-2); font-size: 0.85rem; }
 
 .create-form { display: flex; flex-direction: column; gap: 0.5rem; width: 100%; }
-.create-form input {
+.create-form input,
+.create-form select {
   padding: 0.6rem 0.8rem;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid var(--border-2);
   border-radius: 8px;
   color: #fff;
   text-align: center;
+  font-family: inherit;
+  width: 100%;
 }
 
 .join-code { display: flex; align-items: center; gap: 0.75rem; color: var(--text-2); }
@@ -325,6 +358,45 @@ onBeforeUnmount(() => {
   color: #fff;
   text-transform: uppercase;
 }
+
+.mode-badge.hard { background: linear-gradient(135deg, #b91c1c, #991b1b); }
+
+.hard-last-guess {
+  max-width: 60rem;
+  margin: 0 auto 1rem;
+}
+
+.hard-last-guess-title {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.hard-last-guess-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.hard-last-guess-row .portrait {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.hard-last-guess-name { font-weight: 700; color: #fff; font-size: 0.85rem; margin-right: 0.3rem; }
 
 .scoreboard {
   display: flex;

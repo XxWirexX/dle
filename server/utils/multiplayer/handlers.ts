@@ -5,6 +5,7 @@ import { getCachedGamePlayData } from '../gameCache'
 import { listAcceptedFriends } from '../../db/queries/friends'
 import { findGameIdBySlug, updateStats } from '../../db/queries/stats'
 import type { AuthTokenPayload } from '#shared/types/user'
+import type { RoomMode } from '#shared/types/multiplayer'
 
 interface AuthedSocket extends Socket {
   data: { user: AuthTokenPayload | null }
@@ -24,9 +25,23 @@ async function recordMultiplayerStats(room: NonNullable<ReturnType<typeof roomMa
   const gameRow = await findGameIdBySlug(room.slug)
   if (!gameRow) return
   for (const player of room.players.values()) {
-    const playerAttempts = room.attempts.filter((a) => a.socketId === player.socketId).length
+    // guessCounts plutôt qu'un filtre sur `room.attempts` : ce dernier
+    // reste vide en mode "hard" (pas de feed partagé), donc ne reflète pas
+    // le nombre réel de tentatives de chaque joueur dans ce mode.
+    const playerAttempts = room.guessCounts.get(player.socketId) ?? 0
     const won = room.winnerSocketId === player.socketId
     await updateStats(player.userId, gameRow.id, { won, attempts: playerAttempts, isMultiplayer: true })
+  }
+}
+
+// Chaque joueur reçoit son propre snapshot (nécessaire en mode "hard" pour
+// ne jamais exposer le plateau ou la dernière tentative d'un autre joueur ;
+// inoffensif en mode classique où le contenu est de toute façon identique
+// pour tout le monde).
+function broadcastRoom(io: Server, room: NonNullable<ReturnType<typeof roomManager.getRoom>> | null) {
+  if (!room) return
+  for (const player of room.players.values()) {
+    io.to(player.socketId).emit('mp:room-update', roomManager.toSnapshot(room, player.socketId))
   }
 }
 
@@ -64,14 +79,14 @@ export function registerMultiplayerHandlers(io: Server) {
       for (const p of room.players.values()) {
         io.sockets.sockets.get(p.socketId)?.join(room.id)
       }
-      io.to(room.id).emit('mp:room-update', roomManager.toSnapshot(room))
+      broadcastRoom(io, room)
     })
 
     socket.on('mp:leave-queue', ({ slug }: { slug: string }) => {
       roomManager.leaveQuickMatch(socket.id, slug)
     })
 
-    socket.on('mp:create-room', async ({ slug, maxPlayers, difficulty }: { slug: string; maxPlayers: number; difficulty: string | null }) => {
+    socket.on('mp:create-room', async ({ slug, maxPlayers, difficulty, mode }: { slug: string; maxPlayers: number; difficulty: string | null; mode?: RoomMode }) => {
       if (!user) return socket.emit('mp:error', { message: 'Connecte-toi pour jouer en multijoueur' })
 
       const gameData = await getCachedGamePlayData(slug)
@@ -83,9 +98,10 @@ export function registerMultiplayerHandlers(io: Server) {
         gameData,
         maxPlayers,
         difficulty ?? null,
+        mode ?? 'classic',
       )
       socket.join(room.id)
-      socket.emit('mp:room-update', roomManager.toSnapshot(room))
+      socket.emit('mp:room-update', roomManager.toSnapshot(room, socket.id))
     })
 
     socket.on('mp:join-room', ({ code }: { code: string }) => {
@@ -98,7 +114,7 @@ export function registerMultiplayerHandlers(io: Server) {
       if (!result.ok) return socket.emit('mp:error', { message: result.error })
 
       socket.join(result.room.id)
-      io.to(result.room.id).emit('mp:room-update', roomManager.toSnapshot(result.room))
+      broadcastRoom(io, result.room)
     })
 
     // Invitation directe depuis la liste d'amis : crée (ou réutilise) un
@@ -121,7 +137,7 @@ export function registerMultiplayerHandlers(io: Server) {
           null,
         )
         socket.join(room.id)
-        socket.emit('mp:room-update', roomManager.toSnapshot(room))
+        socket.emit('mp:room-update', roomManager.toSnapshot(room, socket.id))
       }
 
       presence.notifyUser(friendUserId, 'friend:invite', {
@@ -136,21 +152,21 @@ export function registerMultiplayerHandlers(io: Server) {
     socket.on('mp:start-room', () => {
       const result = roomManager.startRoomByHost(socket.id)
       if (!result.ok) return socket.emit('mp:error', { message: result.error })
-      io.to(result.room.id).emit('mp:room-update', roomManager.toSnapshot(result.room))
+      broadcastRoom(io, result.room)
     })
 
     socket.on('mp:guess', ({ characterId }: { characterId: number }) => {
       const room = roomManager.getRoom(socket.id)
       const result = roomManager.makeGuess(socket.id, characterId)
       if (!result.ok) return socket.emit('mp:error', { message: result.error })
-      if (room) io.to(room.id).emit('mp:room-update', roomManager.toSnapshot(room))
+      broadcastRoom(io, room)
       if (room && result.gameOver) recordMultiplayerStats(room).catch(() => {})
     })
 
     socket.on('mp:rematch', () => {
       const result = roomManager.requestRematch(socket.id)
       if ('error' in result) return socket.emit('mp:error', { message: result.error })
-      io.to(result.room.id).emit('mp:room-update', roomManager.toSnapshot(result.room))
+      broadcastRoom(io, result.room)
     })
 
     socket.on('mp:chat', ({ text }: { text: string }) => {
@@ -164,14 +180,14 @@ export function registerMultiplayerHandlers(io: Server) {
       const result = roomManager.leaveRoom(socket.id)
       if (roomId) {
         socket.leave(roomId)
-        if (result) io.to(roomId).emit('mp:room-update', roomManager.toSnapshot(result.room))
+        if (result) broadcastRoom(io, result.room)
       }
       socket.emit('mp:left-room', {})
     })
 
     socket.on('disconnect', () => {
       const result = roomManager.handleDisconnect(socket.id)
-      if (result) io.to(result.room.id).emit('mp:room-update', roomManager.toSnapshot(result.room))
+      if (result) broadcastRoom(io, result.room)
 
       if (user) {
         const trulyOffline = presence.disconnect(user.userId, socket.id)
