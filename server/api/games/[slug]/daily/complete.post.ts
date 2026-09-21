@@ -4,6 +4,7 @@ import { readValidatedJsonBody } from '~~/server/utils/validate'
 import { getCachedGamePlayData } from '~~/server/utils/gameCache'
 import { getTodayDateString, getDailyTarget } from '~~/server/utils/daily'
 import { updateStats, findGameIdBySlug } from '~~/server/db/queries/stats'
+import { recordDailyCompletion } from '~~/server/db/queries/dailyLeaderboard'
 
 const schema = z.object({ attemptCharacterIds: z.array(z.number().int()) })
 
@@ -43,6 +44,14 @@ export default defineEventHandler(async (event) => {
     won,
     attempts: attemptCharacterIds.length,
     isDaily: true,
+  })
+
+  await recordDailyCompletion({
+    userId,
+    gameId: gameRow.id,
+    date: getTodayDateString(),
+    attempts: attemptCharacterIds.length,
+    won,
   })
 
   return stats
