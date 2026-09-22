@@ -17,6 +17,22 @@ export async function recordDailyCompletion(opts: RecordDailyCompletionOptions) 
   await db.insert(dailyCompletions).values(opts).onConflictDoNothing()
 }
 
+export interface MyDailyCompletion {
+  attempts: number
+  won: boolean
+}
+
+// Sert à bloquer le rejeu du défi du jour côté client : si une ligne
+// existe pour (user, jeu, date), la page /daily doit afficher le résultat
+// déjà obtenu plutôt que de laisser reguesser.
+export async function getMyDailyCompletion(userId: number, gameId: number, date: string): Promise<MyDailyCompletion | null> {
+  const row = await db.query.dailyCompletions.findFirst({
+    where: and(eq(dailyCompletions.userId, userId), eq(dailyCompletions.gameId, gameId), eq(dailyCompletions.date, date)),
+    columns: { attempts: true, won: true },
+  })
+  return row ?? null
+}
+
 export interface DailyLeaderboardEntry {
   userId: number
   username: string
