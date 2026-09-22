@@ -39,6 +39,12 @@ export interface GameSummary {
   attributeCount: number
 }
 
+export type GameVisibility = 'public' | 'private'
+
+export interface OwnedGameSummary extends GameSummary {
+  visibility: GameVisibility
+}
+
 export interface GameDetail extends GameSummary {
   attributes: Attribute[]
   characterPreview: Pick<Character, 'id' | 'name' | 'imageUrl'>[]

@@ -3,6 +3,20 @@ definePageMeta({ middleware: 'auth' })
 
 const { user } = useAuth()
 const { data: stats, pending, error } = await useFetch('/api/stats', { key: 'my-stats' })
+
+const { data: myGames, refresh: refreshMyGames } = await useFetch('/api/games/mine', { key: 'my-games' })
+const deletingSlug = ref<string | null>(null)
+
+async function onDeleteGame(slug: string) {
+  if (!confirm('Supprimer ce DLE ? Cette action est irréversible.')) return
+  deletingSlug.value = slug
+  try {
+    await $fetch(`/api/games/${slug}`, { method: 'DELETE' })
+    await refreshMyGames()
+  } finally {
+    deletingSlug.value = null
+  }
+}
 </script>
 
 <template>
@@ -91,6 +105,28 @@ const { data: stats, pending, error } = await useFetch('/api/stats', { key: 'my-
         </ul>
       </section>
     </template>
+
+    <section class="my-games">
+      <div class="my-games-header">
+        <h2 class="section-title">Mes créations</h2>
+        <NuxtLink to="/games/create" class="btn btn-sm btn-primary">+ Créer un DLE</NuxtLink>
+      </div>
+      <p v-if="!myGames || myGames.length === 0" class="muted">Tu n'as encore créé aucun DLE custom.</p>
+      <ul v-else class="game-list">
+        <li v-for="g in myGames" :key="g.slug" class="game-row my-game-row">
+          <NuxtLink :to="`/games/${g.slug}`" class="game-name">
+            {{ g.name }}
+            <span class="visibility-badge" :class="g.visibility">{{ g.visibility === 'public' ? 'Public' : 'Privé' }}</span>
+          </NuxtLink>
+          <div class="game-metrics">
+            <span class="metric">{{ g.characterCount }} personnages · {{ g.attributeCount }} attributs</span>
+          </div>
+          <button class="btn btn-sm btn-danger" :disabled="deletingSlug === g.slug" @click="onDeleteGame(g.slug)">
+            {{ deletingSlug === g.slug ? '...' : 'Supprimer' }}
+          </button>
+        </li>
+      </ul>
+    </section>
   </div>
 </template>
 
@@ -232,4 +268,44 @@ const { data: stats, pending, error } = await useFetch('/api/stats', { key: 'my-
 
 .metric { color: var(--text-3); font-size: 0.8rem; }
 .metric.daily { color: rgba(217, 119, 6, 0.9); }
+
+.my-games { margin-top: 2rem; }
+
+.my-games-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.my-games-header .section-title { margin-bottom: 0; }
+
+.my-game-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.my-game-row .game-name { margin-bottom: 0; flex: 1; display: flex; align-items: center; gap: 0.5rem; }
+.my-game-row .game-metrics { flex: none; }
+
+.visibility-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+}
+
+.visibility-badge.public { background: rgba(74, 222, 128, 0.15); color: #4ade80; }
+.visibility-badge.private { background: rgba(148, 163, 184, 0.15); color: #94a3b8; }
+
+.btn-danger {
+  background: rgba(185, 28, 28, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: rgba(252, 165, 165, 0.9);
+}
+
+.btn-danger:hover:not(:disabled) { background: rgba(185, 28, 28, 0.22); color: #fff; }
 </style>
