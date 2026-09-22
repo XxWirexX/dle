@@ -23,11 +23,15 @@ const phase = ref<Phase>('setup')
 
 const availableCount = computed(() => allGames.value?.length ?? 0)
 const roundOptions = computed(() => [3, 5, 8].filter((n) => n <= availableCount.value))
-const roundCount = ref(5)
+const roundCount = ref<number | 'infinite'>(5)
+const isInfinite = computed(() => roundCount.value === 'infinite')
 
+// Rejoué au fil des manches plutôt que pré-tiré une fois pour toutes : le
+// mode infini n'a pas de longueur connue à l'avance, donc chaque manche
+// choisit son jeu au moment où elle démarre (sequence sert alors d'
+// historique, pas d'un plan fixe).
 const sequence = ref<GameSummary[]>([])
 const results = ref<RoundResult[]>([])
-const currentIndex = ref(0)
 
 const currentGame = ref<GamePlayData | null>(null)
 const target = ref<Character | null>(null)
@@ -38,32 +42,43 @@ const showHints = ref(false)
 
 const guessedIds = computed(() => attempts.value.map((a) => a.character.id))
 const hintAttributes = computed(() => currentGame.value?.attributes.filter((a) => a.hints || a.order) ?? [])
-const roundLabel = computed(() => `Manche ${currentIndex.value + 1} / ${sequence.value.length}`)
+const roundLabel = computed(() => isInfinite.value
+  ? `Manche ${sequence.value.length}`
+  : `Manche ${sequence.value.length} / ${roundCount.value}`)
 
-function pickRoundCount(n: number) {
+function pickRoundCount(n: number | 'infinite') {
   roundCount.value = n
+}
+
+// Priorité aux jeux pas encore joués cette partie (comme l'ancien tirage
+// sans remise) ; une fois tous épuisés — uniquement possible en mode
+// infini — retire juste le tout dernier joué pour éviter un doublon
+// immédiat, puis pioche dans tout le pool.
+function pickNextGame(): GameSummary {
+  const pool = allGames.value!
+  const playedSlugs = new Set(sequence.value.map((g) => g.slug))
+  const unplayed = pool.filter((g) => !playedSlugs.has(g.slug))
+  const lastSlug = sequence.value[sequence.value.length - 1]?.slug
+  const candidates = unplayed.length > 0 ? unplayed : pool.filter((g) => g.slug !== lastSlug)
+  const source = candidates.length > 0 ? candidates : pool
+  return source[Math.floor(Math.random() * source.length)]!
 }
 
 async function startRun() {
   if (!allGames.value || allGames.value.length === 0) return
-  const pool = [...allGames.value]
-  for (let i = pool.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1))
-    ;[pool[i], pool[j]] = [pool[j] as GameSummary, pool[i] as GameSummary]
-  }
-  sequence.value = pool.slice(0, Math.min(roundCount.value, pool.length))
+  sequence.value = []
   results.value = []
-  currentIndex.value = 0
   await loadRound()
 }
 
 async function loadRound() {
-  const summary = sequence.value[currentIndex.value]
-  if (!summary) {
+  if (!isInfinite.value && sequence.value.length >= (roundCount.value as number)) {
     phase.value = 'summary'
     return
   }
   phase.value = 'loading'
+  const summary = pickNextGame()
+  sequence.value.push(summary)
   const data = await $fetch<GamePlayData>(`/api/games/${summary.slug}/play`)
   currentGame.value = data
   target.value = data.characters[Math.floor(Math.random() * data.characters.length)] ?? null
@@ -116,8 +131,11 @@ function reveal() {
 }
 
 async function nextRound() {
-  currentIndex.value += 1
   await loadRound()
+}
+
+function stopRun() {
+  phase.value = 'summary'
 }
 
 function restart() {
@@ -154,6 +172,13 @@ const totalAttemptsSum = computed(() => results.value.reduce((sum, r) => sum + r
               >
                 {{ n }}
               </button>
+              <button
+                class="btn"
+                :class="{ active: isInfinite }"
+                @click="pickRoundCount('infinite')"
+              >
+                ∞ Infini
+              </button>
             </div>
           </div>
           <button class="btn btn-primary btn-lg" @click="startRun">Lancer</button>
@@ -167,24 +192,31 @@ const totalAttemptsSum = computed(() => results.value.reduce((sum, r) => sum + r
 
       <!-- ─── Manche en cours ─── -->
       <div v-else-if="phase === 'playing' && currentGame" class="playing">
-        <div class="progress-bar">
+        <div v-if="!isInfinite" class="progress-bar">
           <span
             v-for="(g, i) in sequence"
             :key="g.slug"
             class="progress-dot"
             :class="{
-              current: i === currentIndex,
-              done: i < currentIndex,
+              current: i === sequence.length - 1,
+              done: i < sequence.length - 1,
               won: results[i]?.won,
               lost: results[i] && !results[i]!.won,
             }"
           />
         </div>
+        <div v-else class="infinite-tally">
+          <span class="tally-win">✓ {{ totalWins }}</span>
+          <span class="tally-lose">✗ {{ results.length - totalWins }}</span>
+        </div>
 
         <header class="header">
           <div class="round-label">{{ roundLabel }}</div>
           <h1 class="title">{{ currentGame.name }}</h1>
-          <button class="btn btn-danger" :disabled="gameOver" @click="reveal">Révéler</button>
+          <div class="header-actions">
+            <button class="btn btn-danger" :disabled="gameOver" @click="reveal">Révéler</button>
+            <button v-if="isInfinite" class="btn" @click="stopRun">Arrêter la partie</button>
+          </div>
         </header>
 
         <GameSearchBar
@@ -203,9 +235,12 @@ const totalAttemptsSum = computed(() => results.value.reduce((sum, r) => sum + r
           <div class="result" :class="won ? 'win' : 'lose'">{{ won ? 'Trouvé !' : 'Dommage' }}</div>
           <div class="target-name">{{ target.name }}</div>
           <div class="stats-line">{{ attempts.length }} essai{{ attempts.length > 1 ? 's' : '' }}</div>
-          <button class="btn btn-primary" @click="nextRound">
-            {{ currentIndex + 1 < sequence.length ? 'Manche suivante' : 'Voir le résultat' }}
-          </button>
+          <div class="game-over-actions">
+            <button class="btn btn-primary" @click="nextRound">
+              {{ isInfinite || sequence.length < (roundCount as number) ? 'Manche suivante' : 'Voir le résultat' }}
+            </button>
+            <button v-if="isInfinite" class="btn" @click="stopRun">Arrêter la partie</button>
+          </div>
         </div>
 
         <button class="hints-toggle" @click="showHints = !showHints">
@@ -309,6 +344,20 @@ const totalAttemptsSum = computed(() => results.value.reduce((sum, r) => sum + r
 .progress-dot.done.won { background: #4ade80; border-color: #4ade80; }
 .progress-dot.done.lost { background: #f87171; border-color: #f87171; }
 
+.infinite-tally {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin: 0 auto 1.25rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.tally-win { color: #4ade80; }
+.tally-lose { color: #f87171; }
+
+.header-actions { display: flex; gap: 0.5rem; }
+
 .header { text-align: center; margin-bottom: 1.5rem; display: flex; flex-direction: column; align-items: center; gap: 0.75rem; }
 
 .round-label {
@@ -361,6 +410,7 @@ const totalAttemptsSum = computed(() => results.value.reduce((sum, r) => sum + r
 
 .target-name { color: var(--text-2); font-weight: 600; }
 .stats-line { color: var(--text-3); font-size: 0.85rem; margin-bottom: 0.5rem; }
+.game-over-actions { display: flex; gap: 0.5rem; }
 
 .hints-toggle {
   display: block;
