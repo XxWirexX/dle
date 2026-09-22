@@ -25,6 +25,26 @@ const guessing = ref(false)
 const copied = ref(false)
 const { attempts, gameOver, won, addAttempt, forfeit, guessedIds } = useGuessGame(game.value.maxAttempts)
 
+// Déjà joué aujourd'hui (rechargement de page, ou retour le même jour) :
+// on verrouille direct sur le résultat plutôt que de laisser reguesser à
+// l'infini — seul rempart visible, jusque-là le "une fois par jour" ne
+// vivait que côté stats, invisible pour l'utilisateur.
+const alreadyCompletedToday = ref(false)
+const lockedAttemptsCount = ref(0)
+if (daily.value.myCompletion) {
+  alreadyCompletedToday.value = true
+  lockedAttemptsCount.value = daily.value.myCompletion.attempts
+  gameOver.value = true
+  won.value = daily.value.myCompletion.won
+  try {
+    const result = await $fetch<{ target: Character }>(`/api/games/${slug}/daily/reveal`, { method: 'POST' })
+    revealedTarget.value = result.target
+  } catch {
+    // Pas grave si ça échoue — l'écran "déjà joué" reste correct sans le portrait.
+  }
+  await loadLeaderboard()
+}
+
 // Appelé une fois de façon synchrone ici (pas dans le computed plus bas) :
 // useRequestURL() a besoin du contexte Nuxt actif, indisponible si on
 // l'appelle depuis une callback réévaluée plus tard.
@@ -116,6 +136,7 @@ async function reveal() {
 }
 
 const hintAttributes = computed(() => attributes.filter((a) => a.hints || a.order))
+const displayAttemptsCount = computed(() => alreadyCompletedToday.value ? lockedAttemptsCount.value : attempts.value.length)
 </script>
 
 <template>
@@ -150,9 +171,10 @@ const hintAttributes = computed(() => attributes.filter((a) => a.hints || a.orde
         </div>
         <div class="result" :class="won ? 'win' : 'lose'">{{ won ? 'Trouvé !' : 'Dommage' }}</div>
         <div v-if="revealedTarget" class="target-name">{{ revealedTarget.name }}</div>
-        <div class="stats-line">{{ attempts.length }} essai{{ attempts.length > 1 ? 's' : '' }} · reviens demain pour un nouveau défi</div>
+        <p v-if="alreadyCompletedToday" class="already-done">Tu as déjà fait le défi d'aujourd'hui.</p>
+        <div class="stats-line">{{ displayAttemptsCount }} essai{{ displayAttemptsCount > 1 ? 's' : '' }} · reviens demain pour un nouveau défi</div>
 
-        <div class="share-section">
+        <div v-if="attempts.length > 0" class="share-section">
           <pre class="share-grid">{{ shareText }}</pre>
           <button class="btn btn-primary btn-sm" @click="copyResult">
             {{ copied ? '✓ Copié !' : 'Partager le résultat' }}
@@ -298,6 +320,7 @@ const hintAttributes = computed(() => attributes.filter((a) => a.hints || a.orde
 .result.lose { color: #f87171; }
 
 .target-name { color: var(--text-2); font-weight: 600; margin-bottom: 0.75rem; }
+.already-done { color: var(--text-3); font-size: 0.8rem; margin-bottom: 0.25rem; }
 .stats-line { color: var(--text-3); font-size: 0.85rem; margin-bottom: 1.25rem; }
 
 .share-section { display: flex; flex-direction: column; align-items: center; gap: 0.75rem; }
