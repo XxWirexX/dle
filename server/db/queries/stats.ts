@@ -30,6 +30,7 @@ export interface StatsRow {
   dailyWins: number
   dailyStreak: number
   dailyMaxStreak: number
+  lastDailyDate: string | null
   multiplayerPlayed: number
   multiplayerWins: number
 }
@@ -55,6 +56,7 @@ export async function getAllStatsForUser(userId: number): Promise<StatsRow[]> {
       dailyWins: r.dailyWins,
       dailyStreak: r.dailyStreak,
       dailyMaxStreak: r.dailyMaxStreak,
+      lastDailyDate: r.lastDailyDate,
       multiplayerPlayed: r.multiplayerPlayed,
       multiplayerWins: r.multiplayerWins,
     }))
