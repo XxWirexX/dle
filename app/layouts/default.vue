@@ -31,6 +31,7 @@ const latestInvite = computed(() => pendingInvites.value[pendingInvites.value.le
 
       <nav class="nav-links">
         <NuxtLink to="/" class="nav-link">Jeux</NuxtLink>
+        <NuxtLink v-if="user" to="/games/create" class="nav-link">Créer un DLE</NuxtLink>
         <NuxtLink v-if="user" to="/notifications" class="nav-link notif-link">
           Notifications
           <span v-if="pendingInvites.length" class="notif-badge">{{ pendingInvites.length }}</span>

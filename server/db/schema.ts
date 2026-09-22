@@ -47,8 +47,8 @@ export const users = pgTable('users', {
 
 // "games" unifie ce qui était séparé dans l'ancienne version (animes
 // officiels en JSON vs table `custom_dles`) : un seul concept, un
-// `owner_id` nul pour le contenu officiel. La création de DLE custom
-// (UI + upload) est une phase ultérieure, mais le modèle est prêt.
+// `owner_id` nul pour le contenu officiel et renseigné pour un DLE custom
+// (voir server/api/games/index.post.ts).
 export const games = pgTable('games', {
   id: serial('id').primaryKey(),
   slug: varchar('slug', { length: 60 }).notNull(),
