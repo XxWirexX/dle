@@ -12,12 +12,15 @@ const { user } = useAuth()
 const { favoriteIds, refresh: refreshFavorites } = useFavorites()
 
 const dailyStreaks = ref<Record<string, number>>({})
+const playedToday = ref<Record<string, boolean>>({})
 const globalStats = ref<GlobalStats | null>(null)
 if (user.value) {
   await refreshFavorites()
   try {
-    const stats = await apiFetch<{ global: GlobalStats; byGame: { gameSlug: string; dailyStreak: number }[] }>('/api/stats')
+    const today = new Date().toISOString().split('T')[0]
+    const stats = await apiFetch<{ global: GlobalStats; byGame: { gameSlug: string; dailyStreak: number; lastDailyDate: string | null }[] }>('/api/stats')
     dailyStreaks.value = Object.fromEntries(stats.byGame.map((g) => [g.gameSlug, g.dailyStreak]))
+    playedToday.value = Object.fromEntries(stats.byGame.map((g) => [g.gameSlug, g.lastDailyDate === today]))
     globalStats.value = stats.global
   } catch {
     // Pas grave si ça échoue — la page reste utilisable sans les stats du hero.
@@ -26,6 +29,14 @@ if (user.value) {
 
 const favoriteGames = computed(() => games.value?.filter((g) => favoriteIds.value.has(g.id)) ?? [])
 const otherGames = computed(() => games.value?.filter((g) => !favoriteIds.value.has(g.id)) ?? [])
+
+// Un seul DLE mis en avant chaque jour (rotation déterministe, voir
+// featuredGameIndex) — plus explicite qu'un badge "défi du jour" présent
+// sur toutes les cartes, qui donnait l'impression que chacune l'était.
+const featuredGame = computed(() => {
+  if (!games.value || games.value.length === 0) return null
+  return games.value[featuredGameIndex(games.value.length)] ?? null
+})
 </script>
 
 <template>
@@ -67,17 +78,41 @@ const otherGames = computed(() => games.value?.filter((g) => !favoriteIds.value.
       </NuxtLink>
     </section>
 
+    <NuxtLink v-if="featuredGame" :to="`/games/${featuredGame.slug}/daily`" class="featured">
+      <div class="featured-bg">
+        <SafeImage :src="featuredGame.backgroundUrl ?? ''" :alt="featuredGame.name" :width="1200" />
+      </div>
+      <div class="featured-gradient" />
+      <div class="featured-content">
+        <span class="featured-label">⭐ Le DLE du jour</span>
+        <span class="featured-name">{{ featuredGame.name }}</span>
+        <span class="featured-cta">Jouer au défi du jour →</span>
+      </div>
+    </NuxtLink>
+
     <section v-if="favoriteGames.length > 0" class="section">
       <h2 class="section-title">★ Favoris</h2>
       <div class="grid">
-        <GameCard v-for="game in favoriteGames" :key="game.slug" :game="game" :daily-streak="dailyStreaks[game.slug]" />
+        <GameCard
+          v-for="game in favoriteGames"
+          :key="game.slug"
+          :game="game"
+          :daily-streak="dailyStreaks[game.slug]"
+          :daily-done="user ? playedToday[game.slug] ?? false : undefined"
+        />
       </div>
     </section>
 
     <section class="section">
       <h2 class="section-title">{{ favoriteGames.length > 0 ? 'Tous les jeux' : 'Jeux disponibles' }}</h2>
       <div class="grid">
-        <GameCard v-for="game in otherGames" :key="game.slug" :game="game" :daily-streak="dailyStreaks[game.slug]" />
+        <GameCard
+          v-for="game in otherGames"
+          :key="game.slug"
+          :game="game"
+          :daily-streak="dailyStreaks[game.slug]"
+          :daily-done="user ? playedToday[game.slug] ?? false : undefined"
+        />
       </div>
     </section>
   </div>
@@ -176,6 +211,48 @@ const otherGames = computed(() => games.value?.filter((g) => !favoriteIds.value.
 .hero-random-sub { color: var(--text-2); font-size: 0.82rem; }
 .hero-random-cta { margin-top: 0.4rem; font-weight: 700; color: var(--accent-2); }
 
+.featured {
+  position: relative;
+  display: block;
+  margin-top: 1.25rem;
+  height: 140px;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--border-2);
+  transition: transform 0.15s, border-color 0.15s;
+}
+
+.featured:hover { transform: translateY(-2px); border-color: var(--accent); }
+
+.featured-bg { position: absolute; inset: 0; }
+
+.featured-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(5, 5, 12, 0.95) 0%, rgba(5, 5, 12, 0.75) 55%, rgba(5, 5, 12, 0.35) 100%);
+}
+
+.featured-content {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.3rem;
+  padding: 1.25rem 1.5rem;
+}
+
+.featured-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fbbf24;
+}
+
+.featured-name { font-size: 1.4rem; font-weight: 800; color: #fff; text-shadow: 0 2px 12px rgba(0, 0, 0, 0.7); }
+.featured-cta { font-size: 0.85rem; font-weight: 600; color: var(--accent-2); }
+
 .section { margin-top: 0.5rem; }
 
 .section-title {
@@ -201,6 +278,8 @@ const otherGames = computed(() => games.value?.filter((g) => !favoriteIds.value.
   .home { padding: 0 1rem 2rem; }
   .hero { padding: 1.5rem; }
   .hero-title { font-size: 1.5rem; }
+  .featured { height: 110px; }
+  .featured-name { font-size: 1.15rem; }
   .grid { grid-template-columns: repeat(2, 1fr); gap: 0.65rem; }
 }
 </style>

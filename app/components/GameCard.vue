@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { GameSummary } from '#shared/types/game'
 
-const props = defineProps<{ game: GameSummary; dailyStreak?: number }>()
+const props = defineProps<{ game: GameSummary; dailyStreak?: number; dailyDone?: boolean }>()
 
 const { user } = useAuth()
 const { isFavorite, toggle } = useFavorites()
@@ -30,6 +30,13 @@ function onDailyClick(e: Event) {
     <div class="card-gradient" />
     <div class="card-icon">
       <SafeImage :src="game.iconUrl ?? ''" :alt="game.name" :width="80" />
+      <button
+        v-if="dailyDone === false"
+        class="daily-dot"
+        title="Défi du jour pas encore fait"
+        aria-label="Défi du jour pas encore fait"
+        @click="onDailyClick"
+      />
     </div>
     <button
       v-if="user"
@@ -41,11 +48,8 @@ function onDailyClick(e: Event) {
       {{ isFavorite(game.id) ? '★' : '☆' }}
     </button>
     <div class="card-body">
-      <div class="card-actions">
-        <button class="daily-link" @click="onDailyClick">
-          Défi du jour
-        </button>
-        <span v-if="dailyStreak && dailyStreak > 0" class="streak-badge">🔥 {{ dailyStreak }}</span>
+      <div v-if="dailyStreak && dailyStreak > 0" class="card-actions">
+        <span class="streak-badge">🔥 {{ dailyStreak }}</span>
       </div>
       <h3 class="card-title">{{ game.name }}</h3>
       <span class="card-meta">{{ game.characterCount }} personnages · {{ game.attributeCount }} attributs</span>
@@ -130,23 +134,19 @@ function onDailyClick(e: Event) {
   margin-bottom: 0.4rem;
 }
 
-.daily-link {
-  display: inline-block;
-  padding: 0.2rem 0.55rem;
-  background: rgba(59, 130, 246, 0.25);
-  border: 1px solid rgba(59, 130, 246, 0.4);
-  border-radius: 999px;
-  color: #fff;
-  font-size: 0.62rem;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-  font-family: inherit;
+.daily-dot {
+  position: absolute;
+  bottom: -3px;
+  right: -3px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid var(--bg);
+  padding: 0;
   cursor: pointer;
-  transition: background 0.15s;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.35);
 }
-
-.daily-link:hover { background: rgba(59, 130, 246, 0.45); }
 
 .streak-badge {
   font-size: 0.68rem;
