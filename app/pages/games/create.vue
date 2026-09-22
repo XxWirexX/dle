@@ -16,6 +16,11 @@ const ATTRIBUTE_TYPE_LABELS: Record<AttributeType, string> = {
 }
 const ATTRIBUTE_TYPES = Object.keys(ATTRIBUTE_TYPE_LABELS) as AttributeType[]
 
+// ─── Étapes ───
+type Step = 1 | 2 | 3
+const STEP_LABELS: Record<Step, string> = { 1: 'Infos', 2: 'Attributs', 3: 'Personnages' }
+const currentStep = ref<Step>(1)
+
 // ─── Infos générales ───
 const name = ref('')
 const maxAttempts = ref(15)
@@ -143,23 +148,133 @@ function slugifyKey(label: string): string {
     .replace(/(^_+|_+$)/g, '')
 }
 
-function validate(): string | null {
+function validateStep1(): string | null {
   if (!name.value.trim()) return 'Donne un nom à ton DLE'
+  if (uploadingIcon.value || uploadingBackground.value) return 'Attends la fin des uploads en cours'
+  return null
+}
+
+function validateStep2(): string | null {
   if (attributes.value.length === 0) return 'Ajoute au moins un attribut'
   for (const a of attributes.value) {
     if (!a.label.trim()) return 'Chaque attribut a besoin d\'un libellé'
     if (a.type === 'ordered' && orderValues(a).length < 2) return `L'attribut "${a.label}" (ordonné) a besoin d'au moins 2 valeurs`
     if (a.type === 'text-group' && a.groupRows.every((g) => !g.trim())) return `L'attribut "${a.label}" (groupe) a besoin d'au moins un groupe rempli`
   }
+  return null
+}
+
+function validateStep3(): string | null {
   if (characters.value.length < 4) return 'Ajoute au moins 4 personnages'
   for (const c of characters.value) {
     if (!c.name.trim()) return 'Chaque personnage a besoin d\'un nom'
     if (!c.imageUrl) return `Ajoute une image pour "${c.name || 'ce personnage'}"`
     if (c.uploading) return 'Attends la fin des uploads en cours'
   }
-  if (uploadingIcon.value || uploadingBackground.value) return 'Attends la fin des uploads en cours'
   return null
 }
+
+function validate(): string | null {
+  return validateStep1() ?? validateStep2() ?? validateStep3()
+}
+
+// Avancer valide chaque étape traversée ; revenir en arrière est toujours
+// libre (on ne punit jamais quelqu'un qui veut juste relire une étape).
+function goToStep(step: Step) {
+  if (step > currentStep.value) {
+    for (let s = currentStep.value; s < step; s++) {
+      const err = s === 1 ? validateStep1() : validateStep2()
+      if (err) {
+        formError.value = err
+        return
+      }
+    }
+  }
+  formError.value = ''
+  currentStep.value = step
+}
+
+function nextStep() {
+  goToStep((currentStep.value + 1) as Step)
+}
+
+function prevStep() {
+  currentStep.value = (currentStep.value - 1) as Step
+}
+
+// ─── Brouillon (localStorage) ───
+// Pas de backend dédié pour un état aussi transitoire : ça évite d'avoir
+// à maintenir une table + des endpoints juste pour "où j'en étais", et un
+// brouillon abandonné n'a pas besoin d'être visible ailleurs qu'ici.
+const DRAFT_KEY = 'dle-create-draft'
+let restoringDraft = false
+
+function saveDraft() {
+  if (restoringDraft || typeof window === 'undefined') return
+  try {
+    localStorage.setItem(DRAFT_KEY, JSON.stringify({
+      currentStep: currentStep.value,
+      name: name.value,
+      maxAttempts: maxAttempts.value,
+      visibility: visibility.value,
+      iconUrl: iconUrl.value,
+      iconPublicId: iconPublicId.value,
+      backgroundUrl: backgroundUrl.value,
+      backgroundPublicId: backgroundPublicId.value,
+      attributes: attributes.value,
+      characters: characters.value,
+    }))
+  } catch {
+    // Stockage indisponible (navigation privée, quota) : tant pis, jamais bloquant.
+  }
+}
+
+function loadDraft() {
+  if (typeof window === 'undefined') return
+  try {
+    const raw = localStorage.getItem(DRAFT_KEY)
+    if (!raw) return
+    const draft = JSON.parse(raw)
+    restoringDraft = true
+    name.value = draft.name ?? ''
+    maxAttempts.value = draft.maxAttempts ?? 15
+    visibility.value = draft.visibility ?? 'public'
+    iconUrl.value = draft.iconUrl ?? null
+    iconPublicId.value = draft.iconPublicId ?? null
+    backgroundUrl.value = draft.backgroundUrl ?? null
+    backgroundPublicId.value = draft.backgroundPublicId ?? null
+    if (Array.isArray(draft.attributes) && draft.attributes.length > 0) attributes.value = draft.attributes
+    if (Array.isArray(draft.characters) && draft.characters.length > 0) characters.value = draft.characters
+    currentStep.value = draft.currentStep ?? 1
+    hasRestoredDraft.value = true
+  } catch {
+    // Brouillon corrompu : on ignore plutôt que de planter la page.
+  } finally {
+    restoringDraft = false
+  }
+}
+
+function clearDraft() {
+  try {
+    localStorage.removeItem(DRAFT_KEY)
+  } catch {
+    // Rien à faire de plus si le storage est indisponible.
+  }
+}
+
+function discardDraft() {
+  if (!confirm('Effacer le brouillon et repartir de zéro ?')) return
+  clearDraft()
+  location.reload()
+}
+
+const hasRestoredDraft = ref(false)
+
+onMounted(loadDraft)
+
+watch([name, maxAttempts, visibility, iconUrl, iconPublicId, backgroundUrl, backgroundPublicId, currentStep], saveDraft)
+watch(attributes, saveDraft, { deep: true })
+watch(characters, saveDraft, { deep: true })
 
 function coerceForSubmit(attr: DraftAttribute, raw: unknown): unknown {
   if (attr.type === 'multiple') {
@@ -216,6 +331,7 @@ async function onSubmit() {
     }
 
     const { slug } = await $fetch<{ slug: string }>('/api/games', { method: 'POST', body: payload })
+    clearDraft()
     await router.push(`/games/${slug}`)
   } catch (err: any) {
     formError.value = err?.data?.message || 'Erreur lors de la création du DLE'
@@ -227,10 +343,28 @@ async function onSubmit() {
 
 <template>
   <div class="create-page">
-    <h1 class="title">Créer un DLE</h1>
+    <div class="page-header">
+      <h1 class="title">Créer un DLE</h1>
+      <button type="button" class="btn btn-sm discard-btn" @click="discardDraft">Effacer le brouillon</button>
+    </div>
+    <p v-if="hasRestoredDraft" class="banner banner-success">Brouillon repris là où tu l'avais laissé.</p>
     <p v-if="formError" class="banner banner-error">{{ formError }}</p>
 
-    <section class="section">
+    <nav class="steps">
+      <button
+        v-for="n in ([1, 2, 3] as const)"
+        :key="n"
+        type="button"
+        class="step-tab"
+        :class="{ active: currentStep === n }"
+        @click="goToStep(n)"
+      >
+        <span class="step-number">{{ n }}</span>
+        {{ STEP_LABELS[n] }}
+      </button>
+    </nav>
+
+    <section v-if="currentStep === 1" class="section">
       <h2 class="section-title">Infos générales</h2>
       <div class="field">
         <label for="name">Nom</label>
@@ -263,9 +397,14 @@ async function onSubmit() {
           <img v-else-if="backgroundUrl" :src="backgroundUrl" class="preview-bg" alt="">
         </div>
       </div>
+
+      <div class="step-nav">
+        <span />
+        <button type="button" class="btn btn-primary" @click="nextStep">Suivant : Attributs →</button>
+      </div>
     </section>
 
-    <section class="section">
+    <section v-if="currentStep === 2" class="section">
       <h2 class="section-title">Attributs ({{ attributes.length }})</h2>
       <div v-for="attr in attributes" :key="attr.id" class="attribute-card">
         <div class="field-row">
@@ -297,9 +436,14 @@ async function onSubmit() {
         </div>
       </div>
       <button type="button" class="btn" @click="addAttribute">+ Ajouter un attribut</button>
+
+      <div class="step-nav">
+        <button type="button" class="btn" @click="prevStep">← Précédent</button>
+        <button type="button" class="btn btn-primary" @click="nextStep">Suivant : Personnages →</button>
+      </div>
     </section>
 
-    <section class="section">
+    <section v-if="currentStep === 3" class="section">
       <h2 class="section-title">Personnages ({{ characters.length }})</h2>
       <div class="table-wrap">
         <table class="char-table">
@@ -337,11 +481,14 @@ async function onSubmit() {
         </table>
       </div>
       <button type="button" class="btn" @click="addCharacter">+ Ajouter un personnage</button>
-    </section>
 
-    <button type="button" class="btn btn-primary btn-lg" :disabled="submitting" @click="onSubmit">
-      {{ submitting ? 'Création...' : 'Créer le DLE' }}
-    </button>
+      <div class="step-nav">
+        <button type="button" class="btn" @click="prevStep">← Précédent</button>
+        <button type="button" class="btn btn-primary btn-lg" :disabled="submitting" @click="onSubmit">
+          {{ submitting ? 'Création...' : 'Créer le DLE' }}
+        </button>
+      </div>
+    </section>
   </div>
 </template>
 
@@ -352,7 +499,66 @@ async function onSubmit() {
   padding: 2rem 1.5rem 4rem;
 }
 
-.title { font-size: 1.6rem; font-weight: 800; color: var(--text); margin-bottom: 1.25rem; }
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+
+.title { font-size: 1.6rem; font-weight: 800; color: var(--text); margin: 0; }
+
+.discard-btn { color: var(--text-3); }
+
+.steps {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.step-tab {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-3);
+  font-weight: 600;
+  font-size: 0.85rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.step-tab:hover { background: rgba(255, 255, 255, 0.04); color: var(--text-2); }
+
+.step-tab.active {
+  border-color: var(--accent);
+  background: var(--accent-dim);
+  color: var(--text);
+}
+
+.step-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  font-size: 0.75rem;
+}
+
+.step-tab.active .step-number { background: var(--accent); color: #fff; }
+
+.step-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1.5rem;
+}
 
 .section {
   margin-bottom: 2rem;
