@@ -144,6 +144,29 @@ export async function deleteGame(gameId: number, ownerId: number): Promise<boole
   return deleted.length > 0
 }
 
+export interface UpdateGameMetaInput {
+  name: string
+  maxAttempts: number
+  iconUrl: string | null
+  iconPublicId: string | null
+  backgroundUrl: string | null
+  backgroundPublicId: string | null
+}
+
+export async function updateGameMeta(gameId: number, input: UpdateGameMetaInput): Promise<void> {
+  await db.update(games)
+    .set({
+      name: input.name,
+      maxAttempts: input.maxAttempts,
+      iconUrl: input.iconUrl,
+      iconPublicId: input.iconPublicId,
+      backgroundUrl: input.backgroundUrl,
+      backgroundPublicId: input.backgroundPublicId,
+      updatedAt: new Date(),
+    })
+    .where(eq(games.id, gameId))
+}
+
 export async function findGameDetailBySlug(slug: string): Promise<GameDetail | null> {
   const game = await db.query.games.findFirst({
     where: eq(games.slug, slug),
