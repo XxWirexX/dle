@@ -182,7 +182,10 @@ export async function findGamePlayDataBySlug(slug: string): Promise<GamePlayData
     where: eq(games.slug, slug),
     with: {
       attributes: { orderBy: asc(attributes.sortOrder) },
-      characters: true,
+      // Sans tri explicite, Postgres ne garantit pas un ordre stable — un
+      // UPDATE (voir édition admin) peut faire "sauter" un personnage dans
+      // la liste sans ça, ce qui a l'air d'une perte de données côté UI.
+      characters: { orderBy: asc(characters.id) },
     },
   })
   if (!game) return null
@@ -208,4 +211,65 @@ export async function findGamePlayDataBySlug(slug: string): Promise<GamePlayData
       attributes: c.attributes,
     })),
   }
+}
+
+export interface AdminGameSummary {
+  slug: string
+  name: string
+  isOfficial: boolean
+  characterCount: number
+}
+
+// Contrairement à listPublicGames, aucun filtre de visibilité — un admin
+// doit pouvoir retrouver n'importe quel jeu pour en éditer les personnages.
+export async function listAllGames(): Promise<AdminGameSummary[]> {
+  const rows = await db.query.games.findMany({
+    orderBy: asc(games.name),
+    with: { characters: { columns: { id: true } } },
+  })
+  return rows.map((g) => ({
+    slug: g.slug,
+    name: g.name,
+    isOfficial: g.isOfficial,
+    characterCount: g.characters.length,
+  }))
+}
+
+export interface CharacterInput {
+  name: string
+  imageUrl: string
+  imagePublicId: string | null
+  attributes: Record<string, unknown>
+}
+
+export async function addCharacter(gameId: number, input: CharacterInput): Promise<{ id: number }> {
+  const [row] = await db.insert(characters).values({
+    gameId,
+    name: input.name,
+    imageUrl: input.imageUrl,
+    imagePublicId: input.imagePublicId,
+    attributes: input.attributes,
+  }).returning({ id: characters.id })
+  return row!
+}
+
+/** Ne modifie rien si `characterId` n'appartient pas à `gameId` — évite un contrôle séparé. */
+export async function updateCharacter(characterId: number, gameId: number, input: CharacterInput): Promise<boolean> {
+  const updated = await db.update(characters)
+    .set({
+      name: input.name,
+      imageUrl: input.imageUrl,
+      imagePublicId: input.imagePublicId,
+      attributes: input.attributes,
+    })
+    .where(and(eq(characters.id, characterId), eq(characters.gameId, gameId)))
+    .returning({ id: characters.id })
+  return updated.length > 0
+}
+
+export async function deleteCharacter(characterId: number, gameId: number): Promise<boolean> {
+  const deleted = await db.delete(characters)
+    .where(and(eq(characters.id, characterId), eq(characters.gameId, gameId)))
+    .returning({ id: characters.id })
+  return deleted.length > 0
 }

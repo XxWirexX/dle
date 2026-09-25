@@ -3,6 +3,7 @@ import { requireAuthPayload } from '~~/server/utils/session'
 import { readValidatedJsonBody } from '~~/server/utils/validate'
 import { createCustomGame, type CreateGameAttributeInput, type CreateGameCharacterInput } from '~~/server/db/queries/games'
 import { invalidateGameCache } from '~~/server/utils/gameCache'
+import { coerceAttributeValue } from '~~/server/utils/attributeValues'
 
 const attributeSchema = z.object({
   key: z.string().regex(/^[a-z0-9_]+$/).min(1).max(40),
@@ -35,26 +36,6 @@ const createGameSchema = z.object({
   characters: z.array(characterSchema).min(4).max(500),
 })
 
-function coerceValue(attr: CreateGameAttributeInput, raw: unknown): unknown {
-  if (attr.type === 'number') {
-    const n = Number(raw)
-    if (Number.isNaN(n)) throw createError({ statusCode: 400, message: `Valeur numérique invalide pour "${attr.label}"` })
-    return n
-  }
-  if (attr.type === 'boolean') return raw === true || raw === 'true'
-  if (attr.type === 'multiple') {
-    if (!Array.isArray(raw)) throw createError({ statusCode: 400, message: `Valeur invalide pour "${attr.label}" (liste attendue)` })
-    return raw.map((v) => String(v).trim()).filter(Boolean)
-  }
-  if (attr.type === 'ordered') {
-    const value = String(raw ?? '').trim()
-    const valid = (attr.order ?? []).some((o) => o.toLowerCase() === value.toLowerCase())
-    if (!valid) throw createError({ statusCode: 400, message: `"${value}" n'est pas une valeur déclarée pour "${attr.label}"` })
-    return value
-  }
-  return String(raw ?? '').trim()
-}
-
 // Clés déduites des labels (uniques au sein d'un même DLE) plutôt que
 // saisies à la main : moins d'erreurs de frappe côté client, et les clés
 // n'ont besoin d'exister que pour relier attributs et valeurs personnage.
@@ -84,7 +65,7 @@ export default defineEventHandler(async (event) => {
     imageUrl: c.imageUrl,
     imagePublicId: c.imagePublicId ?? null,
     attributes: Object.fromEntries(
-      attributeInputs.map((attr) => [attr.key, coerceValue(attr, c.attributes[attr.key])]),
+      attributeInputs.map((attr) => [attr.key, coerceAttributeValue(attr, c.attributes[attr.key])]),
     ),
   }))
 
