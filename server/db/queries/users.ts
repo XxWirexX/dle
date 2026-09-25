@@ -27,6 +27,7 @@ export function toPublicUser(row: typeof users.$inferSelect): PublicUser {
     avatarColor: row.avatarColor,
     avatarImageUrl: row.avatarImageUrl,
     emailVerified: row.emailVerified,
+    isAdmin: row.isAdmin,
   }
 }
 

@@ -5,6 +5,7 @@ export interface PublicUser {
   avatarColor: string
   avatarImageUrl: string | null
   emailVerified: boolean
+  isAdmin: boolean
 }
 
 export interface AuthTokenPayload {

@@ -35,6 +35,10 @@ export const users = pgTable('users', {
   avatarColor: varchar('avatar_color', { length: 20 }).notNull(),
   avatarImageUrl: text('avatar_image_url'),
   emailVerified: boolean('email_verified').notNull().default(false),
+  // Édition du contenu officiel (personnages d'un jeu existant) depuis
+  // l'app plutôt que via le script de migration + fichiers locaux —
+  // jamais accordé par l'API elle-même, seulement en base à la main.
+  isAdmin: boolean('is_admin').notNull().default(false),
   verificationToken: text('verification_token'),
   verificationTokenExpires: timestamp('verification_token_expires'),
   passwordResetToken: text('password_reset_token'),

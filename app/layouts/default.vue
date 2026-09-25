@@ -36,6 +36,7 @@ const latestInvite = computed(() => pendingInvites.value[pendingInvites.value.le
           Notifications
           <span v-if="pendingInvites.length" class="notif-badge">{{ pendingInvites.length }}</span>
         </NuxtLink>
+        <NuxtLink v-if="user?.isAdmin" to="/admin" class="nav-link">Admin</NuxtLink>
       </nav>
 
       <div class="user-area">
