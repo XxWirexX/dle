@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Attribute, AttributeValue, GamePlayData } from '#shared/types/game'
+import type { Attribute, AttributeValue, GamePlayData, GameDetail } from '#shared/types/game'
 
 definePageMeta({ middleware: 'auth' })
 
@@ -12,11 +12,92 @@ if (!user.value?.isAdmin) {
 
 const { uploadImage } = useImageUpload()
 
-const { data: game, error: gameError } = await useFetch<GamePlayData>(`/api/games/${slug}/play`, { key: `admin-game-${slug}` })
-if (gameError.value || !game.value) {
+const [{ data: game, error: gameError }, { data: gameDetail, error: detailError }] = await Promise.all([
+  useFetch<GamePlayData>(`/api/games/${slug}/play`, { key: `admin-game-${slug}` }),
+  useFetch<GameDetail>(`/api/games/${slug}`, { key: `admin-game-detail-${slug}` }),
+])
+if (gameError.value || !game.value || detailError.value || !gameDetail.value) {
   throw createError({ statusCode: 404, statusMessage: 'Jeu introuvable' })
 }
 const attributes = game.value.attributes
+
+// ─── Infos du jeu (nom, essais max, icône, fond) ───
+const metaName = ref(gameDetail.value.name)
+const metaMaxAttempts = ref(gameDetail.value.maxAttempts)
+const iconUrl = ref(gameDetail.value.iconUrl)
+const iconPublicId = ref<string | null>(null)
+const backgroundUrl = ref(gameDetail.value.backgroundUrl)
+const backgroundPublicId = ref<string | null>(null)
+const uploadingIcon = ref(false)
+const uploadingBackground = ref(false)
+const savingMeta = ref(false)
+const metaSavedMessage = ref('')
+const metaError = ref('')
+let metaSavedTimer: ReturnType<typeof setTimeout> | null = null
+
+async function saveMeta(message = 'Enregistré') {
+  if (!metaName.value.trim()) {
+    metaError.value = 'Le nom est obligatoire'
+    return
+  }
+  savingMeta.value = true
+  metaError.value = ''
+  metaSavedMessage.value = ''
+  try {
+    await $fetch(`/api/admin/games/${slug}`, {
+      method: 'PATCH',
+      body: {
+        name: metaName.value.trim(),
+        maxAttempts: metaMaxAttempts.value,
+        iconUrl: iconUrl.value,
+        iconPublicId: iconPublicId.value,
+        backgroundUrl: backgroundUrl.value,
+        backgroundPublicId: backgroundPublicId.value,
+      },
+    })
+    metaSavedMessage.value = message
+    if (metaSavedTimer) clearTimeout(metaSavedTimer)
+    metaSavedTimer = setTimeout(() => { metaSavedMessage.value = '' }, 2000)
+  } catch (err: any) {
+    metaError.value = err?.data?.message || 'Erreur lors de l\'enregistrement'
+  } finally {
+    savingMeta.value = false
+  }
+}
+
+async function onMetaIconChange(e: Event) {
+  const file = (e.target as HTMLInputElement).files?.[0]
+  if (!file) return
+  uploadingIcon.value = true
+  metaError.value = ''
+  try {
+    const result = await uploadImage(file, 'icon')
+    iconUrl.value = result.url
+    iconPublicId.value = result.publicId
+    await saveMeta('Icône mise à jour')
+  } catch {
+    metaError.value = "Échec de l'upload de l'icône"
+  } finally {
+    uploadingIcon.value = false
+  }
+}
+
+async function onMetaBackgroundChange(e: Event) {
+  const file = (e.target as HTMLInputElement).files?.[0]
+  if (!file) return
+  uploadingBackground.value = true
+  metaError.value = ''
+  try {
+    const result = await uploadImage(file, 'background')
+    backgroundUrl.value = result.url
+    backgroundPublicId.value = result.publicId
+    await saveMeta('Fond mis à jour')
+  } catch {
+    metaError.value = "Échec de l'upload du fond"
+  } finally {
+    uploadingBackground.value = false
+  }
+}
 
 interface EditableCharacter {
   id: number | null
@@ -160,7 +241,42 @@ async function removeRow(row: EditableCharacter) {
 <template>
   <div class="admin-page">
     <NuxtLink to="/admin" class="back">← Jeux</NuxtLink>
-    <h1 class="title">{{ game!.name }} — Personnages ({{ rows.length }})</h1>
+    <h1 class="title">{{ game!.name }}</h1>
+
+    <section class="meta-section">
+      <h2 class="section-title">Infos du jeu</h2>
+      <p v-if="metaError" class="banner banner-error">{{ metaError }}</p>
+      <div class="field-row">
+        <div class="field">
+          <label for="meta-name">Nom</label>
+          <input id="meta-name" v-model="metaName" type="text" maxlength="100">
+        </div>
+        <div class="field">
+          <label for="meta-max-attempts">Essais max</label>
+          <input id="meta-max-attempts" v-model.number="metaMaxAttempts" type="number" min="4" max="40">
+        </div>
+        <button type="button" class="btn btn-primary" :disabled="savingMeta" @click="saveMeta()">
+          {{ savingMeta ? '...' : 'Enregistrer' }}
+        </button>
+        <span v-if="metaSavedMessage" class="saved-msg">✓ {{ metaSavedMessage }}</span>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>Icône</label>
+          <img v-if="iconUrl" :src="iconUrl" class="preview-icon" alt="">
+          <input type="file" accept="image/*" :disabled="uploadingIcon" @change="onMetaIconChange">
+          <span v-if="uploadingIcon" class="muted">Upload...</span>
+        </div>
+        <div class="field">
+          <label>Image de fond</label>
+          <img v-if="backgroundUrl" :src="backgroundUrl" class="preview-bg" alt="">
+          <input type="file" accept="image/*" :disabled="uploadingBackground" @change="onMetaBackgroundChange">
+          <span v-if="uploadingBackground" class="muted">Upload...</span>
+        </div>
+      </div>
+    </section>
+
+    <h2 class="section-title">Personnages ({{ rows.length }})</h2>
 
     <div class="table-wrap">
       <table class="char-table">
@@ -219,6 +335,41 @@ async function removeRow(row: EditableCharacter) {
 .back:hover { color: var(--text-2); }
 
 .title { font-size: 1.4rem; font-weight: 800; color: var(--text); margin-bottom: 1.25rem; }
+
+.meta-section {
+  padding: 1.25rem;
+  margin-bottom: 1.75rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+}
+
+.section-title {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin: 0 0 1rem;
+}
+
+.field { display: flex; flex-direction: column; gap: 0.35rem; margin-bottom: 0.9rem; flex: 1; }
+.field-row { display: flex; gap: 1rem; align-items: flex-end; }
+
+.field label { font-size: 0.8rem; color: var(--text-2); font-weight: 600; }
+
+.field input[type="text"], .field input[type="number"] {
+  padding: 0.55rem 0.7rem;
+  border-radius: 7px;
+  border: 1px solid var(--border-2);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.9rem;
+}
+
+.preview-icon { width: 48px; height: 48px; border-radius: 8px; object-fit: cover; margin-bottom: 0.3rem; }
+.preview-bg { width: 100%; max-width: 200px; height: 60px; border-radius: 8px; object-fit: cover; margin-bottom: 0.3rem; }
 
 .table-wrap { overflow-x: auto; margin-bottom: 0.75rem; }
 
