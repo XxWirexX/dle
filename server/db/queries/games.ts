@@ -77,7 +77,10 @@ export interface CreateGameCharacterInput {
 }
 
 export interface CreateGameInput {
-  ownerId: number
+  // null uniquement pour un jeu officiel créé par un admin (voir isOfficial)
+  // — jamais pour un DLE custom, qui garde toujours un propriétaire.
+  ownerId: number | null
+  isOfficial: boolean
   name: string
   iconUrl: string | null
   iconPublicId: string | null
@@ -106,7 +109,7 @@ export async function createCustomGame(input: CreateGameInput): Promise<{ slug: 
       backgroundUrl: input.backgroundUrl,
       backgroundPublicId: input.backgroundPublicId,
       maxAttempts: input.maxAttempts,
-      isOfficial: false,
+      isOfficial: input.isOfficial,
       ownerId: input.ownerId,
       visibility: input.visibility,
     }).returning({ id: games.id })

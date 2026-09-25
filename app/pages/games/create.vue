@@ -5,6 +5,7 @@ definePageMeta({ middleware: 'auth' })
 
 const router = useRouter()
 const { uploadImage } = useImageUpload()
+const { user } = useAuth()
 
 const ATTRIBUTE_TYPE_LABELS: Record<AttributeType, string> = {
   text: 'Texte (correspondance simple/partielle)',
@@ -25,6 +26,7 @@ const currentStep = ref<Step>(1)
 const name = ref('')
 const maxAttempts = ref(15)
 const visibility = ref<'public' | 'private'>('public')
+const isOfficial = ref(false)
 const iconUrl = ref<string | null>(null)
 const backgroundUrl = ref<string | null>(null)
 const iconPublicId = ref<string | null>(null)
@@ -217,6 +219,7 @@ function saveDraft() {
       name: name.value,
       maxAttempts: maxAttempts.value,
       visibility: visibility.value,
+      isOfficial: isOfficial.value,
       iconUrl: iconUrl.value,
       iconPublicId: iconPublicId.value,
       backgroundUrl: backgroundUrl.value,
@@ -239,6 +242,7 @@ function loadDraft() {
     name.value = draft.name ?? ''
     maxAttempts.value = draft.maxAttempts ?? 15
     visibility.value = draft.visibility ?? 'public'
+    isOfficial.value = user.value?.isAdmin ? (draft.isOfficial ?? false) : false
     iconUrl.value = draft.iconUrl ?? null
     iconPublicId.value = draft.iconPublicId ?? null
     backgroundUrl.value = draft.backgroundUrl ?? null
@@ -272,7 +276,7 @@ const hasRestoredDraft = ref(false)
 
 onMounted(loadDraft)
 
-watch([name, maxAttempts, visibility, iconUrl, iconPublicId, backgroundUrl, backgroundPublicId, currentStep], saveDraft)
+watch([name, maxAttempts, visibility, isOfficial, iconUrl, iconPublicId, backgroundUrl, backgroundPublicId, currentStep], saveDraft)
 watch(attributes, saveDraft, { deep: true })
 watch(characters, saveDraft, { deep: true })
 
@@ -313,6 +317,7 @@ async function onSubmit() {
       backgroundPublicId: backgroundPublicId.value,
       maxAttempts: maxAttempts.value,
       visibility: visibility.value,
+      isOfficial: user.value?.isAdmin ? isOfficial.value : false,
       attributes: attrsWithKeys.map((a) => ({
         key: a.key,
         label: a.label.trim(),
@@ -375,7 +380,7 @@ async function onSubmit() {
           <label for="max-attempts">Nombre d'essais max</label>
           <input id="max-attempts" v-model.number="maxAttempts" type="number" min="4" max="40">
         </div>
-        <div class="field">
+        <div v-if="!isOfficial" class="field">
           <label for="visibility">Visibilité</label>
           <select id="visibility" v-model="visibility">
             <option value="public">Public — visible par tout le monde</option>
@@ -383,6 +388,10 @@ async function onSubmit() {
           </select>
         </div>
       </div>
+      <label v-if="user?.isAdmin" class="official-toggle">
+        <input v-model="isOfficial" type="checkbox">
+        Jeu officiel (sans propriétaire, listé pour tout le monde comme les autres animes — pas besoin de relancer le script de migration)
+      </label>
       <div class="field-row">
         <div class="field">
           <label>Icône (optionnel)</label>
@@ -598,6 +607,20 @@ textarea { resize: vertical; }
 
 .preview-icon { width: 48px; height: 48px; border-radius: 8px; object-fit: cover; margin-top: 0.4rem; }
 .preview-bg { width: 100%; max-width: 200px; height: 60px; border-radius: 8px; object-fit: cover; margin-top: 0.4rem; }
+
+.official-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 0.8rem;
+  margin-bottom: 0.9rem;
+  background: rgba(59, 130, 246, 0.08);
+  border: 1px solid rgba(59, 130, 246, 0.25);
+  border-radius: 8px;
+  font-size: 0.82rem;
+  color: var(--text-2);
+  cursor: pointer;
+}
 
 .attribute-card {
   padding: 1rem;

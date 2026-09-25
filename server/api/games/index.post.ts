@@ -4,6 +4,7 @@ import { readValidatedJsonBody } from '~~/server/utils/validate'
 import { createCustomGame, type CreateGameAttributeInput, type CreateGameCharacterInput } from '~~/server/db/queries/games'
 import { invalidateGameCache } from '~~/server/utils/gameCache'
 import { coerceAttributeValue } from '~~/server/utils/attributeValues'
+import { findUserById } from '~~/server/db/queries/users'
 
 const attributeSchema = z.object({
   key: z.string().regex(/^[a-z0-9_]+$/).min(1).max(40),
@@ -32,6 +33,7 @@ const createGameSchema = z.object({
   backgroundPublicId: z.string().nullable().optional(),
   maxAttempts: z.number().int().min(4).max(40),
   visibility: z.enum(['public', 'private']),
+  isOfficial: z.boolean().optional(),
   attributes: z.array(attributeSchema).min(1).max(15),
   characters: z.array(characterSchema).min(4).max(500),
 })
@@ -50,6 +52,17 @@ function dedupeKeys(attrs: { key: string }[]): void {
 export default defineEventHandler(async (event) => {
   const { userId } = requireAuthPayload(event)
   const body = await readValidatedJsonBody(event, createGameSchema)
+
+  // Un jeu "officiel" (sans propriétaire, toujours public) n'est accordé
+  // que si le compte est réellement admin en base — jamais sur la seule
+  // foi de ce que le client envoie, même si l'UI ne montre l'option qu'aux
+  // admins.
+  let isOfficial = false
+  if (body.isOfficial) {
+    const requester = await findUserById(userId)
+    if (!requester?.isAdmin) throw createError({ statusCode: 403, message: 'Réservé aux administrateurs' })
+    isOfficial = true
+  }
 
   const attributeInputs: CreateGameAttributeInput[] = body.attributes.map((a) => ({
     key: a.key,
@@ -70,14 +83,15 @@ export default defineEventHandler(async (event) => {
   }))
 
   const { slug } = await createCustomGame({
-    ownerId: userId,
+    ownerId: isOfficial ? null : userId,
+    isOfficial,
     name: body.name,
     iconUrl: body.iconUrl ?? null,
     iconPublicId: body.iconPublicId ?? null,
     backgroundUrl: body.backgroundUrl ?? null,
     backgroundPublicId: body.backgroundPublicId ?? null,
     maxAttempts: body.maxAttempts,
-    visibility: body.visibility,
+    visibility: isOfficial ? 'public' : body.visibility,
     attributes: attributeInputs,
     characters: characterInputs,
   })
