@@ -1,6 +1,7 @@
 export type AttributeType = 'text' | 'number' | 'ordered' | 'multiple' | 'text-group' | 'boolean'
 
 export interface Attribute {
+  id: number
   key: string
   label: string
   type: AttributeType

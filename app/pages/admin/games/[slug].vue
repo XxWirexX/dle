@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Attribute, AttributeValue, GamePlayData, GameDetail } from '#shared/types/game'
+import type { Attribute, AttributeType, AttributeValue, GamePlayData, GameDetail } from '#shared/types/game'
 
 definePageMeta({ middleware: 'auth' })
 
@@ -12,14 +12,215 @@ if (!user.value?.isAdmin) {
 
 const { uploadImage } = useImageUpload()
 
-const [{ data: game, error: gameError }, { data: gameDetail, error: detailError }] = await Promise.all([
+const [{ data: game, error: gameError, refresh: refreshGame }, { data: gameDetail, error: detailError, refresh: refreshDetail }] = await Promise.all([
   useFetch<GamePlayData>(`/api/games/${slug}/play`, { key: `admin-game-${slug}` }),
   useFetch<GameDetail>(`/api/games/${slug}`, { key: `admin-game-detail-${slug}` }),
 ])
 if (gameError.value || !game.value || detailError.value || !gameDetail.value) {
   throw createError({ statusCode: 404, statusMessage: 'Jeu introuvable' })
 }
-const attributes = game.value.attributes
+const attributes = computed(() => game.value!.attributes)
+
+// ─── Attributs (ajout / édition / suppression / réordonnancement) ───
+interface EditableAttribute {
+  id: number
+  key: string
+  label: string
+  type: AttributeType
+  orderText: string
+  hintsText: string
+  groupsText: string
+  saving: boolean
+  savedMessage: string
+  savedTimer: ReturnType<typeof setTimeout> | null
+  error: string
+}
+
+function toEditableAttribute(a: Attribute): EditableAttribute {
+  return {
+    id: a.id,
+    key: a.key,
+    label: a.label,
+    type: a.type,
+    orderText: (a.order ?? []).join(', '),
+    hintsText: (a.hints ?? []).join(', '),
+    groupsText: (a.groups ?? []).map((g) => g.join(', ')).join('\n'),
+    saving: false,
+    savedMessage: '',
+    savedTimer: null,
+    error: '',
+  }
+}
+
+const attributeRows = ref<EditableAttribute[]>(
+  game.value!.attributes.map(toEditableAttribute),
+)
+const attributesError = ref('')
+
+const attributeTypes: { value: AttributeType; label: string }[] = [
+  { value: 'text', label: 'Texte' },
+  { value: 'number', label: 'Nombre' },
+  { value: 'ordered', label: 'Ordonné' },
+  { value: 'multiple', label: 'Liste (multiple)' },
+  { value: 'text-group', label: 'Groupes proches' },
+  { value: 'boolean', label: 'Oui / Non' },
+]
+
+function parseCommaList(text: string): string[] {
+  return text.split(',').map((v) => v.trim()).filter(Boolean)
+}
+
+function parseGroups(text: string): string[][] {
+  return text.split('\n').map((line) => parseCommaList(line)).filter((g) => g.length > 0)
+}
+
+async function reloadGameData() {
+  await Promise.all([refreshGame(), refreshDetail()])
+  attributeRows.value = game.value!.attributes.map(toEditableAttribute)
+  rows.value = game.value!.characters.map(toEditable)
+}
+
+async function saveAttributeRow(row: EditableAttribute) {
+  if (!row.label.trim()) {
+    row.error = 'Le libellé est obligatoire'
+    return
+  }
+  const order = row.type === 'ordered' ? parseCommaList(row.orderText) : undefined
+  if (row.type === 'ordered' && (!order || order.length < 2)) {
+    row.error = 'Un attribut "ordonné" a besoin d\'au moins 2 valeurs'
+    return
+  }
+  const groups = row.type === 'text-group' ? parseGroups(row.groupsText) : undefined
+  if (row.type === 'text-group' && (!groups || groups.length < 1)) {
+    row.error = 'Un attribut "groupe" a besoin d\'au moins un groupe'
+    return
+  }
+  row.saving = true
+  row.error = ''
+  row.savedMessage = ''
+  try {
+    await $fetch(`/api/admin/games/${slug}/attributes/${row.id}`, {
+      method: 'PATCH',
+      body: {
+        label: row.label.trim(),
+        type: row.type,
+        order,
+        hints: parseCommaList(row.hintsText),
+        groups,
+      },
+    })
+    await reloadGameData()
+    const saved = attributeRows.value.find((r) => r.id === row.id)
+    if (saved) {
+      saved.savedMessage = 'Enregistré'
+      saved.savedTimer = setTimeout(() => { saved.savedMessage = '' }, 2000)
+    }
+  } catch (err: any) {
+    row.error = err?.data?.message || 'Erreur lors de l\'enregistrement'
+  } finally {
+    row.saving = false
+  }
+}
+
+async function removeAttributeRow(row: EditableAttribute) {
+  if (!confirm(`Supprimer l'attribut "${row.label}" ? Sa valeur sera perdue pour tous les personnages.`)) return
+  row.saving = true
+  row.error = ''
+  try {
+    await $fetch(`/api/admin/games/${slug}/attributes/${row.id}`, { method: 'DELETE' })
+    await reloadGameData()
+  } catch (err: any) {
+    row.error = err?.data?.message || 'Erreur lors de la suppression'
+    row.saving = false
+  }
+}
+
+async function moveAttribute(row: EditableAttribute, direction: -1 | 1) {
+  const ids = attributeRows.value.map((r) => r.id)
+  const i = ids.indexOf(row.id)
+  const j = i + direction
+  if (i === -1 || j < 0 || j >= ids.length) return
+  ;[ids[i], ids[j]] = [ids[j]!, ids[i]!]
+  attributesError.value = ''
+  try {
+    await $fetch(`/api/admin/games/${slug}/attributes/reorder`, { method: 'POST', body: { ids } })
+    await reloadGameData()
+  } catch (err: any) {
+    attributesError.value = err?.data?.message || 'Erreur lors du réordonnancement'
+  }
+}
+
+const newAttrLabel = ref('')
+const newAttrType = ref<AttributeType>('text')
+const newAttrOrderText = ref('')
+const newAttrHintsText = ref('')
+const newAttrGroupsText = ref('')
+const addingAttribute = ref(false)
+const showAddAttribute = ref(false)
+
+// Clé technique déduite du libellé (comme à la création d'un DLE) — invisible
+// et immuable une fois créée, l'admin ne manipule que le libellé ensuite.
+function slugifyKey(label: string): string {
+  return label
+    .toLowerCase()
+    .normalize('NFD').replace(/[̀-ͯ]/g, '')
+    .replace(/[^a-z0-9]+/g, '_')
+    .replace(/(^_+|_+$)/g, '')
+    .slice(0, 40)
+}
+
+async function addAttribute() {
+  const label = newAttrLabel.value.trim()
+  if (!label) {
+    attributesError.value = 'Le libellé est obligatoire'
+    return
+  }
+  const key = slugifyKey(label)
+  if (!key) {
+    attributesError.value = 'Libellé invalide'
+    return
+  }
+  if (attributeRows.value.some((r) => r.key === key)) {
+    attributesError.value = 'Un attribut avec une clé équivalente existe déjà — choisis un libellé différent'
+    return
+  }
+  const order = newAttrType.value === 'ordered' ? parseCommaList(newAttrOrderText.value) : undefined
+  if (newAttrType.value === 'ordered' && (!order || order.length < 2)) {
+    attributesError.value = 'Un attribut "ordonné" a besoin d\'au moins 2 valeurs'
+    return
+  }
+  const groups = newAttrType.value === 'text-group' ? parseGroups(newAttrGroupsText.value) : undefined
+  if (newAttrType.value === 'text-group' && (!groups || groups.length < 1)) {
+    attributesError.value = 'Un attribut "groupe" a besoin d\'au moins un groupe'
+    return
+  }
+  addingAttribute.value = true
+  attributesError.value = ''
+  try {
+    await $fetch(`/api/admin/games/${slug}/attributes`, {
+      method: 'POST',
+      body: {
+        key,
+        label,
+        type: newAttrType.value,
+        order,
+        hints: parseCommaList(newAttrHintsText.value),
+        groups,
+      },
+    })
+    await reloadGameData()
+    newAttrLabel.value = ''
+    newAttrType.value = 'text'
+    newAttrOrderText.value = ''
+    newAttrHintsText.value = ''
+    newAttrGroupsText.value = ''
+    showAddAttribute.value = false
+  } catch (err: any) {
+    attributesError.value = err?.data?.message || "Erreur lors de l'ajout"
+  } finally {
+    addingAttribute.value = false
+  }
+}
 
 // ─── Infos du jeu (nom, essais max, icône, fond) ───
 const metaName = ref(gameDetail.value.name)
@@ -126,7 +327,7 @@ function toEditable(c: GamePlayData['characters'][number]): EditableCharacter {
     name: c.name,
     imageUrl: c.imageUrl,
     imagePublicId: null,
-    values: Object.fromEntries(attributes.map((a) => [a.key, valueForInput(a, c.attributes[a.key])])),
+    values: Object.fromEntries(attributes.value.map((a) => [a.key, valueForInput(a, c.attributes[a.key])])),
     uploading: false,
     saving: false,
     savedMessage: '',
@@ -143,7 +344,7 @@ function newRow(): EditableCharacter {
     name: '',
     imageUrl: null,
     imagePublicId: null,
-    values: Object.fromEntries(attributes.map((a) => {
+    values: Object.fromEntries(attributes.value.map((a) => {
       if (a.type === 'boolean') return [a.key, false]
       if (a.type === 'ordered') return [a.key, a.order?.[0] ?? '']
       return [a.key, '']
@@ -203,7 +404,7 @@ async function saveRow(row: EditableCharacter, message = 'Enregistré') {
       name: row.name.trim(),
       imageUrl: row.imageUrl,
       imagePublicId: row.imagePublicId,
-      attributes: Object.fromEntries(attributes.map((a) => [a.key, coerceForSubmit(a, row.values[a.key])])),
+      attributes: Object.fromEntries(attributes.value.map((a) => [a.key, coerceForSubmit(a, row.values[a.key])])),
     }
     if (row.id) {
       await $fetch(`/api/admin/games/${slug}/characters/${row.id}`, { method: 'PATCH', body: payload })
@@ -273,6 +474,60 @@ async function removeRow(row: EditableCharacter) {
           <input type="file" accept="image/*" :disabled="uploadingBackground" @change="onMetaBackgroundChange">
           <span v-if="uploadingBackground" class="muted">Upload...</span>
         </div>
+      </div>
+    </section>
+
+    <section class="meta-section">
+      <h2 class="section-title">Attributs ({{ attributeRows.length }}/15)</h2>
+      <p v-if="attributesError" class="banner banner-error">{{ attributesError }}</p>
+
+      <div v-for="(row, i) in attributeRows" :key="row.id" class="attr-row">
+        <div class="attr-row-main">
+          <button type="button" class="btn btn-sm" :disabled="i === 0" title="Monter" @click="moveAttribute(row, -1)">↑</button>
+          <button type="button" class="btn btn-sm" :disabled="i === attributeRows.length - 1" title="Descendre" @click="moveAttribute(row, 1)">↓</button>
+          <input v-model="row.label" type="text" placeholder="Libellé" class="cell-input attr-label-input">
+          <select v-model="row.type" class="cell-input attr-type-select">
+            <option v-for="t in attributeTypes" :key="t.value" :value="t.value">{{ t.label }}</option>
+          </select>
+          <input v-if="row.type === 'ordered'" v-model="row.orderText" type="text" placeholder="Valeurs dans l'ordre, séparées par des virgules" class="cell-input attr-wide-input">
+          <input v-model="row.hintsText" type="text" placeholder="Indices suggérés (optionnel), séparés par des virgules" class="cell-input attr-wide-input">
+          <button type="button" class="btn btn-sm btn-primary" :disabled="row.saving" @click="saveAttributeRow(row)">
+            {{ row.saving ? '...' : 'Enregistrer' }}
+          </button>
+          <button type="button" class="btn btn-sm btn-danger" :disabled="row.saving" @click="removeAttributeRow(row)">✕</button>
+          <span v-if="row.savedMessage" class="saved-msg">✓ {{ row.savedMessage }}</span>
+        </div>
+        <textarea
+          v-if="row.type === 'text-group'"
+          v-model="row.groupsText"
+          rows="2"
+          placeholder="Un groupe de valeurs 'proches' par ligne, séparées par des virgules (ex: Feu, Flamme)"
+          class="attr-groups-textarea"
+        />
+        <span v-if="row.error" class="error-msg">{{ row.error }}</span>
+      </div>
+
+      <button v-if="!showAddAttribute" type="button" class="btn" @click="showAddAttribute = true">+ Ajouter un attribut</button>
+      <div v-else class="attr-row attr-new">
+        <div class="attr-row-main">
+          <input v-model="newAttrLabel" type="text" placeholder="Libellé (ex: Race)" class="cell-input attr-label-input">
+          <select v-model="newAttrType" class="cell-input attr-type-select">
+            <option v-for="t in attributeTypes" :key="t.value" :value="t.value">{{ t.label }}</option>
+          </select>
+          <input v-if="newAttrType === 'ordered'" v-model="newAttrOrderText" type="text" placeholder="Valeurs dans l'ordre, séparées par des virgules" class="cell-input attr-wide-input">
+          <input v-model="newAttrHintsText" type="text" placeholder="Indices suggérés (optionnel), séparés par des virgules" class="cell-input attr-wide-input">
+          <button type="button" class="btn btn-sm btn-primary" :disabled="addingAttribute" @click="addAttribute">
+            {{ addingAttribute ? '...' : 'Créer' }}
+          </button>
+          <button type="button" class="btn btn-sm" @click="showAddAttribute = false">Annuler</button>
+        </div>
+        <textarea
+          v-if="newAttrType === 'text-group'"
+          v-model="newAttrGroupsText"
+          rows="2"
+          placeholder="Un groupe de valeurs 'proches' par ligne, séparées par des virgules (ex: Feu, Flamme)"
+          class="attr-groups-textarea"
+        />
       </div>
     </section>
 
@@ -406,4 +661,30 @@ async function removeRow(row: EditableCharacter) {
 }
 
 .btn-danger:hover:not(:disabled) { background: rgba(185, 28, 28, 0.22); color: #fff; }
+
+.attr-row {
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.attr-row:last-of-type { border-bottom: none; }
+.attr-row-main { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+
+.attr-label-input { min-width: 140px; max-width: 200px; }
+.attr-type-select { min-width: 150px; max-width: 170px; }
+.attr-wide-input { flex: 1; min-width: 200px; }
+
+.attr-groups-textarea {
+  width: 100%;
+  margin-top: 0.5rem;
+  padding: 0.5rem 0.6rem;
+  border-radius: 6px;
+  border: 1px solid var(--border-2);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.85rem;
+  resize: vertical;
+}
+
+.attr-new { border: 1px dashed var(--border-2); border-radius: 10px; padding: 0.75rem; margin-top: 0.75rem; }
 </style>
