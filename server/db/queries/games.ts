@@ -1,4 +1,4 @@
-import { eq, and, or, desc, asc } from 'drizzle-orm'
+import { eq, and, or, desc, asc, sql } from 'drizzle-orm'
 import { db } from '../client'
 import { games, attributes, characters } from '../schema'
 import type { AttributeType, GameSummary, OwnedGameSummary, GameDetail, GamePlayData, GameVisibility } from '#shared/types/game'
@@ -192,6 +192,7 @@ export async function findGameDetailBySlug(slug: string): Promise<GameDetail | n
     characterCount: characterCountRow.length,
     attributeCount: game.attributes.length,
     attributes: game.attributes.map((a) => ({
+      id: a.id,
       key: a.key,
       label: a.label,
       type: a.type,
@@ -223,6 +224,7 @@ export async function findGamePlayDataBySlug(slug: string): Promise<GamePlayData
     backgroundUrl: game.backgroundUrl,
     maxAttempts: game.maxAttempts,
     attributes: game.attributes.map((a) => ({
+      id: a.id,
       key: a.key,
       label: a.label,
       type: a.type,
@@ -298,4 +300,105 @@ export async function deleteCharacter(characterId: number, gameId: number): Prom
     .where(and(eq(characters.id, characterId), eq(characters.gameId, gameId)))
     .returning({ id: characters.id })
   return deleted.length > 0
+}
+
+function defaultAttributeValue(type: AttributeType): unknown {
+  if (type === 'number') return 0
+  if (type === 'boolean') return false
+  if (type === 'multiple') return []
+  return ''
+}
+
+export interface AttributeInput {
+  key: string
+  label: string
+  type: AttributeType
+  order?: string[] | null
+  hints?: string[] | null
+  groups?: string[][] | null
+}
+
+export async function listAttributeKeys(gameId: number): Promise<{ id: number; key: string }[]> {
+  return db.query.attributes.findMany({
+    where: eq(attributes.gameId, gameId),
+    columns: { id: true, key: true },
+  })
+}
+
+export async function addAttribute(gameId: number, input: AttributeInput): Promise<{ id: number }> {
+  const [{ maxOrder }] = await db
+    .select({ maxOrder: sql<number>`coalesce(max(${attributes.sortOrder}), -1)` })
+    .from(attributes)
+    .where(eq(attributes.gameId, gameId))
+
+  const [row] = await db.insert(attributes).values({
+    gameId,
+    key: input.key,
+    label: input.label,
+    type: input.type,
+    // Ajouté en dernière position — l'ordre d'affichage se réarrange
+    // ensuite via reorderAttributes si besoin.
+    sortOrder: (maxOrder ?? -1) + 1,
+    orderValues: input.order ?? null,
+    hints: input.hints ?? null,
+    groups: input.groups ?? null,
+  }).returning({ id: attributes.id })
+
+  // Les personnages existants n'ont pas cette clé dans leur JSONB tant
+  // qu'on ne la leur ajoute pas explicitement — sans ça la valeur serait
+  // "undefined" côté jeu au lieu d'une valeur vide cohérente avec le type.
+  await db.execute(sql`
+    update ${characters}
+    set attributes = attributes || jsonb_build_object(${input.key}::text, ${JSON.stringify(defaultAttributeValue(input.type))}::jsonb)
+    where ${characters.gameId} = ${gameId}
+  `)
+
+  return row!
+}
+
+export interface UpdateAttributeInput {
+  label: string
+  type: AttributeType
+  order?: string[] | null
+  hints?: string[] | null
+  groups?: string[][] | null
+}
+
+export async function updateAttribute(attributeId: number, gameId: number, input: UpdateAttributeInput): Promise<boolean> {
+  const updated = await db.update(attributes)
+    .set({
+      label: input.label,
+      type: input.type,
+      orderValues: input.order ?? null,
+      hints: input.hints ?? null,
+      groups: input.groups ?? null,
+    })
+    .where(and(eq(attributes.id, attributeId), eq(attributes.gameId, gameId)))
+    .returning({ id: attributes.id })
+  return updated.length > 0
+}
+
+/** Retire aussi la clé désormais orpheline du JSONB de chaque personnage. */
+export async function deleteAttribute(attributeId: number, gameId: number): Promise<boolean> {
+  const deleted = await db.delete(attributes)
+    .where(and(eq(attributes.id, attributeId), eq(attributes.gameId, gameId)))
+    .returning({ id: attributes.id, key: attributes.key })
+  if (deleted.length === 0) return false
+
+  await db.execute(sql`
+    update ${characters}
+    set attributes = attributes - ${deleted[0]!.key}::text
+    where ${characters.gameId} = ${gameId}
+  `)
+  return true
+}
+
+export async function reorderAttributes(gameId: number, orderedIds: number[]): Promise<void> {
+  await db.transaction(async (tx) => {
+    for (let i = 0; i < orderedIds.length; i++) {
+      await tx.update(attributes)
+        .set({ sortOrder: i })
+        .where(and(eq(attributes.id, orderedIds[i]!), eq(attributes.gameId, gameId)))
+    }
+  })
 }
