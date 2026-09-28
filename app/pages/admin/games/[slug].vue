@@ -751,6 +751,7 @@ async function removeRow(row: EditableCharacter) {
 .char-table { border-collapse: collapse; width: 100%; min-width: 700px; }
 .char-table th, .char-table td { padding: 0.5rem; border-bottom: 1px solid var(--border); text-align: left; vertical-align: middle; }
 .char-table th { font-size: 0.7rem; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.04em; }
+.char-table td:has(.hint-select-field) { min-width: 190px; }
 
 .cell-input {
   width: 100%;
@@ -795,8 +796,8 @@ async function removeRow(row: EditableCharacter) {
 .attr-sub-field { margin-top: 0.5rem; }
 .attr-sub-label { display: block; font-size: 0.72rem; color: var(--text-3); margin-bottom: 0.3rem; }
 
-.hint-select-field { display: flex; align-items: center; gap: 0.3rem; }
-.hint-select-field .cell-input { min-width: 0; }
+.hint-select-field { display: flex; align-items: center; gap: 0.3rem; min-width: 180px; }
+.hint-select-field .cell-input { flex: 1; min-width: 100px; }
 .hint-toggle {
   flex-shrink: 0;
   background: rgba(255, 255, 255, 0.04);
