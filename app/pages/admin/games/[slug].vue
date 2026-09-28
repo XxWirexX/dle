@@ -344,10 +344,8 @@ interface EditableCharacter {
   error: string
 }
 
-// "multiple" s'édite comme une liste séparée par des virgules — plus simple
-// qu'un vrai multi-select — reconverti en tableau seulement à l'envoi.
 function valueForInput(attr: Attribute, raw: AttributeValue): unknown {
-  if (attr.type === 'multiple') return Array.isArray(raw) ? raw.join(', ') : ''
+  if (attr.type === 'multiple') return Array.isArray(raw) ? [...raw] : []
   if (attr.type === 'boolean') return raw === true
   return raw ?? ''
 }
@@ -356,6 +354,40 @@ function isValueInHints(attr: Attribute, value: unknown): boolean {
   if (!attr.hints?.length) return false
   const v = String(value ?? '').toLowerCase()
   return attr.hints.some((h) => h.toLowerCase() === v)
+}
+
+// Options du <select multiple> : les indices déclarés (dans leur ordre —
+// certains jeux comme Star Wars ordonnent "appearance" chronologiquement,
+// on ne veut pas le casser en triant tout) puis, en plus, toute valeur déjà
+// utilisée par un personnage mais absente des indices (ex: "haki" sur One
+// Piece n'a pas d'indices déclarés du tout — sans ça le select serait vide).
+function multipleOptions(attr: Attribute): string[] {
+  const declared = attr.hints ?? []
+  const seen = new Set(declared.map((h) => h.toLowerCase()))
+  const extra = new Set<string>()
+  for (const r of rows.value) {
+    const v = r.values[attr.key]
+    if (!Array.isArray(v)) continue
+    for (const item of v) {
+      const s = String(item ?? '').trim()
+      if (s && !seen.has(s.toLowerCase())) extra.add(s)
+    }
+  }
+  return [...declared, ...[...extra].sort((a, b) => a.localeCompare(b))]
+}
+
+function multiSelectSize(attr: Attribute): number {
+  return Math.min(Math.max(multipleOptions(attr).length, 2), 6)
+}
+
+function addMultipleValue(row: EditableCharacter, attr: Attribute, e: Event) {
+  const input = e.target as HTMLInputElement
+  const value = input.value.trim()
+  input.value = ''
+  if (!value) return
+  const current = Array.isArray(row.values[attr.key]) ? row.values[attr.key] as string[] : []
+  if (current.some((v) => v.toLowerCase() === value.toLowerCase())) return
+  row.values[attr.key] = [...current, value]
 }
 
 function toEditable(c: GamePlayData['characters'][number]): EditableCharacter {
@@ -392,6 +424,7 @@ function newRow(): EditableCharacter {
     values: Object.fromEntries(attributes.value.map((a) => {
       if (a.type === 'boolean') return [a.key, false]
       if (a.type === 'ordered') return [a.key, a.order?.[0] ?? '']
+      if (a.type === 'multiple') return [a.key, []]
       return [a.key, '']
     })),
     customFields: Object.fromEntries(
@@ -410,9 +443,7 @@ function addRow() {
 }
 
 function coerceForSubmit(attr: Attribute, raw: unknown): unknown {
-  if (attr.type === 'multiple') {
-    return String(raw ?? '').split(',').map((v) => v.trim()).filter(Boolean)
-  }
+  if (attr.type === 'multiple') return Array.isArray(raw) ? raw : []
   if (attr.type === 'boolean') return raw === true
   if (attr.type === 'number') return raw === '' || raw === undefined ? null : Number(raw)
   return String(raw ?? '').trim()
@@ -665,7 +696,13 @@ async function removeRow(row: EditableCharacter) {
                   @click="row.customFields[attr.key] = !row.customFields[attr.key]"
                 >{{ row.customFields[attr.key] ? '☰' : '✎' }}</button>
               </div>
-              <input v-else-if="attr.type === 'text' || attr.type === 'text-group' || attr.type === 'multiple'" v-model="row.values[attr.key]" type="text" class="cell-input">
+              <div v-else-if="attr.type === 'multiple'" class="multi-select-field">
+                <select v-model="row.values[attr.key]" multiple class="cell-input multi-select" :size="multiSelectSize(attr)">
+                  <option v-for="opt in multipleOptions(attr)" :key="opt" :value="opt">{{ opt }}</option>
+                </select>
+                <input type="text" class="multi-add-input" placeholder="+ valeur" @keydown.enter.prevent="addMultipleValue(row, attr, $event)">
+              </div>
+              <input v-else-if="attr.type === 'text' || attr.type === 'text-group'" v-model="row.values[attr.key]" type="text" class="cell-input">
               <input v-else-if="attr.type === 'number'" v-model.number="row.values[attr.key]" type="number" class="cell-input">
               <input v-else-if="attr.type === 'boolean'" v-model="row.values[attr.key]" type="checkbox">
               <select v-else-if="attr.type === 'ordered'" v-model="row.values[attr.key]" class="cell-input">
@@ -752,6 +789,7 @@ async function removeRow(row: EditableCharacter) {
 .char-table th, .char-table td { padding: 0.5rem; border-bottom: 1px solid var(--border); text-align: left; vertical-align: middle; }
 .char-table th { font-size: 0.7rem; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.04em; }
 .char-table td:has(.hint-select-field) { min-width: 190px; }
+.char-table td:has(.multi-select-field) { min-width: 170px; }
 
 .cell-input {
   width: 100%;
@@ -798,6 +836,19 @@ async function removeRow(row: EditableCharacter) {
 
 .hint-select-field { display: flex; align-items: center; gap: 0.3rem; min-width: 180px; }
 .hint-select-field .cell-input { flex: 1; min-width: 100px; }
+
+.multi-select-field { display: flex; flex-direction: column; gap: 0.3rem; min-width: 150px; }
+.multi-select { min-width: 150px; }
+.multi-add-input {
+  width: 100%;
+  padding: 0.3rem 0.5rem;
+  border-radius: 6px;
+  border: 1px solid var(--border-2);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.78rem;
+}
 .hint-toggle {
   flex-shrink: 0;
   background: rgba(255, 255, 255, 0.04);
