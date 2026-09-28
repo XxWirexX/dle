@@ -9,8 +9,8 @@ const schema = z.object({
   key: z.string().regex(/^[a-z0-9_]+$/).min(1).max(40),
   label: z.string().trim().min(1).max(60),
   type: z.enum(['text', 'number', 'ordered', 'multiple', 'text-group', 'boolean']),
-  order: z.array(z.string().trim().min(1)).max(50).optional(),
-  hints: z.array(z.string().trim().min(1)).max(50).optional(),
+  order: z.array(z.string().trim().min(1)).max(100).optional(),
+  hints: z.array(z.string().trim().min(1)).max(300).optional(),
   groups: z.array(z.array(z.string().trim().min(1)).min(1)).max(30).optional(),
 }).refine((a) => a.type !== 'ordered' || (a.order && a.order.length >= 2), {
   message: 'Un attribut "ordonné" a besoin d\'au moins 2 valeurs',

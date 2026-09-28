@@ -27,8 +27,8 @@ interface EditableAttribute {
   key: string
   label: string
   type: AttributeType
-  orderText: string
-  hintsText: string
+  order: string[]
+  hints: string[]
   groupsText: string
   saving: boolean
   savedMessage: string
@@ -42,8 +42,8 @@ function toEditableAttribute(a: Attribute): EditableAttribute {
     key: a.key,
     label: a.label,
     type: a.type,
-    orderText: (a.order ?? []).join(', '),
-    hintsText: (a.hints ?? []).join(', '),
+    order: [...(a.order ?? [])],
+    hints: [...(a.hints ?? [])],
     groupsText: (a.groups ?? []).map((g) => g.join(', ')).join('\n'),
     saving: false,
     savedMessage: '',
@@ -56,6 +56,7 @@ const attributeRows = ref<EditableAttribute[]>(
   game.value!.attributes.map(toEditableAttribute),
 )
 const attributesError = ref('')
+const savingAllAttributes = ref(false)
 
 const attributeTypes: { value: AttributeType; label: string }[] = [
   { value: 'text', label: 'Texte' },
@@ -80,20 +81,22 @@ async function reloadGameData() {
   rows.value = game.value!.characters.map(toEditable)
 }
 
-async function saveAttributeRow(row: EditableAttribute) {
+// N'enregistre qu'un attribut, sans recharger toute la page — réutilisé par
+// le bouton par-ligne (qui recharge ensuite) et par "tout enregistrer" (qui
+// ne recharge qu'une fois, à la fin, pour éviter N rechargements).
+async function persistAttribute(row: EditableAttribute): Promise<boolean> {
   if (!row.label.trim()) {
     row.error = 'Le libellé est obligatoire'
-    return
+    return false
   }
-  const order = row.type === 'ordered' ? parseCommaList(row.orderText) : undefined
-  if (row.type === 'ordered' && (!order || order.length < 2)) {
+  if (row.type === 'ordered' && row.order.length < 2) {
     row.error = 'Un attribut "ordonné" a besoin d\'au moins 2 valeurs'
-    return
+    return false
   }
   const groups = row.type === 'text-group' ? parseGroups(row.groupsText) : undefined
   if (row.type === 'text-group' && (!groups || groups.length < 1)) {
     row.error = 'Un attribut "groupe" a besoin d\'au moins un groupe'
-    return
+    return false
   }
   row.saving = true
   row.error = ''
@@ -104,22 +107,47 @@ async function saveAttributeRow(row: EditableAttribute) {
       body: {
         label: row.label.trim(),
         type: row.type,
-        order,
-        hints: parseCommaList(row.hintsText),
+        order: row.type === 'ordered' ? row.order : undefined,
+        hints: row.hints,
         groups,
       },
     })
-    await reloadGameData()
-    const saved = attributeRows.value.find((r) => r.id === row.id)
-    if (saved) {
-      saved.savedMessage = 'Enregistré'
-      saved.savedTimer = setTimeout(() => { saved.savedMessage = '' }, 2000)
-    }
+    return true
   } catch (err: any) {
     row.error = err?.data?.message || 'Erreur lors de l\'enregistrement'
+    return false
   } finally {
     row.saving = false
   }
+}
+
+async function saveAttributeRow(row: EditableAttribute) {
+  const ok = await persistAttribute(row)
+  if (!ok) return
+  await reloadGameData()
+  const saved = attributeRows.value.find((r) => r.id === row.id)
+  if (saved) {
+    saved.savedMessage = 'Enregistré'
+    saved.savedTimer = setTimeout(() => { saved.savedMessage = '' }, 2000)
+  }
+}
+
+async function saveAllAttributes() {
+  savingAllAttributes.value = true
+  attributesError.value = ''
+  const snapshot = attributeRows.value
+  const results = await Promise.all(snapshot.map((row) => persistAttribute(row)))
+  const failedIds = new Set(snapshot.filter((_, i) => !results[i]).map((r) => r.id))
+  await reloadGameData()
+  if (failedIds.size > 0) {
+    attributesError.value = `${failedIds.size} attribut(s) n'ont pas pu être enregistrés`
+  }
+  for (const row of attributeRows.value) {
+    if (failedIds.has(row.id)) continue
+    row.savedMessage = 'Enregistré'
+    row.savedTimer = setTimeout(() => { row.savedMessage = '' }, 2000)
+  }
+  savingAllAttributes.value = false
 }
 
 async function removeAttributeRow(row: EditableAttribute) {
@@ -152,8 +180,8 @@ async function moveAttribute(row: EditableAttribute, direction: -1 | 1) {
 
 const newAttrLabel = ref('')
 const newAttrType = ref<AttributeType>('text')
-const newAttrOrderText = ref('')
-const newAttrHintsText = ref('')
+const newAttrOrder = ref<string[]>([])
+const newAttrHints = ref<string[]>([])
 const newAttrGroupsText = ref('')
 const addingAttribute = ref(false)
 const showAddAttribute = ref(false)
@@ -184,8 +212,7 @@ async function addAttribute() {
     attributesError.value = 'Un attribut avec une clé équivalente existe déjà — choisis un libellé différent'
     return
   }
-  const order = newAttrType.value === 'ordered' ? parseCommaList(newAttrOrderText.value) : undefined
-  if (newAttrType.value === 'ordered' && (!order || order.length < 2)) {
+  if (newAttrType.value === 'ordered' && newAttrOrder.value.length < 2) {
     attributesError.value = 'Un attribut "ordonné" a besoin d\'au moins 2 valeurs'
     return
   }
@@ -203,16 +230,16 @@ async function addAttribute() {
         key,
         label,
         type: newAttrType.value,
-        order,
-        hints: parseCommaList(newAttrHintsText.value),
+        order: newAttrType.value === 'ordered' ? newAttrOrder.value : undefined,
+        hints: newAttrHints.value,
         groups,
       },
     })
     await reloadGameData()
     newAttrLabel.value = ''
     newAttrType.value = 'text'
-    newAttrOrderText.value = ''
-    newAttrHintsText.value = ''
+    newAttrOrder.value = []
+    newAttrHints.value = []
     newAttrGroupsText.value = ''
     showAddAttribute.value = false
   } catch (err: any) {
@@ -306,6 +333,10 @@ interface EditableCharacter {
   imageUrl: string | null
   imagePublicId: string | null
   values: Record<string, unknown>
+  // Pour un attribut "texte" avec des indices : true = saisie libre affichée
+  // au lieu du <select>, pour les valeurs qui ne correspondent à aucun indice
+  // (données existantes) ou quand l'admin veut taper une valeur hors liste.
+  customFields: Record<string, boolean>
   uploading: boolean
   saving: boolean
   savedMessage: string
@@ -321,13 +352,25 @@ function valueForInput(attr: Attribute, raw: AttributeValue): unknown {
   return raw ?? ''
 }
 
+function isValueInHints(attr: Attribute, value: unknown): boolean {
+  if (!attr.hints?.length) return false
+  const v = String(value ?? '').toLowerCase()
+  return attr.hints.some((h) => h.toLowerCase() === v)
+}
+
 function toEditable(c: GamePlayData['characters'][number]): EditableCharacter {
+  const values = Object.fromEntries(attributes.value.map((a) => [a.key, valueForInput(a, c.attributes[a.key])]))
   return {
     id: c.id,
     name: c.name,
     imageUrl: c.imageUrl,
     imagePublicId: null,
-    values: Object.fromEntries(attributes.value.map((a) => [a.key, valueForInput(a, c.attributes[a.key])])),
+    values,
+    customFields: Object.fromEntries(
+      attributes.value
+        .filter((a) => a.type === 'text' && a.hints?.length)
+        .map((a) => [a.key, !!values[a.key] && !isValueInHints(a, values[a.key])]),
+    ),
     uploading: false,
     saving: false,
     savedMessage: '',
@@ -337,6 +380,8 @@ function toEditable(c: GamePlayData['characters'][number]): EditableCharacter {
 }
 
 const rows = ref<EditableCharacter[]>(game.value.characters.map(toEditable))
+const charactersError = ref('')
+const savingAllCharacters = ref(false)
 
 function newRow(): EditableCharacter {
   return {
@@ -349,6 +394,9 @@ function newRow(): EditableCharacter {
       if (a.type === 'ordered') return [a.key, a.order?.[0] ?? '']
       return [a.key, '']
     })),
+    customFields: Object.fromEntries(
+      attributes.value.filter((a) => a.type === 'text' && a.hints?.length).map((a) => [a.key, false]),
+    ),
     uploading: false,
     saving: false,
     savedMessage: '',
@@ -387,14 +435,17 @@ async function onImageChange(row: EditableCharacter, e: Event) {
   }
 }
 
-async function saveRow(row: EditableCharacter, message = 'Enregistré') {
+// N'enregistre qu'un personnage, sans effet secondaire sur savedMessage —
+// réutilisé par le bouton par-ligne (saveRow, qui gère le message) et par
+// "tout enregistrer" (qui gère ses propres messages une fois tout fini).
+async function persistCharacter(row: EditableCharacter): Promise<boolean> {
   if (!row.name.trim()) {
     row.error = 'Le nom est obligatoire'
-    return
+    return false
   }
   if (!row.imageUrl) {
     row.error = 'Une image est obligatoire'
-    return
+    return false
   }
   row.saving = true
   row.error = ''
@@ -412,14 +463,38 @@ async function saveRow(row: EditableCharacter, message = 'Enregistré') {
       const result = await $fetch<{ id: number }>(`/api/admin/games/${slug}/characters`, { method: 'POST', body: payload })
       row.id = result.id
     }
-    row.savedMessage = message
-    if (row.savedTimer) clearTimeout(row.savedTimer)
-    row.savedTimer = setTimeout(() => { row.savedMessage = '' }, 2000)
+    return true
   } catch (err: any) {
     row.error = err?.data?.message || 'Erreur lors de l\'enregistrement'
+    return false
   } finally {
     row.saving = false
   }
+}
+
+async function saveRow(row: EditableCharacter, message = 'Enregistré') {
+  const ok = await persistCharacter(row)
+  if (!ok) return
+  row.savedMessage = message
+  if (row.savedTimer) clearTimeout(row.savedTimer)
+  row.savedTimer = setTimeout(() => { row.savedMessage = '' }, 2000)
+}
+
+async function saveAllCharacters() {
+  savingAllCharacters.value = true
+  charactersError.value = ''
+  const results = await Promise.all(rows.value.map((row) => persistCharacter(row)))
+  const failCount = results.filter((ok) => !ok).length
+  if (failCount > 0) {
+    charactersError.value = `${failCount} personnage(s) n'ont pas pu être enregistrés`
+  }
+  for (const [i, row] of rows.value.entries()) {
+    if (!results[i]) continue
+    row.savedMessage = 'Enregistré'
+    if (row.savedTimer) clearTimeout(row.savedTimer)
+    row.savedTimer = setTimeout(() => { row.savedMessage = '' }, 2000)
+  }
+  savingAllCharacters.value = false
 }
 
 async function removeRow(row: EditableCharacter) {
@@ -478,7 +553,12 @@ async function removeRow(row: EditableCharacter) {
     </section>
 
     <section class="meta-section">
-      <h2 class="section-title">Attributs ({{ attributeRows.length }}/15)</h2>
+      <div class="section-header">
+        <h2 class="section-title">Attributs ({{ attributeRows.length }}/15)</h2>
+        <button type="button" class="btn btn-sm btn-primary" :disabled="savingAllAttributes || !attributeRows.length" @click="saveAllAttributes">
+          {{ savingAllAttributes ? '...' : 'Tout enregistrer' }}
+        </button>
+      </div>
       <p v-if="attributesError" class="banner banner-error">{{ attributesError }}</p>
 
       <div v-for="(row, i) in attributeRows" :key="row.id" class="attr-row">
@@ -489,13 +569,19 @@ async function removeRow(row: EditableCharacter) {
           <select v-model="row.type" class="cell-input attr-type-select">
             <option v-for="t in attributeTypes" :key="t.value" :value="t.value">{{ t.label }}</option>
           </select>
-          <input v-if="row.type === 'ordered'" v-model="row.orderText" type="text" placeholder="Valeurs dans l'ordre, séparées par des virgules" class="cell-input attr-wide-input">
-          <input v-model="row.hintsText" type="text" placeholder="Indices suggérés (optionnel), séparés par des virgules" class="cell-input attr-wide-input">
           <button type="button" class="btn btn-sm btn-primary" :disabled="row.saving" @click="saveAttributeRow(row)">
             {{ row.saving ? '...' : 'Enregistrer' }}
           </button>
           <button type="button" class="btn btn-sm btn-danger" :disabled="row.saving" @click="removeAttributeRow(row)">✕</button>
           <span v-if="row.savedMessage" class="saved-msg">✓ {{ row.savedMessage }}</span>
+        </div>
+        <div v-if="row.type === 'ordered'" class="attr-sub-field">
+          <label class="attr-sub-label">Valeurs, dans l'ordre</label>
+          <AdminTagListEditor v-model="row.order" placeholder="Ajouter une valeur..." />
+        </div>
+        <div class="attr-sub-field">
+          <label class="attr-sub-label">Indices suggérés (optionnel)</label>
+          <AdminTagListEditor v-model="row.hints" placeholder="Ajouter un indice..." />
         </div>
         <textarea
           v-if="row.type === 'text-group'"
@@ -514,12 +600,18 @@ async function removeRow(row: EditableCharacter) {
           <select v-model="newAttrType" class="cell-input attr-type-select">
             <option v-for="t in attributeTypes" :key="t.value" :value="t.value">{{ t.label }}</option>
           </select>
-          <input v-if="newAttrType === 'ordered'" v-model="newAttrOrderText" type="text" placeholder="Valeurs dans l'ordre, séparées par des virgules" class="cell-input attr-wide-input">
-          <input v-model="newAttrHintsText" type="text" placeholder="Indices suggérés (optionnel), séparés par des virgules" class="cell-input attr-wide-input">
           <button type="button" class="btn btn-sm btn-primary" :disabled="addingAttribute" @click="addAttribute">
             {{ addingAttribute ? '...' : 'Créer' }}
           </button>
           <button type="button" class="btn btn-sm" @click="showAddAttribute = false">Annuler</button>
+        </div>
+        <div v-if="newAttrType === 'ordered'" class="attr-sub-field">
+          <label class="attr-sub-label">Valeurs, dans l'ordre</label>
+          <AdminTagListEditor v-model="newAttrOrder" placeholder="Ajouter une valeur..." />
+        </div>
+        <div class="attr-sub-field">
+          <label class="attr-sub-label">Indices suggérés (optionnel)</label>
+          <AdminTagListEditor v-model="newAttrHints" placeholder="Ajouter un indice..." />
         </div>
         <textarea
           v-if="newAttrType === 'text-group'"
@@ -531,7 +623,13 @@ async function removeRow(row: EditableCharacter) {
       </div>
     </section>
 
-    <h2 class="section-title">Personnages ({{ rows.length }})</h2>
+    <div class="section-header">
+      <h2 class="section-title">Personnages ({{ rows.length }})</h2>
+      <button type="button" class="btn btn-sm btn-primary" :disabled="savingAllCharacters || !rows.length" @click="saveAllCharacters">
+        {{ savingAllCharacters ? '...' : 'Tout enregistrer' }}
+      </button>
+    </div>
+    <p v-if="charactersError" class="banner banner-error">{{ charactersError }}</p>
 
     <div class="table-wrap">
       <table class="char-table">
@@ -554,7 +652,20 @@ async function removeRow(row: EditableCharacter) {
             </td>
             <td><input v-model="row.name" type="text" placeholder="Nom" class="cell-input"></td>
             <td v-for="attr in attributes" :key="attr.key">
-              <input v-if="attr.type === 'text' || attr.type === 'text-group' || attr.type === 'multiple'" v-model="row.values[attr.key]" type="text" class="cell-input">
+              <div v-if="attr.type === 'text' && attr.hints?.length" class="hint-select-field">
+                <select v-if="!row.customFields[attr.key]" v-model="row.values[attr.key]" class="cell-input">
+                  <option value="">—</option>
+                  <option v-for="h in attr.hints" :key="h" :value="h">{{ h }}</option>
+                </select>
+                <input v-else v-model="row.values[attr.key]" type="text" placeholder="Valeur personnalisée" class="cell-input">
+                <button
+                  type="button"
+                  class="hint-toggle"
+                  :title="row.customFields[attr.key] ? 'Revenir à la liste' : 'Saisir une valeur hors liste'"
+                  @click="row.customFields[attr.key] = !row.customFields[attr.key]"
+                >{{ row.customFields[attr.key] ? '☰' : '✎' }}</button>
+              </div>
+              <input v-else-if="attr.type === 'text' || attr.type === 'text-group' || attr.type === 'multiple'" v-model="row.values[attr.key]" type="text" class="cell-input">
               <input v-else-if="attr.type === 'number'" v-model.number="row.values[attr.key]" type="number" class="cell-input">
               <input v-else-if="attr.type === 'boolean'" v-model="row.values[attr.key]" type="checkbox">
               <select v-else-if="attr.type === 'ordered'" v-model="row.values[attr.key]" class="cell-input">
@@ -607,6 +718,15 @@ async function removeRow(row: EditableCharacter) {
   color: var(--text-3);
   margin: 0 0 1rem;
 }
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.section-header .section-title { margin: 0; }
 
 .field { display: flex; flex-direction: column; gap: 0.35rem; margin-bottom: 0.9rem; flex: 1; }
 .field-row { display: flex; gap: 1rem; align-items: flex-end; }
@@ -671,7 +791,24 @@ async function removeRow(row: EditableCharacter) {
 
 .attr-label-input { min-width: 140px; max-width: 200px; }
 .attr-type-select { min-width: 150px; max-width: 170px; }
-.attr-wide-input { flex: 1; min-width: 200px; }
+
+.attr-sub-field { margin-top: 0.5rem; }
+.attr-sub-label { display: block; font-size: 0.72rem; color: var(--text-3); margin-bottom: 0.3rem; }
+
+.hint-select-field { display: flex; align-items: center; gap: 0.3rem; }
+.hint-select-field .cell-input { min-width: 0; }
+.hint-toggle {
+  flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-2);
+  border-radius: 6px;
+  color: var(--text-3);
+  cursor: pointer;
+  padding: 0.4rem 0.5rem;
+  font-size: 0.8rem;
+  line-height: 1;
+}
+.hint-toggle:hover { color: var(--text); border-color: var(--border); }
 
 .attr-groups-textarea {
   width: 100%;
