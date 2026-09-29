@@ -9,7 +9,7 @@ defineProps<{
 
 <template>
   <div class="hard-board">
-    <div class="hard-board-title">Ton plateau</div>
+    <div class="hard-board-title">Plateau partagé</div>
     <div class="hard-row">
       <div v-for="attr in attributes" :key="attr.key" class="hard-slot">
         <div class="hard-slot-label">{{ attr.label }}</div>

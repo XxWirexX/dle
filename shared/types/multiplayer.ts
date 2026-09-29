@@ -37,13 +37,14 @@ export interface RoomSnapshot {
   players: RoomPlayerInfo[]
   hostSocketId: string
   currentTurnSocketId: string | null
-  // Mode "classic" uniquement — feed partagé des tentatives de tout le
-  // monde. Vide en mode "hard" (chaque joueur n'a que son propre plateau).
+  // Mode "classic" uniquement — feed partagé des tentatives complètes (qui
+  // a deviné quel personnage). Vide en mode "hard", qui ne partage que les
+  // champs corrects/proches (voir myBoard), jamais l'identité du personnage.
   attempts: FeedAttempt[]
-  // Mode "hard" uniquement, propre à chaque destinataire du snapshot : les
-  // champs correct/proche jamais obtenus par CE joueur restent gris,
-  // jamais révélés — d'où le besoin d'un snapshot personnalisé par socket
-  // plutôt qu'un seul broadcast partagé comme en mode classique.
+  // Mode "hard" uniquement — plateau PARTAGÉ par tout le salon : un champ
+  // correct/proche trouvé par n'importe quel joueur devient visible pour
+  // tout le monde. Ce qui reste caché, c'est qui a deviné quel personnage
+  // pour l'obtenir (voir myLastGuess) — pas la valeur du champ elle-même.
   myBoard?: Record<string, FieldFeedback>
   myLastGuess?: LastGuess | null
   myGuessedIds?: number[]
