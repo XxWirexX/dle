@@ -44,10 +44,14 @@ interface Room {
   status: 'waiting' | 'playing' | 'finished'
   winnerSocketId: string | null
   mode: RoomMode
-  // Mode "hard" uniquement : le plateau propre à chaque joueur (champs
-  // correct/proche déjà débloqués, jamais les faux) et sa dernière
-  // tentative isolée (remplacée, jamais accumulée, à chaque nouveau guess).
-  hardBoards: Map<string, Record<string, FieldFeedback>>
+  // Mode "hard" uniquement : plateau PARTAGÉ par tout le salon (champs
+  // correct/proche débloqués par n'importe quel joueur, jamais les faux) —
+  // un champ vert ou orange trouvé par quelqu'un profite immédiatement à
+  // tout le monde. Ce qui reste privé à chaque joueur, c'est sa dernière
+  // tentative isolée (remplacée, jamais accumulée, à chaque nouveau guess) :
+  // on voit QUE le champ "race" est correct pour tous, mais pas QUI a deviné
+  // QUEL personnage pour l'obtenir.
+  hardBoard: Record<string, FieldFeedback>
   hardLastGuess: Map<string, LastGuess | null>
   // Exclusion propre à chaque joueur en mode "hard" — contrairement au mode
   // classique, un personnage tenté par quelqu'un d'autre ne doit pas
@@ -204,7 +208,7 @@ export class RoomManager {
       status: 'waiting',
       winnerSocketId: null,
       mode: opts.mode ?? 'classic',
-      hardBoards: new Map(),
+      hardBoard: {},
       hardLastGuess: new Map(),
       hardGuessedIds: new Map(),
       guessCounts: new Map(),
@@ -235,7 +239,7 @@ export class RoomManager {
     room.guessedCharacterIds = new Set()
     room.attempts = []
     room.winnerSocketId = null
-    room.hardBoards = new Map()
+    room.hardBoard = {}
     room.hardLastGuess = new Map()
     room.hardGuessedIds = new Map()
     room.guessCounts = new Map()
@@ -290,14 +294,13 @@ export class RoomManager {
       const guessed = room.hardGuessedIds.get(socketId) ?? new Set<number>()
       guessed.add(characterId)
       room.hardGuessedIds.set(socketId, guessed)
-      // Le plateau ne s'enrichit que des champs correct/proche — les faux
-      // ne laissent jamais de trace, et la dernière tentative remplace la
-      // précédente au lieu de s'accumuler dans un historique visible.
-      const board = room.hardBoards.get(socketId) ?? {}
+      // Le plateau partagé ne s'enrichit que des champs correct/proche —
+      // les faux ne laissent jamais de trace, quel que soit le joueur qui a
+      // deviné. La dernière tentative, elle, reste propre à ce joueur :
+      // remplacée (jamais accumulée) à chaque nouveau guess.
       for (const [key, fieldFeedback] of Object.entries(feedback)) {
-        if (fieldFeedback.type === 'correct' || fieldFeedback.type === 'close') board[key] = fieldFeedback
+        if (fieldFeedback.type === 'correct' || fieldFeedback.type === 'close') room.hardBoard[key] = fieldFeedback
       }
-      room.hardBoards.set(socketId, board)
       room.hardLastGuess.set(socketId, { character: guess, feedback, isCorrect })
     } else {
       room.guessedCharacterIds.add(characterId)
@@ -412,9 +415,11 @@ export class RoomManager {
     return { room }
   }
 
-  // `forSocketId` : obligatoire en mode "hard" pour renvoyer le plateau et
-  // la dernière tentative propres à CE joueur — jamais ceux d'un autre,
-  // c'est tout le principe du mode. Ignoré en mode classique (partagé).
+  // `forSocketId` : obligatoire en mode "hard" pour renvoyer la dernière
+  // tentative propre à CE joueur — jamais celle d'un autre. Le plateau,
+  // lui, est désormais partagé par tout le salon (voir hardBoard) : même
+  // contenu pour tout le monde, `forSocketId` ne le concerne pas. Ignoré en
+  // mode classique (tout est de toute façon partagé).
   toSnapshot(room: Room, forSocketId?: string): RoomSnapshot {
     const players: RoomPlayerInfo[] = [...room.players.values()].map((p) => ({
       socketId: p.socketId,
@@ -437,7 +442,7 @@ export class RoomManager {
       hostSocketId: room.hostSocketId,
       currentTurnSocketId: this.currentTurnSocketId(room),
       attempts: room.mode === 'classic' ? room.attempts : [],
-      myBoard: room.mode === 'hard' && forSocketId ? (room.hardBoards.get(forSocketId) ?? {}) : undefined,
+      myBoard: room.mode === 'hard' ? room.hardBoard : undefined,
       myLastGuess: room.mode === 'hard' && forSocketId ? (room.hardLastGuess.get(forSocketId) ?? null) : undefined,
       myGuessedIds: room.mode === 'hard' && forSocketId ? [...(room.hardGuessedIds.get(forSocketId) ?? [])] : undefined,
       winnerSocketId: room.winnerSocketId,
