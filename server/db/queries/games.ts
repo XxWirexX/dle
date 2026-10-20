@@ -504,3 +504,94 @@ export async function growAttributeHints(
     await db.update(attributes).set({ hints: [...existingHints, ...newOnes] }).where(eq(attributes.id, attr.id))
   }
 }
+
+export interface RenameRule {
+  from: string
+  /** null = retire juste `from` des indices, aucun personnage n'est modifié (utile pour un indice déjà orphelin). */
+  to: string | null
+}
+
+export interface RenameValueResult {
+  from: string
+  to: string | null
+  charactersUpdated: number
+}
+
+/**
+ * Fusionne/renomme en masse des valeurs d'un attribut texte/multiple/groupe à
+ * travers tous les personnages du jeu (ex: "Beast Pirates" -> "Beasts
+ * Pirates"), et met à jour les indices en conséquence (retire les valeurs
+ * d'origine devenues inutilisées, ajoute les valeurs cibles si absentes).
+ * Pensé pour nettoyer en un clic les doublons/fautes de frappe accumulés
+ * dans la donnée brute des personnages, sans accès direct à la prod.
+ */
+export async function renameAttributeValues(
+  gameId: number,
+  attributeId: number,
+  rules: RenameRule[],
+): Promise<RenameValueResult[]> {
+  const attr = await db.query.attributes.findFirst({ where: and(eq(attributes.id, attributeId), eq(attributes.gameId, gameId)) })
+  if (!attr || !HINTABLE_TYPES.includes(attr.type)) throw createError({ statusCode: 404, message: 'Attribut introuvable ou type non pris en charge' })
+
+  const gameCharacters = await db.query.characters.findMany({
+    where: eq(characters.gameId, gameId),
+    columns: { id: true, attributes: true },
+  })
+
+  const ruleFor = (raw: unknown): RenameRule | undefined => {
+    if (typeof raw !== 'string') return undefined
+    const norm = raw.trim().toLowerCase()
+    return rules.find((r) => r.from.trim().toLowerCase() === norm)
+  }
+
+  const counts = new Map<RenameRule, number>(rules.map((r) => [r, 0]))
+
+  await db.transaction(async (tx) => {
+    for (const c of gameCharacters) {
+      const current = c.attributes[attr.key]
+      let next = current
+      let changed = false
+
+      if (attr.type === 'multiple') {
+        const list = Array.isArray(current) ? current : []
+        const mapped: string[] = []
+        for (const v of list) {
+          const rule = ruleFor(v)
+          if (rule && rule.to !== null) {
+            counts.set(rule, (counts.get(rule) ?? 0) + 1)
+            changed = true
+            if (!mapped.some((m) => m.toLowerCase() === rule.to!.toLowerCase())) mapped.push(rule.to)
+          } else {
+            if (!mapped.some((m) => m.toLowerCase() === String(v).toLowerCase())) mapped.push(v as string)
+          }
+        }
+        if (changed) next = mapped
+      } else {
+        const rule = ruleFor(current)
+        if (rule && rule.to !== null) {
+          counts.set(rule, (counts.get(rule) ?? 0) + 1)
+          changed = true
+          next = rule.to
+        }
+      }
+
+      if (changed) {
+        await tx.update(characters).set({ attributes: { ...c.attributes, [attr.key]: next } }).where(eq(characters.id, c.id))
+      }
+    }
+
+    const fromKeys = new Set(rules.map((r) => r.from.trim().toLowerCase()))
+    const toValues = [...new Set(rules.filter((r) => r.to !== null).map((r) => r.to as string))]
+    let hints = (attr.hints ?? []).filter((h) => !fromKeys.has(h.trim().toLowerCase()))
+    const hintsLower = new Set(hints.map((h) => h.toLowerCase()))
+    for (const v of toValues) {
+      if (!hintsLower.has(v.toLowerCase())) {
+        hints.push(v)
+        hintsLower.add(v.toLowerCase())
+      }
+    }
+    await tx.update(attributes).set({ hints }).where(eq(attributes.id, attr.id))
+  })
+
+  return rules.map((r) => ({ from: r.from, to: r.to, charactersUpdated: counts.get(r) ?? 0 }))
+}

@@ -60,6 +60,59 @@ const savingAllAttributes = ref(false)
 const syncingHints = ref(false)
 const syncHintsMessage = ref('')
 
+interface RenamePanelState {
+  open: boolean
+  text: string
+  busy: boolean
+  message: string
+  error: string
+}
+const renamePanels = reactive<Record<number, RenamePanelState>>({})
+
+function renamePanel(attributeId: number): RenamePanelState {
+  if (!renamePanels[attributeId]) {
+    renamePanels[attributeId] = { open: false, text: '', busy: false, message: '', error: '' }
+  }
+  return renamePanels[attributeId]
+}
+
+function parseRenameRules(text: string): { from: string, to: string | null }[] {
+  return text.split('\n')
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .map((line) => {
+      const i = line.indexOf('=>')
+      if (i === -1) return { from: line.trim(), to: null }
+      const from = line.slice(0, i).trim()
+      const to = line.slice(i + 2).trim()
+      return { from, to: to.length ? to : null }
+    })
+    .filter((r) => r.from.length > 0)
+}
+
+async function applyRenameValues(attributeId: number) {
+  const panel = renamePanel(attributeId)
+  const rules = parseRenameRules(panel.text)
+  if (rules.length === 0) return
+  panel.busy = true
+  panel.message = ''
+  panel.error = ''
+  try {
+    const { results } = await $fetch<{ results: { from: string, to: string | null, charactersUpdated: number }[] }>(
+      `/api/admin/games/${slug}/attributes/${attributeId}/rename-value`,
+      { method: 'POST', body: { rules } },
+    )
+    const totalChars = results.reduce((n, r) => n + r.charactersUpdated, 0)
+    panel.message = `${rules.length} règle(s) appliquée(s), ${totalChars} personnage(s) mis à jour.`
+    panel.text = ''
+    await reloadGameData()
+  } catch (err: any) {
+    panel.error = err?.data?.message || 'Erreur lors du renommage'
+  } finally {
+    panel.busy = false
+  }
+}
+
 const attributeTypes: { value: AttributeType; label: string }[] = [
   { value: 'text', label: 'Texte' },
   { value: 'number', label: 'Nombre' },
@@ -649,6 +702,30 @@ async function removeRow(row: EditableCharacter) {
           <label class="attr-sub-label">Indices suggérés (optionnel)</label>
           <AdminTagListEditor v-model="row.hints" placeholder="Ajouter un indice..." />
         </div>
+        <div v-if="row.type !== 'ordered'" class="attr-sub-field">
+          <button type="button" class="btn btn-sm" @click="renamePanel(row.id).open = !renamePanel(row.id).open">
+            {{ renamePanel(row.id).open ? 'Fermer' : 'Fusionner / renommer des valeurs' }}
+          </button>
+          <div v-if="renamePanel(row.id).open" class="rename-panel">
+            <p class="attr-sub-note">
+              Une règle par ligne : <code>ancienne valeur =&gt; nouvelle valeur</code> renomme cette
+              valeur partout où elle est utilisée par un personnage (et met à jour les indices).
+              <code>ancienne valeur</code> seule (sans <code>=&gt;</code>) retire juste cet indice
+              s'il n'est plus utilisé par personne.
+            </p>
+            <textarea
+              v-model="renamePanel(row.id).text"
+              rows="4"
+              placeholder="Beast Pirates => Beasts Pirates&#10;Other"
+              class="attr-groups-textarea"
+            />
+            <button type="button" class="btn btn-sm btn-primary" :disabled="renamePanel(row.id).busy || !renamePanel(row.id).text.trim()" @click="applyRenameValues(row.id)">
+              {{ renamePanel(row.id).busy ? '...' : 'Appliquer' }}
+            </button>
+            <p v-if="renamePanel(row.id).message" class="banner banner-success">{{ renamePanel(row.id).message }}</p>
+            <p v-if="renamePanel(row.id).error" class="banner banner-error">{{ renamePanel(row.id).error }}</p>
+          </div>
+        </div>
         <textarea
           v-if="row.type === 'text-group'"
           v-model="row.groupsText"
@@ -913,6 +990,16 @@ async function removeRow(row: EditableCharacter) {
   font-size: 0.85rem;
   resize: vertical;
 }
+
+.rename-panel {
+  margin-top: 0.5rem;
+  padding: 0.6rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-2);
+  background: rgba(255, 255, 255, 0.02);
+}
+.rename-panel .btn { margin-top: 0.5rem; }
+.rename-panel .banner { margin-top: 0.5rem; }
 
 .attr-new { border: 1px dashed var(--border-2); border-radius: 10px; padding: 0.75rem; margin-top: 0.75rem; }
 </style>
