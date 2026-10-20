@@ -192,7 +192,7 @@ const displayAttemptsCount = computed(() => alreadyCompletedToday.value ? locked
             >
               <span class="leaderboard-rank">{{ i + 1 }}</span>
               <span class="leaderboard-avatar" :style="{ background: entry.avatarColor }">
-                <img v-if="entry.avatarImageUrl" :src="entry.avatarImageUrl" :alt="entry.username">
+                <img v-if="entry.avatarImageUrl" :src="cloudinaryUrl(entry.avatarImageUrl, 48)" :alt="entry.username">
                 <span v-else>{{ entry.username[0]?.toUpperCase() }}</span>
               </span>
               <span class="leaderboard-name">{{ entry.username }}</span>

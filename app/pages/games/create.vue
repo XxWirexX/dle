@@ -397,13 +397,13 @@ async function onSubmit() {
           <label>Icône (optionnel)</label>
           <input type="file" accept="image/*" :disabled="uploadingIcon" @change="onIconChange">
           <span v-if="uploadingIcon" class="muted">Upload...</span>
-          <img v-else-if="iconUrl" :src="iconUrl" class="preview-icon" alt="">
+          <img v-else-if="iconUrl" :src="cloudinaryUrl(iconUrl, 64)" class="preview-icon" alt="">
         </div>
         <div class="field">
           <label>Image de fond (optionnel)</label>
           <input type="file" accept="image/*" :disabled="uploadingBackground" @change="onBackgroundChange">
           <span v-if="uploadingBackground" class="muted">Upload...</span>
-          <img v-else-if="backgroundUrl" :src="backgroundUrl" class="preview-bg" alt="">
+          <img v-else-if="backgroundUrl" :src="cloudinaryUrl(backgroundUrl, 480)" class="preview-bg" alt="">
         </div>
       </div>
 

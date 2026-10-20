@@ -42,7 +42,7 @@ const latestInvite = computed(() => pendingInvites.value[pendingInvites.value.le
         <template v-if="user">
           <div class="user-menu" @click="userMenuOpen = !userMenuOpen">
             <span class="avatar" :style="{ background: user.avatarColor }">
-              <img v-if="user.avatarImageUrl" :src="user.avatarImageUrl" :alt="user.username">
+              <img v-if="user.avatarImageUrl" :src="cloudinaryUrl(user.avatarImageUrl, 64)" :alt="user.username">
               <span v-else>{{ user.username[0]?.toUpperCase() }}</span>
             </span>
             <span v-if="pendingInvites.length" class="avatar-badge" />

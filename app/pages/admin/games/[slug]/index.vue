@@ -651,13 +651,13 @@ async function removeRow(row: EditableCharacter) {
       <div class="field-row">
         <div class="field">
           <label>Icône</label>
-          <img v-if="iconUrl" :src="iconUrl" class="preview-icon" alt="">
+          <img v-if="iconUrl" :src="cloudinaryUrl(iconUrl, 64)" class="preview-icon" alt="">
           <input type="file" accept="image/*" :disabled="uploadingIcon" @change="onMetaIconChange">
           <span v-if="uploadingIcon" class="muted">Upload...</span>
         </div>
         <div class="field">
           <label>Image de fond</label>
-          <img v-if="backgroundUrl" :src="backgroundUrl" class="preview-bg" alt="">
+          <img v-if="backgroundUrl" :src="cloudinaryUrl(backgroundUrl, 480)" class="preview-bg" alt="">
           <input type="file" accept="image/*" :disabled="uploadingBackground" @change="onMetaBackgroundChange">
           <span v-if="uploadingBackground" class="muted">Upload...</span>
         </div>
