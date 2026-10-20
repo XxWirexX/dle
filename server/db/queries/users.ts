@@ -2,6 +2,7 @@ import { eq, sql } from 'drizzle-orm'
 import crypto from 'node:crypto'
 import { db } from '../client'
 import { users } from '../schema'
+import { hashPassword } from '../../utils/password'
 import type { PublicUser } from '#shared/types/user'
 
 const AVATAR_COLORS = [
@@ -99,4 +100,42 @@ export async function resendVerificationToken(userId: number) {
 
 export function updateUserAvatar(userId: number, avatarImageUrl: string | null) {
   return db.update(users).set({ avatarImageUrl }).where(eq(users.id, userId))
+}
+
+export function findUserByDiscordId(discordId: string) {
+  return db.query.users.findFirst({ where: eq(users.discordId, discordId) })
+}
+
+function sanitizeDiscordUsername(raw: string): string {
+  const cleaned = raw.replace(/[^a-zA-Z0-9_]/g, '').slice(0, 20)
+  return cleaned.length >= 2 ? cleaned : `joueur${Math.floor(Math.random() * 100000)}`
+}
+
+/**
+ * Provisionne un compte DLE pour un membre Discord qui n'en a pas encore,
+ * la première fois qu'il ouvre l'Activity (voir server/api/discord/).
+ * Email/mot de passe sont des valeurs jetables jamais communiquées — le
+ * compte ne se connecte que via Discord, jamais via le formulaire classique.
+ */
+export async function createDiscordUser(discordId: string, discordUsername: string, avatarImageUrl: string | null) {
+  const base = sanitizeDiscordUsername(discordUsername)
+  let username = base
+  let suffix = 2
+  while (await findUserByUsername(username)) {
+    username = `${base}${suffix++}`.slice(0, 20)
+  }
+
+  const passwordHash = await hashPassword(crypto.randomBytes(32).toString('hex'))
+
+  const [row] = await db.insert(users).values({
+    email: `discord-${discordId}@dle.internal`,
+    passwordHash,
+    username,
+    avatarColor: randomAvatarColor(),
+    avatarImageUrl,
+    emailVerified: true,
+    discordId,
+  }).returning()
+
+  return row!
 }

@@ -34,6 +34,25 @@ export function setAuthCookie(event: H3Event, token: string) {
   })
 }
 
+/**
+ * Comme `setAuthCookie`, mais pour une session ouverte depuis l'Activity
+ * Discord : le site tourne dans un iframe proxifié par Discord
+ * (`{clientId}.discordsays.com`), donc le cookie est vu comme tiers par le
+ * navigateur — il lui faut `SameSite=None` + `Partitioned` (CHIPS) pour
+ * survivre, ce qu'on ne veut surtout pas sur le site normal (inutile et
+ * moins strict que `Lax`).
+ */
+export function setAuthCookieForDiscordActivity(event: H3Event, token: string) {
+  setCookie(event, COOKIE_NAME, token, {
+    httpOnly: true,
+    secure: true,
+    sameSite: 'none',
+    partitioned: true,
+    maxAge: TOKEN_TTL_SECONDS,
+    path: '/',
+  })
+}
+
 export function clearAuthCookie(event: H3Event) {
   deleteCookie(event, COOKIE_NAME, { path: '/' })
 }

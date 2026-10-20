@@ -35,6 +35,10 @@ export const users = pgTable('users', {
   avatarColor: varchar('avatar_color', { length: 20 }).notNull(),
   avatarImageUrl: text('avatar_image_url'),
   emailVerified: boolean('email_verified').notNull().default(false),
+  // Compte auto-provisionné depuis l'Activity Discord (voir
+  // server/db/queries/users.ts#createDiscordUser) — null pour un compte
+  // classique email/mot de passe.
+  discordId: varchar('discord_id', { length: 32 }),
   // Édition du contenu officiel (personnages d'un jeu existant) depuis
   // l'app plutôt que via le script de migration + fichiers locaux —
   // jamais accordé par l'API elle-même, seulement en base à la main.
@@ -47,6 +51,7 @@ export const users = pgTable('users', {
 }, (t) => ({
   emailIdx: uniqueIndex('users_email_idx').on(t.email),
   usernameIdx: uniqueIndex('users_username_idx').on(t.username),
+  discordIdIdx: uniqueIndex('users_discord_id_idx').on(t.discordId),
 }))
 
 // "games" unifie ce qui était séparé dans l'ancienne version (animes
