@@ -43,8 +43,11 @@ export default defineNuxtConfig({
       apiKey: process.env.CLOUDINARY_API_KEY,
       apiSecret: process.env.CLOUDINARY_API_SECRET,
     },
+    discordClientSecret: process.env.DISCORD_CLIENT_SECRET,
     public: {
       frontendUrl: process.env.FRONTEND_URL || 'http://localhost:3000',
+      // Vide = l'Activity Discord reste désactivée (page /activity hors service).
+      discordClientId: process.env.DISCORD_CLIENT_ID || '',
     },
   },
 
