@@ -3,7 +3,7 @@ import { requireAdmin } from '~~/server/utils/admin'
 import { readValidatedJsonBody } from '~~/server/utils/validate'
 import { getCachedGamePlayData, invalidateGameCache } from '~~/server/utils/gameCache'
 import { findGameIdBySlug } from '~~/server/db/queries/stats'
-import { updateCharacter } from '~~/server/db/queries/games'
+import { updateCharacter, growAttributeHints } from '~~/server/db/queries/games'
 import { coerceAttributeValue } from '~~/server/utils/attributeValues'
 
 const schema = z.object({
@@ -37,6 +37,8 @@ export default defineEventHandler(async (event) => {
     attributes,
   })
   if (!updated) throw createError({ statusCode: 404, message: 'Personnage introuvable dans ce jeu' })
+
+  await growAttributeHints(game.attributes, attributes)
 
   invalidateGameCache(slug)
   return { ok: true }
