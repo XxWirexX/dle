@@ -10,7 +10,8 @@ const arrows: Record<string, string> = { higher: '↓', lower: '↑' }
   <div class="cells-row" :class="{ compact }">
     <span v-for="c in cells" :key="c.attrKey" class="chip" :class="`bg-${c.type}`" :title="`${c.attrLabel} : ${c.type}${c.direction ? ' (' + c.direction + ')' : ''}`">
       <span v-if="!compact">{{ c.attrLabel }}</span>
-      <span v-if="c.direction" class="arrow">{{ arrows[c.direction] }}</span>
+      <span v-if="c.type === 'higher' || c.type === 'lower'" class="arrow">{{ c.type === 'higher' ? '↓' : '↑' }}</span>
+      <span v-else-if="c.direction" class="arrow">{{ arrows[c.direction] }}</span>
     </span>
   </div>
 </template>
