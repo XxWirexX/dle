@@ -30,7 +30,6 @@ const latestInvite = computed(() => pendingInvites.value[pendingInvites.value.le
       </NuxtLink>
 
       <nav class="nav-links">
-        <NuxtLink to="/" class="nav-link">Jeux</NuxtLink>
         <NuxtLink v-if="user" to="/games/create" class="nav-link">Créer un DLE</NuxtLink>
         <NuxtLink v-if="user" to="/notifications" class="nav-link notif-link">
           Notifications
@@ -46,12 +45,19 @@ const latestInvite = computed(() => pendingInvites.value[pendingInvites.value.le
               <img v-if="user.avatarImageUrl" :src="user.avatarImageUrl" :alt="user.username">
               <span v-else>{{ user.username[0]?.toUpperCase() }}</span>
             </span>
+            <span v-if="pendingInvites.length" class="avatar-badge" />
             <span class="username">{{ user.username }}</span>
           </div>
 
           <div v-if="userMenuOpen" class="dropdown" @click="userMenuOpen = false">
             <NuxtLink to="/profile" class="dropdown-item">Mon profil</NuxtLink>
             <NuxtLink to="/friends" class="dropdown-item">Amis</NuxtLink>
+            <NuxtLink to="/games/create" class="dropdown-item mobile-only">Créer un DLE</NuxtLink>
+            <NuxtLink to="/notifications" class="dropdown-item mobile-only">
+              Notifications
+              <span v-if="pendingInvites.length" class="notif-badge">{{ pendingInvites.length }}</span>
+            </NuxtLink>
+            <NuxtLink v-if="user?.isAdmin" to="/admin" class="dropdown-item mobile-only">Admin</NuxtLink>
             <button class="dropdown-item danger" @click="onLogout">Se déconnecter</button>
           </div>
         </template>
@@ -174,6 +180,7 @@ const latestInvite = computed(() => pendingInvites.value[pendingInvites.value.le
 .user-area {
   margin-left: auto;
   position: relative;
+  flex-shrink: 0;
 }
 
 .user-menu {
@@ -184,6 +191,18 @@ const latestInvite = computed(() => pendingInvites.value[pendingInvites.value.le
   padding: 0.25rem 0.5rem;
   border-radius: 8px;
   transition: background 0.15s;
+  position: relative;
+}
+
+.avatar-badge {
+  position: absolute;
+  top: 0;
+  left: 20px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid rgba(13, 13, 20, 0.95);
 }
 
 .user-menu:hover {
@@ -289,4 +308,25 @@ const latestInvite = computed(() => pendingInvites.value[pendingInvites.value.le
 .site-footer a { color: var(--text-3); }
 .site-footer a:hover { color: var(--text-2); }
 .footer-sep { opacity: 0.5; }
+
+/* En dessous de ce seuil, "Jeux/Créer un DLE/Notifications/Admin" en
+   ligne dans la navbar pousse le menu utilisateur (et donc la
+   déconnexion) hors de l'écran — on les replie dans le menu déroulant
+   de l'avatar, qui reste toujours accessible. */
+.mobile-only { display: none; }
+
+@media (max-width: 640px) {
+  .navbar { gap: 0.75rem; padding: 0 0.85rem; }
+  .nav-links { display: none; }
+  .username { display: none; }
+  .mobile-only { display: block; }
+}
+
+@media (max-width: 420px) {
+  .brand-name { display: none; }
+}
+
+@media (max-width: 480px) {
+  .invite-toast { left: 12px; right: 12px; bottom: 12px; max-width: none; }
+}
 </style>
