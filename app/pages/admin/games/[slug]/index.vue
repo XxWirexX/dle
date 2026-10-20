@@ -108,7 +108,9 @@ async function persistAttribute(row: EditableAttribute): Promise<boolean> {
         label: row.label.trim(),
         type: row.type,
         order: row.type === 'ordered' ? row.order : undefined,
-        hints: row.hints,
+        // Pour "ordonné", les valeurs ci-dessus servent déjà d'indices —
+        // pas de second champ séparé à maintenir en double.
+        hints: row.type === 'ordered' ? undefined : row.hints,
         groups,
       },
     })
@@ -231,7 +233,7 @@ async function addAttribute() {
         label,
         type: newAttrType.value,
         order: newAttrType.value === 'ordered' ? newAttrOrder.value : undefined,
-        hints: newAttrHints.value,
+        hints: newAttrType.value === 'ordered' ? undefined : newAttrHints.value,
         groups,
       },
     })
@@ -612,8 +614,9 @@ async function removeRow(row: EditableCharacter) {
         <div v-if="row.type === 'ordered'" class="attr-sub-field">
           <label class="attr-sub-label">Valeurs, dans l'ordre</label>
           <AdminTagListEditor v-model="row.order" placeholder="Ajouter une valeur..." />
+          <p class="attr-sub-note">Sert aussi d'indices suggérés en jeu — pas besoin de les ressaisir ailleurs.</p>
         </div>
-        <div class="attr-sub-field">
+        <div v-else class="attr-sub-field">
           <label class="attr-sub-label">Indices suggérés (optionnel)</label>
           <AdminTagListEditor v-model="row.hints" placeholder="Ajouter un indice..." />
         </div>
@@ -642,8 +645,9 @@ async function removeRow(row: EditableCharacter) {
         <div v-if="newAttrType === 'ordered'" class="attr-sub-field">
           <label class="attr-sub-label">Valeurs, dans l'ordre</label>
           <AdminTagListEditor v-model="newAttrOrder" placeholder="Ajouter une valeur..." />
+          <p class="attr-sub-note">Sert aussi d'indices suggérés en jeu — pas besoin de les ressaisir ailleurs.</p>
         </div>
-        <div class="attr-sub-field">
+        <div v-else class="attr-sub-field">
           <label class="attr-sub-label">Indices suggérés (optionnel)</label>
           <AdminTagListEditor v-model="newAttrHints" placeholder="Ajouter un indice..." />
         </div>
@@ -837,6 +841,7 @@ async function removeRow(row: EditableCharacter) {
 
 .attr-sub-field { margin-top: 0.5rem; }
 .attr-sub-label { display: block; font-size: 0.72rem; color: var(--text-3); margin-bottom: 0.3rem; }
+.attr-sub-note { font-size: 0.72rem; color: var(--text-3); margin: 0.35rem 0 0; font-style: italic; }
 
 .hint-select-field { display: flex; align-items: center; gap: 0.3rem; min-width: 180px; }
 .hint-select-field .cell-input { flex: 1; min-width: 100px; }
