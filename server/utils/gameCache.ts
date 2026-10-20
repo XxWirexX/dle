@@ -1,4 +1,5 @@
 import type { GameSummary, GameDetail, GamePlayData } from '#shared/types/game'
+import type { BenchmarkResult } from '#shared/utils/solver'
 import { listPublicGames, findGameDetailBySlug, findGamePlayDataBySlug } from '~~/server/db/queries/games'
 
 // Le contenu des jeux (officiels + DLE custom) est lu en permanence et
@@ -9,6 +10,11 @@ import { listPublicGames, findGameDetailBySlug, findGamePlayDataBySlug } from '~
 let summariesCache: GameSummary[] | null = null
 const detailCache = new Map<string, GameDetail | null>()
 const playCache = new Map<string, GamePlayData | null>()
+// Le benchmark du solveur (coups moyens, efficacité info) résout l'arbre en
+// entier — nettement plus lourd qu'une simple lecture DB — donc on le garde
+// en cache tant que le contenu du jeu n'a pas changé, plutôt que de le
+// recalculer à chaque chargement de la page admin.
+const solverBenchmarkCache = new Map<string, BenchmarkResult>()
 
 export async function getCachedGameSummaries(): Promise<GameSummary[]> {
   if (!summariesCache) summariesCache = await listPublicGames()
@@ -29,14 +35,24 @@ export async function getCachedGamePlayData(slug: string): Promise<GamePlayData 
   return playCache.get(slug)!
 }
 
+export function getCachedSolverBenchmark(slug: string): BenchmarkResult | undefined {
+  return solverBenchmarkCache.get(slug)
+}
+
+export function setCachedSolverBenchmark(slug: string, result: BenchmarkResult): void {
+  solverBenchmarkCache.set(slug, result)
+}
+
 /** À appeler après toute écriture sur `games`/`attributes`/`characters` (création/suppression de DLE custom). */
 export function invalidateGameCache(slug?: string) {
   summariesCache = null
   if (slug) {
     detailCache.delete(slug)
     playCache.delete(slug)
+    solverBenchmarkCache.delete(slug)
   } else {
     detailCache.clear()
     playCache.clear()
+    solverBenchmarkCache.clear()
   }
 }
