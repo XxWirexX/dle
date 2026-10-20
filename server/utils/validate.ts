@@ -11,3 +11,13 @@ export async function readValidatedJsonBody<T>(event: H3Event, schema: ZodType<T
   }
   return result.data
 }
+
+/** Même chose pour les paramètres de query string (?foo=bar). */
+export function readValidatedQuery<T>(event: H3Event, schema: ZodType<T>): T {
+  const result = schema.safeParse(getQuery(event))
+  if (!result.success) {
+    const firstError = result.error.issues[0]?.message ?? 'Validation échouée'
+    throw createError({ statusCode: 400, message: firstError })
+  }
+  return result.data
+}

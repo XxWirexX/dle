@@ -548,7 +548,10 @@ async function removeRow(row: EditableCharacter) {
 <template>
   <div class="admin-page">
     <NuxtLink to="/admin" class="back">← Jeux</NuxtLink>
-    <h1 class="title">{{ game!.name }}</h1>
+    <div class="title-row">
+      <h1 class="title">{{ game!.name }}</h1>
+      <NuxtLink :to="`/admin/games/${slug}/solver`" class="btn btn-sm">Solveur / stats d'ouverture</NuxtLink>
+    </div>
 
     <section class="meta-section">
       <h2 class="section-title">Infos du jeu</h2>
@@ -737,7 +740,8 @@ async function removeRow(row: EditableCharacter) {
 .back { color: var(--text-3); font-size: 0.85rem; display: inline-block; margin-bottom: 1rem; }
 .back:hover { color: var(--text-2); }
 
-.title { font-size: 1.4rem; font-weight: 800; color: var(--text); margin-bottom: 1.25rem; }
+.title { font-size: 1.4rem; font-weight: 800; color: var(--text); margin: 0; }
+.title-row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.25rem; }
 
 .meta-section {
   padding: 1.25rem;
