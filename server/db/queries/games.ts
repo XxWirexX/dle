@@ -197,8 +197,13 @@ export async function findGameDetailBySlug(slug: string): Promise<GameDetail | n
       label: a.label,
       type: a.type,
       order: a.orderValues ?? undefined,
-      hints: a.hints ?? undefined,
-      groups: a.groups ?? undefined,
+      // `?? undefined` ne suffit pas : un attribut sauvegardé sans indice
+      // depuis l'admin stocke `[]` (pas NULL), et [] est "truthy" — sans ce
+      // test de longueur, l'UI de jeu choisirait ce tableau vide plutôt que
+      // de retomber sur `order` pour un attribut "ordonné" (indices absents
+      // en jeu alors que les valeurs existent).
+      hints: a.hints?.length ? a.hints : undefined,
+      groups: a.groups?.length ? a.groups : undefined,
     })),
     characterPreview: game.characters.map((c) => ({ id: c.id, name: c.name, imageUrl: c.imageUrl })),
   }
@@ -229,8 +234,9 @@ export async function findGamePlayDataBySlug(slug: string): Promise<GamePlayData
       label: a.label,
       type: a.type,
       order: a.orderValues ?? undefined,
-      hints: a.hints ?? undefined,
-      groups: a.groups ?? undefined,
+      // Voir le commentaire équivalent dans findGameDetailBySlug.
+      hints: a.hints?.length ? a.hints : undefined,
+      groups: a.groups?.length ? a.groups : undefined,
     })),
     characters: game.characters.map((c) => ({
       id: c.id,
@@ -340,8 +346,10 @@ export async function addAttribute(gameId: number, input: AttributeInput): Promi
     // ensuite via reorderAttributes si besoin.
     sortOrder: (maxOrder ?? -1) + 1,
     orderValues: input.order ?? null,
-    hints: input.hints ?? null,
-    groups: input.groups ?? null,
+    // null plutôt que [] quand c'est vide : un tableau vide est "truthy",
+    // il casserait le repli vers `order` côté affichage des indices en jeu.
+    hints: input.hints?.length ? input.hints : null,
+    groups: input.groups?.length ? input.groups : null,
   }).returning({ id: attributes.id })
 
   // Les personnages existants n'ont pas cette clé dans leur JSONB tant
@@ -370,8 +378,8 @@ export async function updateAttribute(attributeId: number, gameId: number, input
       label: input.label,
       type: input.type,
       orderValues: input.order ?? null,
-      hints: input.hints ?? null,
-      groups: input.groups ?? null,
+      hints: input.hints?.length ? input.hints : null,
+      groups: input.groups?.length ? input.groups : null,
     })
     .where(and(eq(attributes.id, attributeId), eq(attributes.gameId, gameId)))
     .returning({ id: attributes.id })
