@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { OpenerStats, SolverTreeNode } from '#shared/utils/solver'
+import type { OpenerStats, SolverTreeNode, BenchmarkResult } from '#shared/utils/solver'
 import type { GameDetail } from '#shared/types/game'
 
 definePageMeta({ middleware: 'auth' })
@@ -32,6 +32,15 @@ const { data, pending, error, refresh } = await useFetch<SolverResponse>(`/api/a
   key: `admin-solver-${slug}`,
 })
 
+// Séparé du reste : résout l'arbre EN ENTIER (pas limité par maxDepth),
+// donc plus lent la première fois — mais mis en cache côté serveur tant
+// que le contenu du jeu ne change pas, pour ne jamais le recalculer à
+// chaque chargement de page.
+const { data: benchmark, pending: benchmarkPending } = await useFetch<BenchmarkResult & { cached: boolean }>(
+  `/api/admin/games/${slug}/solver/benchmark`,
+  { key: `admin-solver-benchmark-${slug}` },
+)
+
 type SortKey = 'expectedRemaining' | 'entropyBits' | 'worstCaseBucket' | 'distinctPatterns'
 const sortKey = ref<SortKey>('expectedRemaining')
 
@@ -47,15 +56,24 @@ const sortedStats = computed(() => {
 
 const bestOpener = computed(() => sortedStats.value.length ? [...data.value!.stats].sort((a, b) => a.expectedRemaining - b.expectedRemaining)[0] : null)
 
-// Seuils arbitraires mais pratiques : servent juste à donner un repère
-// qualitatif rapide pour comparer des DLE entre eux, pas une vérité absolue.
+// Repère qualitatif basé sur le vrai nombre de coups moyen une fois connu
+// (benchmark) — avant ça, un repère provisoire moins précis basé juste sur
+// le premier guess, pour ne pas laisser la carte vide pendant le calcul.
 const difficultyLabel = computed(() => {
+  if (benchmark.value) {
+    const g = benchmark.value.expectedGuesses
+    if (g <= 2.5) return 'Facile — se résout en 2-3 coups en moyenne'
+    if (g <= 5) return 'Normal'
+    return 'Difficile — prévoir pas mal d\'essais en moyenne'
+  }
   const e = bestOpener.value?.expectedRemaining
   if (e === undefined || e === null) return ''
-  if (e <= 2.5) return 'Facile — se résout en 2-3 coups même avec un mauvais départ'
-  if (e <= 5) return 'Normal'
-  return 'Difficile — beaucoup de personnages proches sur les attributs actuels'
+  if (e <= 2.5) return 'Facile (provisoire — calcul en cours)'
+  if (e <= 5) return 'Normal (provisoire — calcul en cours)'
+  return 'Difficile (provisoire — calcul en cours)'
 })
+
+const efficiencyPercent = computed(() => benchmark.value ? Math.round(benchmark.value.efficiencyRatio * 100) : null)
 </script>
 
 <template>
@@ -104,13 +122,39 @@ const difficultyLabel = computed(() => {
         </div>
         <div class="summary-stat">
           <span class="summary-value">{{ bestOpener?.expectedRemaining.toFixed(2) }}</span>
-          <span class="summary-label">Candidats restants en moyenne</span>
+          <span class="summary-label">Candidats restants après ce guess (moy.)</span>
+        </div>
+        <div class="summary-stat">
+          <span class="summary-value">
+            <template v-if="benchmark">{{ benchmark.expectedGuesses.toFixed(2) }}</template>
+            <span v-else class="muted">calcul...</span>
+          </span>
+          <span class="summary-label">Coups moyens pour gagner (stratégie recommandée)</span>
+        </div>
+        <div class="summary-stat">
+          <span class="summary-value">
+            <template v-if="efficiencyPercent !== null">{{ efficiencyPercent }}%</template>
+            <span v-else class="muted">calcul...</span>
+          </span>
+          <span class="summary-label">Efficacité info (vs idéal théorique pour {{ benchmark?.characterCount ?? '?' }} persos)</span>
         </div>
         <div class="summary-stat">
           <span class="summary-value">{{ difficultyLabel }}</span>
           <span class="summary-label">Difficulté estimée</span>
         </div>
       </div>
+      <p v-if="benchmark && benchmark.distinctProfileCount < benchmark.characterCount" class="banner banner-warning benchmark-warning">
+        {{ benchmark.characterCount - benchmark.distinctProfileCount }} personnage(s) partagent exactement les mêmes valeurs sur
+        tous les attributs actuels avec au moins un autre ({{ benchmark.distinctProfileCount }} profils uniques sur
+        {{ benchmark.characterCount }}) — ceux-là, aucun attribut ne pourra jamais les départager tant qu'ils restent identiques.
+      </p>
+      <p class="muted benchmark-footer">
+        <template v-if="benchmarkPending">Calcul du benchmark en cours (résout l'arbre en entier, peut prendre quelques secondes sur un gros jeu)...</template>
+        <template v-else-if="benchmark">
+          {{ benchmark.cached ? 'Benchmark en cache' : `Benchmark calculé à l'instant (${benchmark.nodesComputed} nœuds)` }}
+          <span v-if="benchmark.budgetExceeded"> — budget de calcul atteint, chiffre approximatif</span>
+        </template>
+      </p>
     </section>
 
     <section v-if="data" class="meta-section">
@@ -212,6 +256,9 @@ const difficultyLabel = computed(() => {
 .summary-stat { display: flex; flex-direction: column; gap: 0.2rem; }
 .summary-value { font-size: 1.1rem; font-weight: 800; color: var(--text); }
 .summary-label { font-size: 0.72rem; color: var(--text-3); }
+
+.benchmark-warning { margin-top: 1rem; margin-bottom: 0; }
+.benchmark-footer { margin-top: 0.9rem; margin-bottom: 0; }
 
 .table-wrap { overflow-x: auto; }
 .stats-table { border-collapse: collapse; width: 100%; min-width: 600px; }

@@ -209,3 +209,124 @@ export async function buildSolverTree(
   const tree = await build(characters, new Set(), 0, opts.rootCharacterId)
   return { tree, nodesComputed, budgetExceeded }
 }
+
+export interface BenchmarkResult {
+  characterCount: number
+  // Nombre de personnages ayant une combinaison d'attributs unique — s'il
+  // est < characterCount, des groupes de "jumeaux" (mêmes valeurs sur
+  // tous les attributs, ex. le trio "Esrest") plafonnent ce qu'AUCUN
+  // attribut, même parfait, ne pourra jamais départager.
+  distinctProfileCount: number
+  // log2(characterCount) : nombre de bits qu'il faudrait pour identifier
+  // n'importe quel personnage avec certitude absolue — un plancher
+  // théorique, pas forcément atteignable (surtout si distinctProfileCount
+  // < characterCount).
+  theoreticalMinBits: number
+  bestOpenerEntropyBits: number
+  // bestOpenerEntropyBits / theoreticalMinBits : proche de 1 = les
+  // attributs exploitent bien la taille du roster dès le premier guess ;
+  // loin de 1 = beaucoup de personnages se ressemblent trop pour ce que
+  // les attributs actuels peuvent distinguer.
+  efficiencyRatio: number
+  // Nombre de coups moyen pour gagner EN SUIVANT la stratégie que l'outil
+  // recommande (meilleur guess à chaque étape) — pas un minimum théorique
+  // inatteignable, le vrai chiffre si tu joues comme l'arbre le conseille.
+  expectedGuesses: number
+  nodesComputed: number
+  budgetExceeded: boolean
+}
+
+export interface BenchmarkOptions {
+  maxNodes: number
+  maxTimeMs: number
+  onYield?: () => Promise<void>
+}
+
+/**
+ * Résout l'arbre en entier (pas de limite de profondeur arbitraire, juste
+ * les mêmes garde-fous nombre de nœuds / temps que buildSolverTree) pour
+ * calculer le vrai nombre de coups moyen, plus le ratio d'efficacité
+ * informationnelle du meilleur guess d'ouverture par rapport à la taille
+ * du jeu. Plus lourd que buildSolverTree (pas de coupure de profondeur) —
+ * à mettre en cache côté appelant.
+ */
+export async function computeBenchmark(
+  characters: Character[],
+  attributes: Attribute[],
+  openerStats: OpenerStats[],
+  opts: BenchmarkOptions,
+): Promise<BenchmarkResult> {
+  const n = characters.length
+  const distinctProfileCount = new Set(
+    characters.map((c) => attributes.map((a) => JSON.stringify(c.attributes[a.key] ?? null)).join('\u0001')),
+  ).size
+
+  let nodesComputed = 0
+  let budgetExceeded = false
+  const startedAt = Date.now()
+  const isOverBudget = () => nodesComputed >= opts.maxNodes || Date.now() - startedAt >= opts.maxTimeMs
+
+  async function expectedGuessesFor(pool: Character[], excludeIds: Set<number>): Promise<number> {
+    nodesComputed++
+    if (opts.onYield && nodesComputed % 15 === 0) await opts.onYield()
+
+    if (pool.length === 1) return 1
+
+    if (isOverBudget()) {
+      budgetExceeded = true
+      // Portion non résolue faute de budget : approximée comme si elle
+      // était indiscernable (deviner au hasard un par un) — sous-estime
+      // sans doute un peu le vrai total, mais reste raisonnable plutôt que
+      // de laisser planter ou tronquer la réponse.
+      return (pool.length + 1) / 2
+    }
+
+    const { guess } = bestGuessForPool(pool, characters, excludeIds, attributes)
+    const newExclude = new Set(excludeIds)
+    newExclude.add(guess.id)
+
+    const buckets = new Map<string, Character[]>()
+    for (const target of pool) {
+      const key = patternKey(guess, target, attributes)
+      if (!buckets.has(key)) buckets.set(key, [])
+      buckets.get(key)!.push(target)
+    }
+
+    if (buckets.size === 1) {
+      // Prouvé plus haut (buildSolverTree) : si le meilleur guess possible
+      // ne sépare pas du tout ce pool, aucun autre ne le pourra — groupe
+      // définitivement indiscernable.
+      return (pool.length + 1) / 2
+    }
+
+    const poolSize = pool.length
+    let total = 1 // le guess qu'on vient de faire
+    for (const list of buckets.values()) {
+      let cost: number
+      if (list.length === 1) {
+        cost = list[0]!.id === guess.id ? 0 : 1
+      } else {
+        cost = await expectedGuessesFor(list, newExclude)
+      }
+      total += (list.length / poolSize) * cost
+    }
+    return total
+  }
+
+  const expectedGuesses = await expectedGuessesFor(characters, new Set())
+
+  const best = openerStats[0]
+  const theoreticalMinBits = Math.log2(n)
+  const bestOpenerEntropyBits = best?.entropyBits ?? 0
+
+  return {
+    characterCount: n,
+    distinctProfileCount,
+    theoreticalMinBits,
+    bestOpenerEntropyBits,
+    efficiencyRatio: theoreticalMinBits > 0 ? bestOpenerEntropyBits / theoreticalMinBits : 1,
+    expectedGuesses,
+    nodesComputed,
+    budgetExceeded,
+  }
+}
