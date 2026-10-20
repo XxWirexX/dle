@@ -26,8 +26,6 @@ services:
       - db
     environment:
       - NODE_ENV=production
-      - DATABASE_URL=postgres://dle:dle@db:5432/dle
-      - FRONTEND_URL=https://dle.wireredblue.xyz
     env_file:
       - .env
     labels:
@@ -36,6 +34,7 @@ services:
       - "traefik.http.routers.dle.entrypoints=websecure"
       - "traefik.http.routers.dle.tls.certresolver=letsencrypt"
       - "traefik.http.services.dle.loadbalancer.server.port=3000"
+      - "traefik.docker.network=proxy"
     networks:
       - proxy
       - default

@@ -1,0 +1,6 @@
+{
+  "name": "DLE",
+  "description": "Jeu de devinettes façon Wordle sur des personnages d'anime, avec mode solo et duo en temps réel.",
+  "url": "https://dle.wireredblue.xyz",
+  "tags": ["react", "express", "socket.io", "jeu"]
+}
