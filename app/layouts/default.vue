@@ -63,6 +63,12 @@ const latestInvite = computed(() => pendingInvites.value[pendingInvites.value.le
       <slot />
     </main>
 
+    <footer class="site-footer">
+      <NuxtLink to="/conditions">Conditions d'utilisation</NuxtLink>
+      <span class="footer-sep">·</span>
+      <NuxtLink to="/confidentialite">Politique de confidentialité</NuxtLink>
+    </footer>
+
     <div v-if="latestInvite" class="invite-toast">
       <p><strong>{{ latestInvite.fromUsername }}</strong> t'invite à jouer sur <strong>{{ latestInvite.gameName }}</strong></p>
       <div class="invite-actions">
@@ -269,4 +275,18 @@ const latestInvite = computed(() => pendingInvites.value[pendingInvites.value.le
 
 .invite-toast p { margin-bottom: 0.75rem; }
 .invite-actions { display: flex; gap: 0.5rem; }
+
+.site-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 1.5rem;
+  color: var(--text-3);
+  font-size: 0.78rem;
+}
+
+.site-footer a { color: var(--text-3); }
+.site-footer a:hover { color: var(--text-2); }
+.footer-sep { opacity: 0.5; }
 </style>
