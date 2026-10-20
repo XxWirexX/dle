@@ -57,6 +57,8 @@ const attributeRows = ref<EditableAttribute[]>(
 )
 const attributesError = ref('')
 const savingAllAttributes = ref(false)
+const syncingHints = ref(false)
+const syncHintsMessage = ref('')
 
 const attributeTypes: { value: AttributeType; label: string }[] = [
   { value: 'text', label: 'Texte' },
@@ -150,6 +152,27 @@ async function saveAllAttributes() {
     row.savedTimer = setTimeout(() => { row.savedMessage = '' }, 2000)
   }
   savingAllAttributes.value = false
+}
+
+async function syncHints() {
+  syncingHints.value = true
+  syncHintsMessage.value = ''
+  attributesError.value = ''
+  try {
+    const { results } = await $fetch<{ results: { attributeKey: string, attributeLabel: string, addedValues: string[] }[] }>(
+      `/api/admin/games/${slug}/attributes/sync-hints`,
+      { method: 'POST' },
+    )
+    const totalAdded = results.reduce((n, r) => n + r.addedValues.length, 0)
+    syncHintsMessage.value = totalAdded === 0
+      ? 'Déjà à jour — aucun indice manquant.'
+      : `${totalAdded} indice(s) ajouté(s) : ${results.map((r) => `${r.attributeLabel} (${r.addedValues.join(', ')})`).join(' · ')}`
+    await reloadGameData()
+  } catch (err: any) {
+    attributesError.value = err?.data?.message || 'Erreur lors de la synchronisation des indices'
+  } finally {
+    syncingHints.value = false
+  }
 }
 
 async function removeAttributeRow(row: EditableAttribute) {
@@ -591,11 +614,17 @@ async function removeRow(row: EditableCharacter) {
     <section class="meta-section">
       <div class="section-header">
         <h2 class="section-title">Attributs ({{ attributeRows.length }}/15)</h2>
-        <button type="button" class="btn btn-sm btn-primary" :disabled="savingAllAttributes || !attributeRows.length" @click="saveAllAttributes">
-          {{ savingAllAttributes ? '...' : 'Tout enregistrer' }}
-        </button>
+        <div class="section-actions">
+          <button type="button" class="btn btn-sm" :disabled="syncingHints || !attributeRows.length" title="Ajoute aux indices toute valeur déjà utilisée par un personnage mais absente de la liste" @click="syncHints">
+            {{ syncingHints ? '...' : 'Synchroniser les indices' }}
+          </button>
+          <button type="button" class="btn btn-sm btn-primary" :disabled="savingAllAttributes || !attributeRows.length" @click="saveAllAttributes">
+            {{ savingAllAttributes ? '...' : 'Tout enregistrer' }}
+          </button>
+        </div>
       </div>
       <p v-if="attributesError" class="banner banner-error">{{ attributesError }}</p>
+      <p v-if="syncHintsMessage" class="banner banner-success">{{ syncHintsMessage }}</p>
 
       <div v-for="(row, i) in attributeRows" :key="row.id" class="attr-row">
         <div class="attr-row-main">
@@ -772,6 +801,7 @@ async function removeRow(row: EditableCharacter) {
   margin-bottom: 1rem;
 }
 .section-header .section-title { margin: 0; }
+.section-actions { display: flex; gap: 0.5rem; }
 
 .field { display: flex; flex-direction: column; gap: 0.35rem; margin-bottom: 0.9rem; flex: 1; }
 .field-row { display: flex; gap: 1rem; align-items: flex-end; }

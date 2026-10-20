@@ -410,3 +410,97 @@ export async function reorderAttributes(gameId: number, orderedIds: number[]): P
     }
   })
 }
+
+// "ordered" exclu : une valeur hors de `order` est déjà rejetée à l'écriture
+// (coerceAttributeValue), donc `order` contient forcément déjà tout ce qui
+// est utilisé — pas de synchronisation à faire pour ce type.
+const HINTABLE_TYPES: AttributeType[] = ['text', 'multiple', 'text-group']
+
+function valuesForHints(type: AttributeType, raw: unknown): string[] {
+  const list = type === 'multiple' ? (Array.isArray(raw) ? raw : []) : (raw !== undefined && raw !== null && raw !== '' ? [raw] : [])
+  return [...new Set(list.map((v) => String(v).trim()).filter(Boolean))]
+}
+
+export interface SyncHintsResult {
+  attributeKey: string
+  attributeLabel: string
+  addedValues: string[]
+}
+
+/**
+ * Pour chaque attribut "texte"/"multiple"/"groupe" du jeu, ajoute aux
+ * indices toute valeur déjà utilisée par un personnage mais absente de la
+ * liste — et déduplique au passage les indices existants (filet de
+ * sécurité contre une éventuelle entrée en double laissée par une écriture
+ * concurrente via growAttributeHints ci-dessous).
+ */
+export async function syncAttributeHintsWithUsedValues(gameId: number): Promise<SyncHintsResult[]> {
+  const gameAttributes = await db.query.attributes.findMany({ where: eq(attributes.gameId, gameId) })
+  const gameCharacters = await db.query.characters.findMany({
+    where: eq(characters.gameId, gameId),
+    columns: { attributes: true },
+  })
+
+  const results: SyncHintsResult[] = []
+
+  for (const attr of gameAttributes) {
+    if (!HINTABLE_TYPES.includes(attr.type)) continue
+
+    const seen = new Map<string, string>() // clé en minuscule -> casse d'origine (premier vu)
+    for (const h of attr.hints ?? []) {
+      const key = h.toLowerCase()
+      if (!seen.has(key)) seen.set(key, h)
+    }
+    const beforeCount = seen.size
+
+    const added = new Set<string>()
+    for (const c of gameCharacters) {
+      for (const v of valuesForHints(attr.type, c.attributes[attr.key])) {
+        const key = v.toLowerCase()
+        if (!seen.has(key)) {
+          seen.set(key, v)
+          added.add(v)
+        }
+      }
+    }
+
+    if (seen.size === beforeCount && added.size === 0) continue
+
+    const addedValues = [...added].sort((a, b) => a.localeCompare(b))
+    const dedupedExisting = [...new Map([...seen].filter(([k]) => !added.has(seen.get(k)!))).values()]
+    const newHints = [...dedupedExisting, ...addedValues]
+
+    await db.update(attributes).set({ hints: newHints }).where(eq(attributes.id, attr.id))
+    results.push({ attributeKey: attr.key, attributeLabel: attr.label, addedValues })
+  }
+
+  return results
+}
+
+/**
+ * Appelé après la sauvegarde d'un personnage : si une valeur saisie pour un
+ * attribut "texte"/"multiple"/"groupe" n'est pas déjà dans ses indices,
+ * l'y ajoute — pour que les indices restent à jour avec ce qui est
+ * réellement jouable, sans synchronisation manuelle à chaque fois.
+ */
+export async function growAttributeHints(
+  gameAttributes: { id: number; key: string; type: AttributeType }[],
+  submittedValues: Record<string, unknown>,
+): Promise<void> {
+  for (const attr of gameAttributes) {
+    if (!HINTABLE_TYPES.includes(attr.type)) continue
+    const candidates = valuesForHints(attr.type, submittedValues[attr.key])
+    if (candidates.length === 0) continue
+
+    // Relu juste avant l'écriture (pas depuis un éventuel cache) pour
+    // réduire la fenêtre de course avec un autre personnage sauvegardé en
+    // parallèle (ex: "Tout enregistrer") qui ajouterait le même indice.
+    const [current] = await db.select({ hints: attributes.hints }).from(attributes).where(eq(attributes.id, attr.id))
+    const existingHints = current?.hints ?? []
+    const existingLower = new Set(existingHints.map((h) => h.toLowerCase()))
+    const newOnes = candidates.filter((v) => !existingLower.has(v.toLowerCase()))
+    if (newOnes.length === 0) continue
+
+    await db.update(attributes).set({ hints: [...existingHints, ...newOnes] }).where(eq(attributes.id, attr.id))
+  }
+}

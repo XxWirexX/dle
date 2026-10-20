@@ -3,7 +3,7 @@ import { requireAdmin } from '~~/server/utils/admin'
 import { readValidatedJsonBody } from '~~/server/utils/validate'
 import { getCachedGamePlayData, invalidateGameCache } from '~~/server/utils/gameCache'
 import { findGameIdBySlug } from '~~/server/db/queries/stats'
-import { addCharacter } from '~~/server/db/queries/games'
+import { addCharacter, growAttributeHints } from '~~/server/db/queries/games'
 import { coerceAttributeValue } from '~~/server/utils/attributeValues'
 
 const schema = z.object({
@@ -33,6 +33,8 @@ export default defineEventHandler(async (event) => {
     imagePublicId: body.imagePublicId ?? null,
     attributes,
   })
+
+  await growAttributeHints(game.attributes, attributes)
 
   invalidateGameCache(slug)
   return { id }
