@@ -23,7 +23,7 @@ async function onDeleteGame(slug: string) {
   <div class="profile-page">
     <div v-if="user" class="profile-header">
       <span class="avatar" :style="{ background: user.avatarColor }">
-        <img v-if="user.avatarImageUrl" :src="user.avatarImageUrl" :alt="user.username">
+        <img v-if="user.avatarImageUrl" :src="cloudinaryUrl(user.avatarImageUrl, 128)" :alt="user.username">
         <span v-else>{{ user.username[0]?.toUpperCase() }}</span>
       </span>
       <div>
