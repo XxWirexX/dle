@@ -1,18 +1,12 @@
 services:
-  # Pas de `networks:` ici -> rejoint le réseau par défaut du projet
-  # ("default"). `app`/`migrate` doivent aussi y être en plus de `proxy`
-  # (réservé au routage Traefik), sinon le nom d'hôte "db" ne se résout pas
-  # pour eux — deux réseaux séparés, pas un partagé.
   db:
     image: postgres:16-alpine
     container_name: dle_db
     restart: unless-stopped
     environment:
       - POSTGRES_USER=dle
-      - POSTGRES_PASSWORD=dle
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_DB=dle
-    ports:
-      - "5432:5432"
     volumes:
       - dle_db_data:/var/lib/postgresql/data
 
@@ -32,21 +26,12 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.dle.rule=Host(`dle.wireredblue.xyz`)"
       - "traefik.http.routers.dle.entrypoints=websecure"
-      - "traefik.http.routers.dle.tls.certresolver=letsencrypt"
       - "traefik.http.services.dle.loadbalancer.server.port=3000"
       - "traefik.docker.network=proxy"
     networks:
       - proxy
       - default
 
-  # Image "outil" pour appliquer les migrations Drizzle — jamais démarrée
-  # par `docker compose up`, seulement via `docker compose run --rm migrate`
-  # (voir .github/workflows/deploy.yml). Le profil "tools" l'exclut de `up`.
-  #
-  # `env_file` donne aussi accès aux identifiants Cloudinary (nécessaires à
-  # `npm run migrate:legacy`, pas seulement aux migrations de schéma) ; le
-  # volume monte `legacy-content/` à l'exécution plutôt que de compter sur
-  # l'image, qui l'exclut volontairement via .dockerignore.
   migrate:
     build:
       context: .
@@ -54,15 +39,10 @@ services:
     container_name: dle_migrate
     depends_on:
       - db
-    environment:
-      - DATABASE_URL=postgres://dle:dle@db:5432/dle
     env_file:
       - .env
     volumes:
       - ./legacy-content:/app/legacy-content:ro
-    networks:
-      - proxy
-      - default
     profiles:
       - tools
 
