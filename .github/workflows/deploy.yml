@@ -1,8 +1,5 @@
 name: Deploy to VPS
 
-# Le "cutover" se fait naturellement : ce workflow ne se déclenche que sur
-# main, donc il ne prend effet qu'au merge de la réécriture — pas besoin d'y
-# retoucher à ce moment-là.
 on:
   push:
     branches:
@@ -19,11 +16,4 @@ jobs:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
-          script: |
-            set -e
-            cd /home/debian/projects/dle
-            git pull origin main
-            docker compose build
-            docker compose run --rm migrate
-            docker compose up -d --remove-orphans
-            docker image prune -f
+          script: deploy
