@@ -22,12 +22,8 @@ services:
       - NODE_ENV=production
     env_file:
       - .env
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.dle.rule=Host(`dle.wireredblue.xyz`)"
-      - "traefik.http.routers.dle.entrypoints=websecure"
-      - "traefik.http.services.dle.loadbalancer.server.port=3000"
-      - "traefik.docker.network=proxy"
+    # La route (sous-domaine, maintenance) est gérée par le panel admin
+    # (vps-infra/admin) : il suffit que le conteneur soit sur le réseau proxy.
     networks:
       - proxy
       - default
