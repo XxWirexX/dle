@@ -31,9 +31,9 @@ function emailShell(title: string, bodyHtml: string): string {
 <body><div class="container"><h1>${title}</h1>${bodyHtml}</div></body></html>`
 }
 
-export async function sendVerificationEmail(to: string, username: string, token: string): Promise<void> {
+export async function sendVerificationEmail(to: string, username: string, token: string, origin: string): Promise<void> {
   const t = getTransporter()
-  const url = `${useRuntimeConfig().public.frontendUrl}/verify-email?token=${token}`
+  const url = `${origin}/verify-email?token=${token}`
 
   if (!t) {
     console.warn(`[email] SMTP non configuré — lien de vérification pour ${to}: ${url}`)
@@ -44,6 +44,7 @@ export async function sendVerificationEmail(to: string, username: string, token:
     from: `"DLE" <${useRuntimeConfig().smtpUser}>`,
     to,
     subject: 'Confirme ton compte DLE',
+    text: `Salut ${username}, confirme ton adresse email en ouvrant ce lien : ${url}\n\nCe lien expire dans 24h.`,
     html: emailShell('Bienvenue sur DLE', `
       <p>Salut ${username}, clique ci-dessous pour confirmer ton adresse email :</p>
       <a href="${url}" class="button">Confirmer mon email</a>
@@ -52,9 +53,9 @@ export async function sendVerificationEmail(to: string, username: string, token:
   })
 }
 
-export async function sendPasswordResetEmail(to: string, username: string, token: string): Promise<void> {
+export async function sendPasswordResetEmail(to: string, username: string, token: string, origin: string): Promise<void> {
   const t = getTransporter()
-  const url = `${useRuntimeConfig().public.frontendUrl}/reset-password?token=${token}`
+  const url = `${origin}/reset-password?token=${token}`
 
   if (!t) {
     console.warn(`[email] SMTP non configuré — lien de reset pour ${to}: ${url}`)
@@ -65,6 +66,7 @@ export async function sendPasswordResetEmail(to: string, username: string, token
     from: `"DLE" <${useRuntimeConfig().smtpUser}>`,
     to,
     subject: 'Réinitialise ton mot de passe DLE',
+    text: `Salut ${username}, réinitialise ton mot de passe en ouvrant ce lien : ${url}\n\nCe lien expire dans 1h. Ignore cet email si tu n'es pas à l'origine de la demande.`,
     html: emailShell('Réinitialisation du mot de passe', `
       <p>Salut ${username}, clique ci-dessous pour choisir un nouveau mot de passe :</p>
       <a href="${url}" class="button">Réinitialiser mon mot de passe</a>
