@@ -898,11 +898,16 @@ async function removeRow(row: EditableCharacter) {
 .preview-icon { width: 48px; height: 48px; border-radius: 8px; object-fit: cover; margin-bottom: 0.3rem; }
 .preview-bg { width: 100%; max-width: 200px; height: 60px; border-radius: 8px; object-fit: cover; margin-bottom: 0.3rem; }
 
-.table-wrap { overflow-x: auto; margin-bottom: 0.75rem; }
+/* Hauteur bornée + scroll interne : avec beaucoup de personnages, la barre
+   de défilement horizontale se retrouvait tout en bas d'un tableau très
+   long — il fallait défiler toute la page avant de pouvoir l'atteindre.
+   En bornant la hauteur, elle reste toujours juste sous les lignes
+   visibles. */
+.table-wrap { overflow: auto; max-height: 70vh; margin-bottom: 0.75rem; border: 1px solid var(--border); border-radius: 10px; }
 
 .char-table { border-collapse: collapse; width: 100%; min-width: 700px; }
 .char-table th, .char-table td { padding: 0.5rem; border-bottom: 1px solid var(--border); text-align: left; vertical-align: middle; }
-.char-table th { font-size: 0.7rem; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.04em; }
+.char-table th { font-size: 0.7rem; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.04em; position: sticky; top: 0; background: var(--bg); z-index: 1; }
 .char-table td:has(.hint-select-field) { min-width: 190px; }
 .char-table td:has(.multi-select-field) { min-width: 170px; }
 
