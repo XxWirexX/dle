@@ -137,6 +137,31 @@ async function reveal() {
 
 const hintAttributes = computed(() => attributes.filter((a) => a.hints || a.order))
 const displayAttemptsCount = computed(() => alreadyCompletedToday.value ? lockedAttemptsCount.value : attempts.value.length)
+
+// Si l'onglet reste ouvert après le changement de jour (minuit heure de
+// Paris), rien ne réévalue spontanément `daily`/`attempts`/etc. — sans ça
+// un défi réussi hier reste affiché indéfiniment. On revérifie
+// périodiquement et au retour sur l'onglet plutôt que de traquer un
+// setTimeout précis jusqu'à minuit (fragile : un onglet en arrière-plan
+// peut voir ses timers retardés par le navigateur).
+const loadedDate = daily.value.date
+let dayCheckInterval: ReturnType<typeof setInterval> | undefined
+
+function reloadIfNewDay() {
+  if (getParisDateString() !== loadedDate) {
+    window.location.reload()
+  }
+}
+
+onMounted(() => {
+  dayCheckInterval = setInterval(reloadIfNewDay, 60_000)
+  document.addEventListener('visibilitychange', reloadIfNewDay)
+})
+
+onUnmounted(() => {
+  clearInterval(dayCheckInterval)
+  document.removeEventListener('visibilitychange', reloadIfNewDay)
+})
 </script>
 
 <template>

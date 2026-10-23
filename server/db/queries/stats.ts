@@ -1,6 +1,7 @@
 import { eq, and, desc, gt } from 'drizzle-orm'
 import { db } from '../client'
 import { userGameStats, games } from '../schema'
+import { getTodayDateString } from '../../utils/daily'
 
 const EMPTY_STATS = {
   gamesPlayed: 0, wins: 0, currentStreak: 0, maxStreak: 0, totalAttempts: 0,
@@ -69,10 +70,6 @@ interface UpdateStatsOptions {
   isMultiplayer?: boolean
 }
 
-function todayStr(): string {
-  return new Date().toISOString().split('T')[0]!
-}
-
 export async function updateStats(userId: number, gameId: number, opts: UpdateStatsOptions) {
   const current = await getStats(userId, gameId)
   const attempts = opts.attempts ?? 0
@@ -91,7 +88,11 @@ export async function updateStats(userId: number, gameId: number, opts: UpdateSt
   // Le quotidien ne compte qu'une fois par jour, même si l'endpoint est
   // rappelé (double clic, retry réseau...).
   let { dailyPlayed, dailyWins, dailyStreak, dailyMaxStreak, lastDailyDate } = current
-  const today = todayStr()
+  // Même jour que le défi du jour lui-même (server/utils/daily.ts) — sinon
+  // un essai joué dans la fenêtre où UTC et le jour Paris divergent (1-2h
+  // selon heure d'été/hiver) pouvait être compté sur le mauvais jour,
+  // cassant la série ou le "déjà joué aujourd'hui".
+  const today = getTodayDateString()
   if (opts.isDaily && lastDailyDate !== today) {
     dailyPlayed += 1
     dailyWins += opts.won ? 1 : 0

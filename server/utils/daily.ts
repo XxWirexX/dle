@@ -1,7 +1,15 @@
 import type { Character } from '#shared/types/game'
 
+// Fuseau de référence pour le défi du jour : le site est francophone, donc
+// "minuit" doit correspondre à minuit à Paris, pas minuit UTC (jusqu'ici en
+// UTC, le défi changeait en réalité à 1h ou 2h du matin heure française,
+// selon l'heure d'été/hiver — Intl gère cette bascule automatiquement).
+const DAILY_TIMEZONE = 'Europe/Paris'
+
 export function getTodayDateString(): string {
-  return new Date().toISOString().split('T')[0]!
+  // "en-CA" rend directement le format YYYY-MM-DD, pas besoin de réassembler
+  // les parts nous-mêmes.
+  return new Intl.DateTimeFormat('en-CA', { timeZone: DAILY_TIMEZONE }).format(new Date())
 }
 
 const EPOCH = new Date('2024-01-01T00:00:00Z').getTime()

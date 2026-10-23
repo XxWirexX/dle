@@ -18,6 +18,18 @@ const typeLabels: Record<string, string> = {
   'text-group': 'Texte (groupé)',
   boolean: 'Oui/Non',
 }
+
+useSeoMeta({
+  title: () => game.value ? game.value.name : 'Jeu introuvable',
+  description: () => game.value
+    ? `Devine le personnage de ${game.value.name} en un minimum d'essais — ${game.value.characterCount} personnages à deviner, façon Wordle.`
+    : undefined,
+  ogTitle: () => game.value ? `${game.value.name} — DLE` : undefined,
+  ogDescription: () => game.value
+    ? `Devine le personnage de ${game.value.name} en un minimum d'essais.`
+    : undefined,
+  ogImage: () => game.value?.iconUrl ?? undefined,
+})
 </script>
 
 <template>

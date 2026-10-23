@@ -1,2 +1,4 @@
 User-Agent: *
 Disallow:
+
+Sitemap: https://dle.wireredblue.xyz/sitemap.xml
