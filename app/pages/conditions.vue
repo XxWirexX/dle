@@ -1,5 +1,5 @@
 <script setup lang="ts">
-useHead({ title: "Conditions d'utilisation — DLE" })
+useHead({ title: "Conditions d'utilisation" })
 </script>
 
 <template>

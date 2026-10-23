@@ -17,7 +17,7 @@ const globalStats = ref<GlobalStats | null>(null)
 if (user.value) {
   await refreshFavorites()
   try {
-    const today = new Date().toISOString().split('T')[0]
+    const today = getParisDateString()
     const stats = await apiFetch<{ global: GlobalStats; byGame: { gameSlug: string; dailyStreak: number; lastDailyDate: string | null }[] }>('/api/stats')
     dailyStreaks.value = Object.fromEntries(stats.byGame.map((g) => [g.gameSlug, g.dailyStreak]))
     playedToday.value = Object.fromEntries(stats.byGame.map((g) => [g.gameSlug, g.lastDailyDate === today]))
@@ -36,6 +36,13 @@ const otherGames = computed(() => games.value?.filter((g) => !favoriteIds.value.
 const featuredGame = computed(() => {
   if (!games.value || games.value.length === 0) return null
   return games.value[featuredGameIndex(games.value.length)] ?? null
+})
+
+useSeoMeta({
+  title: 'Jeux de devinettes de personnages',
+  description: 'DLE, le Wordle des personnages : devine un personnage d\'anime, de manga ou d\'une autre série en un minimum d\'essais, seul ou en duo. Crée aussi ton propre DLE personnalisé.',
+  ogTitle: 'DLE — Jeux de devinettes de personnages',
+  ogDescription: 'Devine un personnage en un minimum d\'essais, seul ou en duo, sur des dizaines de séries différentes.',
 })
 </script>
 

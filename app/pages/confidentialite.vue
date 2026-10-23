@@ -1,5 +1,5 @@
 <script setup lang="ts">
-useHead({ title: 'Politique de confidentialité — DLE' })
+useHead({ title: 'Politique de confidentialité' })
 </script>
 
 <template>

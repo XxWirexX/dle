@@ -9,7 +9,18 @@ export default defineNuxtConfig({
 
   app: {
     head: {
-      title: 'DLE',
+      htmlAttrs: { lang: 'fr' },
+      title: 'Jeux de devinettes de personnages',
+      titleTemplate: '%s · DLE',
+      meta: [
+        {
+          name: 'description',
+          content: 'DLE, le Wordle des personnages : devine un personnage d\'anime, de manga ou d\'une autre série en un minimum d\'essais, seul ou en duo. Crée aussi ton propre DLE personnalisé.',
+        },
+        { property: 'og:type', content: 'website' },
+        { property: 'og:site_name', content: 'DLE' },
+        { name: 'theme-color', content: '#0d0d14' },
+      ],
       link: [
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
