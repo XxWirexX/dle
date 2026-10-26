@@ -16,7 +16,7 @@ export default defineEventHandler(async (event) => {
   }
 
   const token = await resendVerificationToken(user.id)
-  await sendVerificationEmail(user.email, user.username, token, getRequestURL(event).origin)
+  await sendVerificationEmail(user.email, user.username, token, getRequestURL(event, { xForwardedHost: true, xForwardedProto: true }).origin)
 
   return { message: 'Email de vérification envoyé' }
 })

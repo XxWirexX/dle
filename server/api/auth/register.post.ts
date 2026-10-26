@@ -31,7 +31,7 @@ export default defineEventHandler(async (event) => {
   // seul le mail de vérification est perdu, l'utilisateur peut en
   // redemander un via /resend-verification.
   try {
-    await sendVerificationEmail(email, username, verificationToken, getRequestURL(event).origin)
+    await sendVerificationEmail(email, username, verificationToken, getRequestURL(event, { xForwardedHost: true, xForwardedProto: true }).origin)
   } catch (err) {
     console.error('[register] Échec d\'envoi de l\'email de vérification:', err)
   }

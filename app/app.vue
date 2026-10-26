@@ -10,7 +10,9 @@
 // Appelé une fois ici, de façon synchrone : useHead résout `link` plus tard
 // dans le cycle de rendu, hors du contexte Nuxt, donc un useRequestURL()
 // différé (ex: dans un computed) y échoue.
-const origin = useRequestURL().origin
+// Derrière Traefik, l'app reçoit les requêtes en http : sans les en-têtes X-Forwarded-*,
+// la canonique pointerait vers http://, que Google voit comme une autre URL (qui redirige).
+const origin = useRequestURL({ xForwardedHost: true, xForwardedProto: true }).origin
 const route = useRoute()
 useHead({
   link: [

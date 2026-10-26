@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
   if (user) {
     try {
       const token = await createPasswordResetToken(user.id)
-      await sendPasswordResetEmail(email, user.username, token, getRequestURL(event).origin)
+      await sendPasswordResetEmail(email, user.username, token, getRequestURL(event, { xForwardedHost: true, xForwardedProto: true }).origin)
     } catch (err) {
       console.error('[forgot-password] Échec d\'envoi de l\'email de reset:', err)
     }

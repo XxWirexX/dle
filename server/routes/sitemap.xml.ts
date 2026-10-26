@@ -3,7 +3,8 @@ import { listPublicGames } from '~~/server/db/queries/games'
 const STATIC_PATHS = ['/', '/conditions', '/confidentialite']
 
 export default defineEventHandler(async (event) => {
-  const origin = getRequestURL(event).origin
+  // Protocole et hôte publics (Traefik) : sinon les URL du sitemap seraient en http://
+  const origin = getRequestURL(event, { xForwardedHost: true, xForwardedProto: true }).origin
   const games = await listPublicGames()
 
   const urls = [

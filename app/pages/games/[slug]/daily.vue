@@ -48,7 +48,7 @@ if (daily.value.myCompletion) {
 // Appelé une fois de façon synchrone ici (pas dans le computed plus bas) :
 // useRequestURL() a besoin du contexte Nuxt actif, indisponible si on
 // l'appelle depuis une callback réévaluée plus tard.
-const shareUrl = `${useRequestURL().origin}/games/${slug}/daily`
+const shareUrl = `${useRequestURL({ xForwardedHost: true, xForwardedProto: true }).origin}/games/${slug}/daily`
 
 const shareText = computed(() => generateShareText({
   gameName: game.value!.name,
