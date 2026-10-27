@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { AttributeType } from '#shared/types/game'
+import type { AnilistImportResult } from '#shared/utils/anilistImport'
 
 definePageMeta({ middleware: 'auth' })
 
@@ -136,6 +137,44 @@ async function onCharacterImage(character: DraftCharacter, e: Event) {
   } finally {
     character.uploading = false
   }
+}
+
+// ─── Import AniList (jeux officiels) ───
+// Pré-remplit les étapes 2 et 3 : rien n'est enregistré à ce stade, l'admin
+// garde la main sur tout (renommer, supprimer, ajouter) avant de créer.
+const showAnilistImport = ref(false)
+const importNotice = ref('')
+
+function hasFormContent(): boolean {
+  return characters.value.some((c) => c.name.trim() || c.imageUrl)
+    || attributes.value.some((a) => a.label.trim())
+}
+
+function applyAnilistImport(result: AnilistImportResult) {
+  if (hasFormContent() && !confirm('Remplacer les attributs et personnages déjà saisis par ceux d\'AniList ?')) return
+
+  if (!name.value.trim()) name.value = result.name.slice(0, 100)
+  if (result.iconUrl && !iconUrl.value) {
+    iconUrl.value = result.iconUrl
+    iconPublicId.value = null
+  }
+
+  const draftAttributes = result.attributes.map((a) => ({ ...newAttribute(), label: a.label, type: a.type }))
+  const draftIdByField = new Map(result.attributes.map((a, i) => [a.id, draftAttributes[i]!.id]))
+  attributes.value = draftAttributes
+  characters.value = result.characters.map((c) => ({
+    ...newCharacter(),
+    name: c.name,
+    imageUrl: c.imageUrl,
+    values: Object.fromEntries(
+      Object.entries(c.values).map(([fieldId, value]) => [draftIdByField.get(fieldId)!, value ?? '']),
+    ),
+  }))
+
+  showAnilistImport.value = false
+  formError.value = ''
+  importNotice.value = `${result.characters.length} personnages et ${result.attributes.length} attributs importés depuis AniList. Vérifie les attributs, ajoute les tiens, puis relis les personnages.`
+  currentStep.value = 2
 }
 
 // ─── Soumission ───
@@ -353,6 +392,7 @@ async function onSubmit() {
       <button type="button" class="btn btn-sm discard-btn" @click="discardDraft">Effacer le brouillon</button>
     </div>
     <p v-if="hasRestoredDraft" class="banner banner-success">Brouillon repris là où tu l'avais laissé.</p>
+    <p v-if="importNotice" class="banner banner-success">{{ importNotice }}</p>
     <p v-if="formError" class="banner banner-error">{{ formError }}</p>
 
     <nav class="steps">
@@ -392,6 +432,12 @@ async function onSubmit() {
         <input v-model="isOfficial" type="checkbox">
         Jeu officiel (sans propriétaire, listé pour tout le monde comme les autres animes — pas besoin de relancer le script de migration)
       </label>
+      <template v-if="user?.isAdmin && isOfficial">
+        <AdminAnilistImport v-if="showAnilistImport" @apply="applyAnilistImport" @close="showAnilistImport = false" />
+        <button v-else type="button" class="btn anilist-btn" @click="showAnilistImport = true">
+          Partir d'AniList…
+        </button>
+      </template>
       <div class="field-row">
         <div class="field">
           <label>Icône (optionnel)</label>
@@ -621,6 +667,8 @@ textarea { resize: vertical; }
   color: var(--text-2);
   cursor: pointer;
 }
+
+.anilist-btn { margin-bottom: 0.9rem; }
 
 .attribute-card {
   padding: 1rem;
