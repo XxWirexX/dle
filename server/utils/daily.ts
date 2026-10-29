@@ -24,6 +24,19 @@ function seededHash(seed: string): number {
   for (let i = 0; i < seed.length; i++) {
     hash = (Math.imul(31, hash) + seed.charCodeAt(i)) | 0
   }
+  // Un hash polynomial classique varie presque linéairement quand la seed
+  // ne change que d'un caractère de faible poids — ici, un jour sur l'autre
+  // ne change que le dernier chiffre de la date (poids 31^0 = 1), donc deux
+  // jours consécutifs retombaient sur des index quasi consécutifs dans la
+  // liste des personnages (triée par ordre d'insertion) : le défi du jour
+  // semblait suivre l'ordre d'ajout en base au lieu d'être aléatoire.
+  // Ce finaliseur (type MurmurHash3) diffuse chaque bit d'entrée sur toute
+  // la sortie pour casser cette corrélation.
+  hash = hash ^ (hash >>> 16)
+  hash = Math.imul(hash, 0x85ebca6b)
+  hash = hash ^ (hash >>> 13)
+  hash = Math.imul(hash, 0xc2b2ae35)
+  hash = hash ^ (hash >>> 16)
   return Math.abs(hash)
 }
 
